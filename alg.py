@@ -1,9 +1,42 @@
 import random
-import googlemaps
+import mysql.connector
 from collections import defaultdict
-from utils.openai_prompting import generate_prompt, get_openai_response
 
-gmaps = googlemaps.Client(key="YOUR_GOOGLE_MAPS_API_KEY")
+DB_CONFIG = {
+    "host": "139.59.132.41",
+    "user": "admin",
+    "password": "ed329a875c6c4ebdf4e87e2bbe53a15771b5844ef6606dde",
+    "database": "adam"
+}
+
+def test_db_connection():
+    try:
+        conn = mysql.connector.connect(**DB_CONFIG)
+        if conn.is_connected():
+            print("Connessione al database riuscita!")
+        conn.close()
+    except mysql.connector.Error as err:
+        print(f"Errore di connessione al database: {err}")
+
+def fetch_cleaners_from_db():
+    """Recupera nome e cognome dei cleaners dal database dove user_role_id è 7 o 15."""
+    try:
+        connection = mysql.connector.connect(**DB_CONFIG)
+        cursor = connection.cursor(dictionary=True)
+
+        query = "SELECT name, lastname FROM app_users WHERE user_role_id IN (7, 15) AND active = 1;"
+        cursor.execute(query)
+        cleaners = cursor.fetchall()
+
+        cursor.close()
+        connection.close()
+
+        return [f"{cleaner['name']} {cleaner['lastname']}" for cleaner in cleaners]
+
+    except mysql.connector.Error as err:
+        print(f"Errore nella connessione al DB: {err}")
+        return []
+
 
 def generate_mock_data():
     cleaners = [
@@ -24,11 +57,10 @@ def sort_by_priority(apartments):
 def filter_by_type(items, type_value):
     return [item for item in items if item["type"] == type_value]
 
-def get_distance(loc1, loc2):
-    result = gmaps.distance_matrix(loc1, loc2, mode="driving")
-    return result["rows"][0]["elements"][0]["distance"]["value"] if result["rows"][0]["elements"][0]["status"] == "OK" else float("inf")
+def euclidean_distance(loc1, loc2):
+    return ((loc1[0] - loc2[0]) ** 2 + (loc1[1] - loc2[1]) ** 2) ** 0.5
 
-def find_best_next_apartment(cleaner, available_apts, current_apt):
+def find_best_next_apartment(cleaner, available_apts, current_apt, use_gmaps=False):
     if not available_apts:
         return None
     
@@ -36,9 +68,10 @@ def find_best_next_apartment(cleaner, available_apts, current_apt):
     if not available_apts:
         return None
     
-    return min(available_apts, key=lambda apt: get_distance(current_apt["location"], apt["location"]))
+    distance_func = gmaps_distance if use_gmaps else euclidean_distance
+    return min(available_apts, key=lambda apt: distance_func(current_apt["location"], apt["location"]))
 
-def assign_apartments(apartments, cleaners):
+def assign_apartments(apartments, cleaners, use_gmaps=False):
     assignments = defaultdict(list)
     
     for apt in apartments:
@@ -46,14 +79,14 @@ def assign_apartments(apartments, cleaners):
         if not available_cleaners:
             continue
         
-        cleaner = min(available_cleaners, key=lambda c: (len(assignments[c["name"]]), get_distance(c["location"], apt["location"])))
+        cleaner = min(available_cleaners, key=lambda c: (len(assignments[c["name"]]), euclidean_distance(c["location"], apt["location"])) if not use_gmaps else (len(assignments[c["name"]]), gmaps_distance(c["location"], apt["location"])))
         assignments[cleaner["name"]].append(apt)
     
     remaining_apartments = [apt for apt in apartments if apt not in sum(assignments.values(), [])]
     for cleaner in cleaners:
         if cleaner["name"] in assignments and assignments[cleaner["name"]]:
             first_apt = assignments[cleaner["name"]][0]
-            next_apt = find_best_next_apartment(cleaner, remaining_apartments, first_apt)
+            next_apt = find_best_next_apartment(cleaner, remaining_apartments, first_apt, use_gmaps)
             if next_apt:
                 assignments[cleaner["name"]].append(next_apt)
                 remaining_apartments.remove(next_apt)
@@ -61,6 +94,14 @@ def assign_apartments(apartments, cleaners):
     return assignments
 
 def main():
+    cleaners_from_db = fetch_cleaners_from_db()
+
+    if cleaners_from_db:
+        print("Lista cleaners dal database:")
+        for cleaner in cleaners_from_db:
+            print(cleaner, end=", ")
+        print("\n")
+
     cleaners, apartments = generate_mock_data()
     
     apartments_premium = sort_by_priority(filter_by_type(apartments, "Premium"))
@@ -82,3 +123,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
