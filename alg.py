@@ -1,7 +1,9 @@
 import random
 import mysql.connector
+import requests
 from collections import defaultdict
 
+# Configurazione database
 DB_CONFIG = {
     "host": "139.59.132.41",
     "user": "admin",
@@ -9,118 +11,96 @@ DB_CONFIG = {
     "database": "adam"
 }
 
-def test_db_connection():
-    try:
-        conn = mysql.connector.connect(**DB_CONFIG)
-        if conn.is_connected():
-            print("Connessione al database riuscita!")
-        conn.close()
-    except mysql.connector.Error as err:
-        print(f"Errore di connessione al database: {err}")
+# API Key di Google Maps
+GOOGLE_API_KEY = "AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0"
 
-def fetch_cleaners_from_db():
-    """Recupera nome e cognome dei cleaners dal database dove user_role_id è 7 o 15."""
+class Apartment:
+    def __init__(self, id, name, address, customer_id, lat, lng, apt_type):
+        self.id = id
+        self.name = name
+        self.address = address
+        self.customer_id = customer_id
+        self.lat = lat
+        self.lng = lng
+        self.type = apt_type
+
+    def __repr__(self):
+        return f"Apartment(ID: {self.id}, Type: {self.type})"
+
+def fetch_apartments_from_db():
+    """Recupera gli appartamenti attivi dal database e li inserisce in oggetti Apartment."""
     try:
         connection = mysql.connector.connect(**DB_CONFIG)
         cursor = connection.cursor(dictionary=True)
 
-        query = "SELECT name, lastname FROM app_users WHERE user_role_id IN (7, 15) AND active = 1;"
+        query = "SELECT id, name, address1, customer_id, lat, lng FROM app_structures WHERE active = 1;"
         cursor.execute(query)
-        cleaners = cursor.fetchall()
+        apartments = cursor.fetchall()
 
         cursor.close()
         connection.close()
 
-        return [f"{cleaner['name']} {cleaner['lastname']}" for cleaner in cleaners]
-
+        return [Apartment(
+            apt["id"], apt["name"], apt["address1"], apt["customer_id"], apt["lat"], apt["lng"],
+            "Premium" if apt["id"] % 2 == 0 else "Standard"
+        ) for apt in apartments]
+    
     except mysql.connector.Error as err:
         print(f"Errore nella connessione al DB: {err}")
         return []
 
+def get_driving_distance(origin, destination):
+    """Calcola la distanza su strada tra due coordinate usando Google Maps API."""
+    base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
+    params = {
+        "origins": f"{origin[0]},{origin[1]}",  
+        "destinations": f"{destination[0]},{destination[1]}",
+        "key": GOOGLE_API_KEY,
+        "mode": "driving"
+    }
 
-def generate_mock_data():
-    cleaners = [
-        {"id": i, "name": f"Cleaner_{i}", "type": "Premium" if i % 2 == 0 else "Standard", "location": (random.randint(0, 100), random.randint(0, 100))}
-        for i in range(1, 21)
-    ]
-    
-    apartments = [
-        {"id": i, "priority": random.randint(1, 5), "type": "Premium" if i % 2 == 0 else "Standard", 
-         "location": (random.randint(0, 100), random.randint(0, 100)), "time": random.uniform(1, 3)}
-        for i in range(101, 201)
-    ]
-    return cleaners, apartments
+    response = requests.get(base_url, params=params)
+    data = response.json()
 
-def sort_by_priority(apartments):
-    return sorted(apartments, key=lambda x: x["priority"], reverse=True)
+    if response.status_code == 200 and data["rows"]:
+        try:
+            distance_meters = data["rows"][0]["elements"][0]["distance"]["value"]
+            return distance_meters / 1000  # Converti in km
+        except KeyError:
+            return float('inf')
+    else:
+        return float('inf')
 
-def filter_by_type(items, type_value):
-    return [item for item in items if item["type"] == type_value]
-
-def euclidean_distance(loc1, loc2):
-    return ((loc1[0] - loc2[0]) ** 2 + (loc1[1] - loc2[1]) ** 2) ** 0.5
-
-def find_best_next_apartment(cleaner, available_apts, current_apt, use_gmaps=False):
-    if not available_apts:
-        return None
-    
-    available_apts = [apt for apt in available_apts if apt["type"] == cleaner["type"] or cleaner["type"] == "Premium"]
-    if not available_apts:
-        return None
-    
-    distance_func = gmaps_distance if use_gmaps else euclidean_distance
-    return min(available_apts, key=lambda apt: distance_func(current_apt["location"], apt["location"]))
-
-def assign_apartments(apartments, cleaners, use_gmaps=False):
+def assign_apartments(apartments):
+    """Assegna gli appartamenti in base alla distanza tra di loro."""
     assignments = defaultdict(list)
     
-    for apt in apartments:
-        available_cleaners = [c for c in cleaners if c["type"] == apt["type"] or c["type"] == "Premium"]
-        if not available_cleaners:
-            continue
+    # Calcoliamo la distanza tra appartamenti consecutivi
+    for i in range(len(apartments) - 1):
+        apt1 = apartments[i]
+        apt2 = apartments[i + 1]
         
-        cleaner = min(available_cleaners, key=lambda c: (len(assignments[c["name"]]), euclidean_distance(c["location"], apt["location"])) if not use_gmaps else (len(assignments[c["name"]]), gmaps_distance(c["location"], apt["location"])))
-        assignments[cleaner["name"]].append(apt)
-    
-    remaining_apartments = [apt for apt in apartments if apt not in sum(assignments.values(), [])]
-    for cleaner in cleaners:
-        if cleaner["name"] in assignments and assignments[cleaner["name"]]:
-            first_apt = assignments[cleaner["name"]][0]
-            next_apt = find_best_next_apartment(cleaner, remaining_apartments, first_apt, use_gmaps)
-            if next_apt:
-                assignments[cleaner["name"]].append(next_apt)
-                remaining_apartments.remove(next_apt)
+        # Calcola la distanza tra due appartamenti consecutivi
+        distance = get_driving_distance((apt1.lat, apt1.lng), (apt2.lat, apt2.lng))
+        
+        # Aggiungi l'appartamento alla lista in base alla distanza
+        assignments[apt1.name].append(apt2.id)
     
     return assignments
 
 def main():
-    cleaners_from_db = fetch_cleaners_from_db()
-
-    if cleaners_from_db:
-        print("Lista cleaners dal database:")
-        for cleaner in cleaners_from_db:
-            print(cleaner, end=", ")
-        print("\n")
-
-    cleaners, apartments = generate_mock_data()
+    apartments = fetch_apartments_from_db()
     
-    apartments_premium = sort_by_priority(filter_by_type(apartments, "Premium"))
-    apartments_standard = sort_by_priority(filter_by_type(apartments, "Standard"))
+    if apartments:
+        print("Lista appartamenti dal database:")
+        for apt in apartments:
+            print(f"ID: {apt.id}, Nome: {apt.name}, Indirizzo: {apt.address}, Cliente: {apt.customer_id}, Lat: {apt.lat}, Lng: {apt.lng}")
     
-    cleaners_premium = filter_by_type(cleaners, "Premium")
-    cleaners_standard = filter_by_type(cleaners, "Standard")
+    assignments = assign_apartments(apartments)
     
-    assignments_premium = assign_apartments(apartments_premium, cleaners_premium)
-    assignments_standard = assign_apartments(apartments_standard, cleaners_standard)
-    
-    print("Assegnazioni Premium:")
-    for cleaner, apts in assignments_premium.items():
-        print(f"{cleaner}: {[apt['id'] for apt in apts]}")
-    
-    print("\nAssegnazioni Standard:")
-    for cleaner, apts in assignments_standard.items():
-        print(f"{cleaner}: {[apt['id'] for apt in apts]}")
+    print("\nAssegnazioni Appartamenti -> ID Appartamenti Successivi:")
+    for apt_name, apts in assignments.items():
+        print(f"{apt_name}: {apts}")
 
 if __name__ == "__main__":
     main()
-
