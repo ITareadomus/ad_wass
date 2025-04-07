@@ -50,7 +50,7 @@ def fetch_apartments_from_db():
         return []
 
 def get_driving_distance(origin, destination):
-    """Calcola la distanza su strada tra due coordinate usando Google Maps API."""
+    """Calcola la distanza su strada tra due coordinate usando Google Maps API. """
     base_url = "https://maps.googleapis.com/maps/api/distancematrix/json"
     params = {
         "origins": f"{origin[0]},{origin[1]}",  
