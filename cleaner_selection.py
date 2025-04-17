@@ -2,7 +2,7 @@ import json
 import mysql.connector
 
 # Carica configurazione dal file JSON
-with open("modello.json", "r") as f:
+with open("modello_cleaner.json", "r") as f:
     config = json.load(f)
 
 db_config = config["db_config"]
@@ -54,8 +54,8 @@ for cleaner in results:
 config["cleaners"] = cleaners_data
 
 # Sovrascrive il file modello.json con i dati aggiornati
-with open("modello.json", "w") as f:
+with open("modello_cleaner.json", "w") as f:
     json.dump(config, f, indent=4)
 
-print(f"Aggiornato modello.json con {len(results)} cleaners.")
+print(f"Aggiornato modello_cleaner.json con {len(results)} cleaners.")
 
