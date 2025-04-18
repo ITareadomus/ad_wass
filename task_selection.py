@@ -4,23 +4,23 @@ from datetime import datetime, date
 
 # Funzione per convertire i campi di tipo date e datetime in stringhe
 def date_to_str(value):
-    if isinstance(value, (datetime, date)):  # Gestisce sia datetime che date
-        return value.strftime('%Y-%m-%d')  # Converte in formato stringa YYYY-MM-DD
-    return value  # Ritorna il valore così com'è se non è un oggetto datetime o date
+    if isinstance(value, (datetime, date)):
+        return value.strftime('%Y-%m-%d')
+    return value
 
-# Funzione per verificare e restituire il valore di tipo stringa
+# Funzione per convertire i valori VARCHAR (anche None) in stringa
 def varchar_to_str(value):
     if value is None:
-        return None  # Mantiene None per i campi NULL
-    return str(value)  # Converte in stringa nel caso in cui il campo è già un varchar
+        return None
+    return str(value)
 
-# Carica configurazione dal file JSON con gestione degli errori
+# Caricamento configurazione da file JSON
 try:
     with open("modello_apt.json", "r") as f:
         config = json.load(f)
 except json.decoder.JSONDecodeError as e:
     print(f"Errore nel caricamento del JSON: {e}")
-    config = {"apt": []}  # Imposta un valore di default se il file è vuoto o malformato
+    config = {"apt": []}
 
 # Configurazione del database
 db_config = {
@@ -34,69 +34,80 @@ db_config = {
 connection = mysql.connector.connect(**db_config)
 cursor = connection.cursor(dictionary=True)
 
-# Esegui la query per prendere i parametri degli appartamenti
+# Query con JOIN su structures e recupero anche customer_id come client_id
 cursor.execute("""
-    SELECT id, structure_id, checkin, checkout, checkin_time, checkout_time
-    FROM app_housekeeping 
-    WHERE checkout = CURDATE() + INTERVAL 1 DAY
+    SELECT 
+        h.id,
+        h.structure_id,
+        h.checkin,
+        h.checkout,
+        h.checkin_time,
+        h.checkout_time,
+        s.address1 AS address,
+        s.lat,
+        s.lng,
+        h.checkin_pax AS pax_in,
+        h.checkout_pax AS pax_out,
+        s.premium AS premium,
+        s.customer_id AS client_id
+    FROM app_housekeeping h
+    JOIN app_structures s ON h.structure_id = s.id
+    WHERE h.checkout = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
 """)
 results = cursor.fetchall()
 
 cursor.close()
 connection.close()
 
-# Predefiniamo i parametri statici, tutti settati su None
+# Parametri statici
 static_params = {
     "task_id": None,
     "structure_id": None,
     "client_id": None,
-    "type": None,       
-    "address": None,          
-    "lat": None,         
-    "lng": None,     
-    "cleaning_time": None,        
-    "checkin": None,  # Impostato a None
-    "checkout": None, 
-    "checkin_time": None,  # Impostato a None
-    "checkout_time": None,  # Impostato a None
+    "type": "Standard",
+    "address": None,
+    "lat": None,
+    "lng": None,
+    "cleaning_time": None,
+    "checkin": None,
+    "checkout": None,
+    "checkin_time": None,
+    "checkout_time": None,
     "pax_in": None,
-    "pax_out": None,      
+    "pax_out": None,
 }
 
-# Lista per raccogliere i dati degli appartamenti
+# Prepara la lista dei dati appartamenti
 apt_data = []
 
-# Cicla sui risultati della query e prepara i dati
 for apt in results:
-    # Usa il valore di static_params se il valore dal db è NULL
     apt_entry = {
-        "task_id": apt.get("id") if apt.get("id") is not None else static_params["task_id"],
-        "structure_id": apt.get("structure_id") if apt.get("structure_id") is not None else static_params["structure_id"],
-        "client_id": static_params["client_id"],  # Sempre statico in questo caso
-        "type": static_params["type"],  # Sempre statico in questo caso
-        "address": static_params["address"],  # Sempre statico in questo caso
-        "lat": static_params["lat"],  # Sempre statico in questo caso
-        "lng": static_params["lng"],  # Sempre statico in questo caso
-        "cleaning_time": static_params["cleaning_time"],  # Sempre statico in questo caso
-        "checkin": date_to_str(apt.get("checkin")) if apt.get("checkin") is not None else static_params["checkin"],
-        "checkout": date_to_str(apt.get("checkout")) if apt.get("checkout") is not None else static_params["checkout"],
-        "checkin_time": varchar_to_str(apt.get("checkin_time")) if apt.get("checkin_time") is not None else static_params["checkin_time"],
-        "checkout_time": varchar_to_str(apt.get("checkout_time")) if apt.get("checkout_time") is not None else static_params["checkout_time"],
-        "pax_in": static_params["pax_in"],  # Sempre statico in questo caso
-        "pax_out": static_params["pax_out"],  # Sempre statico in questo caso
+        "task_id": apt.get("id", static_params["task_id"]),
+        "structure_id": apt.get("structure_id", static_params["structure_id"]),
+        "client_id": apt.get("client_id", static_params["client_id"]),
+        "type": "Premium" if apt.get("premium") == 1 else "Standard",
+        "address": apt.get("address", static_params["address"]),
+        "lat": apt.get("lat", static_params["lat"]),
+        "lng": apt.get("lng", static_params["lng"]),
+        "cleaning_time": static_params["cleaning_time"],
+        "checkin": date_to_str(apt.get("checkin")) if apt.get("checkin") else static_params["checkin"],
+        "checkout": date_to_str(apt.get("checkout")) if apt.get("checkout") else static_params["checkout"],
+        "checkin_time": varchar_to_str(apt.get("checkin_time")) if apt.get("checkin_time") else static_params["checkin_time"],
+        "checkout_time": varchar_to_str(apt.get("checkout_time")) if apt.get("checkout_time") else static_params["checkout_time"],
+        "pax_in": apt.get("pax_in", static_params["pax_in"]),
+        "pax_out": apt.get("pax_out", static_params["pax_out"]),
     }
     apt_data.append(apt_entry)
 
-# Aggiorna il JSON con i dati degli appartamenti
+# Aggiorna la configurazione
 config["apt"] = apt_data
 
-# Funzione per serializzare correttamente le date nel JSON
+# Salva nel file JSON
 def custom_serializer(obj):
-    if isinstance(obj, (datetime, date)):  # Gestisce datetime e date
+    if isinstance(obj, (datetime, date)):
         return obj.strftime('%Y-%m-%d')
     raise TypeError(f'Tipo {obj.__class__.__name__} non serializzabile')
 
-# Sovrascrive il file modello_apt.json con i dati aggiornati
 with open("modello_apt.json", "w") as f:
     json.dump(config, f, indent=4, default=custom_serializer)
 
