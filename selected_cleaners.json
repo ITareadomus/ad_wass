@@ -1,3 +1,184 @@
 {
-    "selected_cleaners": []
+    "selected_cleaners": [
+        {
+            "name": "JOHOISER ERNESTO",
+            "lastname": "LOPEZ GIRON",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "EL HADJI",
+            "lastname": "BA",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "HENRY",
+            "lastname": "CHIDUBEM",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "KONE LASSINE",
+            "lastname": "KONE",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "RACHEL",
+            "lastname": "OTSHINGA",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "LAFORTUNE",
+            "lastname": "DJOUKOUO NGUEMTHE",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "MUSTAPHA",
+            "lastname": "BAH",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "YOHANNES",
+            "lastname": "TAMIRAT ALI",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "BOUBACAR",
+            "lastname": "BARRY",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "FESTUS OSARO",
+            "lastname": "AIHIVBERE",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "RASEL",
+            "lastname": "MOLLA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "IBRAHIM",
+            "lastname": "SANYANG",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "LAMIN",
+            "lastname": "SOLY",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "BLESSING",
+            "lastname": "UGBOME",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        }
+    ]
 }

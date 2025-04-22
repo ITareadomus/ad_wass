@@ -75,6 +75,7 @@ static_params = {
     "checkout_time": None,
     "pax_in": None,
     "pax_out": None,
+    "small_equipment": False,
 }
 
 # Prepara la lista dei dati appartamenti
@@ -96,6 +97,7 @@ for apt in results:
         "checkout_time": varchar_to_str(apt.get("checkout_time")) if apt.get("checkout_time") else static_params["checkout_time"],
         "pax_in": apt.get("pax_in", static_params["pax_in"]),
         "pax_out": apt.get("pax_out", static_params["pax_out"]),
+        "small_equipment": static_params["small_equipment"],
     }
     apt_data.append(apt_entry)
 

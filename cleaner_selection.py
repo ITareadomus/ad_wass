@@ -29,7 +29,7 @@ static_params = {
     "lastname": None,
     "role": None,       
     "active": False,          
-    "ranking": None,         
+    "ranking": 0,         
     "counter_hours": 0.0,     
     "counter_days": 0,        
     "available": False        
