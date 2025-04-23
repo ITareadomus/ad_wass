@@ -1,5 +1,5 @@
 import json
-import mysql.connector
+import  mysql.connector
 
 # Carica configurazione dal file JSON
 with open("modello_cleaner.json", "r") as f:

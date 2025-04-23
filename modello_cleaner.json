@@ -11,450 +11,450 @@
             "lastname": "NGANGA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "JOHOISER ERNESTO",
             "lastname": "LOPEZ GIRON",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "BOUBACAR",
             "lastname": "BARRY",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "FESTUS OSARO",
             "lastname": "AIHIVBERE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "RASEL",
             "lastname": "MOLLA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "IBRAHIM",
             "lastname": "SANYANG",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "LAMIN",
             "lastname": "SOLY",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "BLESSING",
             "lastname": "UGBOME",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "EL HADJI",
             "lastname": "BA",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "SEYNI",
             "lastname": "DRAME",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "TRACY",
             "lastname": "OKE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "HENRY",
             "lastname": "CHIDUBEM",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "KONE LASSINE",
             "lastname": "KONE",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "PRECIOUS",
             "lastname": "GYABAAH",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 6.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "RACHEL",
             "lastname": "OTSHINGA",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 7.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "LAFORTUNE",
             "lastname": "DJOUKOUO NGUEMTHE",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 8.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "MUSTAPHA",
             "lastname": "BAH",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 8.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "YOHANNES",
             "lastname": "TAMIRAT ALI",
             "role": "Premium",
             "active": true,
-            "ranking": 0,
+            "ranking": 8.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "ESTHER DORCAS",
             "lastname": "LANDA PANEZ",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 8.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "AIDA",
             "lastname": "DIONE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 2.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "NAME JULIE",
             "lastname": "ADOU",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 2.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "LOVETH",
             "lastname": "IGUDIA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 2.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "YENCI MARICELA",
             "lastname": "PILIA LINARES",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 3.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "ADEL FAYEZ ABDELKRIM",
             "lastname": "DESSOUKI",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 9.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "HODA MAHMOUD SALAMA",
             "lastname": "HUSSEIN",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 9.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "MARIE LAURE",
             "lastname": "PENKA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 9.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "SEYDOU",
             "lastname": "DIAKITE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "ABDINASIR",
             "lastname": "MOHAMED ABDILAHI",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "MISLEIDYS",
             "lastname": "PENA HERNANDEZ",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "NURUL",
             "lastname": "ISLAM",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "BABY JANE",
             "lastname": "MAGNAYE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "MOHAMAD",
             "lastname": "MOHDIN AHMED",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 10.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "ABDI RAHMAN",
             "lastname": "ADEM",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "NOAH",
             "lastname": "PHILIP",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "ISOKEN JOY",
             "lastname": "UWUMAROGIE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "IIDO",
             "lastname": "HASSAN",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "DIAWAYNE",
             "lastname": "TOUNKARA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "RITA",
             "lastname": "IGBINOMWANKHIA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "LAMIN",
             "lastname": "GASSAMA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "GBOPO MARINA BENEDITE",
             "lastname": "TEA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "MUSA",
             "lastname": "SAMURA",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         },
         {
             "name": "CHRISTIAN",
             "lastname": "AGBONHESE",
             "role": "Standard",
             "active": true,
-            "ranking": 0,
+            "ranking": 4.0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": true
+            "available": false
         }
     ]
 }
