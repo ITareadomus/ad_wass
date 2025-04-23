@@ -4,13 +4,13 @@ import googlemaps
 API_KEY = 'AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0'
 gmaps = googlemaps.Client(key=API_KEY)
 
-def calcola_distanza(lat1, lon1, lat2, lon2):
-    origine = f"{lat1},{lon1}"
-    destinazione = f"{lat2},{lon2}"
+def calcola_distanza(lat1, lng1, lat2, lng2):
+    origine = f"{lat1},{lng1}"
+    destinazione = f"{lat2},{lng2}"
     
     result = gmaps.distance_matrix(origins=[origine],
                                    destinations=[destinazione],
-                                   mode='driving',  # puoi usare anche 'walking', 'bicycling', 'transit'
+                                   mode='walking',  # puoi usare anche 'walking', 'bicycling', 'transit'
                                    units='metric')
 
     try:
@@ -27,12 +27,12 @@ def calcola_distanza(lat1, lon1, lat2, lon2):
         print("Errore nel calcolo della distanza:", e)
         return None
 
-# Esempio
+''' Esempio
 if __name__ == "__main__":
-    lat1, lon1 = 45.4642, 9.1900  # Milano
-    lat2, lon2 = 45.4064, 11.8768  # Padova
+    lat1, lng1 = 45.4474306, 9.1559278  # Apt. 1
+    lat2, lng2 = 45.4549824, 9.1722022  # Apt. 2
 
-    distanza = calcola_distanza(lat1, lon1, lat2, lon2)
+    distanza = calcola_distanza(lat1, lng1, lat2, lng2)
     if distanza:
         print("Distanza:", distanza['distanza_testo'])
-        print("Durata:", distanza['durata'])
+        print("Durata:", distanza['durata']) '''

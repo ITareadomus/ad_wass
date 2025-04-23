@@ -14,6 +14,11 @@ def varchar_to_str(value):
         return None
     return str(value)
 
+def normalize_coord(coord):
+    if coord is None:
+        return None
+    return str(coord).replace(',', '.').strip() 
+
 # Caricamento configurazione da file JSON
 try:
     with open("modello_apt.json", "r") as f:
@@ -78,6 +83,8 @@ static_params = {
     "small_equipment": False,
 }
 
+
+
 # Prepara la lista dei dati appartamenti
 apt_data = []
 
@@ -88,8 +95,8 @@ for apt in results:
         "client_id": apt.get("client_id", static_params["client_id"]),
         "type": "Premium" if apt.get("premium") == 1 else "Standard",
         "address": apt.get("address", static_params["address"]),
-        "lat": apt.get("lat", static_params["lat"]),
-        "lng": apt.get("lng", static_params["lng"]),
+        "lat": normalize_coord(apt.get("lat")),
+        "lng": normalize_coord(apt.get("lng")),
         "cleaning_time": static_params["cleaning_time"],
         "checkin": date_to_str(apt.get("checkin")) if apt.get("checkin") else static_params["checkin"],
         "checkout": date_to_str(apt.get("checkout")) if apt.get("checkout") else static_params["checkout"],
