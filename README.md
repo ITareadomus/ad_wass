@@ -23,17 +23,17 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 
 ### Pre Sviluppo
 <p> 
-    <li>
-        <ol>Connessione al db con i dati già disponibili</ol>
-        <ul>Impostare il timing sulla tabella housekeeping </ul>
-        <ul>Creare maschera risorse umane per controllare disponibilità dei cleaner </ul>
-        <ul>Controllare le dotazioni piccole </ul>
-        <ul>Pescare il minimo ore</ul>
-        <ul>Ripristinare ADOQ</ul>
-        <ul>Impostare il timing sulla tabella housekeeping </ul>
-        <ul>Creare maschera risorse umane per controllare disponibilità dei cleaner </ul>
-        <ul>Controllare le dotazioni piccole </ul>
-    </li>
+    <ul>
+        <li>Connessione al db con i dati già disponibili</li>
+        <li>Impostare il timing sulla tabella housekeeping </li>
+        <li>Creare maschera risorse umane per controllare disponibilità dei cleaner </li>
+        <li>Controllare le dotazioni piccole </li>
+        <li>Pescare il minimo ore</li>
+        <li>Ripristinare ADOQ</li>
+        <li>Impostare il timing sulla tabella housekeeping </li>
+        <li>Creare maschera risorse umane per controllare disponibilità dei cleaner </li>
+        <li>Controllare le dotazioni piccole </li>
+    </ul>
 </p>
 
 ### Sviluppo
