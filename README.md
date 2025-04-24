@@ -24,22 +24,20 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 ### Pre Sviluppo
 <p> 
     <ul>
-        <li>Connessione al db con i dati già disponibili</li>
-        <li>Impostare il timing sulla tabella housekeeping </li>
-        <li>Creare maschera risorse umane per controllare disponibilità dei cleaner </li>
-        <li>Controllare le dotazioni piccole </li>
-        <li>Pescare il minimo ore</li>
-        <li>Ripristinare ADOQ</li>
-        <li>Impostare il timing sulla tabella housekeeping </li>
-        <li>Creare maschera risorse umane per controllare disponibilità dei cleaner </li>
-        <li>Controllare le dotazioni piccole </li>
+        <li>Connessione al db con i dati già disponibili ✔️</li>
+        <li>Impostare il timing sulla tabella housekeeping ✔️</li>
+        <li>Creare maschera risorse umane per controllare disponibilità dei cleaner 🕓</li>
+        <li>Controllare le dotazioni piccole 🕓</li>
+        <li>Pescare il minimo ore 😒</li>
+        <li>Ripristinare ADOQ 😒</li>
+        <li>Impostare il timing sulla tabella housekeeping 🕓</li>
     </ul>
 </p>
 
 ### Sviluppo
 <p> 
     <li>
-        <ul>Sviluppo dell'algoritmo delle assegnazioni in python</ul>
+        <ul>Sviluppo dell'algoritmo delle assegnazioni in python 🕓</ul>
         <ul>Aggiunta dell'integrazione con openai per utilizzo di AI</ul>
     </li>
 </p>
@@ -50,7 +48,7 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
         <ul>Gestire output assegnazioni</ul>
         <ul>Creazioni maschere su ADAM per i risultati</ul>
         <ul>Integrazione con servizi esterni(Telegram e OptimoRoute)</ul>
-        <ul>Attendere la risposta di Paolo per il nome</ul>
+        <ul>Attendere la risposta di Paolo per il nome💕</ul>
     </li>
 </p>
 
