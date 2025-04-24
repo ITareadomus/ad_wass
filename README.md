@@ -1,4 +1,4 @@
-# Algoritmo di assegnazioni Area domus
+# Algoritmo di assegnazioni Area Domus
 
 ## Obiettivo : 
 <div> 
