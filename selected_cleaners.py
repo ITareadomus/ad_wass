@@ -1,33 +1,50 @@
 import json
+import math
 
-# Carica i dati dal file JSON
-with open("modello_cleaner.json", "r") as f:
-    data = json.load(f)
+# === Carica cleaners e appartamenti ===
+with open("mock_cleaners.json", "r") as f:
+    all_data = json.load(f)
 
-cleaners = data.get("cleaners", [])
+cleaners = all_data.get("cleaners", [])
 
-# Filtra i cleaner attivi e disponibili
-eligible_cleaners = [c for c in cleaners if c.get("active") and c.get("available")]
+with open("mock_apartments.json", "r") as f:
+    apt_data = json.load(f)
 
-# Ordina per ranking decrescente, poi per counter_days crescente
-sorted_cleaners = sorted(
-    eligible_cleaners,
-    key=lambda x: (-x.get("ranking", 0), x.get("counter_days", 0))
-)
+apartments = apt_data.get("apt", [])
 
-# Separa i cleaner per ruolo
-premium_cleaners = [c for c in sorted_cleaners if c.get("role", "").lower() == "premium"]
-standard_cleaners = [c for c in sorted_cleaners if c.get("role", "").lower() == "standard"]
+# === Conta appartamenti per tipo ===
+premium_apts = [apt for apt in apartments if apt.get("type") == "Premium"]
+standard_apts = [apt for apt in apartments if apt.get("type") == "Standard"]
 
-# Seleziona fino a 10 cleaner per tipo
-selected_premium = premium_cleaners[:10]
-selected_standard = standard_cleaners[:10]
+# Cleaner richiesti
+num_premium_cleaners = math.ceil(len(premium_apts) / 3)
+num_standard_cleaners = math.ceil(len(standard_apts) / 3)
 
-# Unione finale
+# === Filtra cleaner validi ===
+valid_cleaners = [
+    cleaner for cleaner in cleaners
+    if cleaner.get("active") is True
+    and cleaner.get("available") is True
+    and cleaner.get("counter_days", 0) <= 12
+]
+
+# === Seleziona cleaner ===
+def select_cleaners(role, num_needed):
+    filtered = [c for c in valid_cleaners if c.get("role") == role]
+    # Ordina per counter_hours crescente
+    sorted_cleaners = sorted(filtered, key=lambda c: c.get("counter_hours", 0))
+    return sorted_cleaners[:num_needed]
+
+selected_premium = select_cleaners("Premium", num_premium_cleaners)
+selected_standard = select_cleaners("Standard", num_standard_cleaners)
+
 selected_cleaners = selected_premium + selected_standard
 
-# Scrivi l'output nel file JSON
+# === Salva in JSON ===
 with open("selected_cleaners.json", "w") as f:
     json.dump({"selected_cleaners": selected_cleaners}, f, indent=4)
 
-print(f"Selezionati {len(selected_cleaners)} cleaner e salvati in 'selected_cleaners.json'")
+# Output di riepilogo
+print(f"Cleaner Premium richiesti: {num_premium_cleaners}, selezionati: {len(selected_premium)}")
+print(f"Cleaner Standard richiesti: {num_standard_cleaners}, selezionati: {len(selected_standard)}")
+print(f"Totale cleaner selezionati: {len(selected_cleaners)}")

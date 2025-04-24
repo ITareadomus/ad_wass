@@ -11,7 +11,7 @@
             "lastname": "NGANGA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -21,7 +21,7 @@
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -31,7 +31,7 @@
             "lastname": "LOPEZ GIRON",
             "role": "Premium",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -41,7 +41,7 @@
             "lastname": "Igwe",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -51,7 +51,7 @@
             "lastname": "ISMAILA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -61,7 +61,7 @@
             "lastname": "BARRY",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -71,7 +71,7 @@
             "lastname": "AIHIVBERE",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -81,7 +81,7 @@
             "lastname": "MOLLA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -91,7 +91,7 @@
             "lastname": "SANYANG",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -101,7 +101,7 @@
             "lastname": "SOLY",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -111,7 +111,7 @@
             "lastname": "UGBOME",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -121,7 +121,7 @@
             "lastname": "BA",
             "role": "Premium",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -131,7 +131,7 @@
             "lastname": "DRAME",
             "role": "Standard",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -141,7 +141,17 @@
             "lastname": "OKE",
             "role": "Standard",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": false
+        },
+        {
+            "name": "BEATRICE",
+            "lastname": "MURA",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -151,7 +161,7 @@
             "lastname": "CHIDUBEM",
             "role": "Premium",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -161,7 +171,7 @@
             "lastname": "KONE",
             "role": "Premium",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -171,7 +181,7 @@
             "lastname": "GYABAAH",
             "role": "Standard",
             "active": true,
-            "ranking": 6.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -181,7 +191,7 @@
             "lastname": "OTSHINGA",
             "role": "Premium",
             "active": true,
-            "ranking": 7.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -191,7 +201,7 @@
             "lastname": "DJOUKOUO NGUEMTHE",
             "role": "Premium",
             "active": true,
-            "ranking": 8.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -201,7 +211,7 @@
             "lastname": "BAH",
             "role": "Premium",
             "active": true,
-            "ranking": 8.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -211,7 +221,7 @@
             "lastname": "TAMIRAT ALI",
             "role": "Premium",
             "active": true,
-            "ranking": 8.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -221,7 +231,7 @@
             "lastname": "LANDA PANEZ",
             "role": "Standard",
             "active": true,
-            "ranking": 8.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -231,7 +241,7 @@
             "lastname": "DIONE",
             "role": "Standard",
             "active": true,
-            "ranking": 2.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -241,7 +251,7 @@
             "lastname": "ADOU",
             "role": "Standard",
             "active": true,
-            "ranking": 2.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -251,7 +261,7 @@
             "lastname": "IGUDIA",
             "role": "Standard",
             "active": true,
-            "ranking": 2.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -261,7 +271,7 @@
             "lastname": "PILIA LINARES",
             "role": "Standard",
             "active": true,
-            "ranking": 3.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -271,7 +281,7 @@
             "lastname": "DESSOUKI",
             "role": "Standard",
             "active": true,
-            "ranking": 9.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -281,7 +291,7 @@
             "lastname": "HUSSEIN",
             "role": "Standard",
             "active": true,
-            "ranking": 9.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -291,7 +301,7 @@
             "lastname": "PENKA",
             "role": "Standard",
             "active": true,
-            "ranking": 9.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -301,7 +311,7 @@
             "lastname": "DIAKITE",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -311,7 +321,7 @@
             "lastname": "MOHAMED ABDILAHI",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -321,7 +331,7 @@
             "lastname": "PENA HERNANDEZ",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -331,7 +341,7 @@
             "lastname": "ISLAM",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -341,7 +351,7 @@
             "lastname": "MAGNAYE",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -351,7 +361,7 @@
             "lastname": "MOHDIN AHMED",
             "role": "Standard",
             "active": true,
-            "ranking": 10.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -361,7 +371,7 @@
             "lastname": "ADEM",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -371,7 +381,7 @@
             "lastname": "PHILIP",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -381,7 +391,7 @@
             "lastname": "UWUMAROGIE",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -391,7 +401,7 @@
             "lastname": "HASSAN",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -401,7 +411,7 @@
             "lastname": "TOUNKARA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -411,7 +421,7 @@
             "lastname": "IGBINOMWANKHIA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -421,7 +431,7 @@
             "lastname": "GASSAMA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -431,7 +441,7 @@
             "lastname": "TEA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -441,7 +451,7 @@
             "lastname": "SAMURA",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
@@ -451,7 +461,7 @@
             "lastname": "AGBONHESE",
             "role": "Standard",
             "active": true,
-            "ranking": 4.0,
+            "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": false
