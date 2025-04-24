@@ -36,20 +36,20 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 
 ### Sviluppo
 <p> 
-    <li>
-        <ul>Sviluppo dell'algoritmo delle assegnazioni in python 🕓</ul>
-        <ul>Aggiunta dell'integrazione con openai per utilizzo di AI</ul>
-    </li>
+    <ul>
+        <li>Sviluppo dell'algoritmo delle assegnazioni in python 🕓</li>
+        <li>Aggiunta dell'integrazione con openai per utilizzo di AI</li>
+    </ul>
 </p>
 
 ### Post Sviluppo
 <p> 
-    <li>
-        <ul>Gestire output assegnazioni</ul>
-        <ul>Creazioni maschere su ADAM per i risultati</ul>
-        <ul>Integrazione con servizi esterni(Telegram e OptimoRoute)</ul>
-        <ul>Attendere la risposta di Paolo per il nome💕</ul>
-    </li>
+    <ul>
+        <li>Gestire output assegnazioni</li>
+        <li>Creazioni maschere su ADAM per i risultati</li>
+        <li>Integrazione con servizi esterni(Telegram e OptimoRoute)</li>
+        <li>Attendere la risposta di Paolo per il nome💕</li>
+    </ul>
 </p>
 
 </div>
