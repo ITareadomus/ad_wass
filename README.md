@@ -19,4 +19,39 @@ Prende in seguito gli appartamenti, ognuno con le proprie specifiche, e calcola 
 Inizia ad assegnare gli appartamenti con priorità più alta ai cleaner premium, valutando anche il loro orario di convocazione e scegliendo il migliore per quel task. Dopo il primo giro di assegnazioni, si passa a quelli successivi, dove vengono assegnati ulteriori appartamenti ai cleaner, valutando il tempo di pulizia, la grandezza degli appartamenti e la distanza da quello precedente. Si procede nello stesso modo anche per i cleaner standard.  
 Infine, avendo la lista delle assegnazioni, questa viene passata all'area di controllo per rivederla e aggiustarla, se necessario. Successivamente, viene validata in una maschera sul gestionale dove sarà confermata.</p>
 
+## Stato di avanzamento
+
+### Pre Sviluppo
+<p> 
+    <li>
+        <ul>Connessione al db con i dati già disponibili</ul>
+        <ul>Impostare il timing sulla tabella housekeeping </ul>
+        <ul>Creare maschera risorse umane per controllare disponibilità dei cleaner </ul>
+        <ul>Controllare le dotazioni piccole </ul>
+        <ul>Pescare il minimo ore</ul>
+        <ul>Ripristinare ADOQ</ul>
+        <ul>Impostare il timing sulla tabella housekeeping </ul>
+        <ul>Creare maschera risorse umane per controllare disponibilità dei cleaner </ul>
+        <ul>Controllare le dotazioni piccole </ul>
+    </li>
+</p>
+
+### Sviluppo
+<p> 
+    <li>
+        <ul>Sviluppo dell'algoritmo delle assegnazioni in python</ul>
+        <ul>Aggiunta dell'integrazione con openai per utilizzo di AI</ul>
+    </li>
+</p>
+
+### Post Sviluppo
+<p> 
+    <li>
+        <ul>Gestire output assegnazioni</ul>
+        <ul>Creazioni maschere su ADAM per i risultati</ul>
+        <ul>Integrazione con servizi esterni(Telegram e OptimoRoute)</ul>
+        <ul>Attendere la risposta di Paolo per il nome</ul>
+    </li>
+</p>
+
 </div>
