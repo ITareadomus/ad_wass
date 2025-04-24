@@ -24,7 +24,7 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 ### Pre Sviluppo
 <p> 
     <li>
-        <ul>Connessione al db con i dati già disponibili</ul>
+        <ol>Connessione al db con i dati già disponibili</ol>
         <ul>Impostare il timing sulla tabella housekeeping </ul>
         <ul>Creare maschera risorse umane per controllare disponibilità dei cleaner </ul>
         <ul>Controllare le dotazioni piccole </ul>
