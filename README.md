@@ -38,7 +38,7 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 <p> 
     <ul>
         <li>Sviluppo dell'algoritmo delle assegnazioni in python 🕓</li>
-        <li>Aggiunta dell'integrazione con openai per utilizzo di AI</li>
+        <li>Aggiunta dell'integrazione con openai per utilizzo di AI 😒</li>
     </ul>
 </p>
 
