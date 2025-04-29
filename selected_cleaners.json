@@ -11,23 +11,13 @@
             "available": true
         },
         {
-            "name": "Cleaner10",
-            "lastname": "Lastname10",
+            "name": "Cleaner5",
+            "lastname": "Lastname5",
             "role": "Premium",
             "active": true,
-            "ranking": 1,
-            "counter_hours": 4.9,
-            "counter_days": 10,
-            "available": true
-        },
-        {
-            "name": "Cleaner9",
-            "lastname": "Lastname9",
-            "role": "Premium",
-            "active": true,
-            "ranking": 0,
-            "counter_hours": 7.2,
-            "counter_days": 9,
+            "ranking": 2,
+            "counter_hours": 19.9,
+            "counter_days": 5,
             "available": true
         },
         {
@@ -41,33 +31,13 @@
             "available": true
         },
         {
-            "name": "Cleaner16",
-            "lastname": "Lastname16",
-            "role": "Standard",
+            "name": "Cleaner1",
+            "lastname": "Lastname1",
+            "role": "Premium",
             "active": true,
             "ranking": 1,
-            "counter_hours": 5.5,
-            "counter_days": 2,
-            "available": true
-        },
-        {
-            "name": "Cleaner15",
-            "lastname": "Lastname15",
-            "role": "Standard",
-            "active": true,
-            "ranking": 0,
-            "counter_hours": 8.9,
+            "counter_hours": 25.8,
             "counter_days": 1,
-            "available": true
-        },
-        {
-            "name": "Cleaner19",
-            "lastname": "Lastname19",
-            "role": "Standard",
-            "active": true,
-            "ranking": 1,
-            "counter_hours": 9.8,
-            "counter_days": 5,
             "available": true
         },
         {
@@ -88,6 +58,36 @@
             "ranking": 2,
             "counter_hours": 14.0,
             "counter_days": 3,
+            "available": true
+        },
+        {
+            "name": "Cleaner16",
+            "lastname": "Lastname16",
+            "role": "Standard",
+            "active": true,
+            "ranking": 1,
+            "counter_hours": 5.5,
+            "counter_days": 2,
+            "available": true
+        },
+        {
+            "name": "Cleaner19",
+            "lastname": "Lastname19",
+            "role": "Standard",
+            "active": true,
+            "ranking": 1,
+            "counter_hours": 9.8,
+            "counter_days": 5,
+            "available": true
+        },
+        {
+            "name": "Cleaner15",
+            "lastname": "Lastname15",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 8.9,
+            "counter_days": 1,
             "available": true
         },
         {

@@ -14,7 +14,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "HUSSAIN",
@@ -24,7 +24,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "JOHOISER ERNESTO",
@@ -34,7 +34,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "Ogbodo Chidi",
@@ -44,7 +44,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "BAH",
@@ -54,7 +54,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "BOUBACAR",
@@ -64,7 +64,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "FESTUS OSARO",
@@ -74,7 +74,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "RASEL",
@@ -84,7 +84,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "IBRAHIM",
@@ -94,7 +94,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "LAMIN",
@@ -104,7 +104,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "BLESSING",
@@ -114,7 +114,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "EL HADJI",
@@ -124,7 +124,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "SEYNI",
@@ -134,7 +134,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "TRACY",
@@ -144,7 +144,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "BEATRICE",
@@ -154,7 +154,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "HENRY",
@@ -164,7 +164,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "KONE LASSINE",
@@ -174,7 +174,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "PRECIOUS",
@@ -184,7 +184,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "RACHEL",
@@ -194,7 +194,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "LAFORTUNE",
@@ -204,7 +204,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "MUSTAPHA",
@@ -214,7 +214,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "YOHANNES",
@@ -224,7 +224,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "ESTHER DORCAS",
@@ -234,7 +234,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "AIDA",
@@ -244,12 +244,22 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "NAME JULIE",
             "lastname": "ADOU",
             "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "SINETH",
+            "lastname": "ANGUNNA",
+            "role": "Premium",
             "active": true,
             "ranking": 0,
             "counter_hours": 0.0,
@@ -264,7 +274,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "YENCI MARICELA",
@@ -274,7 +284,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "ADEL FAYEZ ABDELKRIM",
@@ -284,7 +294,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "HODA MAHMOUD SALAMA",
@@ -294,7 +304,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "MARIE LAURE",
@@ -304,7 +314,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "SEYDOU",
@@ -314,7 +324,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "ABDINASIR",
@@ -324,7 +334,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "MISLEIDYS",
@@ -334,7 +344,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "NURUL",
@@ -344,7 +354,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "BABY JANE",
@@ -354,7 +364,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "MOHAMAD",
@@ -364,7 +374,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "ABDI RAHMAN",
@@ -374,7 +384,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "NOAH",
@@ -384,7 +394,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "ISOKEN JOY",
@@ -394,7 +404,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "IIDO",
@@ -404,7 +414,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "DIAWAYNE",
@@ -414,7 +424,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "RITA",
@@ -424,7 +434,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "LAMIN",
@@ -434,7 +444,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "GBOPO MARINA BENEDITE",
@@ -444,7 +454,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "MUSA",
@@ -454,7 +464,7 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
         },
         {
             "name": "CHRISTIAN",
@@ -464,7 +474,27 @@
             "ranking": 0,
             "counter_hours": 0.0,
             "counter_days": 0,
-            "available": false
+            "available": true
+        },
+        {
+            "name": "MAHMOUD",
+            "lastname": "DIALLO",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
+        },
+        {
+            "name": "MAHDI",
+            "lastname": "HASSAN ELMI",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true
         }
     ]
 }
