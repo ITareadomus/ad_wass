@@ -2,6 +2,8 @@ import json
 import mysql.connector
 from datetime import datetime, timedelta
 
+#ho aggiunto delle colonne nella tabella app_users in cui ho aggiunto un campo per il minimo ore e un altro per il tipo di contratto
+
 # Carica configurazione dal file JSON
 with open("modello_cleaner.json", "r") as f:
     config = json.load(f)
