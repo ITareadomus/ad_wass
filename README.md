@@ -17,7 +17,9 @@ Confermando, arriverà il messaggio di convocazione su Telegram a tutti i cleane
 ### Seconda parte:
 Prende in seguito gli appartamenti, ognuno con le proprie specifiche, e calcola la priorità di ogni task in base agli orari di check-in e check-out.  
 Inizia ad assegnare gli appartamenti con priorità più alta ai cleaner premium, valutando anche il loro orario di convocazione e scegliendo il migliore per quel task. Dopo il primo giro di assegnazioni, si passa a quelli successivi, dove vengono assegnati ulteriori appartamenti ai cleaner, valutando il tempo di pulizia, la grandezza degli appartamenti e la distanza da quello precedente. Si procede nello stesso modo anche per i cleaner standard.  
-Infine, avendo la lista delle assegnazioni, questa viene passata all'area di controllo per rivederla e aggiustarla, se necessario. Successivamente, viene validata in una maschera sul gestionale dove sarà confermata.</p>
+Infine, avendo la lista delle assegnazioni, questa viene passata all'area di controllo per rivederla e aggiustarla, se necessario. Successivamente, viene validata in una maschera sul gestionale dove sarà confermata.
+
+</p>
 
 ## Stato di avanzamento
 
@@ -63,7 +65,7 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 
 Gli appartamenti premium li puliranno solo cleaner premium mentre gli altri saranno puliti da cleaner standard
 Quindi il codice assegnerà prima quelli standard poi quelli premium
-Quello che intendo Io con "Priorità" è la sequenza con cui il cleaner deve pulire gli appartamenti
+Quello che intendo Io con "Priorità" è la sequenza con cui il cleaner deve pulire gli appartamenti. Quindi il cleaner se ha 4 appartamenti da pulire, avrà 4 priorità.
 Quindi vorrei fare un codice che mi imposti le priorità in base al json degli apt, nello specifico in base all'orario di checkin. Se il check-in è alle 14 allora avrà priorità 1(sarà il primo apt che il cleaner pulirà nella sua giornata lavorativa) se invece l'orario di checkin è più tardi delle 14 avrà un altra priorità(non necessariamente priorità 2 può essere anche 3 o 4). 
 Solo che ci sono dei parametri che deve considerare anche se l'apt con priorità 1 ed è grosso da pulire(la quantità di roba da pulire si comprende da 3 parametri principalemente in base ai pax_out/pax_in, tipologia_intervento, dimensione apt) 
 

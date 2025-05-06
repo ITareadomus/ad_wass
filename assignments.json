@@ -1,0 +1,25 @@
+{
+    "assignments": [
+      {
+        "cleaner": {
+          "name": "MUTURI DANIEL",
+          "lastname": "NGANGA"
+        },
+        "task_id": 182434,
+        "priority": 1,
+        "start_time": "08:00",
+        "estimated_end": "09:15"
+      },
+      {
+        "cleaner": {
+          "name": "MUTURI DANIEL",
+          "lastname": "NGANGA"
+        },
+        "task_id": 182435,
+        "priority": 2,
+        "start_time": "09:30",
+        "estimated_end": "10:30"
+      }
+    ]
+  }
+  
