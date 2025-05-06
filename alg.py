@@ -10,7 +10,7 @@ def run_dependency_scripts():
 
 
 def load_data():
-    with open("modello_cleaners.json") as f:
+    with open("modello_cleaner.json") as f:
         cleaners = json.load(f)
     with open("modello_apt.json") as f:
         apartments = json.load(f)
