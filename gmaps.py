@@ -1,7 +1,7 @@
 import googlemaps
 
 # Inserisci qui la tua Google Maps API Key
-API_KEY = 'chiave'  # TODO: sostituisci con la tua chiave reale
+API_KEY = 'AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0'  # TODO: sostituisci con la tua chiave reale
 
 gmaps = googlemaps.Client(key=API_KEY)
 
