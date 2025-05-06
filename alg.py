@@ -3,7 +3,6 @@ import json
 import math
 from gmaps import calcola_distanza
 
-
 def run_dependency_scripts():
     subprocess.run(["python3", "cleaner_list.py"])
     subprocess.run(["python3", "task_selection.py"])
@@ -88,21 +87,28 @@ def save_assignments(assignments):
 
 
 def main():
-    run_dependency_scripts()
-    cleaners, apartments = load_data()
+    # 1. Esegui gli script per generare i dati
+    print("Eseguo task_selection.py...")
+    subprocess.run(["python3", "task_selection.py"])
+    
+    print("Eseguo cleaner_list.py...")
+    subprocess.run(["python3", "cleaner_list.py"])
 
+    # 2. Carica i dati degli appartamenti
+    with open("modello_apt.json") as f:
+        apt_data = json.load(f)
+        apartments = apt_data["apt"]
+
+    # 3. Carica i dati dei cleaner
+    with open("modello_cleaners.json") as f:
+        cleaner_data = json.load(f)
+        cleaners = cleaner_data["cleaners"]
+
+    # 4. Calcola quanti cleaner servono
     n_premium, n_standard = calculate_cleaners_needed(apartments)
-    premium_cleaners = [c for c in cleaners if c["role"] == "premium"][:n_premium]
-    standard_cleaners = [c for c in cleaners if c["role"] == "standard"][:n_standard]
+    print(f"Cleaners necessari - Premium: {n_premium}, Standard: {n_standard}")
 
-    priority1_apts = filter_priority1_apts(apartments)
-    assignments = assign_priority(premium_cleaners + standard_cleaners, priority1_apts, 1, [])
-
-    assignments += assign_by_distance(premium_cleaners + standard_cleaners, apartments, 2, assignments)
-    assignments += assign_by_distance(premium_cleaners + standard_cleaners, apartments, 3, assignments)
-
-    save_assignments(assignments)
-
+    # Qui puoi continuare con l'algoritmo di assegnazione...
 
 if __name__ == "__main__":
     main()
