@@ -17,11 +17,22 @@ def load_data():
 
 
 def calculate_cleaners_needed(apartments):
-    premium = [a for a in apartments if a["type"] == "premium"]
-    standard = [a for a in apartments if a["type"] == "standard"]
-    needed_premium = math.ceil(len(premium) / 3.5)
-    needed_standard = math.ceil(len(standard) / 3.5)
-    return needed_premium, needed_standard
+    # Separa gli apt premium e standard
+    premium_apts = [a for a in apartments if a["type"].lower() == "premium"]
+    standard_apts = [a for a in apartments if a["type"].lower() == "standard"]
+
+    def estimate_cleaners(num_apt):
+        # Preferiamo assegnare 4 apt per cleaner
+        cleaners = num_apt // 4
+        rest = num_apt % 4
+        if rest > 0:
+            cleaners += 1
+        return cleaners
+
+    n_premium_cleaners = estimate_cleaners(len(premium_apts))
+    n_standard_cleaners = estimate_cleaners(len(standard_apts))
+
+    return n_premium_cleaners, n_standard_cleaners
 
 
 def filter_priority1_apts(apartments):
@@ -100,7 +111,7 @@ def main():
         apartments = apt_data["apt"]
 
     # 3. Carica i dati dei cleaner
-    with open("modello_cleaners.json") as f:
+    with open("modello_cleaner.json") as f:
         cleaner_data = json.load(f)
         cleaners = cleaner_data["cleaners"]
 
