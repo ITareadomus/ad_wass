@@ -154,7 +154,12 @@ def main():
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
 
-    # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
+    # 7. Salva le assegnazioni di priorità 1
+    output = {"assignment": assignments}
+    save_assignments(output)
+    print("Assegnazioni di priorità 1 completate e salvate in assignments.json.")
+
+    # 8. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
     all_assignments = assignments.copy()
 
@@ -170,10 +175,7 @@ def main():
         all_assignments.extend(next_batch)
         priority += 1
 
-    # 8. Salva le assegnazioni finali
+    # 9. Salva le assegnazioni finali
     output = {"assignment": all_assignments}
     save_assignments(output)
     print("Assegnazioni completate e salvate in assignments.json.")
-
-if __name__ == "__main__":
-    main()
