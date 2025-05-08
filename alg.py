@@ -36,7 +36,7 @@ def calculate_cleaners_needed(apartments):
 
 
 def filter_priority1_apts(apartments):
-    return [a for a in apartments if a["checkin_time"] == "14:00" or a["dotazione"] == "piccola"]
+    return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
 
 def assign_priority(cleaners, apartments, priority_level, previous_assignments):
