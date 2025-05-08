@@ -133,7 +133,7 @@ def main():
     n_premium, n_standard = calculate_cleaners_needed(apartments)
     print(f"Cleaners necessari - Premium: {n_premium}, Standard: {n_standard}")
 
-    n_cleaners = n_premuim + n_standard
+    n_cleaners = n_premium + n_standard
 
     # 5. Filtra gli appartamenti di priorità 1
     priority1_apts = filter_priority1_apts(apartments)
