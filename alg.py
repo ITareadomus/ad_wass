@@ -140,7 +140,7 @@ def main():
 
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
-
+    print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
     all_assignments = assignments.copy()
