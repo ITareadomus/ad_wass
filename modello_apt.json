@@ -11,7 +11,7 @@
             "cleaning_time": null,
             "checkin": null,
             "checkout": "2025-05-01",
-            "checkin_time": null,
+            "checkin_time": "14:00",
             "checkout_time": null,
             "pax_in": 0,
             "pax_out": 2,
@@ -28,7 +28,7 @@
             "cleaning_time": null,
             "checkin": null,
             "checkout": "2025-05-01",
-            "checkin_time": null,
+            "checkin_time": "14:00",
             "checkout_time": null,
             "pax_in": 0,
             "pax_out": 0,
@@ -83,7 +83,7 @@
             "checkout_time": null,
             "pax_in": 2,
             "pax_out": 1,
-            "small_equipment": false
+            "small_equipment": true
         },
         {
             "task_id": 200377,
@@ -100,7 +100,7 @@
             "checkout_time": null,
             "pax_in": 2,
             "pax_out": 2,
-            "small_equipment": false
+            "small_equipment": true
         }
     ]
 }
