@@ -122,7 +122,10 @@ def main():
     # 3. Carica i dati dei cleaner
     with open("modello_cleaner.json") as f:
         cleaner_data = json.load(f)
-        cleaners = cleaner_data["cleaners"]
+        cleaners = []
+        for c in cleaner_data["cleaners"]:
+            c["id"] = f"{c['name'].strip()}_{c['lastname'].strip()}"
+            cleaners.append(c)
 
     # 4. Calcola quanti cleaner servono
     n_premium, n_standard = calculate_cleaners_needed(apartments)
