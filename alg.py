@@ -83,6 +83,8 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
 
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
     new_assignments = []
+    assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
+
     for cleaner in cleaners:
         # Trova l'ultimo appartamento assegnato al cleaner
         last_assignment = max(
@@ -91,13 +93,17 @@ def assign_by_distance(cleaners, apartments, current_priority, existing_assignme
             default=None
         )
         if last_assignment:
-            last_apt = next(a for a in apartments if a["task_id"] == last_assignment["apt_id"])
+            last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
+            if not last_apt:
+                continue
             remaining_apts = [a for a in apartments if
                               a["type"] == cleaner["role"] and
+                              a["task_id"] not in assigned_apts and
                               a["task_id"] not in [x["apt_id"] for x in existing_assignments]]
             # Trova l'appartamento più vicino
             next_apt = find_closest_apt(last_apt, remaining_apts)
             if next_apt:
+                # Aggiungi l'assegnazione
                 new_assignments.append({
                     "cleaner_id": cleaner["id"],
                     "apt_id": next_apt["task_id"],
@@ -105,8 +111,10 @@ def assign_by_distance(cleaners, apartments, current_priority, existing_assignme
                     "start_time": "09:00",  # Dummy, calcola in base al tempo di percorrenza
                     "estimated_end": "10:00"  # Dummy
                 })
-    return new_assignments
+                # Segna l'appartamento come assegnato
+                assigned_apts.add(next_apt["task_id"])
 
+    return new_assignments
 
 def save_assignments(assignments):
     with open("assignments.json", "w") as f:
@@ -139,7 +147,7 @@ def main():
     priority1_apts = filter_priority1_apts(apartments)
 
     # 6. Assegna priorità 1 (una per cleaner)
-    assignments = assign_priority(n_cleaners, priority1_apts, priority_level=1, previous_assignments=[])
+    assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
     print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
