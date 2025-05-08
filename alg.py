@@ -60,11 +60,12 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
 def find_closest_apt(cleaner_last_apt, remaining_apts):
     distances = []
     for apt in remaining_apts:
-        distance = calcola_distanza(
+        distance_data = calcola_distanza(
             cleaner_last_apt["lat"], cleaner_last_apt["lng"],
             apt["lat"], apt["lng"]
         )
-        distances.append((apt, distance))
+        if distance_data and "distanza_metri" in distance_data:
+            distances.append((apt, distance_data["distanza_metri"]))
     distances.sort(key=lambda x: x[1])
     return distances[0][0] if distances else None
 
