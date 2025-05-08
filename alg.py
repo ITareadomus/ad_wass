@@ -119,7 +119,32 @@ def main():
     n_premium, n_standard = calculate_cleaners_needed(apartments)
     print(f"Cleaners necessari - Premium: {n_premium}, Standard: {n_standard}")
 
-    # Qui puoi continuare con l'algoritmo di assegnazione...
+    # 5. Filtra gli appartamenti di priorità 1
+    priority1_apts = filter_priority1_apts(apartments)
+
+    # 6. Assegna priorità 1 (una per cleaner)
+    assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
+
+    # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
+    priority = 2
+    all_assignments = assignments.copy()
+
+    while True:
+        remaining_apts = [a for a in apartments if a["id"] not in [x["apt_id"] for x in all_assignments]]
+        if not remaining_apts:
+            break
+
+        next_batch = assign_by_distance(cleaners, apartments, current_priority=priority, existing_assignments=all_assignments)
+        if not next_batch:
+            break  # Nessun altro assegnamento possibile
+
+        all_assignments.extend(next_batch)
+        priority += 1
+
+    # 8. Salva le assegnazioni finali
+    output = {"assignment": all_assignments}
+    save_assignments(output)
+    print("Assegnazioni completate e salvate in assignments.json.")
 
 if __name__ == "__main__":
     main()
