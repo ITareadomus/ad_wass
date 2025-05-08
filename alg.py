@@ -81,19 +81,6 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
     travel_times.sort(key=lambda x: x[1])  # Ordina per tempo di percorrenza
     return travel_times
 
-def reassign_based_on_travel_time(assignments, apartments, cleaners, current_priority):
-    for assignment in assignments:
-        cleaner_id = assignment["cleaner_id"]
-        last_apt = next(a for a in apartments if a["task_id"] == assignment["apt_id"])
-        remaining_apts = [a for a in apartments if a["task_id"] not in [x["apt_id"] for x in assignments]]
-        travel_times = calculate_travel_times(last_apt, remaining_apts)
-        if travel_times:
-            best_apt, best_time = travel_times[0]
-            # Verifica se il nuovo tempo è migliore
-            if best_time < assignment.get("travel_time", float('inf')):
-                assignment["apt_id"] = best_apt["task_id"]
-                assignment["travel_time"] = best_time
-
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
     new_assignments = []
     for cleaner in cleaners:
@@ -153,13 +140,8 @@ def main():
 
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
-    print(f"Assegnazioni di priorità 1: {assignments}")
-    # 7. Salva le assegnazioni di priorità 1
-    output = {"assignment": assignments}
-    save_assignments(output)
-    print("Assegnazioni di priorità 1 completate e salvate in assignments.json.")
 
-    # 8. Assegna priorità successive (2, 3, ...) in base alla distanza
+    # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
     all_assignments = assignments.copy()
 
@@ -175,7 +157,10 @@ def main():
         all_assignments.extend(next_batch)
         priority += 1
 
-    # 9. Salva le assegnazioni finali
+    # 8. Salva le assegnazioni finali
     output = {"assignment": all_assignments}
     save_assignments(output)
     print("Assegnazioni completate e salvate in assignments.json.")
+
+if __name__ == "__main__":
+    main()
