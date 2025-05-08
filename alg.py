@@ -48,7 +48,7 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
         if suitable_apts:
             apt = suitable_apts.pop(0)
             assignments.append({
-                "cleaner_id": cleaner["id"],
+                "cleaner_lastname": cleaner["lastname"],
                 "apt_id": apt["task_id"],
                 "priority": priority_level,
                 "start_time": "08:00",  # iniziale dummy
