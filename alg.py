@@ -114,6 +114,14 @@ def save_assignments(assignments):
 
 
 def main():
+
+    # 1. Esegui gli script per generare i dati
+    print("Eseguo task_selection.py...")
+    subprocess.run(["python3", "task_selection.py"])
+    
+    print("Eseguo cleaner_list.py...")
+    subprocess.run(["python3", "cleaner_list.py"])
+
     # 2. Carica i dati degli appartamenti
     with open("modello_apt.json") as f:
         apt_data = json.load(f)
