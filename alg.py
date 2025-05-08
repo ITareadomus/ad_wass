@@ -153,7 +153,7 @@ def main():
 
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
-
+    print(f"Assegnazioni di priorità 1: {assignments}")
     # 7. Salva le assegnazioni di priorità 1
     output = {"assignment": assignments}
     save_assignments(output)
