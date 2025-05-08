@@ -130,7 +130,7 @@ def main():
     all_assignments = assignments.copy()
 
     while True:
-        remaining_apts = [a for a in apartments if a["id"] not in [x["apt_id"] for x in all_assignments]]
+        remaining_apts = [a for a in apartments if a["task_id"] not in [x["apt_id"] for x in all_assignments]]
         if not remaining_apts:
             break
 
