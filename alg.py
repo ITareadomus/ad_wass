@@ -39,23 +39,26 @@ def filter_priority1_apts(apartments):
     return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
 
+
 def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     assignments = []
     
     for cleaner in cleaners:
         suitable_apts = [a for a in apartments if
-                        a["type"] == cleaner["role"] and
-                        a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
+                         a["type"] == cleaner["role"] and
+                         a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
+                         a["task_id"] not in [x["apt_id"] for x in assignments]]
         if suitable_apts:
             apt = suitable_apts.pop(0)
             assignments.append({
-                    "cleaner_id": cleaner["id"],
-                    "apt_id": apt["task_id"],
-                    "priority": priority_level,
-                    "start_time": "08:00",  # iniziale dummy
-                    "estimated_end": "09:00"  # dummy
+                "cleaner_id": cleaner["id"],
+                "apt_id": apt["task_id"],
+                "priority": priority_level,
+                "start_time": "08:00",
+                "estimated_end": "09:00"
             })
-        return assignments
+
+    return assignments  # ✅ Ora è fuori dal ciclo
 
 
 def find_closest_apt(cleaner_last_apt, remaining_apts):
