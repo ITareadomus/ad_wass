@@ -86,12 +86,17 @@ def assign_by_distance(cleaners, apartments, current_priority, existing_assignme
     assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
 
     for cleaner in cleaners:
-        # Trova l'ultimo appartamento assegnato al cleaner
-        last_assignment = max(
-            [a for a in existing_assignments if "cleaner_id" in a and a["cleaner_id"] == cleaner["id"]],
-            key=lambda x: x["priority"],
-            default=None
-        )
+        suitable_apts = [a for a in apartments if
+                        a["type"] == cleaner["role"] and
+                        a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
+        if suitable_apts:
+            apt = suitable_apts.pop(0)
+            assignments.append({
+                "cleaner_id": cleaner["id"],
+                "apt_id": apt["task_id"],
+                ...
+            })
+
         if last_assignment:
             last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
             if not last_apt:
