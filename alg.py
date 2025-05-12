@@ -66,6 +66,7 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
                 "estimated_end": "09:00"  # Dummy
             })
             cleaner_task_count[cleaner["id"]] += 1  # Incrementa il conteggio degli apt assegnati al cleaner
+            print(f"Assegnato appartamento {apt['task_id']} al cleaner {cleaner['id']} (Totale assegnati: {cleaner_task_count[cleaner['id']]})")
 
             # Passa al prossimo cleaner (ciclo round-robin)
             cleaner_index = (cleaner_index + 1) % len(cleaners)
@@ -103,40 +104,54 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
     travel_times.sort(key=lambda x: x[1])  # Ordina per tempo di percorrenza
     return travel_times
 
+    
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
     new_assignments = []
-    assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
+    assigned_apts = set(a["apt_id"] for a in existing_assignments)
+    cleaner_task_count = {cleaner["id"]: len([a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]]) for cleaner in cleaners}
+    MAX_TASKS_PER_CLEANER = 4  # media massima per cleaner
 
     for cleaner in cleaners:
-        # Trova l'ultimo appartamento assegnato al cleaner
-        last_assignment = max(
-            [a for a in existing_assignments if "cleaner_id" in a and a["cleaner_id"] == cleaner["id"]],
-            key=lambda x: x["priority"],
-            default=None
-        )
-        if last_assignment:
-            last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
-            if not last_apt:
-                continue
+        # Evita cleaner già saturi
+        while cleaner_task_count[cleaner["id"]] < MAX_TASKS_PER_CLEANER:
+            # Trova ultimo apt assegnato
+            last_assignments = [a for a in existing_assignments + new_assignments if a["cleaner_id"] == cleaner["id"]]
+            last_apt = None
+            if last_assignments:
+                last_apt_id = last_assignments[-1]["apt_id"]
+                last_apt = next((a for a in apartments if a["task_id"] == last_apt_id), None)
+
+            # Filtra gli apt non ancora assegnati, compatibili con il ruolo
             remaining_apts = [a for a in apartments if
                               a["type"] == cleaner["role"] and
-                              a["task_id"] not in assigned_apts and
-                              a["task_id"] not in [x["apt_id"] for x in existing_assignments]]
-            # Trova l'appartamento più vicino
-            next_apt = find_closest_apt(last_apt, remaining_apts)
-            if next_apt:
-                # Aggiungi l'assegnazione
-                new_assignments.append({
-                    "cleaner_id": cleaner["id"],
-                    "apt_id": next_apt["task_id"],
-                    "priority": current_priority,
-                    "start_time": "09:00",  # Dummy, calcola in base al tempo di percorrenza
-                    "estimated_end": "10:00"  # Dummy
-                })
-                # Segna l'appartamento come assegnato
-                assigned_apts.add(next_apt["task_id"])
+                              a["task_id"] not in assigned_apts]
+
+            if not remaining_apts:
+                break  # Nessun altro apt disponibile
+
+            if last_apt:
+                # Se c'è un ultimo apt, usa distanza
+                next_apt = find_closest_apt(last_apt, remaining_apts)
+            else:
+                # Altrimenti prendi il primo disponibile
+                next_apt = remaining_apts[0]
+
+            if not next_apt:
+                break
+
+            new_assignments.append({
+                "cleaner_id": cleaner["id"],
+                "apt_id": next_apt["task_id"],
+                "priority": current_priority,
+                "start_time": "09:00",  # Dummy
+                "estimated_end": "10:00"  # Dummy
+            })
+
+            assigned_apts.add(next_apt["task_id"])
+            cleaner_task_count[cleaner["id"]] += 1
 
     return new_assignments
+
 
 def save_assignments(assignments):
     with open("assignments.json", "w") as f:
