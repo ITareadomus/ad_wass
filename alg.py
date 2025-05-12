@@ -43,15 +43,21 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     assignments = []
     cleaner_task_count = {cleaner["id"]: 0 for cleaner in cleaners}  # Traccia il numero di apt assegnati a ciascun cleaner
 
-    for apt in apartments:
-        # Trova un cleaner disponibile che può ancora ricevere appartamenti
-        suitable_cleaners = [
-            cleaner for cleaner in cleaners
-            if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < 4
-        ]
-        if suitable_cleaners:
-            # Assegna l'appartamento al primo cleaner disponibile
-            cleaner = suitable_cleaners[0]
+    # Filtra i cleaner disponibili per ruolo
+    premium_cleaners = [cleaner for cleaner in cleaners if cleaner["role"] == "Premium"]
+    standard_cleaners = [cleaner for cleaner in cleaners if cleaner["role"] == "Standard"]
+
+    # Separiamo gli appartamenti premium e standard
+    premium_apts = [apt for apt in apartments if apt["type"] == "Premium"]
+    standard_apts = [apt for apt in apartments if apt["type"] == "Standard"]
+
+    # Funzione per assegnare appartamenti in modo round-robin
+    def distribute_apartments(apts, cleaners):
+        cleaner_index = 0
+        for apt in apts:
+            # Trova il cleaner corrente
+            cleaner = cleaners[cleaner_index]
+            # Assegna l'appartamento al cleaner
             assignments.append({
                 "cleaner_id": cleaner["id"],
                 "apt_id": apt["task_id"],
@@ -60,6 +66,15 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
                 "estimated_end": "09:00"  # Dummy
             })
             cleaner_task_count[cleaner["id"]] += 1  # Incrementa il conteggio degli apt assegnati al cleaner
+
+            # Passa al prossimo cleaner (ciclo round-robin)
+            cleaner_index = (cleaner_index + 1) % len(cleaners)
+
+    # Distribuisci gli appartamenti premium e standard
+    if premium_cleaners:
+        distribute_apartments(premium_apts, premium_cleaners)
+    if standard_cleaners:
+        distribute_apartments(standard_apts, standard_cleaners)
 
     return assignments
 
@@ -162,6 +177,7 @@ def main():
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
     print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
+
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
     all_assignments = assignments.copy()
