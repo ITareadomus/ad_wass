@@ -47,9 +47,9 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
         suitable_apts = [a for a in apartments if
                         a["type"] == cleaner["role"] and
                         a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
-                         a["type"] == cleaner["role"] and
-                         a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
-                         a["task_id"] not in [x["apt_id"] for x in assignments]]
+                        a["type"] == cleaner["role"] and
+                        a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
+                        a["task_id"] not in [x["apt_id"] for x in assignments]
         if suitable_apts:
             apt = suitable_apts.pop(0)
             assignments.append({
