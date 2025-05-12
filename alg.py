@@ -106,57 +106,47 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
 
 
 def assign_by_distance(cleaners, apartments, existing_assignments):
+    from geopy.distance import geodesic
+
+    cleaner_task_count = {
+        c["id"]: sum(1 for a in existing_assignments if a["cleaner_id"] == c["id"])
+        for c in cleaners
+    }
+
+    available_apts = [a for a in apartments if a["task_id"] not in [x["apt_id"] for x in existing_assignments]]
     new_assignments = []
-    assigned_apts = {a["apt_id"] for a in existing_assignments}
-
-    # Conta quanti task ha ogni cleaner
-    cleaner_task_count = {}
-    for cleaner in cleaners:
-        cleaner_task_count[cleaner["id"]] = sum(
-            1 for a in existing_assignments if a["cleaner_id"] == cleaner["id"]
-        )
 
     for cleaner in cleaners:
-        # Trova appartamenti compatibili (non ancora assegnati e dello stesso tipo)
-        remaining_apts = [
-            a for a in apartments
-            if a["task_id"] not in assigned_apts and a["type"] == cleaner["role"]
-        ]
-        if not remaining_apts:
+        assigned_count = cleaner_task_count.get(cleaner["id"], 0)
+        if assigned_count >= 4:
             continue
 
-        # Se ha già ricevuto 4 apt, saltiamo
-        if cleaner_task_count[cleaner["id"]] >= 4:
-            continue
+        cleaner_location = (cleaner["lat"], cleaner["lng"])
 
-        # Trova il suo ultimo appartamento
-        last_assignment = max(
-            (a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]),
-            key=lambda x: x["priority"],
-            default=None
+        # Ordina gli apt disponibili per distanza da questo cleaner
+        sorted_apts = sorted(
+            available_apts,
+            key=lambda a: geodesic(cleaner_location, (a["lat"], a["lng"])).km
         )
-        if last_assignment:
-            last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
-        else:
-            last_apt = None
 
-        # Se è il primo assegnamento, prendi il primo più vicino in assoluto
-        if not last_apt:
-            next_apt = remaining_apts[0]
-        else:
-            next_apt = find_closest_apt(last_apt, remaining_apts)
+        for apt in sorted_apts:
+            if apt["task_id"] in [x["apt_id"] for x in new_assignments]:
+                continue
 
-        if next_apt:
-            cleaner_task_count[cleaner["id"]] += 1
+            if assigned_count >= 4:
+                break
+
+            assigned_count += 1
+            cleaner_task_count[cleaner["id"]] = assigned_count
+
             new_assignment = {
                 "cleaner_id": cleaner["id"],
-                "apt_id": next_apt["task_id"],
-                "priority": cleaner_task_count[cleaner["id"]],
-                "start_time": "09:00",  # Dummy
-                "estimated_end": "10:00"  # Dummy
+                "apt_id": apt["task_id"],
+                "priority": assigned_count,
+                "start_time": "09:00",  # puoi calcolare dinamicamente se vuoi
+                "estimated_end": "10:00",
             }
             new_assignments.append(new_assignment)
-            assigned_apts.add(next_apt["task_id"])
 
     return new_assignments
 
@@ -218,7 +208,7 @@ def main():
 
         all_assignments.extend(next_batch)
 
-    #    priority += 1
+    #priority += 1
 
     # 8. Salva le assegnazioni finali
     output = {"assignment": all_assignments}
