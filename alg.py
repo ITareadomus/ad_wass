@@ -47,12 +47,17 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
         suitable_apts = [a for a in apartments if
                         a["type"] == cleaner["role"] and
                         a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
-                        a["type"] == cleaner["role"] and
-                        a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
-                        a["task_id"] not in [x["apt_id"] for x in assignments]]
+                         a["type"] == cleaner["role"] and
+                         a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
+                         a["task_id"] not in [x["apt_id"] for x in assignments]]
         if suitable_apts:
             apt = suitable_apts.pop(0)
             assignments.append({
+                    "cleaner_id": cleaner["id"],
+                    "apt_id": apt["task_id"],
+                    "priority": priority_level,
+                    "start_time": "08:00",  # iniziale dummy
+                    "estimated_end": "09:00"  # dummy
                 "cleaner_id": cleaner["id"],
                 "apt_id": apt["task_id"],
                 "priority": priority_level,
@@ -184,3 +189,4 @@ def main():
     print("Assegnazioni completate e salvate in assignments.json.")
 
 if __name__ == "__main__":
+    main()
