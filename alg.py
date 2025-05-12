@@ -2,11 +2,12 @@ import subprocess
 import json
 import math
 
+# Vengono reperiti i cleaners disponibili e gli appartamenti da pulire
 def run_dependency_scripts():
     subprocess.run(["python3", "task_selection.py"])
     subprocess.run(["python3", "cleaner_list.py"])
 
-
+# Carica i dati dei cleaners e degli appartamenti dai file JSON
 def load_data():
     with open("modello_cleaner.json") as f:
         cleaners_data = json.load(f)["cleaners"]
@@ -19,17 +20,17 @@ def load_data():
 
     return cleaners, apartments
 
-
+# Ci calcoliamo il numero di cleaners necessari in base al numero di appartamenti
 def calculate_cleaners_needed(apartments):
     num_apts = len(apartments)
-    avg_apt_per_cleaner = 4
+    avg_apt_per_cleaner = 3
     return math.ceil(num_apts / avg_apt_per_cleaner)
 
 
 def filter_priority1_apts(apartments):
     return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
-def assign_apartments(cleaners, apartments, max_apt_per_cleaner=4):
+def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
     assignments = []
     cleaner_task_count = {c["id"]: 0 for c in cleaners}
     assigned_apt_ids = set()
