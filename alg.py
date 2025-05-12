@@ -65,6 +65,9 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     return assignments
 
 def find_closest_apt(cleaner_last_apt, remaining_apts):
+    if not remaining_apts:
+        return None
+
     distances = []
     for apt in remaining_apts:
         distance_data = calcola_distanza(
@@ -158,10 +161,13 @@ def main():
 
     # 5. Filtra gli appartamenti di priorità 1
     priority1_apts = filter_priority1_apts(apartments)
-
+    if not priority1_apts:
+        print("Nessun appartamento di priorità 1 trovato.")
+    else:
     # 6. Assegna priorità 1 (una per cleaner)
     assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
     print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
+
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
     all_assignments = assignments.copy()
