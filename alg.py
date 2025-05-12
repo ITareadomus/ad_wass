@@ -92,13 +92,14 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
     return travel_times
 
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
+    
     new_assignments = []
-    assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
+    assigned_apts = set([a["apt_id"] for a in existing_assignments])  # Appartamenti già assegnati
 
     for cleaner in cleaners:
         # Trova l'ultimo appartamento assegnato al cleaner
         last_assignment = max(
-            [a for a in existing_assignments if "cleaner_id" in a and a["cleaner_id"] == cleaner["id"]],
+            [a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]],
             key=lambda x: x["priority"],
             default=None
         )
@@ -108,8 +109,7 @@ def assign_by_distance(cleaners, apartments, current_priority, existing_assignme
                 continue
             remaining_apts = [a for a in apartments if
                               a["type"] == cleaner["role"] and
-                              a["task_id"] not in assigned_apts and
-                              a["task_id"] not in [x["apt_id"] for x in existing_assignments]]
+                              a["task_id"] not in assigned_apts]
             # Trova l'appartamento più vicino
             next_apt = find_closest_apt(last_apt, remaining_apts)
             if next_apt:
@@ -118,7 +118,7 @@ def assign_by_distance(cleaners, apartments, current_priority, existing_assignme
                     "cleaner_id": cleaner["id"],
                     "apt_id": next_apt["task_id"],
                     "priority": current_priority,
-                    "start_time": "09:00",  # Dummy, calcola in base al tempo di percorrenza
+                    "start_time": "09:00",  # Dummy
                     "estimated_end": "10:00"  # Dummy
                 })
                 # Segna l'appartamento come assegnato

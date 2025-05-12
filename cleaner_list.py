@@ -27,6 +27,7 @@ tomorrow = (datetime.now() + timedelta(days=1)).date()
 
 # Predefiniamo i parametri statici
 static_params = {
+    "id": None,  # Aggiunto il campo id
     "name": None,
     "lastname": None,
     "role": None,       
@@ -49,6 +50,7 @@ for cleaner in results:
     attendance_result = cursor.fetchone()
 
     cleaner_data = {
+        "id": cleaner.get("id", static_params["id"]),  # Aggiunto il campo id
         "name": cleaner.get("name", static_params["name"]),
         "lastname": cleaner.get("lastname", static_params["lastname"]),
         "role": "Premium" if cleaner.get("user_role_id") == 15 else "Standard" if cleaner.get("user_role_id") == 7 else static_params["role"],
