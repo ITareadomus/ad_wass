@@ -42,75 +42,84 @@ def filter_priority1_apts(apartments):
 
 def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     assignments = []
-    cleaner_task_count = {cleaner["id"]: 0 for cleaner in cleaners}  # Traccia il numero di apt assegnati a ciascun cleaner
 
-    for apt in apartments:
-        # Trova un cleaner disponibile che può ancora ricevere appartamenti
-        suitable_cleaners = [
-            cleaner for cleaner in cleaners
-            if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < 4
-        ]
-        if suitable_cleaners:
-            # Assegna l'appartamento al primo cleaner disponibile
-            cleaner = suitable_cleaners[0]
-    
     for cleaner in cleaners:
         suitable_apts = [a for a in apartments if
                         a["type"] == cleaner["role"] and
                         a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
+                         a["type"] == cleaner["role"] and
+                         a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
+                         a["task_id"] not in [x["apt_id"] for x in assignments]]
         if suitable_apts:
             apt = suitable_apts.pop(0)
             assignments.append({
-                "cleaner_id": cleaner["id"],
-                "apt_id": apt["task_id"],
-                "priority": priority_level,
-                "start_time": "08:00",  # Dummy
-                "estimated_end": "09:00"  # Dummy
                     "cleaner_id": cleaner["id"],
                     "apt_id": apt["task_id"],
                     "priority": priority_level,
                     "start_time": "08:00",  # iniziale dummy
                     "estimated_end": "09:00"  # dummy
+                "cleaner_id": cleaner["id"],
+                "apt_id": apt["task_id"],
+                "priority": priority_level,
+                "start_time": "08:00",
+                "estimated_end": "09:00"
             })
-            cleaner_task_count[cleaner["id"]] += 1  # Incrementa il conteggio degli apt assegnati al cleaner
+        return assignments
 
-    return assignments
+    return assignments  # ✅ Ora è fuori dal ciclo
 
 
 def find_closest_apt(cleaner_last_apt, remaining_apts):
-@@ -89,15 +82,14 @@
+    distances = []
+    for apt in remaining_apts:
+        distance_data = calcola_distanza(
+            cleaner_last_apt["lat"], cleaner_last_apt["lng"],
+            apt["lat"], apt["lng"]
+        )
+        if distance_data and "distanza_metri" in distance_data:
+            distances.append((apt, distance_data["distanza_metri"]))
+    distances.sort(key=lambda x: x[1])
+    return distances[0][0] if distances else None
+
+def calculate_travel_times(cleaner_last_apt, remaining_apts):
+    travel_times = []
+    for apt in remaining_apts:
+        distance_data = calcola_distanza(
+            cleaner_last_apt["lat"], cleaner_last_apt["lng"],
+            apt["lat"], apt["lng"]
+        )
+        if distance_data and "durata" in distance_data:
+            travel_times.append((apt, distance_data["durata"]))
     travel_times.sort(key=lambda x: x[1])  # Ordina per tempo di percorrenza
     return travel_times
 
-
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
     new_assignments = []
-    assigned_apts = set([a["apt_id"] for a in existing_assignments])  # Appartamenti già assegnati
     assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
 
     for cleaner in cleaners:
         # Trova l'ultimo appartamento assegnato al cleaner
         last_assignment = max(
-            [a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]],
             [a for a in existing_assignments if "cleaner_id" in a and a["cleaner_id"] == cleaner["id"]],
             key=lambda x: x["priority"],
             default=None
         )
-@@ -107,7 +99,8 @@
+        if last_assignment:
+            last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
+            if not last_apt:
                 continue
             remaining_apts = [a for a in apartments if
                               a["type"] == cleaner["role"] and
-                              a["task_id"] not in assigned_apts]
                               a["task_id"] not in assigned_apts and
                               a["task_id"] not in [x["apt_id"] for x in existing_assignments]]
             # Trova l'appartamento più vicino
             next_apt = find_closest_apt(last_apt, remaining_apts)
             if next_apt:
-@@ -116,72 +109,72 @@
+                # Aggiungi l'assegnazione
+                new_assignments.append({
                     "cleaner_id": cleaner["id"],
                     "apt_id": next_apt["task_id"],
                     "priority": current_priority,
-                    "start_time": "09:00",  # Dummy
                     "start_time": "09:00",  # Dummy, calcola in base al tempo di percorrenza
                     "estimated_end": "10:00"  # Dummy
                 })
@@ -180,4 +189,3 @@ def main():
     print("Assegnazioni completate e salvate in assignments.json.")
 
 if __name__ == "__main__":
-    main()
