@@ -39,7 +39,6 @@ def filter_priority1_apts(apartments):
     return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
 
-
 def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     assignments = []
     cleaner_task_count = {cleaner["id"]: 0 for cleaner in cleaners}  # Traccia il numero di apt assegnati a ciascun cleaner
@@ -157,16 +156,16 @@ def main():
     n_premium, n_standard = calculate_cleaners_needed(apartments)
     print(f"Cleaners necessari - Premium: {n_premium}, Standard: {n_standard}")
 
-    n_cleaners = n_premium + n_standard
+    n_cleaners = n_premium + n_standard # questo l'ho aggiunto io per il calcolo totale di cleaners necessari
 
     # 5. Filtra gli appartamenti di priorità 1
     priority1_apts = filter_priority1_apts(apartments)
     if not priority1_apts:
         print("Nessun appartamento di priorità 1 trovato.")
     else:
-    # 6. Assegna priorità 1 (una per cleaner)
-    assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
-    print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
+        # 6. Assegna priorità 1 (una per cleaner)
+        assignments = assign_priority(cleaners, priority1_apts, priority_level=1, previous_assignments=[])
+        print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
 
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
     priority = 2
@@ -183,7 +182,7 @@ def main():
 
         all_assignments.extend(next_batch)
         priority += 1
-
+    
     # 8. Salva le assegnazioni finali
     output = {"assignment": all_assignments}
     save_assignments(output)
