@@ -29,7 +29,6 @@ def calculate_cleaners_needed(apartments):
 def filter_priority1_apts(apartments):
     return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
-
 def assign_apartments(cleaners, apartments, max_apt_per_cleaner=4):
     assignments = []
     cleaner_task_count = {c["id"]: 0 for c in cleaners}
@@ -37,11 +36,11 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=4):
 
     priority1_apts = filter_priority1_apts(apartments)
 
-    # 1. Assegna priorità 1
-    priority = 1
+    # 1. Assegna priorità 1 (appartamenti urgenti)
     for apt in priority1_apts:
         for cleaner in cleaners:
             if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < max_apt_per_cleaner:
+                priority = cleaner_task_count[cleaner["id"]] + 1
                 assignments.append({
                     "cleaner_id": cleaner["id"],
                     "apt_id": apt["task_id"],
@@ -51,13 +50,13 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=4):
                 assigned_apt_ids.add(apt["task_id"])
                 break  # passa al prossimo appartamento
 
-    # 2. Assegna tutte le altre priorità (priorità 2, 3, ...)
+    # 2. Assegna appartamenti rimanenti (con priorità 2, 3, 4 per ogni cleaner)
     remaining_apts = [a for a in apartments if a["task_id"] not in assigned_apt_ids]
-    priority = 2
 
     for apt in remaining_apts:
         for cleaner in cleaners:
             if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < max_apt_per_cleaner:
+                priority = cleaner_task_count[cleaner["id"]] + 1
                 assignments.append({
                     "cleaner_id": cleaner["id"],
                     "apt_id": apt["task_id"],
@@ -68,6 +67,7 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=4):
                 break  # passa al prossimo appartamento
 
     return assignments
+
 
 
 def save_assignments(assignments):
