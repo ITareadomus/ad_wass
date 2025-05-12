@@ -64,7 +64,6 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
                 "start_time": "08:00",
                 "estimated_end": "09:00"
             })
-        return assignments
 
     return assignments  # ✅ Ora è fuori dal ciclo
 
