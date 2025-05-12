@@ -1,0 +1,64 @@
+{
+    "cleaners": [
+        {
+            "id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": null
+        },
+        {
+            "id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": null
+        },
+        {
+            "id": 132,
+            "name": "JOHOISER ERNESTO",
+            "lastname": "LOPEZ GIRON",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": null
+        },
+        {
+            "id": 249,
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": null
+        },
+        {
+            "id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": null
+        }
+    ]
+}

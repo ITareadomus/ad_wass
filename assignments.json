@@ -1,25 +1,88 @@
 {
-    "assignments": [
-      {
-        "cleaner": {
-          "name": "MUTURI DANIEL",
-          "lastname": "NGANGA"
+    "assignment": [
+        {
+            "cleaner_id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "apt_id": 206279,
+            "priority": 1
         },
-        "task_id": 182434,
-        "priority": 1,
-        "start_time": "08:00",
-        "estimated_end": "09:15"
-      },
-      {
-        "cleaner": {
-          "name": "MUTURI DANIEL",
-          "lastname": "NGANGA"
+        {
+            "cleaner_id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "apt_id": 199797,
+            "priority": 2
         },
-        "task_id": 182435,
-        "priority": 2,
-        "start_time": "09:30",
-        "estimated_end": "10:30"
-      }
+        {
+            "cleaner_id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "apt_id": 206311,
+            "priority": 3
+        },
+        {
+            "cleaner_id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "apt_id": 201900,
+            "priority": 1
+        },
+        {
+            "cleaner_id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "apt_id": 205373,
+            "priority": 2
+        },
+        {
+            "cleaner_id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "apt_id": 202281,
+            "priority": 3
+        },
+        {
+            "cleaner_id": 249,
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "apt_id": 202019,
+            "priority": 1
+        },
+        {
+            "cleaner_id": 249,
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "apt_id": 206304,
+            "priority": 2
+        },
+        {
+            "cleaner_id": 249,
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "apt_id": 205189,
+            "priority": 3
+        },
+        {
+            "cleaner_id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "apt_id": 202136,
+            "priority": 1
+        },
+        {
+            "cleaner_id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "apt_id": 204483,
+            "priority": 2
+        },
+        {
+            "cleaner_id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "apt_id": 205116,
+            "priority": 3
+        }
     ]
-  }
-  
+}

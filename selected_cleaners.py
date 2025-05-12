@@ -1,4 +1,4 @@
-import json
+'''import json
 import math
 
 # === Carica cleaners e appartamenti ===
@@ -62,3 +62,4 @@ with open("selected_cleaners.json", "w") as f:
 print(f"Cleaner Premium richiesti: {num_premium_cleaners}, selezionati: {len(selected_premium)}")
 print(f"Cleaner Standard richiesti: {num_standard_cleaners}, selezionati: {len(selected_standard)}")
 print(f"Totale cleaner selezionati: {len(selected_cleaners)}")
+'''
