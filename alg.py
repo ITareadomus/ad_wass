@@ -104,53 +104,62 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
     travel_times.sort(key=lambda x: x[1])  # Ordina per tempo di percorrenza
     return travel_times
 
-    
-def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
+
+def assign_by_distance(cleaners, apartments, existing_assignments):
     new_assignments = []
-    assigned_apts = set(a["apt_id"] for a in existing_assignments)
-    cleaner_task_count = {cleaner["id"]: len([a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]]) for cleaner in cleaners}
-    MAX_TASKS_PER_CLEANER = 4  # media massima per cleaner
+    assigned_apts = {a["apt_id"] for a in existing_assignments}
+
+    # Conta quanti task ha ogni cleaner
+    cleaner_task_count = {}
+    for cleaner in cleaners:
+        cleaner_task_count[cleaner["id"]] = sum(
+            1 for a in existing_assignments if a["cleaner_id"] == cleaner["id"]
+        )
 
     for cleaner in cleaners:
-        # Evita cleaner già saturi
-        while cleaner_task_count[cleaner["id"]] < MAX_TASKS_PER_CLEANER:
-            # Trova ultimo apt assegnato
-            last_assignments = [a for a in existing_assignments + new_assignments if a["cleaner_id"] == cleaner["id"]]
+        # Trova appartamenti compatibili (non ancora assegnati e dello stesso tipo)
+        remaining_apts = [
+            a for a in apartments
+            if a["task_id"] not in assigned_apts and a["type"] == cleaner["role"]
+        ]
+        if not remaining_apts:
+            continue
+
+        # Se ha già ricevuto 4 apt, saltiamo
+        if cleaner_task_count[cleaner["id"]] >= 4:
+            continue
+
+        # Trova il suo ultimo appartamento
+        last_assignment = max(
+            (a for a in existing_assignments if a["cleaner_id"] == cleaner["id"]),
+            key=lambda x: x["priority"],
+            default=None
+        )
+        if last_assignment:
+            last_apt = next((a for a in apartments if a["task_id"] == last_assignment["apt_id"]), None)
+        else:
             last_apt = None
-            if last_assignments:
-                last_apt_id = last_assignments[-1]["apt_id"]
-                last_apt = next((a for a in apartments if a["task_id"] == last_apt_id), None)
 
-            # Filtra gli apt non ancora assegnati, compatibili con il ruolo
-            remaining_apts = [a for a in apartments if
-                              a["type"] == cleaner["role"] and
-                              a["task_id"] not in assigned_apts]
+        # Se è il primo assegnamento, prendi il primo più vicino in assoluto
+        if not last_apt:
+            next_apt = remaining_apts[0]
+        else:
+            next_apt = find_closest_apt(last_apt, remaining_apts)
 
-            if not remaining_apts:
-                break  # Nessun altro apt disponibile
-
-            if last_apt:
-                # Se c'è un ultimo apt, usa distanza
-                next_apt = find_closest_apt(last_apt, remaining_apts)
-            else:
-                # Altrimenti prendi il primo disponibile
-                next_apt = remaining_apts[0]
-
-            if not next_apt:
-                break
-
-            new_assignments.append({
+        if next_apt:
+            cleaner_task_count[cleaner["id"]] += 1
+            new_assignment = {
                 "cleaner_id": cleaner["id"],
                 "apt_id": next_apt["task_id"],
-                "priority": current_priority,
+                "priority": cleaner_task_count[cleaner["id"]],
                 "start_time": "09:00",  # Dummy
                 "estimated_end": "10:00"  # Dummy
-            })
-
+            }
+            new_assignments.append(new_assignment)
             assigned_apts.add(next_apt["task_id"])
-            cleaner_task_count[cleaner["id"]] += 1
 
     return new_assignments
+
 
 
 def save_assignments(assignments):
@@ -194,7 +203,8 @@ def main():
     print(f"Appartamenti di priorità 1 assegnati: {len(assignments)}")
 
     # 7. Assegna priorità successive (2, 3, ...) in base alla distanza
-    priority = 2
+    #priority = 2
+    # ...
     all_assignments = assignments.copy()
 
     while True:
@@ -202,12 +212,13 @@ def main():
         if not remaining_apts:
             break
 
-        next_batch = assign_by_distance(cleaners, apartments, current_priority=priority, existing_assignments=all_assignments)
+        next_batch = assign_by_distance(cleaners, apartments, existing_assignments=all_assignments)
         if not next_batch:
-            break  # Nessun altro assegnamento possibile
+            break
 
         all_assignments.extend(next_batch)
-        priority += 1
+
+    #    priority += 1
 
     # 8. Salva le assegnazioni finali
     output = {"assignment": all_assignments}
