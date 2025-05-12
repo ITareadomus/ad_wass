@@ -11,12 +11,12 @@ def run_dependency_scripts():
 def load_data():
     with open("modello_cleaner.json") as f:
         cleaners_data = json.load(f)["cleaners"]
-        for c in cleaners_data:
-            c["id"] = f"{c['name'].strip()}_{c['lastname'].strip()}"
-        cleaners = cleaners_data
+        cleaners = cleaners_data  # NON toccare cleaner["id"]!
 
     with open("modello_apt.json") as f:
         apartments = json.load(f)["apt"]
+
+    return cleaners, apartments
 
     return cleaners, apartments
 
@@ -30,6 +30,8 @@ def calculate_cleaners_needed(apartments):
 def filter_priority1_apts(apartments):
     return [a for a in apartments if a.get("checkin_time") == "14:00" or a.get("small_equipment") is True]
 
+
+
 def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
     assignments = []
     cleaner_task_count = {c["id"]: 0 for c in cleaners}
@@ -37,21 +39,21 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
 
     priority1_apts = filter_priority1_apts(apartments)
 
-    # 1. Assegna priorità 1 (appartamenti urgenti)
     for apt in priority1_apts:
         for cleaner in cleaners:
             if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < max_apt_per_cleaner:
                 priority = cleaner_task_count[cleaner["id"]] + 1
                 assignments.append({
-                    "cleaner_id": cleaner["id"],
+                    "cleaner_id": cleaner["id"],  # deve essere il numero (es. 18)
+                    "name": cleaner["name"],
+                    "lastname": cleaner["lastname"],
                     "apt_id": apt["task_id"],
                     "priority": priority
                 })
                 cleaner_task_count[cleaner["id"]] += 1
                 assigned_apt_ids.add(apt["task_id"])
-                break  # passa al prossimo appartamento
+                break
 
-    # 2. Assegna appartamenti rimanenti (con priorità 2, 3, 4 per ogni cleaner)
     remaining_apts = [a for a in apartments if a["task_id"] not in assigned_apt_ids]
 
     for apt in remaining_apts:
@@ -60,12 +62,14 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
                 priority = cleaner_task_count[cleaner["id"]] + 1
                 assignments.append({
                     "cleaner_id": cleaner["id"],
+                    "name": cleaner["name"],
+                    "lastname": cleaner["lastname"],
                     "apt_id": apt["task_id"],
                     "priority": priority
                 })
                 cleaner_task_count[cleaner["id"]] += 1
                 assigned_apt_ids.add(apt["task_id"])
-                break  # passa al prossimo appartamento
+                break
 
     return assignments
 
