@@ -42,31 +42,27 @@ def filter_priority1_apts(apartments):
 
 def assign_priority(cleaners, apartments, priority_level, previous_assignments):
     assignments = []
+    cleaner_task_count = {cleaner["id"]: 0 for cleaner in cleaners}  # Traccia il numero di apt assegnati a ciascun cleaner
 
-    for cleaner in cleaners:
-        suitable_apts = [a for a in apartments if
-                        a["type"] == cleaner["role"] and
-                        a["task_id"] not in [x["apt_id"] for x in previous_assignments]]
-                        a["type"] == cleaner["role"] and
-                        a["task_id"] not in [x["apt_id"] for x in previous_assignments] and
-                        a["task_id"] not in [x["apt_id"] for x in assignments]
-        if suitable_apts:
-            apt = suitable_apts.pop(0)
+    for apt in apartments:
+        # Trova un cleaner disponibile che può ancora ricevere appartamenti
+        suitable_cleaners = [
+            cleaner for cleaner in cleaners
+            if cleaner["role"] == apt["type"] and cleaner_task_count[cleaner["id"]] < 4
+        ]
+        if suitable_cleaners:
+            # Assegna l'appartamento al primo cleaner disponibile
+            cleaner = suitable_cleaners[0]
             assignments.append({
-                    "cleaner_id": cleaner["id"],
-                    "apt_id": apt["task_id"],
-                    "priority": priority_level,
-                    "start_time": "08:00",  # iniziale dummy
-                    "estimated_end": "09:00"  # dummy
                 "cleaner_id": cleaner["id"],
                 "apt_id": apt["task_id"],
                 "priority": priority_level,
-                "start_time": "08:00",
-                "estimated_end": "09:00"
+                "start_time": "08:00",  # Dummy
+                "estimated_end": "09:00"  # Dummy
             })
+            cleaner_task_count[cleaner["id"]] += 1  # Incrementa il conteggio degli apt assegnati al cleaner
 
-    return assignments  # ✅ Ora è fuori dal ciclo
-
+    return assignments
 
 def find_closest_apt(cleaner_last_apt, remaining_apts):
     distances = []
