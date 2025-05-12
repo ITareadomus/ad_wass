@@ -2,6 +2,7 @@ import subprocess
 import json
 import math
 from gmaps import calcola_distanza
+from geopy.distance import geodesic
 
 def run_dependency_scripts():
     subprocess.run(["python3", "cleaner_list.py"])
@@ -106,7 +107,7 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
 
 
 def assign_by_distance(cleaners, apartments, existing_assignments):
-    from geopy.distance import geodesic
+    
 
     cleaner_task_count = {
         c["id"]: sum(1 for a in existing_assignments if a["cleaner_id"] == c["id"])
