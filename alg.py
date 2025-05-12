@@ -75,7 +75,6 @@ def assign_priority(cleaners, apartments, priority_level, previous_assignments):
             cleaner_task_count[cleaner["id"]] += 1  # Incrementa il conteggio degli apt assegnati al cleaner
 
     return assignments
-        return assignments
 
 
 def find_closest_apt(cleaner_last_apt, remaining_apts):
