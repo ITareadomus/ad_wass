@@ -83,6 +83,7 @@ def calculate_travel_times(cleaner_last_apt, remaining_apts):
     return travel_times
 
 def assign_by_distance(cleaners, apartments, current_priority, existing_assignments):
+    
     new_assignments = []
     assigned_apts = set()  # Per tenere traccia degli appartamenti già assegnati
 
@@ -177,4 +178,4 @@ def main():
     save_assignments(output)
     print("Assegnazioni completate e salvate in assignments.json.")
 
-if __name__ == "__main__":
+    if __name__ == "__main__":
