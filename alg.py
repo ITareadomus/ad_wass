@@ -60,7 +60,7 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
                 best_score = score
                 best_apt = apt
 
-    return best_apt
+        return best_apt
 
     # Assegna appartamenti con priorità 1
     for apt in priority1_apts:
