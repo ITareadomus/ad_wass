@@ -4,85 +4,92 @@
             "cleaner_id": 18,
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
-            "apt_id": 206279,
+            "apt_id": 175269,
             "priority": 1
         },
         {
             "cleaner_id": 18,
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
-            "apt_id": 199797,
+            "apt_id": 206200,
             "priority": 2
         },
         {
             "cleaner_id": 18,
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
-            "apt_id": 206311,
+            "apt_id": 198059,
             "priority": 3
         },
         {
             "cleaner_id": 24,
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
-            "apt_id": 201900,
+            "apt_id": 201901,
             "priority": 1
         },
         {
             "cleaner_id": 24,
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
-            "apt_id": 205373,
+            "apt_id": 206199,
             "priority": 2
         },
         {
             "cleaner_id": 24,
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
-            "apt_id": 202281,
+            "apt_id": 206167,
             "priority": 3
         },
         {
             "cleaner_id": 249,
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
-            "apt_id": 202019,
+            "apt_id": 202223,
             "priority": 1
         },
         {
             "cleaner_id": 249,
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
-            "apt_id": 206304,
+            "apt_id": 206091,
             "priority": 2
         },
         {
             "cleaner_id": 249,
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
-            "apt_id": 205189,
+            "apt_id": 205799,
             "priority": 3
         },
         {
             "cleaner_id": 287,
             "name": "BAH",
             "lastname": "ISMAILA",
-            "apt_id": 202136,
+            "apt_id": 204605,
             "priority": 1
         },
         {
             "cleaner_id": 287,
             "name": "BAH",
             "lastname": "ISMAILA",
-            "apt_id": 204483,
+            "apt_id": 206291,
             "priority": 2
         },
         {
             "cleaner_id": 287,
             "name": "BAH",
             "lastname": "ISMAILA",
-            "apt_id": 205116,
+            "apt_id": 206314,
             "priority": 3
+        },
+        {
+            "cleaner_id": 321,
+            "name": "BOUBACAR",
+            "lastname": "BARRY",
+            "apt_id": 205983,
+            "priority": 1
         }
     ]
 }

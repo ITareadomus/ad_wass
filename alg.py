@@ -2,6 +2,25 @@ import subprocess
 import json
 from gmaps import calcola_distanza  # Importa la funzione per calcolare la distanza
 
+# Esegui cleaner_selection.py per aggiornare la lista dei cleaner
+def refresh_cleaner_selection():
+    try:
+        print("Eseguo cleaner_selection.py per aggiornare la lista dei cleaner...")
+        subprocess.run(["python", "cleaner_selection.py"], check=True)
+        print("Lista dei cleaner aggiornata con successo.")
+    except subprocess.CalledProcessError as e:
+        print(f"Errore durante l'esecuzione di cleaner_selection.py: {e}")
+        raise
+
+def refresh_task_selection():
+    try:
+        print("Eseguo task_selection.py per aggiornare la lista degli appartamenti...")
+        subprocess.run(["python", "task_selection.py"], check=True)
+        print("Lista degli appartamenti aggiornata con successo.")
+    except subprocess.CalledProcessError as e:
+        print(f"Errore durante l'esecuzione di task_selection.py: {e}")
+        raise
+
 # Carica i cleaner selezionati dal file JSON
 def load_selected_cleaners():
     with open("sel_cleaners.json") as f:  # Cambiato il nome del file
@@ -38,8 +57,12 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
                 float(apt["lat"]), float(apt["lng"])
             )
 
+
+
+
             if not distanza:
                 continue
+
 
             # Calcola un punteggio basato su distanza e orario
             distanza_metri = distanza["distanza_metri"]
@@ -55,6 +78,7 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
                 orario_diff = float('inf')
 
             score = distanza_metri + (orario_diff * 100)  # Peso maggiore per la distanza
+
 
             if score < best_score:
                 best_score = score
@@ -114,6 +138,10 @@ def save_assignments(assignments):
         json.dump({"assignment": assignments}, f, indent=4)
 
 def main():
+    # Aggiorna la lista degli appartamenti e dei cleaner PRIMA di tutto
+    refresh_task_selection()
+    refresh_cleaner_selection()
+    
     print("Carico cleaner selezionati...")
     cleaners = load_selected_cleaners()
 
