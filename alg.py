@@ -25,43 +25,40 @@ def assign_apartments(cleaners, apartments, max_apt_per_cleaner=3):
 
     # Funzione per trovare l'appartamento più adeguato
     def find_best_next_apartment(current_apt, remaining_apts):
-    best_apt = None
-    best_score = float('inf')
+        best_apt = None
+        best_score = float('inf')
 
-    for apt in remaining_apts:
-        if apt["task_id"] in assigned_apt_ids:
-            continue
+        for apt in remaining_apts:
+            if apt["task_id"] in assigned_apt_ids:
+                continue
 
-        # Calcola la distanza e il tempo di percorrenza tra l'appartamento corrente e quello candidato
-        distanza = calcola_distanza(
-            float(current_apt["lat"]), float(current_apt["lng"]),
-            float(apt["lat"]), float(apt["lng"])
-        )
-
-        if not distanza:
-            continue
-
-        # Estrai i dati dalla risposta
-        distanza_metri = distanza["distanza_metri"]
-        durata_secondi = distanza["durata"]  # Tempo di percorrenza in secondi
-
-        # Calcola un punteggio basato su distanza, tempo di percorrenza e orario
-        checkin_time = apt.get("checkin_time", "15:00") or "15:00"
-        checkout_time = current_apt.get("checkout_time", "00:00") or "00:00"
-
-        try:
-            orario_diff = abs(
-                int(checkin_time[:2]) - int(checkout_time[:2])
+            # Calcola la distanza tra l'appartamento corrente e quello candidato
+            distanza = calcola_distanza(
+                float(current_apt["lat"]), float(current_apt["lng"]),
+                float(apt["lat"]), float(apt["lng"])
             )
-        except ValueError:
-            orario_diff = float('inf')
 
-        # Aggiungi il tempo di percorrenza al punteggio
-        score = distanza_metri + (orario_diff * 100) + durata_secondi
+            if not distanza:
+                continue
 
-        if score < best_score:
-            best_score = score
-            best_apt = apt
+            # Calcola un punteggio basato su distanza e orario
+            distanza_metri = distanza["distanza_metri"]
+            checkin_time = apt.get("checkin_time", "15:00") or "15:00"  # Default a "15:00" se checkin_time è null o None
+            checkout_time = current_apt.get("checkout_time", "00:00") or "00:00"  # Default a mezzanotte se checkout_time è null o None
+
+            try:
+                orario_diff = abs(
+                    int(checkin_time[:2]) - int(checkout_time[:2])
+                )
+            except ValueError:
+                # Gestione di eventuali valori non validi
+                orario_diff = float('inf')
+
+            score = distanza_metri + (orario_diff * 100)  # Peso maggiore per la distanza
+
+            if score < best_score:
+                best_score = score
+                best_apt = apt
 
     return best_apt
 
