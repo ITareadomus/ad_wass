@@ -6,7 +6,7 @@ from gmaps import calcola_distanza  # Importa la funzione per calcolare la dista
 def refresh_cleaner_selection():
     try:
         print("Eseguo cleaner_selection.py per aggiornare la lista dei cleaner...")
-        subprocess.run(["python", "cleaner_selection.py"], check=True)
+        subprocess.run(["python3", "cleaner_selection.py"], check=True)
         print("Lista dei cleaner aggiornata con successo.")
     except subprocess.CalledProcessError as e:
         print(f"Errore durante l'esecuzione di cleaner_selection.py: {e}")
@@ -15,7 +15,7 @@ def refresh_cleaner_selection():
 def refresh_task_selection():
     try:
         print("Eseguo task_selection.py per aggiornare la lista degli appartamenti...")
-        subprocess.run(["python", "task_selection.py"], check=True)
+        subprocess.run(["python3", "task_selection.py"], check=True)
         print("Lista degli appartamenti aggiornata con successo.")
     except subprocess.CalledProcessError as e:
         print(f"Errore durante l'esecuzione di task_selection.py: {e}")
