@@ -54,8 +54,8 @@ cursor.execute("""
         h.checkin_pax AS pax_in,
         h.checkout_pax AS pax_out,
         s.premium AS premium,
-        s.customer_id AS client_id
-        s.structure_type_id AS structure_type_id
+        s.customer_id AS client_id,
+        s.structure_type_id 
     FROM app_housekeeping h
     JOIN app_structures s ON h.structure_id = s.id
     WHERE h.checkout = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
