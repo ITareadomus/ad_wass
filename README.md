@@ -1,4 +1,4 @@
-# Algoritmo di assegnazioni Area Domus
+# WASS - Work Assignment Scheduling System
 
 ## Obiettivo : 
 <div> 
