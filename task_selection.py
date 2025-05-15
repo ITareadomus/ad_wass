@@ -55,6 +55,7 @@ cursor.execute("""
         h.checkout_pax AS pax_out,
         s.premium AS premium,
         s.customer_id AS client_id
+        s.structure_type_id AS structure_type_id
     FROM app_housekeeping h
     JOIN app_structures s ON h.structure_id = s.id
     WHERE h.checkout = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
@@ -89,6 +90,8 @@ static_params = {
 apt_data = []
 
 for apt in results:
+    structure_type_id = apt.get("structure_type_id", None)
+    small_equipment = True if structure_type_id in (1, 2) else static_params["small_equipment"]
     apt_entry = {
         "task_id": apt.get("id", static_params["task_id"]),
         "structure_id": apt.get("structure_id", static_params["structure_id"]),
@@ -104,7 +107,7 @@ for apt in results:
         "checkout_time": varchar_to_str(apt.get("checkout_time")) if apt.get("checkout_time") else static_params["checkout_time"],
         "pax_in": apt.get("pax_in", static_params["pax_in"]),
         "pax_out": apt.get("pax_out", static_params["pax_out"]),
-        "small_equipment": static_params["small_equipment"],
+        "small_equipment": small_equipment,
     }
     apt_data.append(apt_entry)
 
