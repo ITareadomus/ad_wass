@@ -1,0 +1,28 @@
+Cleaner: MUTURI DANIEL NGANGA (Standard)
+  1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 11:00
+     -> distanza: 2381m, durata: 33 mins
+  2. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 15:15 | checkout: 2025-05-16 11:00
+     -> distanza: 3662m, durata: 51 mins
+  3. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 16:00 | checkout: 2025-05-16 12:00
+
+Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
+  1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 16:30 | checkout: 2025-05-16 12:30
+     -> distanza: 6146m, durata: 1 hour 26 mins
+  2. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 8052m, durata: 1 hour 53 mins
+  3. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 15:30 | checkout: 2025-05-16 11:00
+
+Cleaner: Ogbodo Chidi Igwe (Standard)
+  1. Task 100005: Via Paolo Sarpi, 20 - checkin: 2025-05-17 14:15 | checkout: 2025-05-16 10:45
+     -> distanza: 1838m, durata: 25 mins
+  2. Task 100011: Via Senato, 15 - checkin: 2025-05-17 15:45 | checkout: 2025-05-16 11:15
+     -> distanza: 2633m, durata: 36 mins
+  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 14:45 | checkout: 2025-05-16 10:30
+
+Cleaner: BAH ISMAILA (Standard)
+  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:30
+     -> distanza: 571m, durata: 8 mins
+  2. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:30 | checkout: 2025-05-16 11:15
+     -> distanza: 421m, durata: 6 mins
+  3. Task 100012: Via Dante, 10 - checkin: 2025-05-17 16:00 | checkout: 2025-05-16 12:00
+
