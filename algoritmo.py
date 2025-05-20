@@ -272,3 +272,7 @@ def main():
     save_assignments(assignments)
     save_detailed_report(assignments, apartments)
     logging.info('Esecuzione completata con successo.')
+
+
+if __name__=='__main__':
+    main()
