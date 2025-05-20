@@ -61,36 +61,42 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
         key=lambda a: (safe_date(a.get('checkin')), a.get('checkin_time') or '23:59')
     )
 
-    # Inizializza pacchetti e remaining per ogni ruolo
     packets = {}
     for c in cleaners:
         if c.get('active') and c.get('available'):
             role = c.get('role')
             packets.setdefault(role, {'pkgs': [], 'remaining': []})
-    for role, data in packets.items():
-        count = sum(1 for c in cleaners if c.get('role') == role and c.get('active') and c.get('available'))
-        data['pkgs'] = [[] for _ in range(count)]
-        data['remaining'] = [max_duration_hours*3600]*count
 
-    # Distribuisci apartment
+    for role, data in packets.items():
+        # inizializza con almeno 1 pacchetto vuoto
+        data['pkgs'] = [[]]
+        data['remaining'] = [max_duration_hours * 3600]
+
     for apt in sorted_apts:
         role = apt.get('type')
-        if role not in packets: continue
+        if role not in packets:
+            continue
+
         data = packets[role]
-        cleaning_minutes = apt.get('cleaning_time')
-        if cleaning_minutes is None:
-            cleaning_minutes = 120  # default 2 ore
+        cleaning_minutes = apt.get('cleaning_time') or 120
         ct_sec = cleaning_minutes * 60
-        # ordina indici per remaining decrescente
+
         idxs = sorted(range(len(data['pkgs'])), key=lambda i: data['remaining'][i], reverse=True)
         placed = False
+
         for i in idxs:
             pkg = data['pkgs'][i]
+            remaining = data['remaining'][i]
+
+            # primo apt in pacchetto
             if not pkg:
                 pkg.append(apt)
                 data['remaining'][i] -= ct_sec
+                logging.info(f"[TASK {apt['task_id']}] ➤ Inserito come primo apt nel pacchetto {i+1}/{len(data['pkgs'])} '{role}' (Pulizia: {cleaning_minutes} min)")
                 placed = True
                 break
+
+            # verifica distanza e tempo
             last = pkg[-1]
             try:
                 last_lat = float(last.get('lat', 0))
@@ -99,22 +105,32 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
                 apt_lng = float(apt.get('lng', 0))
             except (TypeError, ValueError):
                 continue
+
             d = calcola_distanza(last_lat, last_lng, apt_lat, apt_lng, mode='walking')
-            if d:
-                travel = d['distanza_metri']/1.4
-                if d['distanza_metri'] <= radius_m and ct_sec+travel <= data['remaining'][i]:
-                    pkg.append(apt)
-                    data['remaining'][i] -= (ct_sec+travel)
-                    placed = True
-                    break
+            if not d:
+                continue
+
+            distance_m = d['distanza_metri']
+            travel_sec = distance_m / 1.4  # m/s camminata
+
+            total_required = ct_sec + travel_sec
+            if total_required <= remaining:
+                pkg.append(apt)
+                data['remaining'][i] -= total_required
+                logging.info(f"[TASK {apt['task_id']}] ➤ Inserito in pacchetto {i+1}/{len(data['pkgs'])} '{role}' | Dist: {int(distance_m)}m | Pulizia: {cleaning_minutes}min | Totale stimato: {round(total_required/3600,2)}h")
+                placed = True
+                break
+
         if not placed:
-            i = idxs[0]
-            packets[role]['pkgs'][i].append(apt)
-            packets[role]['remaining'][i] -= ct_sec
+            # crea un nuovo pacchetto dinamico
+            data['pkgs'].append([apt])
+            data['remaining'].append(max_duration_hours * 3600 - ct_sec)
+            logging.warning(f"[TASK {apt['task_id']}] ➕ Nuovo pacchetto creato per '{role}' (Pulizia: {cleaning_minutes} min)")
 
     for role, data in packets.items():
         for i, pkg in enumerate(data['pkgs'], 1):
-            logging.info(f"Pacchetto {i}/{len(data['pkgs'])} '{role}' con {len(pkg)} apt (remaining {data['remaining'][i-1]}s)")
+            total = max_duration_hours * 3600 - data['remaining'][i-1]
+            logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt | Tempo stimato: {round(total/3600,2)}h")
     return {role: data['pkgs'] for role, data in packets.items()}
 
 # FASE 2: Ordinamento all'interno dei pacchetti
