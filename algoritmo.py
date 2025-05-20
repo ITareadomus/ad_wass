@@ -69,9 +69,9 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
             packets.setdefault(role, {'pkgs': [], 'remaining': []})
 
     for role, data in packets.items():
-        count = sum(1 for c in cleaners if c.get('role') == role and c.get('active') and c.get('available'))
-        data['pkgs'] = [[] for _ in range(count)]
-        data['remaining'] = [max_duration_hours * 3600 for _ in range(count)]
+        # Inizializza 1 pacchetto vuoto per iniziare (crescerà dinamicamente)
+        data['pkgs'] = [[]]
+        data['remaining'] = [max_duration_hours * 3600]
 
     # Distribuisci gli appartamenti nei pacchetti
     for apt in sorted_apts:
