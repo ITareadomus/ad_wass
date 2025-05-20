@@ -61,42 +61,36 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
         key=lambda a: (safe_date(a.get('checkin')), a.get('checkin_time') or '23:59')
     )
 
-    # Inizializza pacchetti per ruolo
+    # Inizializza pacchetti e remaining per ogni ruolo
     packets = {}
     for c in cleaners:
         if c.get('active') and c.get('available'):
             role = c.get('role')
             packets.setdefault(role, {'pkgs': [], 'remaining': []})
-
     for role, data in packets.items():
-        # Inizializza 1 pacchetto vuoto per iniziare (crescerà dinamicamente)
-        data['pkgs'] = [[]]
-        data['remaining'] = [max_duration_hours * 3600]
+        count = sum(1 for c in cleaners if c.get('role') == role and c.get('active') and c.get('available'))
+        data['pkgs'] = [[] for _ in range(count)]
+        data['remaining'] = [max_duration_hours*3600]*count
 
-    # Distribuisci gli appartamenti nei pacchetti
+    # Distribuisci apartment
     for apt in sorted_apts:
         role = apt.get('type')
-        if role not in packets:
-            continue
-
+        if role not in packets: continue
         data = packets[role]
-        cleaning_minutes = apt.get('cleaning_time') or 120
+        cleaning_minutes = apt.get('cleaning_time')
+        if cleaning_minutes is None:
+            cleaning_minutes = 120  # default 2 ore
         ct_sec = cleaning_minutes * 60
-
+        # ordina indici per remaining decrescente
         idxs = sorted(range(len(data['pkgs'])), key=lambda i: data['remaining'][i], reverse=True)
         placed = False
-
         for i in idxs:
             pkg = data['pkgs'][i]
-            remaining = data['remaining'][i]
-
             if not pkg:
                 pkg.append(apt)
                 data['remaining'][i] -= ct_sec
-                logging.info(f"[TASK {apt['task_id']}] ➤ Inserito come primo apt nel pacchetto {i+1}/{len(data['pkgs'])} '{role}' (Pulizia: {cleaning_minutes} min, Totale: {round((max_duration_hours * 3600 - data['remaining'][i])/3600, 2)}h)")
                 placed = True
                 break
-
             last = pkg[-1]
             try:
                 last_lat = float(last.get('lat', 0))
@@ -105,34 +99,22 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
                 apt_lng = float(apt.get('lng', 0))
             except (TypeError, ValueError):
                 continue
-
             d = calcola_distanza(last_lat, last_lng, apt_lat, apt_lng, mode='walking')
-            if not d:
-                continue
-
-            distance_m = d['distanza_metri']
-            travel_sec = distance_m / 1.4  # m / speed = seconds
-            total_required = ct_sec + travel_sec
-
-            if total_required <= remaining:
-                pkg.append(apt)
-                data['remaining'][i] -= total_required
-                logging.info(f"[TASK {apt['task_id']}] ➤ Aggiunto a pacchetto {i+1}/{len(data['pkgs'])} '{role}' | Dist: {int(distance_m)}m | Pulizia: {cleaning_minutes} min | Spostamento: {int(travel_sec//60)} min | Totale usato: {round((max_duration_hours * 3600 - data['remaining'][i])/3600, 2)}h")
-                placed = True
-                break
-
+            if d:
+                travel = d['distanza_metri']/1.4
+                if d['distanza_metri'] <= radius_m and ct_sec+travel <= data['remaining'][i]:
+                    pkg.append(apt)
+                    data['remaining'][i] -= (ct_sec+travel)
+                    placed = True
+                    break
         if not placed:
-            # fallback: forza l'inserimento nel pacchetto con più tempo libero
             i = idxs[0]
-            data['pkgs'][i].append(apt)
-            data['remaining'][i] -= ct_sec
-            logging.warning(f"[TASK {apt['task_id']}] ⚠️ Forzato in pacchetto {i+1}/{len(data['pkgs'])} '{role}' senza rispettare limiti (solo pulizia: {cleaning_minutes} min)")
+            packets[role]['pkgs'][i].append(apt)
+            packets[role]['remaining'][i] -= ct_sec
 
-    # Log finale pacchetti
     for role, data in packets.items():
         for i, pkg in enumerate(data['pkgs'], 1):
-            used = round((max_duration_hours * 3600 - data['remaining'][i-1])/3600, 2)
-            logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt | Totale tempo stimato: {used}h")
+            logging.info(f"Pacchetto {i}/{len(data['pkgs'])} '{role}' con {len(pkg)} apt (remaining {data['remaining'][i-1]}s)")
     return {role: data['pkgs'] for role, data in packets.items()}
 
 # FASE 2: Ordinamento all'interno dei pacchetti
@@ -151,31 +133,13 @@ def phase2_order_packages(packages):
 def phase3_assign_to_cleaners(ordered, cleaners):
     logging.info('--- FASE 3: Assegnazione pacchetti ai cleaner ---')
     assignments = []
-    
-    # Mappa cleaner per ruolo con ore assegnate temporanee
-    cleaner_map = {
-        role: [
-            {
-                'id': c['id'],
-                'name': c['name'],
-                'lastname': c['lastname'],
-                'role': c['role'],
-                'ranking': c.get('ranking', 0),
-                'counter_hours': c.get('counter_hours', 0.0),
-                'assigned_hours': 0.0,
-                'apartments': []
-            }
-            for c in cleaners if c.get('active') and c.get('available') and c.get('role') == role
-        ]
-        for role in ordered.keys()
-    }
-
     for role, pkgs in ordered.items():
-        for pkg in pkgs:
-            # Calcola tempo stimato del pacchetto (pulizia + spostamento)
+        cands = sorted([c for c in cleaners if c.get('role') == role and c.get('active') and c.get('available')],
+                       key=lambda c: (-c.get('ranking', 0), c.get('counter_hours', 0)))
+        for cleaner, pkg in zip(cands, pkgs):
             total_clean = sum(a.get('cleaning_time') if a.get('cleaning_time') is not None else 120 for a in pkg)
             total_travel = 0
-            for i in range(len(pkg) - 1):
+            for i in range(len(pkg)-1):
                 try:
                     lat1 = float(pkg[i].get('lat', 0))
                     lng1 = float(pkg[i].get('lng', 0))
@@ -185,40 +149,17 @@ def phase3_assign_to_cleaners(ordered, cleaners):
                     continue
                 d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
                 if d:
-                    total_travel += d['distanza_metri'] / 1.4 / 3600  # in ore
-
-            expected_hours = round((total_clean / 60.0) + total_travel, 2)
-
-            # Se non ci sono cleaner per questo ruolo → logga errore
-            if not cleaner_map[role]:
-                logging.error(f"Nessun cleaner disponibile per ruolo '{role}'. Il pacchetto con task {[a['task_id'] for a in pkg]} non sarà assegnato.")
-                continue
-
-            # Ordina i cleaner: meno ore totali (assegnate + counter_hours), ranking decrescente
-            cands = sorted(
-                cleaner_map[role],
-                key=lambda c: (c['assigned_hours'] + c['counter_hours'], -c['ranking'])
-            )
-
-            chosen = cands[0]
-            chosen['assigned_hours'] += expected_hours
-            chosen['apartments'].extend(a['task_id'] for a in pkg)
-
-            logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {chosen['name']} {chosen['lastname']} ({expected_hours}h)")
-
-    # Converte i cleaner che hanno ricevuto pacchetti in `assignments`
-    for role, clist in cleaner_map.items():
-        for c in clist:
-            if c['apartments']:
-                assignments.append({
-                    'cleaner_id': c['id'],
-                    'name': c['name'],
-                    'lastname': c['lastname'],
-                    'role': c['role'],
-                    'expected_hours': round(c['assigned_hours'], 2),
-                    'apartments': c['apartments']
-                })
-
+                    total_travel += d['distanza_metri']/1.4/3600
+            expected = round((total_clean/60.0) + total_travel, 2)
+            assignments.append({
+                'cleaner_id': cleaner['id'],
+                'name': cleaner['name'],
+                'lastname': cleaner['lastname'],
+                'role': role,
+                'expected_hours': expected,
+                'apartments': [a['task_id'] for a in pkg]
+            })
+            logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {cleaner['name']} {cleaner['lastname']} ({expected}h)")
     return assignments
 
 # Genera un report dettagliato in testo
