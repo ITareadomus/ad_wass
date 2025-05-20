@@ -1,6 +1,7 @@
 import json
 import logging
 import subprocess
+import sys
 from datetime import datetime, timedelta
 from gmaps import calcola_distanza
 
@@ -272,6 +273,9 @@ def main():
     save_assignments(assignments)
     save_detailed_report(assignments, apartments)
     logging.info('Esecuzione completata con successo.')
+
+    print("Python path:", sys.executable)
+    print("Python version:", sys.version)
 
 
 if __name__=='__main__':
