@@ -17,7 +17,7 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking'):
         mode (str): Modalità di trasporto ('driving', 'walking', 'bicycling', 'transit').
 
     Returns:
-        dict: Dizionario con 'distanza_testo', 'distanza_metri', 'durata', oppure None in caso di errore.
+        dict: Dizionario con 'distanza_testo', 'distanza_metri', 'durata' (in secondi), 'durata_testo', oppure None in caso di errore.
     """
     origine = f"{lat1},{lng1}"
     destinazione = f"{lat2},{lng2}"
@@ -35,12 +35,14 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking'):
 
         distanza_testo = elemento['distance']['text']
         distanza_valore = elemento['distance']['value']  # in metri
-        durata = elemento['duration']['text']
+        durata_testo = elemento['duration']['text']
+        durata_valore = elemento['duration']['value']    # in secondi
 
         return {
             'distanza_testo': distanza_testo,
             'distanza_metri': distanza_valore,
-            'durata': durata
+            'durata': durata_valore,      # in secondi!
+            'durata_testo': durata_testo  # opzionale
         }
 
     except Exception as e:
