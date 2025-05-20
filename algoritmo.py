@@ -28,10 +28,10 @@ def refresh_task_selection():
 def refresh_cleaner_selection():
     try:
         logging.info('Eseguo cleaner_selection.py per aggiornare la lista dei cleaner.')
-        subprocess.run(['python3', 'cleaner_selection.py'], check=True)
+        subprocess.run(['python3', 'cleaner_list.py'], check=True)
         logging.info('Lista dei cleaner aggiornata con successo.')
     except subprocess.CalledProcessError as e:
-        logging.error(f"Errore esecuzione cleaner_selection.py: {e}")
+        logging.error(f"Errore esecuzione cleaner_list.py: {e}")
         raise
 
 # Caricamento dati dai JSON di input
