@@ -253,14 +253,22 @@ def save_assignments(assignments):
 def main():
     setup_logging()
     logging.info('Inizio algoritmo di assegnazione')
-    refresh_task_selection(); refresh_cleaner_selection()
-    cleaners=load_selected_cleaners(); apartments=load_apartments()
-    packages=phase1_create_packages(apartments,cleaners)
-    ordered=phase2_order_packages(packages)
-    assignments=phase3_assign_to_cleaners(ordered,cleaners)
-    save_assignments(assignments)
-    save_detailed_report(assignments,apartments)
-    logging.info('Esecuzione completata con successo.')
+    refresh_task_selection()
+    refresh_cleaner_selection()
 
-if __name__=='__main__':
-    main()
+    cleaners = load_selected_cleaners()
+    apartments = load_apartments()
+
+    # 🔍 DEBUG: controllo cleaner disponibili
+    active_available = [c for c in cleaners if c.get('active') and c.get('available')]
+    logging.info(f"[DEBUG] Cleaner totali: {len(cleaners)}")
+    logging.info(f"[DEBUG] Cleaner disponibili (active=True AND available=True): {len(active_available)}")
+    for c in active_available:
+        logging.info(f"[DEBUG] ✓ Cleaner ID: {c.get('id')} | Nome: {c.get('name')} {c.get('lastname')} | Ruolo: {c.get('role')} | Ranking: {c.get('ranking')}")
+
+    packages = phase1_create_packages(apartments, cleaners)
+    ordered = phase2_order_packages(packages)
+    assignments = phase3_assign_to_cleaners(ordered, cleaners)
+    save_assignments(assignments)
+    save_detailed_report(assignments, apartments)
+    logging.info('Esecuzione completata con successo.')
