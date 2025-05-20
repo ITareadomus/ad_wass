@@ -75,42 +75,52 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
     # Distribuisci apartment
     for apt in sorted_apts:
         role = apt.get('type')
-        if role not in packets: continue
+        if role not in packets:
+            continue
         data = packets[role]
-        cleaning_minutes = apt.get('cleaning_time')
-        if cleaning_minutes is None:
-            cleaning_minutes = 120  # default 2 ore
+        cleaning_minutes = apt.get('cleaning_time') or 120
         ct_sec = cleaning_minutes * 60
-        # ordina indici per remaining decrescente
+
         idxs = sorted(range(len(data['pkgs'])), key=lambda i: data['remaining'][i], reverse=True)
         placed = False
+
         for i in idxs:
             pkg = data['pkgs'][i]
             if not pkg:
+                # Primo apt nel pacchetto
                 pkg.append(apt)
                 data['remaining'][i] -= ct_sec
                 placed = True
                 break
+
             last = pkg[-1]
             try:
-                last_lat = float(last.get('lat', 0))
-                last_lng = float(last.get('lng', 0))
-                apt_lat = float(apt.get('lat', 0))
-                apt_lng = float(apt.get('lng', 0))
+                last_lat, last_lng = float(last.get('lat', 0)), float(last.get('lng', 0))
+                apt_lat, apt_lng = float(apt.get('lat', 0)), float(apt.get('lng', 0))
             except (TypeError, ValueError):
                 continue
+
             d = calcola_distanza(last_lat, last_lng, apt_lat, apt_lng, mode='walking')
-            if d:
-                travel = d['distanza_metri']/1.4
-                if d['distanza_metri'] <= radius_m and ct_sec+travel <= data['remaining'][i]:
-                    pkg.append(apt)
-                    data['remaining'][i] -= (ct_sec+travel)
-                    placed = True
-                    break
+            if not d:
+                continue
+
+            distance_m = d['distanza_metri']
+            travel_sec = distance_m / 1.4  # circa 1.4 m/s per camminata
+
+            total_required = ct_sec + travel_sec
+            if total_required <= data['remaining'][i]:
+                # Verifica se rispetta almeno il limite temporale
+                pkg.append(apt)
+                data['remaining'][i] -= total_required
+                placed = True
+                break
+
         if not placed:
+            # Forza inserimento nel pacchetto con più tempo disponibile
             i = idxs[0]
             packets[role]['pkgs'][i].append(apt)
             packets[role]['remaining'][i] -= ct_sec
+
 
     for role, data in packets.items():
         for i, pkg in enumerate(data['pkgs'], 1):
