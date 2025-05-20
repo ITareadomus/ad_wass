@@ -36,11 +36,11 @@ def refresh_cleaner_selection():
 
 # Caricamento dati dai JSON di input
 def load_selected_cleaners():
-    with open('sel_cleaners.json', 'r', encoding='utf-8') as f:
+    with open('modello_cleaner.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('cleaners', [])
 
 def load_apartments():
-    with open('mock_apartments.json', 'r', encoding='utf-8') as f:
+    with open('modello_apt.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('apt', [])
 
 # FASE 1: Creazione pacchetti bilanciati (multi-processor scheduling)
