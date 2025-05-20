@@ -151,13 +151,31 @@ def phase2_order_packages(packages):
 def phase3_assign_to_cleaners(ordered, cleaners):
     logging.info('--- FASE 3: Assegnazione pacchetti ai cleaner ---')
     assignments = []
+    
+    # Mappa cleaner per ruolo con ore assegnate temporanee
+    cleaner_map = {
+        role: [
+            {
+                'id': c['id'],
+                'name': c['name'],
+                'lastname': c['lastname'],
+                'role': c['role'],
+                'ranking': c.get('ranking', 0),
+                'counter_hours': c.get('counter_hours', 0.0),
+                'assigned_hours': 0.0,
+                'apartments': []
+            }
+            for c in cleaners if c.get('active') and c.get('available') and c.get('role') == role
+        ]
+        for role in ordered.keys()
+    }
+
     for role, pkgs in ordered.items():
-        cands = sorted([c for c in cleaners if c.get('role') == role and c.get('active') and c.get('available')],
-                       key=lambda c: (-c.get('ranking', 0), c.get('counter_hours', 0)))
-        for cleaner, pkg in zip(cands, pkgs):
+        for pkg in pkgs:
+            # Calcola tempo stimato del pacchetto (pulizia + spostamento)
             total_clean = sum(a.get('cleaning_time') if a.get('cleaning_time') is not None else 120 for a in pkg)
             total_travel = 0
-            for i in range(len(pkg)-1):
+            for i in range(len(pkg) - 1):
                 try:
                     lat1 = float(pkg[i].get('lat', 0))
                     lng1 = float(pkg[i].get('lng', 0))
@@ -167,17 +185,40 @@ def phase3_assign_to_cleaners(ordered, cleaners):
                     continue
                 d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
                 if d:
-                    total_travel += d['distanza_metri']/1.4/3600
-            expected = round((total_clean/60.0) + total_travel, 2)
-            assignments.append({
-                'cleaner_id': cleaner['id'],
-                'name': cleaner['name'],
-                'lastname': cleaner['lastname'],
-                'role': role,
-                'expected_hours': expected,
-                'apartments': [a['task_id'] for a in pkg]
-            })
-            logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {cleaner['name']} {cleaner['lastname']} ({expected}h)")
+                    total_travel += d['distanza_metri'] / 1.4 / 3600  # in ore
+
+            expected_hours = round((total_clean / 60.0) + total_travel, 2)
+
+            # Se non ci sono cleaner per questo ruolo → logga errore
+            if not cleaner_map[role]:
+                logging.error(f"Nessun cleaner disponibile per ruolo '{role}'. Il pacchetto con task {[a['task_id'] for a in pkg]} non sarà assegnato.")
+                continue
+
+            # Ordina i cleaner: meno ore totali (assegnate + counter_hours), ranking decrescente
+            cands = sorted(
+                cleaner_map[role],
+                key=lambda c: (c['assigned_hours'] + c['counter_hours'], -c['ranking'])
+            )
+
+            chosen = cands[0]
+            chosen['assigned_hours'] += expected_hours
+            chosen['apartments'].extend(a['task_id'] for a in pkg)
+
+            logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {chosen['name']} {chosen['lastname']} ({expected_hours}h)")
+
+    # Converte i cleaner che hanno ricevuto pacchetti in `assignments`
+    for role, clist in cleaner_map.items():
+        for c in clist:
+            if c['apartments']:
+                assignments.append({
+                    'cleaner_id': c['id'],
+                    'name': c['name'],
+                    'lastname': c['lastname'],
+                    'role': c['role'],
+                    'expected_hours': round(c['assigned_hours'], 2),
+                    'apartments': c['apartments']
+                })
+
     return assignments
 
 # Genera un report dettagliato in testo
