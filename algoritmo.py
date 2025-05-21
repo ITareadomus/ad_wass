@@ -111,7 +111,7 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
             if not d:
                 continue
 
-            #distance_m = d['distanza_metri']
+            distance_m = d['distanza_metri']
             #travel_sec = distance_m / 1.4  # m/s camminata
             
             travel_sec = d['durata']  # in secondi
