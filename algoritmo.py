@@ -86,22 +86,6 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
         placed = False
 
         for i in idxs:
-            too_far = False
-            for other in pkg:
-                try:
-                    other_lat = float(other.get('lat', 0))
-                    other_lng = float(other.get('lng', 0))
-                    d_check = calcola_distanza(other_lat, other_lng, apt_lat, apt_lng, mode='walking')
-                    if not d_check or d_check['distanza_metri'] > radius_m:
-                        too_far = True
-                        break
-                except:
-                    too_far = True
-                    break
-
-            if too_far:
-                continue  # salta questo pacchetto e prova il prossimo
-
             pkg = data['pkgs'][i]
             remaining = data['remaining'][i]
 
@@ -113,7 +97,27 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
                 placed = True
                 break
 
-            # verifica distanza e tempo
+            # Controlla se è troppo lontano dagli altri nel pacchetto
+            troppo_lontano = False
+            for other in pkg:
+                try:
+                    dist = calcola_distanza(
+                        float(other['lat']), float(other['lng']),
+                        float(apt['lat']), float(apt['lng']),
+                        mode='walking'
+                    )
+                except Exception as e:
+                    continue
+                if not dist:
+                    continue
+                if dist['distanza_metri'] > radius_m:
+                    troppo_lontano = True
+                    break
+
+            if troppo_lontano:
+                continue
+
+            # verifica distanza e tempo dall’ultimo
             last = pkg[-1]
             try:
                 last_lat = float(last.get('lat', 0))
@@ -128,11 +132,9 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
                 continue
 
             distance_m = d['distanza_metri']
-            #travel_sec = distance_m / 1.4  # m/s camminata
-            
             travel_sec = d['durata']  # in secondi
-
             total_required = ct_sec + travel_sec
+
             if total_required <= remaining:
                 pkg.append(apt)
                 data['remaining'][i] -= total_required
