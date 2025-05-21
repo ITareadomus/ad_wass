@@ -256,7 +256,7 @@ def save_assignments(assignments):
 def main():
     setup_logging()
     logging.info('Inizio algoritmo di assegnazione')
-    refresh_task_selection()
+    #refresh_task_selection()
     refresh_cleaner_selection()
 
     cleaners = load_selected_cleaners()
