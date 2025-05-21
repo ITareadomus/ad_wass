@@ -75,3 +75,8 @@ Solo che ci sono dei parametri che deve considerare anche se l'apt con priorità
 Prende in seguito gli appartamenti, ognuno con le proprie specifiche, e calcola la priorità di ogni task in base agli orari di check-in e check-out.  
 Inizia ad assegnare gli appartamenti con priorità più alta ai cleaner premium, valutando anche il loro orario di convocazione e scegliendo il migliore per quel task. Dopo il primo giro di assegnazioni, si passa a quelli successivi, dove vengono assegnati ulteriori appartamenti ai cleaner, valutando il tempo di pulizia, la grandezza degli appartamenti e la distanza da quello precedente. Si procede nello stesso modo anche per i cleaner standard.  
 Infine, avendo la lista delle assegnazioni, questa viene passata all'area di controllo per rivederla e aggiustarla, se necessario. Successivamente, viene validata in una maschera sul gestionale dove sarà confermata
+
+Dati che mancano per l'algoritmo
+1 manca il conteggio delle ore
+2 mancano i giorni di riposo
+3 manca il minimo ore da contratto
