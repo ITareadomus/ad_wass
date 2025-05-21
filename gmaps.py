@@ -5,7 +5,7 @@ API_KEY = 'AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0'  # TODO: sostituisci con la 
 
 gmaps = googlemaps.Client(key=API_KEY)
 
-def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking'):
+def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking', departure_time=None):
     """
     Calcola la distanza e il tempo di percorrenza tra due coordinate geografiche.
 
@@ -15,6 +15,7 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking'):
         lat2 (float): Latitudine del punto di arrivo.
         lng2 (float): Longitudine del punto di arrivo.
         mode (str): Modalità di trasporto ('driving', 'walking', 'bicycling', 'transit').
+        departure_time (int|datetime, opzionale): Timestamp o datetime di partenza.
 
     Returns:
         dict: Dizionario con 'distanza_testo', 'distanza_metri', 'durata' (in secondi), 'durata_testo', oppure None in caso di errore.
@@ -23,10 +24,16 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking'):
     destinazione = f"{lat2},{lng2}"
 
     try:
-        result = gmaps.distance_matrix(origins=[origine],
-                                       destinations=[destinazione],
-                                       mode=mode,
-                                       units='metric')
+        params = dict(
+            origins=[origine],
+            destinations=[destinazione],
+            mode=mode,
+            units='metric'
+        )
+        if departure_time is not None:
+            params['departure_time'] = departure_time
+
+        result = gmaps.distance_matrix(**params)
 
         elemento = result['rows'][0]['elements'][0]
 
