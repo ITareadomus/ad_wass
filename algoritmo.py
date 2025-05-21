@@ -86,6 +86,22 @@ def phase1_create_packages(apartments, cleaners, max_duration_hours=4, radius_m=
         placed = False
 
         for i in idxs:
+            too_far = False
+            for other in pkg:
+                try:
+                    other_lat = float(other.get('lat', 0))
+                    other_lng = float(other.get('lng', 0))
+                    d_check = calcola_distanza(other_lat, other_lng, apt_lat, apt_lng, mode='walking')
+                    if not d_check or d_check['distanza_metri'] > radius_m:
+                        too_far = True
+                        break
+                except:
+                    too_far = True
+                    break
+
+            if too_far:
+                continue  # salta questo pacchetto e prova il prossimo
+
             pkg = data['pkgs'][i]
             remaining = data['remaining'][i]
 
