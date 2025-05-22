@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from gmaps import calcola_distanza
 
 from route_optimizer import optimize_route
+from sklearn.cluster import KMeans
+import numpy as np
 
 
 # Configurazione logging
@@ -107,7 +109,7 @@ def load_apartments():
                     lng2 = float(apt.get('lng', 0))
                 except (TypeError, ValueError):
                     continue
-                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
+                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
                 travel_sec = d['durata'] if d else 0
                 start_time = last_finish + timedelta(seconds=travel_sec) if last_finish else None
                 finish_time = start_time + timedelta(seconds=ct_sec) if start_time else None
@@ -174,54 +176,56 @@ def parse_datetime(date_str, time_str):
 def assign_apartments_to_packages(sorted_apts, packets):
     for role in packets:
         pkgs = packets[role]['pkgs']
-        checkin_times = packets[role]['checkin_times']
         role_apts = [a for a in sorted_apts if a.get('type') == role]
         n = len(pkgs)
+        assigned_ids = set()
+
+        # Prepara i dati per il clustering
+        coords = []
+        apt_idx = []
         for idx, apt in enumerate(role_apts):
-            cleaning_minutes = apt.get('cleaning_time') or 120
-            ct_sec = cleaning_minutes * 60
-            placed = False
-            for offset in range(n):
-                i = (idx + offset) % n
-                pkg = pkgs[i]
-                if not pkg:
-                    start_time = parse_datetime(apt.get('checkout'), apt.get('checkout_time') or '00:00')
-                    finish_time = start_time + timedelta(seconds=ct_sec) if start_time else None
-                    checkin_time = parse_datetime(apt.get('checkin'), apt.get('checkin_time') or '23:59')
-                    if finish_time and checkin_time and finish_time <= checkin_time:
-                        pkg.append(apt)
-                        checkin_times[i].append(checkin_time)
-                        placed = True
-                        break
-                    continue
-                last_apt = pkg[-1]
-                last_finish = parse_datetime(last_apt.get('checkout'), last_apt.get('checkout_time') or '00:00')
-                last_cleaning = last_apt.get('cleaning_time') or 120
-                last_finish = last_finish + timedelta(minutes=last_cleaning) if last_finish else None
-                try:
-                    lat1, lng1 = float(last_apt.get('lat', 0)), float(last_apt.get('lng', 0))
-                    lat2, lng2 = float(apt.get('lat', 0)), float(apt.get('lng', 0))
-                except (TypeError, ValueError):
-                    continue
-                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
-                travel_sec = d['durata'] if d else 0
-                start_time = last_finish + timedelta(seconds=travel_sec) if last_finish else None
-                finish_time = start_time + timedelta(seconds=ct_sec) if start_time else None
-                checkin_time = parse_datetime(apt.get('checkin'), apt.get('checkin_time') or '23:59')
-                if finish_time and checkin_time and finish_time <= checkin_time:
-                    pkg.append(apt)
-                    checkin_times[i].append(checkin_time)
-                    placed = True
-                    break
-            if not placed:
-                logging.warning(f"[TASK {apt.get('task_id')}] Non è stato possibile assegnare l'appartamento rispettando i vincoli temporali.")
+            try:
+                coords.append([float(apt.get('lat', 0)), float(apt.get('lng', 0))])
+                apt_idx.append(idx)
+            except Exception:
+                continue
+
+        # Esegui il clustering geografico
+        if len(coords) >= n:
+            kmeans = KMeans(n_clusters=n, random_state=0).fit(coords)
+            labels = kmeans.labels_
+        else:
+            labels = [0] * len(coords)
+
+        # Assegna gli appartamenti ai pacchetti in base al cluster
+        clusters = [[] for _ in range(n)]
+        for idx, label in zip(apt_idx, labels):
+            clusters[label].append(role_apts[idx])
+
+        # Bilancia i cluster se necessario (max 4, min 2 per pacchetto)
+        # Sposta eventuali appartamenti in eccesso nei cluster più piccoli
+        changed = True
+        while changed:
+            changed = False
+            for i, cluster in enumerate(clusters):
+                if len(cluster) > 4:
+                    # Trova il cluster più piccolo con meno di 4
+                    min_idx = np.argmin([len(c) for c in clusters])
+                    if len(clusters[min_idx]) < 4:
+                        clusters[min_idx].append(cluster.pop())
+                        changed = True
+
+        # Assegna ai pacchetti
+        for i, cluster in enumerate(clusters):
+            for apt in cluster:
+                pkgs[i].append(apt)
+                assigned_ids.add(apt.get('task_id'))
 
     # Rimuove pacchetti vuoti
     for role, data in packets.items():
         data['pkgs'] = [pkg for pkg in data['pkgs'] if pkg]
-        data['checkin_times'] = [times for times in data['checkin_times'] if times]
 
-    # ⬅️ Sposta questo blocco prima del return
+    # Riordina ogni pacchetto per percorso più breve
     for role, data in packets.items():
         data['pkgs'] = [reorder_package_by_distance(pkg) for pkg in data['pkgs']]
 
@@ -237,38 +241,26 @@ def reorder_package_by_distance(pkg):
 
     while remaining:
         last = ordered[-1]
-        try:
-            lat1, lng1 = float(last.get('lat', 0)), float(last.get('lng', 0))
-        except (TypeError, ValueError):
-            logging.warning("Coordinate non valide nel pacchetto.")
-            break
-
-        distanza_info = []
-        for apt in remaining:
+        # Find the closest apartment to the last one in the ordered list
+        best_idx = None
+        best_dist = None
+        for idx, apt in enumerate(remaining):
             try:
+                lat1, lng1 = float(last.get('lat', 0)), float(last.get('lng', 0))
                 lat2, lng2 = float(apt.get('lat', 0)), float(apt.get('lng', 0))
-                dist = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
-                durata = dist.get('durata', float('inf'))
-                distanza_info.append((apt, durata))
-                logging.debug(
-                    f"[RIORDINO] Da {last.get('task_id')} a {apt.get('task_id')}: durata = {durata} sec"
-                )
-            except Exception as e:
-                logging.warning(f"Errore durante il calcolo della distanza: {e}")
-
-        if not distanza_info:
-            logging.warning("Nessuna distanza valida calcolata, interrotto il riordino.")
-            break
-
-        # Trova l'appartamento più vicino
-        next_apt, _ = min(distanza_info, key=lambda x: x[1])
-
-        ordered.append(next_apt)
-        remaining.remove(next_apt)
-
+            except (TypeError, ValueError):
+                continue
+            d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
+            dist = d['distanza_metri'] if d else float('inf')
+            if best_dist is None or dist < best_dist:
+                best_dist = dist
+                best_idx = idx
+        if best_idx is not None:
+            ordered.append(remaining.pop(best_idx))
+        else:
+            # If no valid distance, just append the next one
+            ordered.append(remaining.pop(0))
     return ordered
-
-
 
 def log_package_summary(packets):
     for role, data in packets.items():
@@ -322,7 +314,7 @@ def phase3_assign_to_cleaners(ordered, cleaners):
                     lng2 = float(pkg[i+1].get('lng', 0))
                 except (TypeError, ValueError):
                     continue
-                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
+                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
                 if d:
                     total_travel += d['distanza_metri'] / 1.4 / 3600
 
@@ -333,7 +325,7 @@ def phase3_assign_to_cleaners(ordered, cleaners):
                 logging.warning(f"Nessun cleaner disponibile per il ruolo '{role}' – pacchetto non assegnato.")
                 continue
 
-            # Assegna al cleaner con meno ore totali (assegnate + counter_hours), poi ranking
+            # Assegna al cleaner con meno ore totali (assegnate + counter_hours)
             cands = sorted(
                 cleaner_map[role],
                 key=lambda c: (c['assigned_hours'] + c['counter_hours'], -c['ranking'])
@@ -379,7 +371,7 @@ def save_detailed_report(assignments, apartments):
                         lng2 = float(next_apt.get('lng', 0))
                     except (TypeError, ValueError):
                         continue
-                    d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
+                    d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
                     if d:
                         durata_min = round(d['durata'] / 60, 1)
                         f.write(f"     -> distanza: {d['distanza_metri']}m, durata: {durata_min} min\n")

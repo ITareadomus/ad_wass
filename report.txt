@@ -1,36 +1,36 @@
 Cleaner: MUTURI DANIEL NGANGA (Standard)
   1. Task 100005: Via Paolo Sarpi, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2676m, durata: 37.0 min
-  2. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2381m, durata: 33.2 min
-  3. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:00
+     -> distanza: 2602m, durata: 20.4 min
+  2. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 751m, durata: 10.2 min
+  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 4.0
+  ➤ Totale ore assegnate: 3.67
 
 Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
-  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 3395m, durata: 46.8 min
-  2. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:00
-     -> distanza: 8018m, durata: 112.4 min
-  3. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:00
+  1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 3128m, durata: 24.9 min
+  2. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 8639m, durata: 37.2 min
+  3. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 5.26
+  ➤ Totale ore assegnate: 5.33
 
 Cleaner: Ogbodo Chidi Igwe (Standard)
-  1. Task 100011: Via Senato, 15 - checkin: 2025-05-17 16:00 | checkout: 2025-05-16 10:00
-     -> distanza: 912m, durata: 12.4 min
-  2. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2503m, durata: 34.6 min
-  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:00
+  1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 4019m, durata: 22.8 min
+  2. Task 100012: Via Dante, 10 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 3.68
+  ➤ Totale ore assegnate: 2.8
 
 Cleaner: BAH ISMAILA (Standard)
-  1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 15:00 | checkout: 2025-05-16 10:00
-     -> distanza: 4833m, durata: 66.9 min
-  2. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 1349m, durata: 18.2 min
-  3. Task 100012: Via Dante, 10 - checkin: 2025-05-17 16:00 | checkout: 2025-05-16 10:00
+  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 1769m, durata: 15.8 min
+  2. Task 100011: Via Senato, 15 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 912m, durata: 12.4 min
+  3. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 2143m, durata: 14.6 min
+  4. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 4.23
+  ➤ Totale ore assegnate: 4.96
 

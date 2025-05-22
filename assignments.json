@@ -5,11 +5,11 @@
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
             "role": "Standard",
-            "expected_hours": 4.0,
+            "expected_hours": 3.67,
             "apartments": [
                 100005,
-                100001,
-                100009
+                100006,
+                100007
             ]
         },
         {
@@ -17,10 +17,10 @@
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
-            "expected_hours": 5.26,
+            "expected_hours": 5.33,
             "apartments": [
-                100002,
-                100006,
+                100001,
+                100009,
                 100010
             ]
         },
@@ -29,11 +29,10 @@
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
             "role": "Standard",
-            "expected_hours": 3.68,
+            "expected_hours": 2.8,
             "apartments": [
-                100011,
-                100003,
-                100007
+                100008,
+                100012
             ]
         },
         {
@@ -41,11 +40,12 @@
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
-            "expected_hours": 4.23,
+            "expected_hours": 4.96,
             "apartments": [
-                100008,
-                100004,
-                100012
+                100002,
+                100011,
+                100003,
+                100004
             ]
         }
     ]
