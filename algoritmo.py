@@ -227,8 +227,7 @@ def assign_apartments_to_packages(sorted_apts, packets):
 
     return packets
 
-    
-def reorder_package_by_distance(pkg):
+  def reorder_package_by_distance(pkg):
     if not pkg:
         return pkg
 
@@ -243,23 +242,31 @@ def reorder_package_by_distance(pkg):
             logging.warning("Coordinate non valide nel pacchetto.")
             break
 
-        try:
-            next_apt = min(
-                remaining,
-                key=lambda apt: calcola_distanza(
-                    lat1, lng1,
-                    float(apt.get('lat', 0)), float(apt.get('lng', 0)),
-                    mode='walking'
-                ).get('durata', float('inf'))  # <-- ora usa durata
-            )
-        except Exception as e:
-            logging.warning(f"Errore durante il riordino per distanza: {e}")
+        distanza_info = []
+        for apt in remaining:
+            try:
+                lat2, lng2 = float(apt.get('lat', 0)), float(apt.get('lng', 0))
+                dist = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
+                durata = dist.get('durata', float('inf'))
+                distanza_info.append((apt, durata))
+                logging.debug(
+                    f"[RIORDINO] Da {last.get('task_id')} a {apt.get('task_id')}: durata = {durata} sec"
+                )
+            except Exception as e:
+                logging.warning(f"Errore durante il calcolo della distanza: {e}")
+
+        if not distanza_info:
+            logging.warning("Nessuna distanza valida calcolata, interrotto il riordino.")
             break
+
+        # Trova l'appartamento più vicino
+        next_apt, _ = min(distanza_info, key=lambda x: x[1])
 
         ordered.append(next_apt)
         remaining.remove(next_apt)
 
     return ordered
+
 
 
 def log_package_summary(packets):
