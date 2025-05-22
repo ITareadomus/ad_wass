@@ -45,7 +45,7 @@ def load_apartments():
         return json.load(f).get('apt', [])
 
 # FASE 1: Creazione pacchetti bilanciati (multi-processor scheduling)
-def phase1_create_packages(apartments, cleaners):
+'''def phase1_create_packages(apartments, cleaners):
     logging.info('--- FASE 1: Creazione pacchetti ---')
 
     def parse_datetime(date_str, time_str):
@@ -128,7 +128,99 @@ def phase1_create_packages(apartments, cleaners):
     for role, data in packets.items():
         for i, pkg in enumerate(data['pkgs'], 1):
             logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt")
+    return {role: data['pkgs'] for role, data in packets.items()}'''
+
+def phase1_create_packages(apartments, cleaners):
+    logging.info('--- FASE 1: Creazione pacchetti ---')
+    sorted_apts = sort_apartments_by_checkout(apartments)
+    role_cleaner_count = count_cleaners_per_role(cleaners)
+    packets = initialize_empty_packages(role_cleaner_count)
+    packets = assign_apartments_to_packages(sorted_apts, packets)
+    log_package_summary(packets)
     return {role: data['pkgs'] for role, data in packets.items()}
+
+
+def sort_apartments_by_checkout(apartments):
+    return sorted(
+        apartments,
+        key=lambda a: (a.get('checkout') or '', a.get('checkout_time') or '00:00')
+    )
+
+def count_cleaners_per_role(cleaners):
+    role_cleaner_count = {}
+    for c in cleaners:
+        if c.get('active') and c.get('available'):
+            role = c.get('role')
+            role_cleaner_count[role] = role_cleaner_count.get(role, 0) + 1
+    return role_cleaner_count
+
+def initialize_empty_packages(role_cleaner_count):
+    packets = {}
+    for role, n_cleaners in role_cleaner_count.items():
+        packets[role] = {
+            'pkgs': [[] for _ in range(n_cleaners)],
+            'checkin_times': [[] for _ in range(n_cleaners)]
+        }
+    return packets
+
+
+def parse_datetime(date_str, time_str):
+    try:
+        return datetime.fromisoformat(f"{date_str}T{time_str}")
+    except Exception:
+        return None
+
+
+def assign_apartments_to_packages(sorted_apts, packets):
+    for role in packets:
+        pkgs = packets[role]['pkgs']
+        checkin_times = packets[role]['checkin_times']
+        role_apts = [a for a in sorted_apts if a.get('type') == role]
+        n = len(pkgs)
+        for idx, apt in enumerate(role_apts):
+            cleaning_minutes = apt.get('cleaning_time') or 120
+            ct_sec = cleaning_minutes * 60
+            placed = False
+            for offset in range(n):
+                i = (idx + offset) % n
+                pkg = pkgs[i]
+                if not pkg:
+                    start_time = parse_datetime(apt.get('checkout'), apt.get('checkout_time') or '00:00')
+                    finish_time = start_time + timedelta(seconds=ct_sec) if start_time else None
+                    checkin_time = parse_datetime(apt.get('checkin'), apt.get('checkin_time') or '23:59')
+                    if finish_time and checkin_time and finish_time <= checkin_time:
+                        pkg.append(apt)
+                        checkin_times[i].append(checkin_time)
+                        placed = True
+                        break
+                    continue
+                last_apt = pkg[-1]
+                last_finish = parse_datetime(last_apt.get('checkout'), last_apt.get('checkout_time') or '00:00')
+                last_cleaning = last_apt.get('cleaning_time') or 120
+                last_finish = last_finish + timedelta(minutes=last_cleaning) if last_finish else None
+                try:
+                    lat1, lng1 = float(last_apt.get('lat', 0)), float(last_apt.get('lng', 0))
+                    lat2, lng2 = float(apt.get('lat', 0)), float(apt.get('lng', 0))
+                except (TypeError, ValueError):
+                    continue
+                d = calcola_distanza(lat1, lng1, lat2, lng2, mode='walking')
+                travel_sec = d['durata'] if d else 0
+                start_time = last_finish + timedelta(seconds=travel_sec) if last_finish else None
+                finish_time = start_time + timedelta(seconds=ct_sec) if start_time else None
+                checkin_time = parse_datetime(apt.get('checkin'), apt.get('checkin_time') or '23:59')
+                if finish_time and checkin_time and finish_time <= checkin_time:
+                    pkg.append(apt)
+                    checkin_times[i].append(checkin_time)
+                    placed = True
+                    break
+            if not placed:
+                logging.warning(f"[TASK {apt.get('task_id')}] Non è stato possibile assegnare l'appartamento rispettando i vincoli temporali.")
+
+    # Rimuove pacchetti vuoti
+    for role, data in packets.items():
+        data['pkgs'] = [pkg for pkg in data['pkgs'] if pkg]
+        data['checkin_times'] = [times for times in data['checkin_times'] if times]
+    return packets
 
 # FASE 2: Ordinamento all'interno dei pacchetti
 def phase2_order_packages(packages):
