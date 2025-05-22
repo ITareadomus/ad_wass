@@ -227,7 +227,8 @@ def assign_apartments_to_packages(sorted_apts, packets):
 
     return packets
 
-  def reorder_package_by_distance(pkg):
+
+ def reorder_package_by_distance(pkg):
     if not pkg:
         return pkg
 
