@@ -231,24 +231,35 @@ def reorder_package_by_distance(pkg):
     if not pkg:
         return pkg
 
-    reordered = []
-    remaining = pkg.copy()
-    current = remaining.pop(0)
-    reordered.append(current)
+    ordered = [pkg[0]]
+    remaining = pkg[1:]
 
     while remaining:
-        lat1 = float(current.get('lat', 0))
-        lng1 = float(current.get('lng', 0))
+        last = ordered[-1]
+        try:
+            lat1, lng1 = float(last.get('lat', 0)), float(last.get('lng', 0))
+        except (TypeError, ValueError):
+            logging.warning("Coordinate non valide nel pacchetto.")
+            break
 
-        next_apt = min(
-            remaining,
-            key=lambda apt: calcola_distanza(lat1, lng1, float(apt.get('lat', 0)), float(apt.get('lng', 0)), mode='walking')["durata"]
-        )
+        try:
+            next_apt = min(
+                remaining,
+                key=lambda apt: calcola_distanza(
+                    lat1, lng1,
+                    float(apt.get('lat', 0)), float(apt.get('lng', 0)),
+                    mode='walking'
+                ).get('durata', float('inf'))  # <-- ora usa durata
+            )
+        except Exception as e:
+            logging.warning(f"Errore durante il riordino per distanza: {e}")
+            break
+
+        ordered.append(next_apt)
         remaining.remove(next_apt)
-        reordered.append(next_apt)
-        current = next_apt
 
-    return reordered
+    return ordered
+
 
 def log_package_summary(packets):
     for role, data in packets.items():
