@@ -222,6 +222,11 @@ def assign_apartments_to_packages(sorted_apts, packets):
         data['checkin_times'] = [times for times in data['checkin_times'] if times]
     return packets
 
+def log_package_summary(packets):
+    for role, data in packets.items():
+        for i, pkg in enumerate(data['pkgs'], 1):
+            logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt")
+
 # FASE 2: Ordinamento all'interno dei pacchetti
 def phase2_order_packages(packages):
     logging.info('--- FASE 2: Ordinamento interno pacchetti ---')
