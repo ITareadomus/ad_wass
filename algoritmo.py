@@ -242,7 +242,7 @@ def reorder_package_by_distance(pkg):
 
         next_apt = min(
             remaining,
-            key=lambda apt: calcola_distanza(lat1, lng1, float(apt.get('lat', 0)), float(apt.get('lng', 0)), mode='walking')["distanza"]
+            key=lambda apt: calcola_distanza(lat1, lng1, float(apt.get('lat', 0)), float(apt.get('lng', 0)), mode='walking')["durata"]
         )
         remaining.remove(next_apt)
         reordered.append(next_apt)
