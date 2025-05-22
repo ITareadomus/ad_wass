@@ -227,6 +227,7 @@ def assign_apartments_to_packages(sorted_apts, packets):
 
     return packets
 
+    
 def reorder_package_by_distance(pkg):
     if not pkg:
         return pkg
@@ -334,9 +335,7 @@ def phase3_assign_to_cleaners(ordered, cleaners):
             chosen['apartments'].extend([a['task_id'] for a in pkg])
 
             logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {chosen['name']} {chosen['lastname']} ({expected_hours}h)")
-            for role, data in packets.items():
-                for i, pkg in enumerate(data['pkgs']):
-                    logging.info(f"[{role} - pacchetto {i}] Task IDs: {[apt['task_id'] for apt in pkg]}")
+
     # Ritorna solo cleaner con appartamenti assegnati
     for clist in cleaner_map.values():
         for c in clist:
