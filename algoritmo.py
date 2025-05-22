@@ -220,7 +220,35 @@ def assign_apartments_to_packages(sorted_apts, packets):
     for role, data in packets.items():
         data['pkgs'] = [pkg for pkg in data['pkgs'] if pkg]
         data['checkin_times'] = [times for times in data['checkin_times'] if times]
+
+    # ⬅️ Sposta questo blocco prima del return
+    for role, data in packets.items():
+        data['pkgs'] = [reorder_package_by_distance(pkg) for pkg in data['pkgs']]
+
     return packets
+
+def reorder_package_by_distance(pkg):
+    if not pkg:
+        return pkg
+
+    reordered = []
+    remaining = pkg.copy()
+    current = remaining.pop(0)
+    reordered.append(current)
+
+    while remaining:
+        lat1 = float(current.get('lat', 0))
+        lng1 = float(current.get('lng', 0))
+
+        next_apt = min(
+            remaining,
+            key=lambda apt: calcola_distanza(lat1, lng1, float(apt.get('lat', 0)), float(apt.get('lng', 0)), mode='walking')["distanza"]
+        )
+        remaining.remove(next_apt)
+        reordered.append(next_apt)
+        current = next_apt
+
+    return reordered
 
 def log_package_summary(packets):
     for role, data in packets.items():
