@@ -7,7 +7,7 @@ from datetime import datetime
 # Inizializza il client con la tua API Key
 gmaps = googlemaps.Client(key="AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0")
 
-def optimize_route(pkg, mode="walking"):
+def optimize_route(pkg, mode="transit"):
     """
     Dato un pacchetto pkg (lista di dict con 'lat','lng'),
     restituisce lo stesso pkg riordinato secondo l'ottimizzazione Google.

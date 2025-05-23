@@ -9,12 +9,12 @@ Cleaner: MUTURI DANIEL NGANGA (Standard)
 
 Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
   1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 3128m, durata: 24.9 min
+     -> distanza: 3355m, durata: 26.8 min
   2. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 8639m, durata: 37.2 min
+     -> distanza: 8586m, durata: 37.2 min
   3. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 5.33
+  ➤ Totale ore assegnate: 5.37
 
 Cleaner: Ogbodo Chidi Igwe (Standard)
   1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
@@ -25,12 +25,12 @@ Cleaner: Ogbodo Chidi Igwe (Standard)
 
 Cleaner: BAH ISMAILA (Standard)
   1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 1769m, durata: 15.8 min
+     -> distanza: 1003m, durata: 13.8 min
   2. Task 100011: Via Senato, 15 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
      -> distanza: 912m, durata: 12.4 min
   3. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
      -> distanza: 2143m, durata: 14.6 min
   4. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
 
-  ➤ Totale ore assegnate: 4.96
+  ➤ Totale ore assegnate: 4.81
 

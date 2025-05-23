@@ -17,7 +17,7 @@
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
-            "expected_hours": 5.33,
+            "expected_hours": 5.37,
             "apartments": [
                 100001,
                 100009,
@@ -40,7 +40,7 @@
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
-            "expected_hours": 4.96,
+            "expected_hours": 4.81,
             "apartments": [
                 100002,
                 100011,

@@ -1,0 +1,36 @@
+Cleaner: MUTURI DANIEL (Standard)
+  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  2. Task 100012: Via Dante, 10 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 370m, durata: 3.0 min
+  3. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 279m, durata: 2.2 min
+  4. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 2678m, durata: 21.4 min
+
+  ➤ Totale ore assegnate: 4.44
+
+Cleaner: HUSSAIN (Standard)
+  1. Task 100005: Via Paolo Sarpi, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  2. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 2069m, durata: 16.6 min
+  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 590m, durata: 4.7 min
+
+  ➤ Totale ore assegnate: 3.35
+
+Cleaner: Ogbodo Chidi (Standard)
+  1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  2. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 1349m, durata: 10.8 min
+  3. Task 100011: Via Senato, 15 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 617m, durata: 4.9 min
+
+  ➤ Totale ore assegnate: 3.26
+
+Cleaner: BAH (Standard)
+  1. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  2. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+     -> distanza: 2831m, durata: 22.6 min
+
+  ➤ Totale ore assegnate: 2.38
+
