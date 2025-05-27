@@ -16,7 +16,7 @@ cursor = connection.cursor(dictionary=True)
 
 # Esegui la query per prendere i parametri dei cleaners
 cursor.execute("""
-    SELECT id, name, lastname, user_role_id, active
+    SELECT id, name, lastname, user_role_id, active, contract_type
     FROM app_users 
     WHERE user_role_id IN (7, 15) AND active = 1;
 """)
@@ -49,6 +49,17 @@ for cleaner in results:
     """, (cleaner["id"], tomorrow))
     attendance_result = cursor.fetchone()
 
+    # Mappa contract_type numerico a lettera
+    contract_type_db = cleaner.get("contract_type", static_params["contract_type"])
+    if contract_type_db == 1:
+        contract_type = "A"
+    elif contract_type_db == 2:
+        contract_type = "B"
+    elif contract_type_db == 3:
+        contract_type = "C"
+    else:
+        contract_type = contract_type_db  # mantiene None o altro valore se non 1/2/3
+
     cleaner_data = {
         "id": cleaner.get("id", static_params["id"]),  # Aggiunto il campo id
         "name": cleaner.get("name", static_params["name"]),
@@ -59,7 +70,7 @@ for cleaner in results:
         "counter_hours": static_params["counter_hours"],
         "counter_days": static_params["counter_days"],
         "available": True if not attendance_result else False,
-        "contract_type": static_params["contract_type"]
+        "contract_type": contract_type
     }
     cleaners_data.append(cleaner_data)
 

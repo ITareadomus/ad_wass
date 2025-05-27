@@ -1,91 +1,96 @@
 import json
-import pandas as pd
-from sklearn.cluster import KMeans
-from geopy.distance import geodesic
+import openai
+import os
 
-# === CONFIG ===
-OUTPUT_FILE = "assegnazioni_gpt.txt"
+# CONFIGURAZIONE API
+openai.api_key = os.getenv("OPENAI_API_KEY")  # O inserisci direttamente: openai.api_key = "your-api-key"
 
-# === Load Data ===
-with open("mock_apartments.json") as f:
-    apartments_data = json.load(f)["apt"]
-
-with open("sel_cleaners.json") as f:
+# CARICAMENTO DATI
+with open("cleaners.json", "r") as f:
     cleaners_data = json.load(f)
 
-cleaners = cleaners_data["cleaners"][:4]
+with open("apartments.json", "r") as f:
+    apartments_data = json.load(f)
 
-# === Preprocess Apartments ===
-apartments_df = pd.DataFrame(apartments_data)
-apartments_df["lat"] = apartments_df["lat"].astype(float)
-apartments_df["lng"] = apartments_df["lng"].astype(float)
+# FUNZIONE DI PROMPTING GENERICO
+def gpt_prompt(role_prompt, task_prompt):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",  # o "gpt-4-1106-preview" se vuoi un modello più recente
+        messages=[
+            {"role": "system", "content": role_prompt},
+            {"role": "user", "content": task_prompt}
+        ],
+        temperature=0.7,
+    )
+    return response['choices'][0]['message']['content']
 
-# === KMeans Clustering ===
-kmeans = KMeans(n_clusters=4, random_state=42)
-apartments_df["cluster"] = kmeans.fit_predict(apartments_df[["lat", "lng"]])
+# FASE 1: RAGGRUPPAMENTO APPARTAMENTI VICINI
+role_1 = "Sei un assistente esperto in ottimizzazione logistica urbana. Raggruppa gli appartamenti più vicini per minimizzare gli spostamenti a piedi o coi mezzi pubblici."
+task_1 = f"""Ecco i dati degli appartamenti da pulire oggi:
+{json.dumps(apartments_data['apartments'], indent=2)}
+Raggruppali in pacchetti da assegnare ai cleaner in base alla distanza (lat, lng). Restituisci una lista di pacchetti in formato JSON, ciascuno con un elenco ordinato di appartamenti (per ora solo raggruppati per prossimità).
+"""
 
-# === Cleaner Setup ===
-assignments = {cleaner["id"]: [] for cleaner in cleaners}
+clusters_output = gpt_prompt(role_1, task_1)
+clusters = json.loads(clusters_output)
 
-# === Assign clusters to cleaners ===
-cluster_groups = apartments_df.groupby("cluster")
-sorted_clusters = sorted(cluster_groups, key=lambda x: len(x[1]), reverse=True)
+# FASE 2: ORDINAMENTO DEI TASK PER PACCHETTO
+role_2 = "Sei un assistente logistico esperto in pianificazione delle pulizie. Devi ordinare gli appartamenti in ogni pacchetto basandoti su checkout e checkin e assegnare priorità a quelli con small_equipment true."
+ordered_clusters = []
 
-for i, (cluster_id, group) in enumerate(sorted_clusters):
-    cleaner_id = cleaners[i % 4]["id"]
-    assignments[cleaner_id] = group.copy()
+for cluster in clusters:
+    task_2 = f"""Ecco un pacchetto di appartamenti: {json.dumps(cluster, indent=2)}.
+Ordinami l’elenco rispettando:
+- Non iniziare prima del checkout_time
+- Finire prima del checkin_time
+- Inizia da quelli con small_equipment = true
+- Minimizza i tempi di spostamento tra un apt e il successivo
+Restituisci il pacchetto ordinato come lista JSON degli appartamenti.
+"""
+    ordered_cluster = gpt_prompt(role_2, task_2)
+    ordered_clusters.append(json.loads(ordered_cluster))
 
-# === Sort apartments within each cluster by distance ===
-def sort_by_distance(group_df):
-    coords = list(zip(group_df["lat"], group_df["lng"]))
-    if not coords:
-        return group_df
-    start = coords[0]
-    sorted_indices = []
-    visited = set()
+# FASE 3: ASSEGNAZIONE AI CLEANER BASATA SU CONTRATTO E ORE LAVORATE
+role_3 = "Sei un assistente HR e logistico. Ogni pacchetto di pulizie va assegnato a un cleaner disponibile cercando di bilanciare il totale delle ore mensili in base al contratto: A (20h), B (30h), C (40h). Considera counter_hours."
+task_3 = f"""Ecco i cleaner disponibili:
+{json.dumps(cleaners_data['cleaners'], indent=2)}
+Ecco i pacchetti di appartamenti ordinati con cleaning_time in minuti:
+{json.dumps(ordered_clusters, indent=2)}
+Assegna ogni pacchetto a un cleaner. Restituisci una lista JSON con:
+[
+  {{
+    "cleaner_id": 18,
+    "assigned_tasks": [...],
+    "total_assigned_minutes": 240
+  }},
+  ...
+]
+"""
 
-    while len(visited) < len(coords):
-        min_dist = float("inf")
-        next_idx = None
-        for idx, coord in enumerate(coords):
-            if idx in visited:
-                continue
-            dist = geodesic(start, coord).meters
-            if dist < min_dist:
-                min_dist = dist
-                next_idx = idx
-        visited.add(next_idx)
-        sorted_indices.append(next_idx)
-        start = coords[next_idx]
+assignments_output = gpt_prompt(role_3, task_3)
+assignments = json.loads(assignments_output)
 
-    return group_df.iloc[sorted_indices]
+# SALVA RISULTATO
+with open("final_assignments.json", "w") as f:
+    json.dump(assignments, f, indent=2)
 
-# === Write output ===
-with open(OUTPUT_FILE, "w", encoding="utf-8") as out_file:
-    for cleaner in cleaners:
-        cleaner_id = cleaner["id"]
-        cleaner_name = cleaner.get("name", f"Cleaner {cleaner_id}")
-        out_file.write(f"Cleaner: {cleaner_name} (Standard)\n")
-        
-        tasks = sort_by_distance(assignments[cleaner_id])
-        total_minutes = 0
-        previous = None
-        
-        for i, task in enumerate(tasks.itertuples(), start=1):
-            line = f"  {i}. Task {task.task_id}: {task.address} - checkin: {task.checkin} {task.checkin_time} | checkout: {task.checkout} {task.checkout_time}\n"
-            out_file.write(line)
-            
-            if previous:
-                dist = geodesic((previous.lat, previous.lng), (task.lat, task.lng)).meters
-                time_min = dist / 1000 * 8  # approx 8 min/km walking
-                total_minutes += time_min
-                detail = f"     -> distanza: {int(dist)}m, durata: {round(time_min, 1)} min\n"
-                out_file.write(detail)
-            previous = task
-        
-        total_hours = (len(tasks) * 60 + total_minutes) / 60
-        out_file.write(f"\n  ➤ Totale ore assegnate: {round(total_hours, 2)}\n\n")
+print("Assegnazioni completate e salvate.")
 
-print(f"✅ Assegnazioni salvate in '{OUTPUT_FILE}'")
+# --- SALVA REPORT GPT SIMILE AD ALGORITMO.PY ---
+# Carica di nuovo i dati degli appartamenti per mappare task_id → info
+with open("apartments.json", "r") as f:
+    apartments_data = json.load(f)
+apt_map = {a['task_id']: a for a in apartments_data.get('apartments', [])}
 
+with open("gpt_report.txt", "w", encoding="utf-8") as f:
+    for asg in assignments:
+        cleaner_id = asg.get("cleaner_id")
+        f.write(f"Cleaner ID: {cleaner_id}\n")
+        assigned_tasks = asg.get("assigned_tasks", [])
+        for idx, tid in enumerate(assigned_tasks):
+            apt = apt_map.get(tid, {})
+            f.write(f"  {idx+1}. Task {tid}: {apt.get('address','')} - checkin: {apt.get('checkin','')} {apt.get('checkin_time','')} | checkout: {apt.get('checkout','')} {apt.get('checkout_time','')}\n")
+            # opzionale: puoi aggiungere distanza/durata se vuoi calcolarla qui
+        f.write(f"\n  ➤ Totale minuti assegnati: {asg.get('total_assigned_minutes', 0)}\n\n")
 
+print("gpt_report.txt generato.")

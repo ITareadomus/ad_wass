@@ -1,5 +1,16 @@
 import json
 import math
+import subprocess
+
+# Esegui cleaner_list.py per aggiornare i dati dei cleaner dal DB
+def refresh_cleaner_list():
+    try:
+        print("Eseguo cleaner_list.py per aggiornare i dati dei cleaner dal DB...")
+        subprocess.run(['python', 'cleaner_list.py'], check=True)
+        print("Dati cleaner aggiornati con successo.")
+    except subprocess.CalledProcessError as e:
+        print(f"Errore nell'esecuzione di cleaner_list.py: {e}")
+        raise
 
 # Calcola il numero di cleaner necessari in base al numero di appartamenti
 def calculate_cleaners_needed(apartments):
@@ -47,6 +58,9 @@ def save_selected_cleaners(selected_cleaners, output_file="sel_cleaners.json"):
 
 # Funzione principale per selezionare i cleaner
 def main():
+    # Aggiorna la lista dei cleaner dal DB
+    refresh_cleaner_list()
+
     # Carica i dati dei cleaner e degli appartamenti
     with open("modello_cleaner.json") as f:
         cleaners = json.load(f)["cleaners"]
@@ -74,5 +88,6 @@ def main():
 
     # Salva i cleaner selezionati in un file JSON
     save_selected_cleaners(selected_cleaners)
+
 if __name__ == "__main__":
     main()
