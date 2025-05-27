@@ -20,18 +20,38 @@ def calculate_cleaners_needed(apartments):
 
 # Seleziona i cleaner da utilizzare per la giornata
 def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
-    # Filtra i cleaner attivi e disponibili
+    # Calcola il deficit di ore rispetto al contratto
+    def contract_min_hours(contract_type):
+        if contract_type == "A":
+            return 20
+        elif contract_type == "B":
+            return 30
+        elif contract_type == "C":
+            return 40
+        return 0
+
+    for c in cleaners:
+        c["deficit_hours"] = contract_min_hours(c.get("contract_type")) - c.get("counter_hours", 0)
+
+    # Filtra cleaner attivi, disponibili, con meno di 6 giorni consecutivi
     eligible_cleaners = [
-        c for c in cleaners if c["active"] and c["available"] and c["counter_days"] < 12
+        c for c in cleaners if c["active"] and c["available"] and c["counter_days"] < 6
     ]
 
-    # Ordina i cleaner per counter_hours (priorità a chi ha meno ore)
-    eligible_cleaners.sort(key=lambda c: c["counter_hours"])
+    # Se non bastano, aggiungi anche quelli con più giorni consecutivi
+    if len(eligible_cleaners) < num_needed:
+        extra_cleaners = [
+            c for c in cleaners if c["active"] and c["available"] and c["counter_days"] >= 6
+        ]
+        eligible_cleaners += extra_cleaners
+
+    # Ordina per deficit_hours decrescente (più lontani dal minimo), poi per counter_days crescente
+    eligible_cleaners.sort(key=lambda c: (-c["deficit_hours"], c["counter_days"]))
 
     # Calcola il numero di cleaner premium e standard necessari
     total_apts = premium_apts + standard_apts
     if total_apts == 0:
-        return []  # Nessun appartamento da pulire
+        return []
 
     premium_ratio = premium_apts / total_apts
     num_premium_needed = round(num_needed * premium_ratio)
@@ -47,7 +67,6 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
         c for c in eligible_cleaners if c["role"].lower() == "standard"
     ][:num_standard_needed]
 
-    # Combina i cleaner selezionati
     selected_cleaners = premium_cleaners + standard_cleaners
     return selected_cleaners
 
