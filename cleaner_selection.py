@@ -6,7 +6,7 @@ import subprocess
 def refresh_cleaner_list():
     try:
         print("Eseguo cleaner_list.py per aggiornare i dati dei cleaner dal DB...")
-        subprocess.run(['python', 'cleaner_list.py'], check=True)
+        subprocess.run(['python3', 'cleaner_list.py'], check=True)
         print("Dati cleaner aggiornati con successo.")
     except subprocess.CalledProcessError as e:
         print(f"Errore nell'esecuzione di cleaner_list.py: {e}")
