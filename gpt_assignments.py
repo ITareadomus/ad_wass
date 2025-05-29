@@ -2,6 +2,7 @@ import json
 import openai
 import os
 import passwords
+import re
 
 # CONFIGURAZIONE API
 openai.api_key = os.getenv(passwords.API_KEY)  # oppure: openai.api_key = "your-api-key"
@@ -15,29 +16,85 @@ with open("mock_apartments.json", "r") as f:
 
 # FUNZIONE DI PROMPTING GENERICO
 def gpt_prompt(role_prompt, task_prompt):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5",
+    client = openai.OpenAI(api_key=passwords.API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": role_prompt},
             {"role": "user", "content": task_prompt}
         ],
         temperature=0.7,
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
+
+def extract_json(text):
+    # Rimuovi blocchi di codice markdown e spazi inutili
+    text = text.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```[a-zA-Z]*\n?", "", text)
+        text = re.sub(r"\n?```$", "", text)
+    # Rimuovi i commenti // ... (solo su linee singole)
+    text = re.sub(r'//.*', '', text)
+    match = re.search(r'(\[.*\])', text, re.DOTALL)
+    if match:
+        json_str = match.group(1)
+        try:
+            return json.loads(json_str)
+        except Exception as e:
+            print("Errore parsing JSON:", e)
+            print("Testo estratto:", json_str)
+            raise
+    raise ValueError("Nessun JSON valido trovato nella risposta GPT.")
 
 # FASE 1: CREAZIONE PACCHETTI BILANCIATI PER VICINANZA (NO GMAPS)
 role_1 = """
-Sei un assistente esperto in logistica urbana. Il tuo compito è raggruppare gli appartamenti in pacchetti da assegnare ai cleaner. 
-Ogni pacchetto deve contenere appartamenti vicini tra loro e tutti dello stesso tipo (STANDARD o PREMIUM).
-Ogni pacchetto deve contenere circa 3-4 appartamenti, bilanciando il numero di task così che ogni pacchetto sia assegnato ad un cleaner diverso
-e che i pacchetti siano bilanciati in termini di ore di lavoro. 
+Sei un assistente esperto in logistica urbana. Il tuo compito è creare pacchetti di appartamenti da assegnare ai cleaner, raggruppando le attività in modo ottimale per vicinanza e coerenza logistica.
+
+REGOLE PER LA CREAZIONE DEI PACCHETTI:
+REGOLA SACRA: SE CI SONO X CLEANER, DEVI CREARE ESATTAMENTE X PACCHETTI, NON UNO DI PIU' E NON UNO DI MENO.
+ALTRA REGOLA SACRA:  Privilegia la separazione tra NORD e SUD rispetto che a EST e OVEST MIRACCOMANDO ASSOLUTMANETE IMPORTANTISSIMO.
+
+1. **Vicinanza geografica**:
+   - Ogni pacchetto deve contenere appartamenti **molto vicini tra loro**.
+   - Considera vicine vie che sembrano appartenere alla **stessa zona urbana** o quartiere.
+   - Evita assolutamente di accorpare vie che appaiono in **quartieri opposti** o distanti.
+
+2. **Tipologia coerente**:
+   - Ogni pacchetto deve contenere solo appartamenti dello **stesso tipo**: `STANDARD` oppure `PREMIUM`.
+
+3. **Numero di appartamenti per pacchetto**:
+   - Ogni pacchetto deve contenere **circa 3 appartamenti**.
+   - Se non è possibile, puoi creare pacchetti da **2** ma **mai da 1**.
+   - ATTENZIONE: **ogni cleaner deve ricevere ESATTAMENTE pacchetto con almeno 2 appartamenti, e non più di 4**.
+
+4. **Bilanciamento dei pacchetti**:
+   - Bilancia il numero di apt. nei pacchetti in modo che il carico sia distribuito in modo equo tra i cleaner disponibili. Dev'essere esattamente UN pacchetto PER ogni cleaner, quindi non fare più pacchetti del num. di cleaner disponibili.
+   - Se non è possibile un bilanciamento perfetto, dai **priorità alla coerenza geografica** piuttosto che alla distribuzione uniforme.
+
+5. **Formato del risultato**:
+   - Restituisci un JSON con una lista di pacchetti, ognuno nel formato:
+     {
+       "package_id": "pkg_1",
+       "type": "STANDARD" o "PREMIUM",
+       "tasks": [<lista_di_task_id>]
+     }
+
+ Ragiona come se i cleaner dovessero fare il giro a piedi o coi mezzi in città. Se due indirizzi ti sembrano appartenere a quartieri diversi o troppo distanti, **non metterli nello stesso pacchetto**.
+
+Rispondi SOLO con il JSON richiesto. NESSUNA PAROLA IN PIU perchè devo passarlo a un sistema che lo interpreta automaticamente.
 """
+
 
 task_1 = f"""
 Ecco la lista degli appartamenti:
-{json.dumps(apartments_data['apartments'], indent=2)}
+{json.dumps(apartments_data['apt'], indent=2)}
+
+ATTENZIONE: Appartamenti come "Via Tortona, 27" e "Via Lambrate, 20" sono **molto lontani** tra loro e **non devono mai essere nello stesso pacchetto**.
+Allo stesso modo, raggruppa sempre insieme appartamenti che si trovano **nel centro storico** o **nella stessa area geografica**.
+
 
 Raggruppa gli appartamenti in pacchetti come specificato. Restituisci un JSON così strutturato:
+Rispondi SOLO con il JSON richiesto. NESSUNA PAROLA IN PIU perchè devo passarlo a un sistema che lo interpreta automaticamente.
 [
   {{
     "package_id": "pkg_1",
@@ -49,7 +106,10 @@ Raggruppa gli appartamenti in pacchetti come specificato. Restituisci un JSON co
 """
 
 clusters_output = gpt_prompt(role_1, task_1)
-clusters = json.loads(clusters_output)
+print("GPT OUTPUT:\n", clusters_output)
+clusters = extract_json(clusters_output)
+
+
 
 # FASE 2: ORDINAMENTO INTERNO DI OGNI PACCHETTO
 role_2 = """
@@ -64,15 +124,18 @@ Regole da seguire:
 ordered_clusters = []
 for cluster in clusters:
     task_ids = cluster['tasks']
-    tasks_full = [apt for apt in apartments_data['apartments'] if apt['task_id'] in task_ids]
+    tasks_full = [apt for apt in apartments_data['apt'] if apt['task_id'] in task_ids]
     task_2 = f"""
 Ecco il pacchetto da ordinare:
 {json.dumps(tasks_full, indent=2)}
 
 Restituisci la lista ordinata solo con i task_id:
+(Rispondi solo con il JSON richiesto, senza alcun testo aggiuntivo.)
 [task_id1, task_id2, ...]
 """
-    ordered_task_ids = json.loads(gpt_prompt(role_2, task_2))
+    gpt_response = gpt_prompt(role_2, task_2)
+    print("DEBUG GPT response (fase 2):", repr(gpt_response))
+    ordered_task_ids = extract_json(gpt_response)
     cluster['tasks'] = ordered_task_ids
     ordered_clusters.append(cluster)
 
@@ -109,7 +172,7 @@ Pacchetti disponibili:
 """
 
 assignments_output = gpt_prompt(role_3, task_3)
-assignments = json.loads(assignments_output)
+assignments = extract_json(assignments_output)
 
 # SALVA RISULTATO
 with open("final_assignments.json", "w") as f:
@@ -118,7 +181,7 @@ with open("final_assignments.json", "w") as f:
 print("Assegnazioni completate e salvate.")
 
 # REPORT DETTAGLIATO
-task_map = {a['task_id']: a for a in apartments_data['apartments']}
+task_map = {a['task_id']: a for a in apartments_data['apt']}
 
 with open("gpt_report.txt", "w", encoding="utf-8") as f:
     for a in assignments:
