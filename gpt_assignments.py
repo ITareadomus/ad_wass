@@ -1,21 +1,22 @@
 import json
 import openai
 import os
+import passwords
 
 # CONFIGURAZIONE API
-openai.api_key = os.getenv("OPENAI_API_KEY")  # oppure: openai.api_key = "your-api-key"
+openai.api_key = os.getenv(passwords.API_KEY)  # oppure: openai.api_key = "your-api-key"
 
 # CARICAMENTO DATI
-with open("cleaners.json", "r") as f:
+with open("sel_cleaners.json", "r") as f:
     cleaners_data = json.load(f)
 
-with open("apartments.json", "r") as f:
+with open("mock_apartments.json", "r") as f:
     apartments_data = json.load(f)
 
 # FUNZIONE DI PROMPTING GENERICO
 def gpt_prompt(role_prompt, task_prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-3.5",
         messages=[
             {"role": "system", "content": role_prompt},
             {"role": "user", "content": task_prompt}
