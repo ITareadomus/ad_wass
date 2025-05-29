@@ -2,6 +2,9 @@ import json
 import math
 import subprocess
 
+# Percentuale di appartamenti extra da considerare (es: 20% in più)
+EXTRA_APT_PERCENTAGE = 0.2  # 20%
+
 # Esegui cleaner_list.py per aggiornare i dati dei cleaner dal DB
 def refresh_cleaner_list():
     try:
@@ -15,8 +18,9 @@ def refresh_cleaner_list():
 # Calcola il numero di cleaner necessari in base al numero di appartamenti
 def calculate_cleaners_needed(apartments):
     num_apts = len(apartments)
+    num_apts_extra = int(num_apts * (1 + EXTRA_APT_PERCENTAGE))
     avg_apt_per_cleaner = 3
-    return math.ceil(num_apts / avg_apt_per_cleaner)
+    return math.ceil(num_apts_extra / avg_apt_per_cleaner)
 
 # Seleziona i cleaner da utilizzare per la giornata
 def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):

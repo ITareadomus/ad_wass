@@ -28,7 +28,8 @@ def gpt_prompt(role_prompt, task_prompt):
 role_1 = """
 Sei un assistente esperto in logistica urbana. Il tuo compito è raggruppare gli appartamenti in pacchetti da assegnare ai cleaner. 
 Ogni pacchetto deve contenere appartamenti vicini tra loro e tutti dello stesso tipo (STANDARD o PREMIUM).
-Ogni pacchetto deve contenere al massimo 3-4 appartamenti, bilanciando il numero di task. Ignora qualsiasi vincolo sui km o durata.
+Ogni pacchetto deve contenere circa 3-4 appartamenti, bilanciando il numero di task così che ogni pacchetto sia assegnato ad un cleaner diverso
+e che i pacchetti siano bilanciati in termini di ore di lavoro. 
 """
 
 task_1 = f"""
@@ -53,9 +54,9 @@ clusters = json.loads(clusters_output)
 role_2 = """
 Sei un assistente logistico specializzato nella pianificazione delle pulizie. Devi ordinare gli appartamenti all'interno di ogni pacchetto.
 Regole da seguire:
-- Inizia a pulire circa 30 minuti dopo il checkout_time
+- Inizia a pulire non prima del checkout_time
 - Finisci prima del checkin_time
-- Se un appartamento ha small_equipment = true, considera se è il caso di farlo all'inizio
+- Se un appartamento ha small_equipment = true, cerca di farlo all'inizio del giro del pacchetto
 - Minimizza i tempi di spostamento
 """
 
@@ -78,14 +79,14 @@ Restituisci la lista ordinata solo con i task_id:
 role_3 = """
 Sei un assistente HR. Devi assegnare i pacchetti ai cleaner disponibili in modo bilanciato.
 Ogni cleaner ha un contratto:
-- A: 20h/mese
-- B: 30h/mese
-- C: 40h/mese
+- A: 20h/settimana
+- B: 30h/settimana
+- C: 40h/settimana
 
 Ogni cleaner ha un counter_hours (ore già lavorate). Assegna i pacchetti ai cleaner compatibili per tipo (STANDARD o PREMIUM).
 Cerca di:
 - Bilanciare le ore totali
-- Preferire cleaner con ranking alto per task più lunghi
+- Assegnare i pacchetti più lunghi ai cleaner a cui mancano ore per raggiungere il minimo del contratto
 
 Restituisci un JSON come questo:
 [
