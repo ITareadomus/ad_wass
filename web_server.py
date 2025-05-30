@@ -36,6 +36,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             script_name = data.get('script')
+            percentage = data.get('percentage')  # Nuovo parametro per la percentuale
             if not script_name:
                 self.send_json_response({'success': False, 'error': 'Nome script mancante'})
                 return
@@ -55,7 +56,12 @@ class CustomHandler(SimpleHTTPRequestHandler):
             
             # Esegui lo script
             try:
-                result = subprocess.run([sys.executable, script_path], 
+                # Aggiungi il parametro percentuale se è cleaner_selection.py
+                cmd = [sys.executable, script_path]
+                if script_name == 'cleaner_selection.py' and percentage is not None:
+                    cmd.append(str(percentage))
+                
+                result = subprocess.run(cmd, 
                                       capture_output=True, 
                                       text=True, 
                                       timeout=60,

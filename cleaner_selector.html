@@ -207,6 +207,21 @@
             color: #0c5460;
             border: 1px solid #bee5eb;
         }
+        
+        .apartment-stats {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .apartment-stats p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #495057;
+        }
     </style>
 </head>
 <body>
@@ -235,6 +250,8 @@
             </div>
             <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
         </div>
+        
+        <div id="apartmentStatsContainer" style="display: none;"></div>
     </div>
 
     <script>
@@ -287,6 +304,49 @@
                     if (showSuccessMessage) {
                         showMessage(`${scriptName} completato con successo`, 'success');
                     }
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+        
+        // Esegui script Python con percentuale
+        async function runPythonScriptWithPercentage(scriptName, percentage) {
+            try {
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+                
+                showMessage(loadingMessage, 'info');
+                setButtonsEnabled(false);
+                
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        script: scriptName,
+                        percentage: percentage
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(`${scriptName} completato con successo`, 'success');
                     return true;
                 } else {
                     showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
@@ -371,8 +431,11 @@
         
         // Genera selezione basata su percentuale
         async function generateSelection() {
-            // Prima esegui cleaner_selection.py
-            const success = await runPythonScript('cleaner_selection.py');
+            // Ottieni la percentuale selezionata
+            const percentage = document.getElementById('percentageSelect').value;
+            
+            // Prima esegui cleaner_selection.py con la percentuale
+            const success = await runPythonScriptWithPercentage('cleaner_selection.py', percentage);
             if (!success) return;
             
             // Ricarica la lista con le nuove selezioni
@@ -391,10 +454,30 @@
                     });
                     
                     updateStats();
+                    
+                    // Mostra le statistiche degli appartamenti se disponibili
+                    if (selData.apartment_stats) {
+                        displayApartmentStats(selData.apartment_stats);
+                    }
+                    
                     showMessage(`Selezione automatica completata: ${selectedFromFile.length} cleaner selezionati`, 'success');
                 }
             } catch (error) {
                 showMessage('Errore nel caricamento della selezione generata', 'error');
+            }
+        }
+        
+        // Mostra le statistiche degli appartamenti
+        function displayApartmentStats(apartmentStats) {
+            const container = document.getElementById('apartmentStatsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="apartment-stats">
+                        <p><strong>Appartamenti da pulire:</strong> ${apartmentStats.total_apartments}</p>
+                        <p><strong>Appartamenti aggiuntivi stimati (${apartmentStats.percentage_used}%):</strong> ${apartmentStats.extra_apartments}</p>
+                    </div>
+                `;
+                container.style.display = 'block';
             }
         }
         
