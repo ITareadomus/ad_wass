@@ -42,9 +42,9 @@ class CustomHandler(SimpleHTTPRequestHandler):
             
             # Costruisci il percorso dello script
             if script_name == 'cleaner_list.py':
-                script_path = os.path.join('SELEZIONI_SERA', 'cleaner_list.py')
+                script_path = 'cleaner_list.py'
             elif script_name == 'cleaner_selection.py':
-                script_path = os.path.join('SELEZIONI_SERA', 'cleaner_selection.py')
+                script_path = 'cleaner_selection.py'
             else:
                 self.send_json_response({'success': False, 'error': 'Script non riconosciuto'})
                 return
