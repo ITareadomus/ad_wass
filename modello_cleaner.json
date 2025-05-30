@@ -16,7 +16,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 24,
@@ -28,7 +28,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 132,
@@ -40,7 +40,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 249,
@@ -52,7 +52,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 287,
@@ -64,7 +64,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 321,
@@ -76,7 +76,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 326,
@@ -88,7 +88,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 404,
@@ -100,7 +100,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 445,
@@ -112,7 +112,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 469,
@@ -124,7 +124,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 476,
@@ -136,7 +136,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 495,
@@ -148,7 +148,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 555,
@@ -160,7 +160,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 596,
@@ -172,7 +172,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 614,
@@ -184,7 +184,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 644,
@@ -196,7 +196,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 722,
@@ -208,7 +208,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 771,
@@ -220,7 +220,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 785,
@@ -232,7 +232,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 789,
@@ -244,7 +244,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 829,
@@ -256,7 +256,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 845,
@@ -268,7 +268,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 895,
@@ -280,7 +280,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 911,
@@ -292,7 +292,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 927,
@@ -304,7 +304,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 934,
@@ -316,7 +316,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": "A"
         },
         {
             "id": 937,
@@ -328,7 +328,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 966,
@@ -340,7 +340,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 967,
@@ -352,7 +352,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 985,
@@ -364,7 +364,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 987,
@@ -376,7 +376,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 989,
@@ -388,7 +388,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 990,
@@ -400,7 +400,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 993,
@@ -412,7 +412,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 994,
@@ -424,7 +424,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 995,
@@ -436,7 +436,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 996,
@@ -448,7 +448,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 997,
@@ -460,7 +460,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1000,
@@ -472,7 +472,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1001,
@@ -484,7 +484,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1002,
@@ -496,7 +496,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1003,
@@ -508,7 +508,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1004,
@@ -520,7 +520,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1005,
@@ -532,7 +532,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1008,
@@ -544,7 +544,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1009,
@@ -556,7 +556,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1013,
@@ -568,7 +568,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1015,
@@ -580,7 +580,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         },
         {
             "id": 1016,
@@ -592,7 +592,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": null
+            "contract_type": 0
         }
     ]
 }

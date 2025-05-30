@@ -1,0 +1,43 @@
+{
+    "timestamp": "2025-05-30T14:08:27.799Z",
+    "cleaners": [
+        {
+            "id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0
+        },
+        {
+            "id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0
+        },
+        {
+            "id": 321,
+            "name": "BOUBACAR",
+            "lastname": "BARRY",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0
+        }
+    ],
+    "total_selected": 3,
+    "total_available": 49
+}
