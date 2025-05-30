@@ -27,6 +27,12 @@
             margin-bottom: 30px;
         }
         
+        .loading {
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+        
         .cleaner-list {
             max-height: 400px;
             overflow-y: auto;
@@ -51,6 +57,24 @@
         .cleaner-name {
             flex-grow: 1;
             font-size: 16px;
+            color: #333;
+        }
+        
+        .cleaner-role {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 10px;
+            margin-right: 15px;
+        }
+        
+        .role-premium {
+            background-color: #ffd700;
+            color: #333;
+        }
+        
+        .role-standard {
+            background-color: #e0e0e0;
             color: #333;
         }
         
@@ -122,12 +146,17 @@
             transition: all 0.3s;
         }
         
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
         .btn-generate {
             background-color: #2196F3;
             color: white;
         }
         
-        .btn-generate:hover {
+        .btn-generate:hover:not(:disabled) {
             background-color: #1976D2;
         }
         
@@ -136,7 +165,7 @@
             color: white;
         }
         
-        .btn-confirm:hover {
+        .btn-confirm:hover:not(:disabled) {
             background-color: #45a049;
         }
         
@@ -153,23 +182,50 @@
             font-size: 14px;
             color: #666;
         }
+        
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .message-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Selezione Cleaner</h1>
         
+        <div id="messageContainer"></div>
+        
         <div class="stats">
             <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
         </div>
         
         <div class="cleaner-list" id="cleanerList">
-            <!-- Cleaner items will be populated here -->
+            <div class="loading">Caricamento cleaner in corso...</div>
         </div>
         
         <div class="controls">
             <div class="generate-section">
-                <button class="btn btn-generate" onclick="generateSelection()">Genera</button>
+                <button class="btn btn-generate" id="generateBtn" onclick="generateSelection()">Genera</button>
                 <select class="percentage-select" id="percentageSelect">
                     <option value="0">0%</option>
                     <option value="10" selected>10%</option>
@@ -177,28 +233,104 @@
                     <option value="30">30%</option>
                 </select>
             </div>
-            <button class="btn btn-confirm" onclick="confirmSelection()">Conferma</button>
+            <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
         </div>
     </div>
 
     <script>
         let cleaners = [];
+        let selectedFromFile = [];
         
-        // Load cleaners from JSON file
-        async function loadCleaners() {
+        // Mostra messaggio all'utente
+        function showMessage(text, type = 'info') {
+            const container = document.getElementById('messageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+            
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+        
+        // Esegui script Python tramite fetch
+        async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
-                const response = await fetch('/SELEZIONI_SERA/modello_cleaner.json');
-                const data = await response.json();
-                cleaners = data.cleaners;
-                displayCleaners();
-                updateStats();
+                showMessage(`Esecuzione ${scriptName} in corso...`, 'info');
+                setButtonsEnabled(false);
+                
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ script: scriptName })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (showSuccessMessage) {
+                        showMessage(`${scriptName} completato con successo`, 'success');
+                    }
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
             } catch (error) {
-                console.error('Errore nel caricamento dei cleaner:', error);
-                alert('Errore nel caricamento dei dati dei cleaner');
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
             }
         }
         
-        // Display cleaners in the list
+        // Abilita/disabilita pulsanti
+        function setButtonsEnabled(enabled) {
+            document.getElementById('generateBtn').disabled = !enabled;
+            document.getElementById('confirmBtn').disabled = !enabled;
+        }
+        
+        // Carica cleaners dal JSON e eventuali selezioni esistenti
+        async function loadCleaners() {
+            try {
+                // Prima esegui cleaner_list.py per aggiornare i dati
+                showMessage('Aggiornamento dati cleaner dal database...', 'info');
+                await runPythonScript('cleaner_list.py', false);
+                
+                // Carica i cleaner aggiornati
+                const response = await fetch('/SELEZIONI_SERA/modello_cleaner.json');
+                const data = await response.json();
+                cleaners = data.cleaners;
+                
+                // Prova a caricare selezioni esistenti
+                try {
+                    const selResponse = await fetch('/sel_cleaners.json');
+                    if (selResponse.ok) {
+                        const selData = await selResponse.json();
+                        selectedFromFile = selData.cleaners || [];
+                    }
+                } catch (error) {
+                    // File non esiste ancora, non è un errore
+                    selectedFromFile = [];
+                }
+                
+                displayCleaners();
+                updateStats();
+                showMessage('Cleaner caricati con successo', 'success');
+            } catch (error) {
+                console.error('Errore nel caricamento dei cleaner:', error);
+                showMessage('Errore nel caricamento dei dati dei cleaner', 'error');
+            }
+        }
+        
+        // Mostra cleaners nella lista
         function displayCleaners() {
             const cleanerList = document.getElementById('cleanerList');
             cleanerList.innerHTML = '';
@@ -207,10 +339,19 @@
                 const cleanerItem = document.createElement('div');
                 cleanerItem.className = 'cleaner-item';
                 
+                const isSelected = selectedFromFile.some(sel => sel.id === cleaner.id);
+                const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
+                
                 cleanerItem.innerHTML = `
-                    <div class="cleaner-name">${cleaner.name} ${cleaner.lastname}</div>
+                    <div class="cleaner-name">
+                        ${cleaner.name} ${cleaner.lastname}
+                        <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                    </div>
                     <label class="switch">
-                        <input type="checkbox" id="cleaner-${index}" onchange="updateStats()">
+                        <input type="checkbox" id="cleaner-${index}" 
+                               ${isSelected ? 'checked' : ''} 
+                               onchange="updateStats()" 
+                               data-cleaner-id="${cleaner.id}">
                         <span class="slider"></span>
                     </label>
                 `;
@@ -219,7 +360,7 @@
             });
         }
         
-        // Update statistics
+        // Aggiorna statistiche
         function updateStats() {
             const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
             const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
@@ -229,74 +370,90 @@
             document.getElementById('totalCount').textContent = totalCount;
         }
         
-        // Generate selection based on percentage
-        function generateSelection() {
-            const percentage = parseInt(document.getElementById('percentageSelect').value);
-            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+        // Genera selezione basata su percentuale
+        async function generateSelection() {
+            // Prima esegui cleaner_selection.py
+            const success = await runPythonScript('cleaner_selection.py');
+            if (!success) return;
             
-            // First, uncheck all
-            checkboxes.forEach(cb => cb.checked = false);
-            
-            if (percentage > 0) {
-                const totalCleaners = checkboxes.length;
-                const numberToSelect = Math.ceil(totalCleaners * percentage / 100);
-                
-                // Create array of indices and shuffle
-                const indices = Array.from({length: totalCleaners}, (_, i) => i);
-                for (let i = indices.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [indices[i], indices[j]] = [indices[j], indices[i]];
+            // Ricarica la lista con le nuove selezioni
+            try {
+                const selResponse = await fetch('/sel_cleaners.json');
+                if (selResponse.ok) {
+                    const selData = await selResponse.json();
+                    selectedFromFile = selData.cleaners || [];
+                    
+                    // Aggiorna le checkbox in base al file generato
+                    const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+                    checkboxes.forEach((checkbox, index) => {
+                        const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                        const isSelected = selectedFromFile.some(sel => sel.id === cleanerId);
+                        checkbox.checked = isSelected;
+                    });
+                    
+                    updateStats();
+                    showMessage(`Selezione automatica completata: ${selectedFromFile.length} cleaner selezionati`, 'success');
                 }
-                
-                // Select the first N cleaners from shuffled array
-                for (let i = 0; i < numberToSelect && i < indices.length; i++) {
-                    checkboxes[indices[i]].checked = true;
-                }
+            } catch (error) {
+                showMessage('Errore nel caricamento della selezione generata', 'error');
             }
-            
-            updateStats();
         }
         
-        // Confirm selection
-        function confirmSelection() {
+        // Conferma selezione e salva nel file
+        async function confirmSelection() {
             const selectedCleaners = [];
             const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
             
             checkboxes.forEach((checkbox, index) => {
                 if (checkbox.checked) {
-                    selectedCleaners.push(cleaners[index]);
+                    const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                    const cleaner = cleaners.find(c => c.id === cleanerId);
+                    if (cleaner) {
+                        selectedCleaners.push(cleaner);
+                    }
                 }
             });
             
             if (selectedCleaners.length === 0) {
-                alert('Seleziona almeno un cleaner prima di confermare.');
+                showMessage('Seleziona almeno un cleaner prima di confermare.', 'error');
                 return;
             }
             
-            // Save selection to a new JSON file
+            // Salva la selezione nel file sel_cleaners.json
             const selectionData = {
                 timestamp: new Date().toISOString(),
-                selected_cleaners: selectedCleaners,
+                cleaners: selectedCleaners,
                 total_selected: selectedCleaners.length,
                 total_available: cleaners.length
             };
             
-            // Create download link
-            const dataStr = JSON.stringify(selectionData, null, 4);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'selected_cleaners.json';
-            link.click();
-            
-            URL.revokeObjectURL(url);
-            
-            alert(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`);
+            try {
+                setButtonsEnabled(false);
+                showMessage('Salvataggio selezione in corso...', 'info');
+                
+                const response = await fetch('/save-selection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(selectionData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati e salvati in sel_cleaners.json`, 'success');
+                } else {
+                    showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+            } finally {
+                setButtonsEnabled(true);
+            }
         }
         
-        // Load cleaners when page loads
+        // Carica cleaners quando la pagina si carica
         window.addEventListener('load', loadCleaners);
     </script>
 </body>
