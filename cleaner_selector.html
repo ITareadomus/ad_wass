@@ -441,7 +441,7 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati e salvati in sel_cleaners.json`, 'success');
+                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`, 'success');
                 } else {
                     showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
                 }
