@@ -3,3 +3,19 @@ modules = ["python-3.12"]
 [nix]
 channel = "stable-24_05"
 
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[workflows]
+runButton = "Web Server"
+
+[[workflows.workflow]]
+name = "Web Server"
+author = 42690265
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 -m http.server 5000"
+
