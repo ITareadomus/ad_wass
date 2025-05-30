@@ -261,7 +261,16 @@
         // Esegui script Python tramite fetch
         async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
-                showMessage(`Esecuzione ${scriptName} in corso...`, 'info');
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+                
+                showMessage(loadingMessage, 'info');
                 setButtonsEnabled(false);
                 
                 const response = await fetch('/run-script', {
@@ -297,11 +306,10 @@
             document.getElementById('confirmBtn').disabled = !enabled;
         }
         
-        // Carica cleaners dal JSON e eventuali selezioni esistenti
+        // Carica cleaners dal JSON senza selezioni precedenti
         async function loadCleaners() {
             try {
                 // Prima esegui cleaner_list.py per aggiornare i dati
-                showMessage('Aggiornamento dati cleaner dal database...', 'info');
                 await runPythonScript('cleaner_list.py', false);
                 
                 // Carica i cleaner aggiornati
@@ -309,17 +317,8 @@
                 const data = await response.json();
                 cleaners = data.cleaners;
                 
-                // Prova a caricare selezioni esistenti
-                try {
-                    const selResponse = await fetch('/sel_cleaners.json');
-                    if (selResponse.ok) {
-                        const selData = await selResponse.json();
-                        selectedFromFile = selData.cleaners || [];
-                    }
-                } catch (error) {
-                    // File non esiste ancora, non è un errore
-                    selectedFromFile = [];
-                }
+                // Non caricare selezioni precedenti - inizia sempre con nessun cleaner selezionato
+                selectedFromFile = [];
                 
                 displayCleaners();
                 updateStats();
@@ -429,7 +428,7 @@
             
             try {
                 setButtonsEnabled(false);
-                showMessage('Salvataggio selezione in corso...', 'info');
+                showMessage('Conferma cleaner selezionati in corso...', 'info');
                 
                 const response = await fetch('/save-selection', {
                     method: 'POST',
