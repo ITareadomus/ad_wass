@@ -277,6 +277,94 @@
             font-size: 14px;
             color: #495057;
         }
+        
+        .assignment-controls {
+            margin-top: 20px;
+        }
+        
+        .info-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-section h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .info-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-section li {
+            margin: 5px 0;
+        }
+        
+        .assignment-options {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .assignment-options h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .option-group {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .option-group label {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .option-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .option-description {
+            margin: 5px 0 0 25px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .assignment-actions {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .assignment-actions .btn {
+            margin: 0 10px;
+        }
+        
+        #assignmentResults {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        #assignmentList {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -297,33 +385,87 @@
     </nav>
     
     <div class="main-content">
-        <div class="container">
-        <h1>Selezione Cleaner</h1>
-        
-        <div id="messageContainer"></div>
-        
-        <div class="stats">
-            <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
-        </div>
-        
-        <div class="cleaner-list" id="cleanerList">
-            <div class="loading">Caricamento cleaner in corso...</div>
-        </div>
-        
-        <div class="controls">
-            <div class="generate-section">
-                <button class="btn btn-generate" id="generateBtn" onclick="generateSelection()">Genera</button>
-                <select class="percentage-select" id="percentageSelect">
-                    <option value="0">0%</option>
-                    <option value="10" selected>10%</option>
-                    <option value="20">20%</option>
-                    <option value="30">30%</option>
-                </select>
+        <!-- Sezione Genera Convocazioni -->
+        <div id="convocazioniSection" class="container">
+            <h1>Genera Convocazioni</h1>
+            
+            <div id="messageContainer"></div>
+            
+            <div class="stats">
+                <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
             </div>
-            <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
+            
+            <div class="cleaner-list" id="cleanerList">
+                <div class="loading">Caricamento cleaner in corso...</div>
+            </div>
+            
+            <div class="controls">
+                <div class="generate-section">
+                    <button class="btn btn-generate" id="generateBtn" onclick="generateSelection()">Genera</button>
+                    <select class="percentage-select" id="percentageSelect">
+                        <option value="0">0%</option>
+                        <option value="10" selected>10%</option>
+                        <option value="20">20%</option>
+                        <option value="30">30%</option>
+                    </select>
+                </div>
+                <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
+            </div>
+            
+            <div id="apartmentStatsContainer" style="display: none;"></div>
         </div>
-        
-        <div id="apartmentStatsContainer" style="display: none;"></div>
+
+        <!-- Sezione Genera Assegnazioni -->
+        <div id="assegnazioniSection" class="container" style="display: none;">
+            <h1>Genera Assegnazioni</h1>
+            
+            <div id="assegnazioniMessageContainer"></div>
+            
+            <div class="assignment-controls">
+                <div class="info-section">
+                    <h3>Informazioni Sistema</h3>
+                    <p>Questa sezione permetterà di generare le assegnazioni automatiche degli appartamenti ai cleaner selezionati.</p>
+                    <p>Le assegnazioni verranno create in base a:</p>
+                    <ul>
+                        <li>Posizione geografica degli appartamenti</li>
+                        <li>Disponibilità dei cleaner</li>
+                        <li>Ranking e competenze</li>
+                        <li>Ottimizzazione dei percorsi</li>
+                    </ul>
+                </div>
+                
+                <div class="assignment-options">
+                    <h3>Opzioni di Assegnazione</h3>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="automatic" checked>
+                            Assegnazione Automatica
+                        </label>
+                        <p class="option-description">Il sistema assegnerà automaticamente gli appartamenti in base all'algoritmo di ottimizzazione.</p>
+                    </div>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="manual">
+                            Assegnazione Manuale
+                        </label>
+                        <p class="option-description">Permette di assegnare manualmente specifici appartamenti a cleaner selezionati.</p>
+                    </div>
+                </div>
+                
+                <div class="assignment-actions">
+                    <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
+                        Genera Assegnazioni
+                    </button>
+                    <button class="btn btn-confirm" id="viewReportBtn" onclick="viewAssignmentReport()" style="display: none;">
+                        Visualizza Report
+                    </button>
+                </div>
+            </div>
+            
+            <div id="assignmentResults" style="display: none;">
+                <h3>Risultati Assegnazioni</h3>
+                <div id="assignmentList"></div>
+            </div>
         </div>
     </div>
 
@@ -618,15 +760,70 @@
             // Aggiungi classe active al link cliccato
             event.target.classList.add('active');
             
+            // Nascondi tutte le sezioni
+            document.getElementById('convocazioniSection').style.display = 'none';
+            document.getElementById('assegnazioniSection').style.display = 'none';
+            
             if (section === 'convocazioni') {
-                // Mostra la sezione corrente (già implementata)
-                document.querySelector('.container').style.display = 'block';
+                document.getElementById('convocazioniSection').style.display = 'block';
                 showMessage('Sezione Genera convocazioni selezionata', 'info');
             } else if (section === 'assegnazioni') {
-                // Per ora mostra un messaggio, in futuro si potrà implementare la sezione assegnazioni
-                document.querySelector('.container').style.display = 'block';
-                showMessage('Sezione Genera assegnazioni - Funzionalità in sviluppo', 'info');
+                document.getElementById('assegnazioniSection').style.display = 'block';
+                showAssegnazioniMessage('Sezione Genera assegnazioni selezionata', 'info');
             }
+        }
+        
+        // Mostra messaggio nella sezione assegnazioni
+        function showAssegnazioniMessage(text, type = 'info') {
+            const container = document.getElementById('assegnazioniMessageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+            
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+        
+        // Genera assegnazioni (placeholder)
+        function generateAssignments() {
+            const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
+            showAssegnazioniMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
+            
+            // Simula processo di generazione
+            setTimeout(() => {
+                showAssegnazioniMessage('Assegnazioni generate con successo!', 'success');
+                document.getElementById('viewReportBtn').style.display = 'inline-block';
+                
+                // Mostra risultati di esempio
+                const resultDiv = document.getElementById('assignmentResults');
+                const listDiv = document.getElementById('assignmentList');
+                listDiv.innerHTML = `
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #28a745;">
+                        <strong>Cleaner1 Lastname1 (Premium)</strong><br>
+                        <small>3 appartamenti assegnati - Zona: Centro Milano</small>
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #17a2b8;">
+                        <strong>Cleaner2 Lastname2 (Premium)</strong><br>
+                        <small>2 appartamenti assegnati - Zona: Porta Garibaldi</small>
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #ffc107; color: #333;">
+                        <strong>Cleaner3 Lastname3 (Standard)</strong><br>
+                        <small>2 appartamenti assegnati - Zona: Navigli</small>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+            }, 2000);
+        }
+        
+        // Visualizza report assegnazioni
+        function viewAssignmentReport() {
+            showAssegnazioniMessage('Report dettagliato disponibile in report.txt', 'info');
         }
         
         // Carica cleaners quando la pagina si carica
