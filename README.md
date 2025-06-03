@@ -27,12 +27,10 @@ Infine, avendo la lista delle assegnazioni, questa viene passata all'area di con
 <p> 
     <ul>
         <li>Connessione al db con i dati già disponibili ✔️</li>
-        <li>Impostare il timing sulla tabella housekeeping ✔️</li>
+        <li>Impostare il timing sulla tabella housekeeping DA FARE</li>
         <li>Creare maschera risorse umane per controllare disponibilità dei cleaner ✔️</li>
-        <li>Controllare le dotazioni piccole 🕓</li>
-        <li>Pescare il minimo ore 😒</li>
-        <li>Ripristinare ADOQ 😒</li> 
-        <li>Impostare il timing sulla tabella housekeeping 🕓</li>
+        <li>Controllare le dotazioni piccole ✔️</li>
+        <li>Pescare il minimo ore 😒(Fatto sull'algoritmo ma non su adam)</li>
     </ul>
 </p>
 
