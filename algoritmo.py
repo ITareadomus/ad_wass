@@ -12,21 +12,24 @@ import numpy as np
 
 # Configurazione logging
 def setup_logging():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+
 
 # Funzioni di refresh
 def refresh_task_selection():
     try:
-        logging.info('Eseguo task_selection.py per aggiornare la lista degli appartamenti...')
+        logging.info(
+            'Eseguo task_selection.py per aggiornare la lista degli appartamenti...'
+        )
         subprocess.run(['python3', 'task_selection.py'], check=True)
         logging.info('Lista degli appartamenti aggiornata con successo.')
     except subprocess.CalledProcessError as e:
         logging.error(f"Errore esecuzione task_selection.py: {e}")
         raise
+
+
 '''
 def refresh_cleaner_selection():
     try:
@@ -37,14 +40,18 @@ def refresh_cleaner_selection():
         logging.error(f"Errore esecuzione cleaner_selection.py: {e}")
         raise
 '''
+
+
 # Caricamento dati dai JSON di input
 def load_selected_cleaners():
     with open('sel_cleaners.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('cleaners', [])
 
+
 def load_apartments():
     with open('mock_apartments.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('apt', [])
+
 
 # FASE 1: Creazione pacchetti bilanciati (multi-processor scheduling)
 '''def phase1_create_packages(apartments, cleaners):
@@ -132,6 +139,7 @@ def load_apartments():
             logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt")
     return {role: data['pkgs'] for role, data in packets.items()}'''
 
+
 def phase1_create_packages(apartments, cleaners):
     logging.info('--- FASE 1: Creazione pacchetti ---')
     sorted_apts = sort_apartments_by_checkout(apartments)
@@ -143,10 +151,10 @@ def phase1_create_packages(apartments, cleaners):
 
 
 def sort_apartments_by_checkout(apartments):
-    return sorted(
-        apartments,
-        key=lambda a: (a.get('checkout') or '', a.get('checkout_time') or '00:00')
-    )
+    return sorted(apartments,
+                  key=lambda a:
+                  (a.get('checkout') or '', a.get('checkout_time') or '00:00'))
+
 
 def count_cleaners_per_role(cleaners):
     role_cleaner_count = {}
@@ -155,6 +163,7 @@ def count_cleaners_per_role(cleaners):
             role = c.get('role')
             role_cleaner_count[role] = role_cleaner_count.get(role, 0) + 1
     return role_cleaner_count
+
 
 def initialize_empty_packages(role_cleaner_count):
     packets = {}
@@ -185,7 +194,9 @@ def assign_apartments_to_packages(sorted_apts, packets):
         apt_idx = []
         for idx, apt in enumerate(role_apts):
             try:
-                coords.append([float(apt.get('lat', 0)), float(apt.get('lng', 0))])
+                coords.append(
+                    [float(apt.get('lat', 0)),
+                     float(apt.get('lng', 0))])
                 apt_idx.append(idx)
             except Exception:
                 continue
@@ -227,7 +238,9 @@ def assign_apartments_to_packages(sorted_apts, packets):
 
     # Riordina ogni pacchetto per percorso più breve
     for role, data in packets.items():
-        data['pkgs'] = [reorder_package_by_distance(pkg) for pkg in data['pkgs']]
+        data['pkgs'] = [
+            reorder_package_by_distance(pkg) for pkg in data['pkgs']
+        ]
 
     return packets
 
@@ -246,7 +259,8 @@ def reorder_package_by_distance(pkg):
         best_dist = None
         for idx, apt in enumerate(remaining):
             try:
-                lat1, lng1 = float(last.get('lat', 0)), float(last.get('lng', 0))
+                lat1, lng1 = float(last.get('lat',
+                                            0)), float(last.get('lng', 0))
                 lat2, lng2 = float(apt.get('lat', 0)), float(apt.get('lng', 0))
             except (TypeError, ValueError):
                 continue
@@ -262,22 +276,33 @@ def reorder_package_by_distance(pkg):
             ordered.append(remaining.pop(0))
     return ordered
 
+
 def log_package_summary(packets):
     for role, data in packets.items():
         for i, pkg in enumerate(data['pkgs'], 1):
-            logging.info(f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt")
+            logging.info(
+                f"📦 Pacchetto {i}/{len(data['pkgs'])} '{role}' → {len(pkg)} apt"
+            )
+
 
 # FASE 2: Ordinamento all'interno dei pacchetti
 def phase2_order_packages(packages):
     logging.info('--- FASE 2: Ordinamento interno pacchetti ---')
+
     def priority(a):
-        return (0,a.get('checkin_time') or '23:59') if a.get('small_equipment') else (1,a.get('checkin_time') or '23:59')
-    ordered={}
-    for role,pkgs in packages.items():
-        ordered[role]=[sorted(pkg,key=priority) for pkg in pkgs]
-        for i,pkg in enumerate(ordered[role],1):
-            logging.info(f"Pacchetto {i}/{len(pkgs)} '{role}' ordinato: {[a['task_id'] for a in pkg]}")
+        return (0, a.get('checkin_time')
+                or '23:59') if a.get('small_equipment') else (
+                    1, a.get('checkin_time') or '23:59')
+
+    ordered = {}
+    for role, pkgs in packages.items():
+        ordered[role] = [sorted(pkg, key=priority) for pkg in pkgs]
+        for i, pkg in enumerate(ordered[role], 1):
+            logging.info(
+                f"Pacchetto {i}/{len(pkgs)} '{role}' ordinato: {[a['task_id'] for a in pkg]}"
+            )
     return ordered
+
 
 # FASE 3: Assegnazione e calcolo expected_hours (cleaning_time -> ore)
 def phase3_assign_to_cleaners(ordered, cleaners):
@@ -286,32 +311,33 @@ def phase3_assign_to_cleaners(ordered, cleaners):
 
     # Mappa cleaner per ruolo, con ore assegnate
     cleaner_map = {
-        role: [
-            {
-                'id': c['id'],
-                'name': c['name'],
-                'lastname': c['lastname'],
-                'role': c['role'],
-                'ranking': c.get('ranking', 0),
-                'counter_hours': c.get('counter_hours', 0.0),
-                'assigned_hours': 0.0,
-                'apartments': []
-            }
-            for c in cleaners if c.get('role') == role and c.get('active') and c.get('available')
-        ]
+        role:
+        [{
+            'id': c['id'],
+            'name': c['name'],
+            'lastname': c['lastname'],
+            'role': c['role'],
+            'ranking': c.get('ranking', 0),
+            'counter_hours': c.get('counter_hours', 0.0),
+            'assigned_hours': 0.0,
+            'apartments': []
+        } for c in cleaners
+         if c.get('role') == role and c.get('active') and c.get('available')]
         for role in ordered.keys()
     }
 
     for role, pkgs in ordered.items():
         for pkg in pkgs:
-            total_clean = sum(a.get('cleaning_time') if a.get('cleaning_time') is not None else 120 for a in pkg)
+            total_clean = sum(
+                a.get('cleaning_time') if a.
+                get('cleaning_time') is not None else 120 for a in pkg)
             total_travel = 0
             for i in range(len(pkg) - 1):
                 try:
                     lat1 = float(pkg[i].get('lat', 0))
                     lng1 = float(pkg[i].get('lng', 0))
-                    lat2 = float(pkg[i+1].get('lat', 0))
-                    lng2 = float(pkg[i+1].get('lng', 0))
+                    lat2 = float(pkg[i + 1].get('lat', 0))
+                    lng2 = float(pkg[i + 1].get('lng', 0))
                 except (TypeError, ValueError):
                     continue
                 d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
@@ -322,31 +348,41 @@ def phase3_assign_to_cleaners(ordered, cleaners):
 
             # Nessun cleaner disponibile per questo ruolo
             if not cleaner_map[role]:
-                logging.warning(f"Nessun cleaner disponibile per il ruolo '{role}' – pacchetto non assegnato.")
+                logging.warning(
+                    f"Nessun cleaner disponibile per il ruolo '{role}' – pacchetto non assegnato."
+                )
                 continue
 
             # Assegna al cleaner con meno ore totali (assegnate + counter_hours)
             cands = sorted(
                 cleaner_map[role],
-                key=lambda c: (c['assigned_hours'] + c['counter_hours'], -c['ranking'])
-            )
+                key=lambda c:
+                (c['assigned_hours'] + c['counter_hours'], -c['ranking']))
             chosen = cands[0]
             chosen['assigned_hours'] += expected_hours
             chosen['apartments'].extend([a['task_id'] for a in pkg])
 
-            logging.info(f"Assegnato {[a['task_id'] for a in pkg]} a {chosen['name']} {chosen['lastname']} ({expected_hours}h)")
+            logging.info(
+                f"Assegnato {[a['task_id'] for a in pkg]} a {chosen['name']} {chosen['lastname']} ({expected_hours}h)"
+            )
 
     # Ritorna solo cleaner con appartamenti assegnati
     for clist in cleaner_map.values():
         for c in clist:
             if c['apartments']:
                 assignments.append({
-                    'cleaner_id': c['id'],
-                    'name': c['name'],
-                    'lastname': c['lastname'],
-                    'role': c['role'],
-                    'expected_hours': round(c['assigned_hours'], 2),
-                    'apartments': c['apartments']
+                    'cleaner_id':
+                    c['id'],
+                    'name':
+                    c['name'],
+                    'lastname':
+                    c['lastname'],
+                    'role':
+                    c['role'],
+                    'expected_hours':
+                    round(c['assigned_hours'], 2),
+                    'apartments':
+                    c['apartments']
                 })
 
     return assignments
@@ -357,13 +393,16 @@ def save_detailed_report(assignments, apartments):
     map_apt = {a['task_id']: a for a in apartments}
     with open('report.txt', 'w', encoding='utf-8') as f:
         for asg in assignments:
-            f.write(f"Cleaner: {asg['name']} {asg['lastname']} ({asg['role']})\n")
+            f.write(
+                f"Cleaner: {asg['name']} {asg['lastname']} ({asg['role']})\n")
             seq = asg['apartments']
             for idx, tid in enumerate(seq):
                 apt = map_apt.get(tid, {})
-                f.write(f"  {idx+1}. Task {tid}: {apt.get('address','')} - checkin: {apt.get('checkin','')} {apt.get('checkin_time','')} | checkout: {apt.get('checkout','')} {apt.get('checkout_time','')}\n")
-                if idx+1 < len(seq):
-                    next_apt = map_apt.get(seq[idx+1], {})
+                f.write(
+                    f"  {idx+1}. Task {tid}: {apt.get('address','')} - checkin: {apt.get('checkin','')} {apt.get('checkin_time','')} | checkout: {apt.get('checkout','')} {apt.get('checkout_time','')}\n"
+                )
+                if idx + 1 < len(seq):
+                    next_apt = map_apt.get(seq[idx + 1], {})
                     try:
                         lat1 = float(apt.get('lat', 0))
                         lng1 = float(apt.get('lng', 0))
@@ -371,18 +410,29 @@ def save_detailed_report(assignments, apartments):
                         lng2 = float(next_apt.get('lng', 0))
                     except (TypeError, ValueError):
                         continue
-                    d = calcola_distanza(lat1, lng1, lat2, lng2, mode='transit')
+                    d = calcola_distanza(lat1,
+                                         lng1,
+                                         lat2,
+                                         lng2,
+                                         mode='transit')
                     if d:
                         durata_min = round(d['durata'] / 60, 1)
-                        f.write(f"     -> distanza: {d['distanza_metri']}m, durata: {durata_min} min\n")
+                        f.write(
+                            f"     -> distanza: {d['distanza_metri']}m, durata: {durata_min} min\n"
+                        )
             # AGGIUNTA: riepilogo ore totali
-            f.write(f"\n  ➤ Totale ore assegnate: {asg.get('expected_hours', 0)}\n\n")
+            f.write(
+                f"\n  ➤ Totale ore assegnate: {asg.get('expected_hours', 0)}\n\n"
+            )
     logging.info("Report dettagliato salvato in 'report.txt'.")
+
+
 # Salvataggio JSON e report
 def save_assignments(assignments):
-    with open('assignments.json','w',encoding='utf-8') as f:
-        json.dump({'assignment':assignments},f,indent=4,ensure_ascii=False)
+    with open('assignments.json', 'w', encoding='utf-8') as f:
+        json.dump({'assignment': assignments}, f, indent=4, ensure_ascii=False)
     logging.info("Assegnazioni salvate in 'assignments.json'.")
+
 
 # Main
 def main():
@@ -395,11 +445,17 @@ def main():
     apartments = load_apartments()
 
     # 🔍 DEBUG: controllo cleaner disponibili
-    active_available = [c for c in cleaners if c.get('active') and c.get('available')]
+    active_available = [
+        c for c in cleaners if c.get('active') and c.get('available')
+    ]
     logging.info(f"[DEBUG] Cleaner totali: {len(cleaners)}")
-    logging.info(f"[DEBUG] Cleaner disponibili (active=True AND available=True): {len(active_available)}")
+    logging.info(
+        f"[DEBUG] Cleaner disponibili (active=True AND available=True): {len(active_available)}"
+    )
     for c in active_available:
-        logging.info(f"[DEBUG] ✓ Cleaner ID: {c.get('id')} | Nome: {c.get('name')} {c.get('lastname')} | Ruolo: {c.get('role')} | Ranking: {c.get('ranking')}")
+        logging.info(
+            f"[DEBUG] ✓ Cleaner ID: {c.get('id')} | Nome: {c.get('name')} {c.get('lastname')} | Ruolo: {c.get('role')} | Ranking: {c.get('ranking')}"
+        )
 
     packages = phase1_create_packages(apartments, cleaners)
     ordered = phase2_order_packages(packages)
@@ -412,5 +468,5 @@ def main():
     print("Python version:", sys.version)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()

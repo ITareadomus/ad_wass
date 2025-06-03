@@ -1,5 +1,5 @@
 {
-    "timestamp": "2025-05-30T14:21:12.434Z",
+    "timestamp": "2025-06-03T09:26:25.468Z",
     "cleaners": [
         {
             "id": 18,
@@ -60,8 +60,20 @@
             "counter_days": 0,
             "available": true,
             "contract_type": 0
+        },
+        {
+            "id": 829,
+            "name": "MUSTAPHA",
+            "lastname": "BAH",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0
         }
     ],
-    "total_selected": 5,
+    "total_selected": 6,
     "total_available": 49
 }
