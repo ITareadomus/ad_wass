@@ -8,10 +8,65 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+        }
+        
+        .navbar {
+            width: 250px;
+            background-color: #2c3e50;
+            min-height: 100vh;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        
+        .navbar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .navbar-item {
+            margin: 0;
+        }
+        
+        .navbar-link {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .navbar-link:hover {
+            background-color: #34495e;
+            color: white;
+            border-left-color: #3498db;
+        }
+        
+        .navbar-link.active {
+            background-color: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+        
+        .main-content {
+            flex: 1;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
         }
         
         .container {
@@ -225,7 +280,24 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <nav class="navbar">
+        <div class="navbar-brand">Area Domus</div>
+        <ul class="navbar-menu">
+            <li class="navbar-item">
+                <a href="#" class="navbar-link active" onclick="showSection('convocazioni')">
+                    Genera convocazioni
+                </a>
+            </li>
+            <li class="navbar-item">
+                <a href="#" class="navbar-link" onclick="showSection('assegnazioni')">
+                    Genera assegnazioni
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="main-content">
+        <div class="container">
         <h1>Selezione Cleaner</h1>
         
         <div id="messageContainer"></div>
@@ -252,6 +324,7 @@
         </div>
         
         <div id="apartmentStatsContainer" style="display: none;"></div>
+        </div>
     </div>
 
     <script>
@@ -532,6 +605,27 @@
                 showMessage(`Errore di rete: ${error.message}`, 'error');
             } finally {
                 setButtonsEnabled(true);
+            }
+        }
+        
+        // Gestione navigazione
+        function showSection(section) {
+            // Rimuovi classe active da tutti i link
+            document.querySelectorAll('.navbar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Aggiungi classe active al link cliccato
+            event.target.classList.add('active');
+            
+            if (section === 'convocazioni') {
+                // Mostra la sezione corrente (già implementata)
+                document.querySelector('.container').style.display = 'block';
+                showMessage('Sezione Genera convocazioni selezionata', 'info');
+            } else if (section === 'assegnazioni') {
+                // Per ora mostra un messaggio, in futuro si potrà implementare la sezione assegnazioni
+                document.querySelector('.container').style.display = 'block';
+                showMessage('Sezione Genera assegnazioni - Funzionalità in sviluppo', 'info');
             }
         }
         
