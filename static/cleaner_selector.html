@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selezione Cleaner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+        }
+        
+        .navbar {
+            width: 250px;
+            background-color: #2c3e50;
+            min-height: 100vh;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        
+        .navbar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .navbar-item {
+            margin: 0;
+        }
+        
+        .navbar-link {
+            display: block;
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+        
+        .navbar-link:hover {
+            background-color: #34495e;
+            color: white;
+            border-left-color: #3498db;
+        }
+        
+        .navbar-link.active {
+            background-color: #3498db;
+            color: white;
+            border-left-color: #2980b9;
+        }
+        
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .cleaner-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .cleaner-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cleaner-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cleaner-name {
+            flex-grow: 1;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .cleaner-role {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 10px;
+            margin-right: 15px;
+        }
+        
+        .role-premium {
+            background-color: #ffd700;
+            color: #333;
+        }
+        
+        .role-standard {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .generate-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-generate {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-generate:hover:not(:disabled) {
+            background-color: #1976D2;
+        }
+        
+        .btn-confirm {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-confirm:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+        
+        .percentage-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .stats {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .message-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .apartment-stats {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .apartment-stats p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #495057;
+        }
+        
+        .assignment-controls {
+            margin-top: 20px;
+        }
+        
+        .info-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-section h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .info-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-section li {
+            margin: 5px 0;
+        }
+        
+        .assignment-options {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .assignment-options h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .option-group {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        .option-group label {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .option-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .option-description {
+            margin: 5px 0 0 25px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .assignment-actions {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .assignment-actions .btn {
+            margin: 0 10px;
+        }
+        
+        #assignmentResults {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        #assignmentList {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Area Domus</div>
+        <ul class="navbar-menu">
+            <li class="navbar-item">
+                <a href="#" class="navbar-link active" onclick="showSection('convocazioni')">
+                    Genera convocazioni
+                </a>
+            </li>
+            <li class="navbar-item">
+                <a href="#" class="navbar-link" onclick="showSection('assegnazioni')">
+                    Genera assegnazioni
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="main-content">
+        <!-- Sezione Genera Convocazioni -->
+        <div id="convocazioniSection" class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 id="convocazioniTitle">Genera convocazioni per <span id="selectedDate"></span></h1>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="dateSelector" style="font-size: 14px; color: #666;">Data:</label>
+                    <input type="date" id="dateSelector" onchange="updateSelectedDate()" 
+                           style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                </div>
+            </div>
+            
+            <div id="messageContainer"></div>
+            
+            <div class="stats">
+                <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
+            </div>
+            
+            <div class="cleaner-list" id="cleanerList">
+                <div class="loading">Caricamento cleaner in corso...</div>
+            </div>
+            
+            <div class="controls">
+                <div class="generate-section">
+                    <button class="btn btn-generate" id="generateBtn" onclick="generateSelection()">Genera</button>
+                    <select class="percentage-select" id="percentageSelect">
+                        <option value="0">0%</option>
+                        <option value="10" selected>10%</option>
+                        <option value="20">20%</option>
+                        <option value="30">30%</option>
+                    </select>
+                </div>
+                <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
+            </div>
+            
+            <div id="apartmentStatsContainer" style="display: none;"></div>
+        </div>
+
+        <!-- Sezione Genera Assegnazioni -->
+        <div id="assegnazioniSection" class="container" style="display: none;">
+            <h1>Genera Assegnazioni</h1>
+            
+            <div id="assegnazioniMessageContainer"></div>
+            
+            <div class="assignment-controls">
+                <div class="info-section">
+                    <h3>Informazioni Sistema</h3>
+                    <p>Questa sezione permetterà di generare le assegnazioni automatiche degli appartamenti ai cleaner selezionati.</p>
+                    <p>Le assegnazioni verranno create in base a:</p>
+                    <ul>
+                        <li>Posizione geografica degli appartamenti</li>
+                        <li>Disponibilità dei cleaner</li>
+                        <li>Ranking e competenze</li>
+                        <li>Ottimizzazione dei percorsi</li>
+                    </ul>
+                </div>
+                
+                <div class="assignment-options">
+                    <h3>Opzioni di Assegnazione</h3>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="automatic" checked>
+                            Assegnazione Automatica
+                        </label>
+                        <p class="option-description">Il sistema assegnerà automaticamente gli appartamenti in base all'algoritmo di ottimizzazione.</p>
+                    </div>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="manual">
+                            Assegnazione Manuale
+                        </label>
+                        <p class="option-description">Permette di assegnare manualmente specifici appartamenti a cleaner selezionati.</p>
+                    </div>
+                </div>
+                
+                <div class="assignment-actions">
+                    <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
+                        Genera Assegnazioni
+                    </button>
+                    <button class="btn btn-confirm" id="viewReportBtn" onclick="viewAssignmentReport()" style="display: none;">
+                        Visualizza Report
+                    </button>
+                </div>
+            </div>
+            
+            <div id="assignmentResults" style="display: none;">
+                <h3>Risultati Assegnazioni</h3>
+                <div id="assignmentList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cleaners = [];
+        let selectedFromFile = [];
+        
+        // Mostra messaggio all'utente
+        function showMessage(text, type = 'info') {
+            const container = document.getElementById('messageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+            
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+        
+        // Esegui script Python tramite fetch
+        async function runPythonScript(scriptName, showSuccessMessage = true) {
+            try {
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+                
+                showMessage(loadingMessage, 'info');
+                setButtonsEnabled(false);
+                
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ script: scriptName })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (showSuccessMessage) {
+                        showMessage(`${scriptName} completato con successo`, 'success');
+                    }
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+        
+        // Esegui script Python con percentuale
+        async function runPythonScriptWithPercentage(scriptName, percentage) {
+            try {
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+                
+                showMessage(loadingMessage, 'info');
+                setButtonsEnabled(false);
+                
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        script: scriptName,
+                        percentage: percentage
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(`${scriptName} completato con successo`, 'success');
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+        
+        // Abilita/disabilita pulsanti
+        function setButtonsEnabled(enabled) {
+            document.getElementById('generateBtn').disabled = !enabled;
+            document.getElementById('confirmBtn').disabled = !enabled;
+        }
+        
+        // Carica cleaners dal JSON senza selezioni precedenti
+        async function loadCleaners() {
+            try {
+                // Prima esegui cleaner_list.py per aggiornare i dati
+                await runPythonScript('cleaner_list.py', false);
+                
+                // Carica i cleaner aggiornati
+                const response = await fetch('/modello_cleaner.json');
+                const data = await response.json();
+                cleaners = data.cleaners;
+                
+                // Non caricare selezioni precedenti - inizia sempre con nessun cleaner selezionato
+                selectedFromFile = [];
+                
+                displayCleaners();
+                updateStats();
+                showMessage('Cleaner caricati con successo', 'success');
+            } catch (error) {
+                console.error('Errore nel caricamento dei cleaner:', error);
+                showMessage('Errore nel caricamento dei dati dei cleaner', 'error');
+            }
+        }
+        
+        // Mostra cleaners nella lista
+        function displayCleaners() {
+            const cleanerList = document.getElementById('cleanerList');
+            cleanerList.innerHTML = '';
+            
+            cleaners.forEach((cleaner, index) => {
+                const cleanerItem = document.createElement('div');
+                cleanerItem.className = 'cleaner-item';
+                
+                const isSelected = selectedFromFile.some(sel => sel.id === cleaner.id);
+                const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
+                
+                cleanerItem.innerHTML = `
+                    <div class="cleaner-name">
+                        ${cleaner.name} ${cleaner.lastname}
+                        <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="cleaner-${index}" 
+                               ${isSelected ? 'checked' : ''} 
+                               onchange="updateStats()" 
+                               data-cleaner-id="${cleaner.id}">
+                        <span class="slider"></span>
+                    </label>
+                `;
+                
+                cleanerList.appendChild(cleanerItem);
+            });
+        }
+        
+        // Aggiorna statistiche
+        function updateStats() {
+            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const totalCount = checkboxes.length;
+            
+            document.getElementById('selectedCount').textContent = selectedCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+        
+        // Genera selezione basata su percentuale
+        async function generateSelection() {
+            // Ottieni la percentuale selezionata
+            const percentage = document.getElementById('percentageSelect').value;
+            
+            // Prima esegui cleaner_selection.py con la percentuale
+            const success = await runPythonScriptWithPercentage('cleaner_selection.py', percentage);
+            if (!success) return;
+            
+            // Ricarica la lista con le nuove selezioni
+            try {
+                const selResponse = await fetch('/data/sel_cleaners.json');
+                if (selResponse.ok) {
+                    const selData = await selResponse.json();
+                    selectedFromFile = selData.cleaners || [];
+                    
+                    // Aggiorna le checkbox in base al file generato
+                    const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+                    checkboxes.forEach((checkbox, index) => {
+                        const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                        const isSelected = selectedFromFile.some(sel => sel.id === cleanerId);
+                        checkbox.checked = isSelected;
+                    });
+                    
+                    updateStats();
+                    
+                    // Mostra le statistiche degli appartamenti se disponibili
+                    if (selData.apartment_stats) {
+                        displayApartmentStats(selData.apartment_stats);
+                    }
+                    
+                    showMessage(`Selezione automatica completata: ${selectedFromFile.length} cleaner selezionati`, 'success');
+                }
+            } catch (error) {
+                showMessage('Errore nel caricamento della selezione generata', 'error');
+            }
+        }
+        
+        // Mostra le statistiche degli appartamenti
+        function displayApartmentStats(apartmentStats) {
+            const container = document.getElementById('apartmentStatsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="apartment-stats">
+                        <p><strong>Appartamenti da pulire:</strong> ${apartmentStats.total_apartments}</p>
+                        <p><strong>Appartamenti aggiuntivi stimati (${apartmentStats.percentage_used}%):</strong> ${apartmentStats.extra_apartments}</p>
+                    </div>
+                `;
+                container.style.display = 'block';
+            }
+        }
+        
+        // Conferma selezione e salva nel file
+        async function confirmSelection() {
+            const selectedCleaners = [];
+            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+            
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                    const cleaner = cleaners.find(c => c.id === cleanerId);
+                    if (cleaner) {
+                        selectedCleaners.push(cleaner);
+                    }
+                }
+            });
+            
+            if (selectedCleaners.length === 0) {
+                showMessage('Seleziona almeno un cleaner prima di confermare.', 'error');
+                return;
+            }
+            
+            // Salva la selezione nel file sel_cleaners.json
+            const selectionData = {
+                timestamp: new Date().toISOString(),
+                cleaners: selectedCleaners,
+                total_selected: selectedCleaners.length,
+                total_available: cleaners.length
+            };
+            
+            try {
+                setButtonsEnabled(false);
+                showMessage('Conferma cleaner selezionati in corso...', 'info');
+                
+                const response = await fetch('/save-selection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(selectionData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`, 'success');
+                } else {
+                    showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+        
+        // Gestione navigazione
+        function showSection(section) {
+            // Rimuovi classe active da tutti i link
+            document.querySelectorAll('.navbar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Aggiungi classe active al link cliccato
+            event.target.classList.add('active');
+            
+            // Nascondi tutte le sezioni
+            document.getElementById('convocazioniSection').style.display = 'none';
+            document.getElementById('assegnazioniSection').style.display = 'none';
+            
+            if (section === 'convocazioni') {
+                document.getElementById('convocazioniSection').style.display = 'block';
+                showMessage('Sezione Genera convocazioni selezionata', 'info');
+            } else if (section === 'assegnazioni') {
+                document.getElementById('assegnazioniSection').style.display = 'block';
+                showAssegnazioniMessage('Sezione Genera assegnazioni selezionata', 'info');
+            }
+        }
+        
+        // Mostra messaggio nella sezione assegnazioni
+        function showAssegnazioniMessage(text, type = 'info') {
+            const container = document.getElementById('assegnazioniMessageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+            
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+        
+        // Genera assegnazioni (placeholder)
+        function generateAssignments() {
+            const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
+            showAssegnazioniMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
+            
+            // Simula processo di generazione
+            setTimeout(() => {
+                showAssegnazioniMessage('Assegnazioni generate con successo!', 'success');
+                document.getElementById('viewReportBtn').style.display = 'inline-block';
+                
+                // Mostra risultati di esempio
+                const resultDiv = document.getElementById('assignmentResults');
+                const listDiv = document.getElementById('assignmentList');
+                listDiv.innerHTML = `
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #28a745;">
+                        <strong>Cleaner1 Lastname1 (Premium)</strong><br>
+                        <small>3 appartamenti assegnati - Zona: Centro Milano</small>
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #17a2b8;">
+                        <strong>Cleaner2 Lastname2 (Premium)</strong><br>
+                        <small>2 appartamenti assegnati - Zona: Porta Garibaldi</small>
+                    </div>
+                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #ffc107; color: #333;">
+                        <strong>Cleaner3 Lastname3 (Standard)</strong><br>
+                        <small>2 appartamenti assegnati - Zona: Navigli</small>
+                    </div>
+                `;
+                resultDiv.style.display = 'block';
+            }, 2000);
+        }
+        
+        // Visualizza report assegnazioni
+        function viewAssignmentReport() {
+            showAssegnazioniMessage('Report dettagliato disponibile in report.txt', 'info');
+        }
+        
+        // Inizializza la data al caricamento della pagina
+        function initializeDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const day = String(tomorrow.getDate()).padStart(2, '0');
+            
+            const tomorrowString = `${year}-${month}-${day}`;
+            const displayDate = `${day}/${month}/${year}`;
+            
+            document.getElementById('dateSelector').value = tomorrowString;
+            document.getElementById('selectedDate').textContent = displayDate;
+        }
+        
+        // Aggiorna la data selezionata
+        function updateSelectedDate() {
+            const selectedDateValue = document.getElementById('dateSelector').value;
+            if (selectedDateValue) {
+                const [year, month, day] = selectedDateValue.split('-');
+                const displayDate = `${day}/${month}/${year}`;
+                document.getElementById('selectedDate').textContent = displayDate;
+                
+                showMessage(`Data aggiornata a: ${displayDate}`, 'info');
+            }
+        }
+        
+        // Ottieni la data selezionata nel formato YYYY-MM-DD
+        function getSelectedDate() {
+            return document.getElementById('dateSelector').value;
+        }
+        
+        // Carica cleaners quando la pagina si carica
+        window.addEventListener('load', function() {
+            initializeDate();
+            loadCleaners();
+        });
+    </script>
+</body>
+</html>
