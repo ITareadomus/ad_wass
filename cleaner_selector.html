@@ -387,7 +387,14 @@
     <div class="main-content">
         <!-- Sezione Genera Convocazioni -->
         <div id="convocazioniSection" class="container">
-            <h1>Genera Convocazioni</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 id="convocazioniTitle">Genera convocazioni per <span id="selectedDate"></span></h1>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="dateSelector" style="font-size: 14px; color: #666;">Data:</label>
+                    <input type="date" id="dateSelector" onchange="updateSelectedDate()" 
+                           style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                </div>
+            </div>
             
             <div id="messageContainer"></div>
             
@@ -826,8 +833,44 @@
             showAssegnazioniMessage('Report dettagliato disponibile in report.txt', 'info');
         }
         
+        // Inizializza la data al caricamento della pagina
+        function initializeDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const day = String(tomorrow.getDate()).padStart(2, '0');
+            
+            const tomorrowString = `${year}-${month}-${day}`;
+            const displayDate = `${day}/${month}/${year}`;
+            
+            document.getElementById('dateSelector').value = tomorrowString;
+            document.getElementById('selectedDate').textContent = displayDate;
+        }
+        
+        // Aggiorna la data selezionata
+        function updateSelectedDate() {
+            const selectedDateValue = document.getElementById('dateSelector').value;
+            if (selectedDateValue) {
+                const [year, month, day] = selectedDateValue.split('-');
+                const displayDate = `${day}/${month}/${year}`;
+                document.getElementById('selectedDate').textContent = displayDate;
+                
+                showMessage(`Data aggiornata a: ${displayDate}`, 'info');
+            }
+        }
+        
+        // Ottieni la data selezionata nel formato YYYY-MM-DD
+        function getSelectedDate() {
+            return document.getElementById('dateSelector').value;
+        }
+        
         // Carica cleaners quando la pagina si carica
-        window.addEventListener('load', loadCleaners);
+        window.addEventListener('load', function() {
+            initializeDate();
+            loadCleaners();
+        });
     </script>
 </body>
 </html>
