@@ -1,6 +1,32 @@
 {
-    "timestamp": "2025-06-04T08:11:41.250Z",
+    "timestamp": "2025-06-04T08:26:36.872443",
     "cleaners": [
+        {
+            "id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
+        {
+            "id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
         {
             "id": 249,
             "name": "Ogbodo Chidi",
@@ -8,12 +34,44 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
+        {
+            "id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
+        {
+            "id": 321,
+            "name": "BOUBACAR",
+            "lastname": "BARRY",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
         }
     ],
-    "total_selected": 1,
-    "total_available": 49
+    "total_selected": 5,
+    "total_available": 0,
+    "apartment_stats": {
+        "total_apartments": 12,
+        "extra_apartments": 1,
+        "percentage_used": 10.0
+    }
 }
