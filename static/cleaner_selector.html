@@ -595,7 +595,7 @@
                 await runPythonScript('cleaner_list.py', false);
                 
                 // Carica i cleaner aggiornati
-                const response = await fetch('/modello_cleaner.json');
+                const response = await fetch('/data/modello_cleaner.json');
                 const data = await response.json();
                 cleaners = data.cleaners;
                 
