@@ -1,15 +1,56 @@
 {
-    "assignment": [
+    "assignments": [
         {
             "cleaner_id": 18,
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
             "role": "Standard",
-            "expected_hours": 3.67,
+            "expected_hours": 3.62,
             "apartments": [
-                100005,
-                100006,
-                100007
+                100001,
+                100004,
+                100011
+            ],
+            "sequence_details": [
+                {
+                    "task_id": 100001,
+                    "address": "Via Vitruvio, 28",
+                    "lat": "45.480900",
+                    "lng": "9.205700",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100004,
+                    "address": "Via San Marco, 20",
+                    "lat": "45.475100",
+                    "lng": "9.187100",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100011,
+                    "address": "Via Fatebenefratelli, 3",
+                    "lat": "45.470000",
+                    "lng": "9.186800",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": true,
+                    "priority_1": true
+                }
             ]
         },
         {
@@ -17,11 +58,52 @@
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
-            "expected_hours": 5.37,
+            "expected_hours": 3.14,
             "apartments": [
-                100001,
-                100009,
-                100010
+                100002,
+                100003,
+                100012
+            ],
+            "sequence_details": [
+                {
+                    "task_id": 100002,
+                    "address": "Via Manzoni, 42",
+                    "lat": "45.468500",
+                    "lng": "9.195200",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": true,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100003,
+                    "address": "Via Verdi, 1",
+                    "lat": "45.466800",
+                    "lng": "9.189700",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100012,
+                    "address": "Via Brera, 6",
+                    "lat": "45.467200",
+                    "lng": "9.189100",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                }
             ]
         },
         {
@@ -29,10 +111,52 @@
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
             "role": "Standard",
-            "expected_hours": 2.8,
+            "expected_hours": 3.66,
             "apartments": [
-                100008,
-                100012
+                100005,
+                100006,
+                100007
+            ],
+            "sequence_details": [
+                {
+                    "task_id": 100005,
+                    "address": "Via Piero della Francesca, 14",
+                    "lat": "45.478700",
+                    "lng": "9.168200",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": true,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100006,
+                    "address": "Via Bergognone, 34",
+                    "lat": "45.461700",
+                    "lng": "9.158500",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100007,
+                    "address": "Via Stendhal, 45",
+                    "lat": "45.459400",
+                    "lng": "9.165800",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                }
             ]
         },
         {
@@ -40,12 +164,52 @@
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
-            "expected_hours": 4.81,
+            "expected_hours": 5.3,
             "apartments": [
-                100002,
-                100011,
-                100003,
-                100004
+                100008,
+                100010,
+                100009
+            ],
+            "sequence_details": [
+                {
+                    "task_id": 100008,
+                    "address": "Corso di Porta Romana, 112",
+                    "lat": "45.450200",
+                    "lng": "9.216100",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": true,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100010,
+                    "address": "Via Teodosio, 15",
+                    "lat": "45.492800",
+                    "lng": "9.240100",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                },
+                {
+                    "task_id": 100009,
+                    "address": "Viale Abruzzi, 10",
+                    "lat": "45.502800",
+                    "lng": "9.208300",
+                    "checkin": "2025-05-17",
+                    "checkin_time": "14:00",
+                    "checkout": "2025-05-16",
+                    "checkout_time": "10:00",
+                    "cleaning_time": 60,
+                    "small_equipment": false,
+                    "priority_1": true
+                }
             ]
         }
     ]

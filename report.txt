@@ -1,36 +1,106 @@
-Cleaner: MUTURI DANIEL NGANGA (Standard)
-  1. Task 100005: Via Paolo Sarpi, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2602m, durata: 20.4 min
-  2. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 751m, durata: 10.2 min
-  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+=== REPORT ASSEGNAZIONI ===
 
-  ➤ Totale ore assegnate: 3.67
+Cleaner: MUTURI DANIEL NGANGA (Standard)
+Ore totali assegnate: 3.62
+Numero appartamenti: 3
+
+  1. Task 100001 [PRIORITÀ 1]
+     Indirizzo: Via Vitruvio, 28
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 2033m (28 min)
+
+  2. Task 100004 [PRIORITÀ 1]
+     Indirizzo: Via San Marco, 20
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 648m (8 min)
+
+  3. Task 100011 [PRIORITÀ 1] [SMALL EQUIPMENT]
+     Indirizzo: Via Fatebenefratelli, 3
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+
+--------------------------------------------------
 
 Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
-  1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 3355m, durata: 26.8 min
-  2. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 8586m, durata: 37.2 min
-  3. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+Ore totali assegnate: 3.14
+Numero appartamenti: 3
 
-  ➤ Totale ore assegnate: 5.37
+  1. Task 100002 [PRIORITÀ 1] [SMALL EQUIPMENT]
+     Indirizzo: Via Manzoni, 42
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 560m (7 min)
+
+  2. Task 100003 [PRIORITÀ 1]
+     Indirizzo: Via Verdi, 1
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 64m (0 min)
+
+  3. Task 100012 [PRIORITÀ 1]
+     Indirizzo: Via Brera, 6
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+
+--------------------------------------------------
 
 Cleaner: Ogbodo Chidi Igwe (Standard)
-  1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 4019m, durata: 22.8 min
-  2. Task 100012: Via Dante, 10 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+Ore totali assegnate: 3.66
+Numero appartamenti: 3
 
-  ➤ Totale ore assegnate: 2.8
+  1. Task 100005 [PRIORITÀ 1] [SMALL EQUIPMENT]
+     Indirizzo: Via Piero della Francesca, 14
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 2173m (29 min)
+
+  2. Task 100006 [PRIORITÀ 1]
+     Indirizzo: Via Bergognone, 34
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 764m (10 min)
+
+  3. Task 100007 [PRIORITÀ 1]
+     Indirizzo: Via Stendhal, 45
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+
+--------------------------------------------------
 
 Cleaner: BAH ISMAILA (Standard)
-  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 1003m, durata: 13.8 min
-  2. Task 100011: Via Senato, 15 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 912m, durata: 12.4 min
-  3. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2143m, durata: 14.6 min
-  4. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+Ore totali assegnate: 5.3
+Numero appartamenti: 3
 
-  ➤ Totale ore assegnate: 4.81
+  1. Task 100008 [PRIORITÀ 1] [SMALL EQUIPMENT]
+     Indirizzo: Corso di Porta Romana, 112
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 6186m (86 min)
+
+  2. Task 100010 [PRIORITÀ 1]
+     Indirizzo: Via Teodosio, 15
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+     -> Distanza al prossimo: 3739m (51 min)
+
+  3. Task 100009 [PRIORITÀ 1]
+     Indirizzo: Viale Abruzzi, 10
+     Check-in: 2025-05-17 14:00
+     Check-out: 2025-05-16 10:00
+     Tempo pulizia: 60 min
+
+--------------------------------------------------
 
