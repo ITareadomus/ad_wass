@@ -37,6 +37,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
             self.handle_run_script()
         elif self.path == '/save-selection':
             self.handle_save_selection()
+        elif self.path == '/get-assignments':
+            self.handle_get_assignments()
         else:
             self.send_response(404)
             self.end_headers()
@@ -114,6 +116,19 @@ class CustomHandler(SimpleHTTPRequestHandler):
 
             self.send_json_response({'success': True})
 
+        except Exception as e:
+            self.send_json_response({'success': False, 'error': str(e)})
+
+    def handle_get_assignments(self):
+        try:
+            # Carica le assegnazioni dal file JSON se esiste
+            assignments_file = 'data/assignments.json'
+            if os.path.exists(assignments_file):
+                with open(assignments_file, 'r', encoding='utf-8') as f:
+                    assignments_data = json.load(f)
+                self.send_json_response({'success': True, 'assignments': assignments_data})
+            else:
+                self.send_json_response({'success': False, 'error': 'File assignments.json non trovato'})
         except Exception as e:
             self.send_json_response({'success': False, 'error': str(e)})
 

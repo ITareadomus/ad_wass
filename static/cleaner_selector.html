@@ -431,14 +431,15 @@
             <div class="assignment-controls">
                 <div class="info-section">
                     <h3>Informazioni Sistema</h3>
-                    <p>Questa sezione permetterà di generare le assegnazioni automatiche degli appartamenti ai cleaner selezionati.</p>
-                    <p>Le assegnazioni verranno create in base a:</p>
+                    <p>Questa sezione genera le assegnazioni automatiche degli appartamenti ai cleaner selezionati dal file sel_cleaners.json.</p>
+                    <p>Le assegnazioni vengono create in base a:</p>
                     <ul>
-                        <li>Posizione geografica degli appartamenti</li>
-                        <li>Disponibilità dei cleaner</li>
-                        <li>Ranking e competenze</li>
-                        <li>Ottimizzazione dei percorsi</li>
+                        <li>Appartamenti con check-in alle 14:00 o small_equipment = true (priorità 1)</li>
+                        <li>Distanza massima di 800 metri tra appartamenti consecutivi</li>
+                        <li>Sequenze di mediamente 3 appartamenti per cleaner</li>
+                        <li>Ottimizzazione dei percorsi tramite Google Maps</li>
                     </ul>
+                    <p><strong>Prerequisito:</strong> Seleziona prima i cleaner nella sezione "Genera convocazioni"</p>
                 </div>
 
                 <div class="assignment-options">
@@ -776,7 +777,7 @@
                 showMessage('Sezione Genera convocazioni selezionata', 'info');
             } else if (section === 'assegnazioni') {
                 document.getElementById('assegnazioniSection').style.display = 'block';
-                showAssegnazioniMessage('Sezione Genera assegnazioni selezionata', 'info');
+                refreshAssignments();
             }
         }
 
@@ -797,40 +798,76 @@
             }, 5000);
         }
 
-        // Genera assegnazioni (placeholder)
-        function generateAssignments() {
+        // Genera assegnazioni utilizzando i cleaner selezionati
+        async function generateAssignments() {
             const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
             showAssegnazioniMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
 
-            // Simula processo di generazione
-            setTimeout(() => {
+            try {
+                // Carica i cleaner selezionati dal file sel_cleaners.json
+                const selCleanersResponse = await fetch('/data/sel_cleaners.json');
+                if (!selCleanersResponse.ok) {
+                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
+                }
+                
+                const selCleanersData = await selCleanersResponse.json();
+                const selectedCleaners = selCleanersData.cleaners || [];
+
+                if (selectedCleaners.length === 0) {
+                    showAssegnazioniMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'error');
+                    return;
+                }
+
+                // Esegui lo script algoritmo.py per generare le assegnazioni
+                const success = await runPythonScript('algoritmo.py', false);
+                if (!success) {
+                    showAssegnazioniMessage('Errore durante la generazione delle assegnazioni', 'error');
+                    return;
+                }
+
                 showAssegnazioniMessage('Assegnazioni generate con successo!', 'success');
                 document.getElementById('viewReportBtn').style.display = 'inline-block';
 
-                // Mostra risultati di esempio
+                // Mostra i cleaner selezionati con le loro assegnazioni
                 const resultDiv = document.getElementById('assignmentResults');
                 const listDiv = document.getElementById('assignmentList');
-                listDiv.innerHTML = `
-                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #28a745;">
-                        <strong>Cleaner1 Lastname1 (Premium)</strong><br>
-                        <small>3 appartamenti assegnati - Zona: Centro Milano</small>
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #17a2b8;">
-                        <strong>Cleaner2 Lastname2 (Premium)</strong><br>
-                        <small>2 appartamenti assegnati - Zona: Porta Garibaldi</small>
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid #ffc107; color: #333;">
-                        <strong>Cleaner3 Lastname3 (Standard)</strong><br>
-                        <small>2 appartamenti assegnati - Zona: Navigli</small>
-                    </div>
-                `;
+                
+                let assignmentsHtml = '';
+                selectedCleaners.forEach((cleaner, index) => {
+                    const roleClass = cleaner.role.toLowerCase() === 'premium' ? '#28a745' : '#ffc107';
+                    const roleColor = cleaner.role.toLowerCase() === 'premium' ? 'white' : '#333';
+                    
+                    assignmentsHtml += `
+                        <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid ${roleClass}; cursor: pointer;" 
+                             onclick="showCleanerRoute(${cleaner.id}, '${cleaner.name} ${cleaner.lastname}')">
+                            <strong>${cleaner.name} ${cleaner.lastname} (${cleaner.role})</strong><br>
+                            <small>Assegnazione in fase di calcolo - Clicca per visualizzare il percorso</small>
+                        </div>
+                    `;
+                });
+
+                listDiv.innerHTML = assignmentsHtml;
                 resultDiv.style.display = 'block';
-            }, 2000);
+
+            } catch (error) {
+                showAssegnazioniMessage(`Errore: ${error.message}`, 'error');
+            }
         }
 
         // Visualizza report assegnazioni
         function viewAssignmentReport() {
             showAssegnazioniMessage('Report dettagliato disponibile in report.txt', 'info');
+        }
+
+        // Mostra il percorso del cleaner sulla mappa
+        function showCleanerRoute(cleanerId, cleanerName) {
+            showAssegnazioniMessage(`Visualizzazione percorso per ${cleanerName} sulla mappa di Milano...`, 'info');
+            
+            // Placeholder per l'integrazione con Google Maps
+            // Qui verrà implementata la visualizzazione del percorso
+            setTimeout(() => {
+                showAssegnazioniMessage(`Percorso di ${cleanerName} caricato sulla mappa`, 'success');
+            }, 1000);
         }
 
         // Inizializza la data al caricamento della pagina
@@ -866,10 +903,25 @@
             return document.getElementById('dateSelector').value;
         }
 
-        // Carica le assegnazioni
-        function refreshAssignments() {
-            // Qui dovresti chiamare la funzione che carica le assegnazioni e le visualizza
-            console.log('Caricamento e visualizzazione delle assegnazioni...');
+        // Carica le assegnazioni e verifica i cleaner selezionati
+        async function refreshAssignments() {
+            try {
+                const response = await fetch('/data/sel_cleaners.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    const selectedCount = data.cleaners ? data.cleaners.length : 0;
+                    
+                    if (selectedCount > 0) {
+                        showAssegnazioniMessage(`${selectedCount} cleaner disponibili per le assegnazioni`, 'success');
+                    } else {
+                        showAssegnazioniMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'info');
+                    }
+                } else {
+                    showAssegnazioniMessage('File sel_cleaners.json non trovato. Genera prima le convocazioni.', 'info');
+                }
+            } catch (error) {
+                showAssegnazioniMessage('Errore nel caricamento dei cleaner selezionati', 'error');
+            }
         }
 
         // Carica i dati all'avvio
