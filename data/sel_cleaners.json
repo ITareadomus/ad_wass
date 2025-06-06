@@ -1,5 +1,5 @@
 {
-    "timestamp": "2025-06-04T09:26:14.862832",
+    "timestamp": "2025-06-04T13:39:56.683Z",
     "cleaners": [
         {
             "id": 18,
@@ -8,11 +8,10 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0.0,
+            "counter_hours": 0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0,
-            "deficit_hours": 0.0
+            "contract_type": 0
         },
         {
             "id": 24,
@@ -21,11 +20,10 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0.0,
+            "counter_hours": 0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0,
-            "deficit_hours": 0.0
+            "contract_type": 0
         },
         {
             "id": 249,
@@ -34,11 +32,10 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0.0,
+            "counter_hours": 0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0,
-            "deficit_hours": 0.0
+            "contract_type": 0
         },
         {
             "id": 287,
@@ -47,11 +44,10 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0.0,
+            "counter_hours": 0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0,
-            "deficit_hours": 0.0
+            "contract_type": 0
         },
         {
             "id": 321,
@@ -60,18 +56,12 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0.0,
+            "counter_hours": 0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0,
-            "deficit_hours": 0.0
+            "contract_type": 0
         }
     ],
     "total_selected": 5,
-    "total_available": 0,
-    "apartment_stats": {
-        "total_apartments": 12,
-        "extra_apartments": 1,
-        "percentage_used": 10.0
-    }
+    "total_available": 49
 }
