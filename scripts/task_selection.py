@@ -32,7 +32,7 @@ db_config = {
     "host": "139.59.132.41",
     "user": "admin",
     "password": "ed329a875c6c4ebdf4e87e2bbe53a15771b5844ef6606dde",
-    "database": "adam"
+    "database": "adamdb"
 }
 
 # Connessione al database

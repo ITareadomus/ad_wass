@@ -39,7 +39,7 @@ def load_selected_cleaners():
         return json.load(f).get('cleaners', [])
 
 def load_apartments():
-    with open('data/mock_apartments.json', 'r', encoding='utf-8') as f:
+    with open('data/modello_apt.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('apt', [])
 
 # Funzione per determinare se un appartamento ha priorità 1
