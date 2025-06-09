@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 #ho aggiunto delle colonne nella tabella app_users in cui ho aggiunto un campo per il minimo ore e un altro per il tipo di contratto
 
 # Carica configurazione dal file JSON
-with open("modello_cleaner.json", "r") as f:
+with open("data/modello_cleaner.json", "r") as f:
     config = json.load(f)
 
 db_config = config["db_config"]
@@ -81,7 +81,7 @@ connection.close()
 config["cleaners"] = cleaners_data
 
 # Sovrascrive il file modello.json con i dati aggiornati
-with open("modello_cleaner.json", "w") as f:
+with open("data/modello_cleaner.json", "w") as f:
     json.dump(config, f, indent=4)
 
 print(f"Aggiornato modello_cleaner.json con {len(results)} cleaners.")
