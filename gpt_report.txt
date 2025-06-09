@@ -1,2 +1,30 @@
+Cleaner ID: 18
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+  ➤ Totale minuti assegnati: 135
 
+Cleaner ID: 24
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+  ➤ Totale minuti assegnati: 135
+
+Cleaner ID: 249
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+  ➤ Totale minuti assegnati: 135
+
+Cleaner ID: 287
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+  ➤ Totale minuti assegnati: 135
+
+Cleaner ID: 321
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+  ➤ Totale minuti assegnati: 135
 

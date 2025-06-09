@@ -1,36 +1,35 @@
 Cleaner: MUTURI DANIEL NGANGA (Standard)
-  1. Task 100005: Via Paolo Sarpi, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2602m, durata: 20.4 min
-  2. Task 100006: Via Tortona, 27 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 751m, durata: 10.2 min
-  3. Task 100007: Via Savona, 35 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
 
-  ➤ Totale ore assegnate: 3.67
+  ➤ Totale ore assegnate: 2.5
 
 Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
-  1. Task 100001: Corso Buenos Aires, 63 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 3355m, durata: 26.8 min
-  2. Task 100009: Piazzale Loreto, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 8586m, durata: 37.2 min
-  3. Task 100010: Via Lambrate, 20 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
 
-  ➤ Totale ore assegnate: 5.37
+  ➤ Totale ore assegnate: 2.5
 
 Cleaner: Ogbodo Chidi Igwe (Standard)
-  1. Task 100008: Viale Monte Nero, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 4019m, durata: 22.8 min
-  2. Task 100012: Via Dante, 10 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
 
-  ➤ Totale ore assegnate: 2.8
+  ➤ Totale ore assegnate: 2.5
 
 Cleaner: BAH ISMAILA (Standard)
-  1. Task 100002: Via Monte Napoleone, 5 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 1003m, durata: 13.8 min
-  2. Task 100011: Via Senato, 15 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 912m, durata: 12.4 min
-  3. Task 100003: Piazza Duomo, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
-     -> distanza: 2143m, durata: 14.6 min
-  4. Task 100004: Via della Moscova, 12 - checkin: 2025-05-17 14:00 | checkout: 2025-05-16 10:00
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
 
-  ➤ Totale ore assegnate: 4.81
+  ➤ Totale ore assegnate: 2.5
+
+Cleaner: BOUBACAR BARRY (Standard)
+  1. Task task_id1:  - checkin:  | checkout: 
+  2. Task task_id2:  - checkin:  | checkout: 
+  3. Task task_id3:  - checkin:  | checkout: 
+
+  ➤ Totale ore assegnate: 2.5
 
