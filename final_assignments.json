@@ -1,0 +1,44 @@
+[
+  {
+    "cleaner_id": 18,
+    "assigned_tasks": [
+      100002,
+      100003,
+      100004
+    ],
+    "total_assigned_minutes": 90
+  },
+  {
+    "cleaner_id": 24,
+    "assigned_tasks": [
+      100005,
+      100011,
+      100012
+    ],
+    "total_assigned_minutes": 90
+  },
+  {
+    "cleaner_id": 249,
+    "assigned_tasks": [
+      100001,
+      100009
+    ],
+    "total_assigned_minutes": 60
+  },
+  {
+    "cleaner_id": 287,
+    "assigned_tasks": [
+      100006,
+      100007
+    ],
+    "total_assigned_minutes": 60
+  },
+  {
+    "cleaner_id": 321,
+    "assigned_tasks": [
+      100008,
+      100010
+    ],
+    "total_assigned_minutes": 60
+  }
+]

@@ -1,24 +1,27 @@
 Cleaner ID: 18
   1. Task 100002: Via Manzoni, 42 - checkin: 14:00 | checkout: 10:00
   2. Task 100003: Via Verdi, 1 - checkin: 14:00 | checkout: 10:00
-  3. Task 100001: Via Vitruvio, 28 - checkin: 14:00 | checkout: 10:00
-  ➤ Totale minuti assegnati: 180
+  3. Task 100004: Via San Marco, 20 - checkin: 14:00 | checkout: 10:00
+  ➤ Totale minuti assegnati: 90
 
 Cleaner ID: 24
   1. Task 100005: Via Piero della Francesca, 14 - checkin: 14:00 | checkout: 10:00
   2. Task 100011: Via Fatebenefratelli, 3 - checkin: 14:00 | checkout: 10:00
-  3. Task 100004: Via San Marco, 20 - checkin: 14:00 | checkout: 10:00
-  ➤ Totale minuti assegnati: 180
+  3. Task 100012: Via Brera, 6 - checkin: 14:00 | checkout: 10:00
+  ➤ Totale minuti assegnati: 90
 
 Cleaner ID: 249
-  1. Task 100006: Via Bergognone, 34 - checkin: 14:00 | checkout: 10:00
-  2. Task 100007: Via Stendhal, 45 - checkin: 14:00 | checkout: 10:00
-  3. Task 100012: Via Brera, 6 - checkin: 14:00 | checkout: 10:00
-  ➤ Totale minuti assegnati: 180
+  1. Task 100001: Via Vitruvio, 28 - checkin: 14:00 | checkout: 10:00
+  2. Task 100009: Viale Abruzzi, 10 - checkin: 14:00 | checkout: 10:00
+  ➤ Totale minuti assegnati: 60
 
 Cleaner ID: 287
+  1. Task 100006: Via Bergognone, 34 - checkin: 14:00 | checkout: 10:00
+  2. Task 100007: Via Stendhal, 45 - checkin: 14:00 | checkout: 10:00
+  ➤ Totale minuti assegnati: 60
+
+Cleaner ID: 321
   1. Task 100008: Corso di Porta Romana, 112 - checkin: 14:00 | checkout: 10:00
-  2. Task 100009: Viale Abruzzi, 10 - checkin: 14:00 | checkout: 10:00
-  3. Task 100010: Via Teodosio, 15 - checkin: 14:00 | checkout: 10:00
-  ➤ Totale minuti assegnati: 180
+  2. Task 100010: Via Teodosio, 15 - checkin: 14:00 | checkout: 10:00
+  ➤ Totale minuti assegnati: 60
 
