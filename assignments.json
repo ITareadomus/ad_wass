@@ -276,7 +276,7 @@
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
-            "expected_hours": 8.94,
+            "expected_hours": 8.92,
             "apartments": [
                 209271,
                 206698,
@@ -731,7 +731,7 @@
             "name": "SEYNI",
             "lastname": "DRAME",
             "role": "Standard",
-            "expected_hours": 4.15,
+            "expected_hours": 4.21,
             "apartments": [
                 208352,
                 209037
@@ -1056,7 +1056,7 @@
             "name": "NAME JULIE",
             "lastname": "ADOU",
             "role": "Standard",
-            "expected_hours": 6.53,
+            "expected_hours": 6.51,
             "apartments": [
                 209052,
                 209266,
@@ -1262,7 +1262,7 @@
             "name": "HODA MAHMOUD SALAMA",
             "lastname": "HUSSEIN",
             "role": "Standard",
-            "expected_hours": 5.27,
+            "expected_hours": 5.24,
             "apartments": [
                 209068,
                 209047
@@ -1356,7 +1356,7 @@
             "name": "SEYDOU",
             "lastname": "DIAKITE",
             "role": "Standard",
-            "expected_hours": 4.82,
+            "expected_hours": 4.54,
             "apartments": [
                 209056,
                 209280
