@@ -40,37 +40,6 @@
             </div>
 
             <div class="assignment-controls">
-                <div class="info-section">
-                    <h3>Informazioni Sistema</h3>
-                    <p>Questa sezione genera le assegnazioni automatiche degli appartamenti ai cleaner selezionati dal file sel_cleaners.json.</p>
-                    <p>Le assegnazioni vengono create in base a:</p>
-                    <ul>
-                        <li>Appartamenti con check-in alle 14:00 o small_equipment = true (priorità 1)</li>
-                        <li>Distanza massima di 800 metri tra appartamenti consecutivi</li>
-                        <li>Sequenze di mediamente 3 appartamenti per cleaner</li>
-                        <li>Ottimizzazione dei percorsi tramite Google Maps</li>
-                    </ul>
-                    <p><strong>Prerequisito:</strong> Seleziona prima i cleaner nella sezione "Genera convocazioni"</p>
-                </div>
-
-                <div class="assignment-options">
-                    <h3>Opzioni di Assegnazione</h3>
-                    <div class="option-group">
-                        <label>
-                            <input type="radio" name="assignmentMode" value="automatic" checked>
-                            Assegnazione Automatica
-                        </label>
-                        <p class="option-description">Il sistema assegnerà automaticamente gli appartamenti in base all'algoritmo di ottimizzazione.</p>
-                    </div>
-                    <div class="option-group">
-                        <label>
-                            <input type="radio" name="assignmentMode" value="manual">
-                            Assegnazione Manuale
-                        </label>
-                        <p class="option-description">Permette di assegnare manualmente specifici appartamenti a cleaner selezionati.</p>
-                    </div>
-                </div>
-
                 <div class="assignment-actions">
                     <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
                         Genera Assegnazioni
@@ -201,8 +170,7 @@
 
         // Genera assegnazioni utilizzando i cleaner selezionati
         async function generateAssignments() {
-            const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
-            showMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
+            showMessage('Generazione assegnazioni in corso...', 'info');
 
             try {
                 // Carica i cleaner selezionati dal file sel_cleaners.json
