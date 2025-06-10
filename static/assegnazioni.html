@@ -420,10 +420,18 @@
                     const apt = apartments[0];
                     const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
 
-                    const marker = new google.maps.marker.AdvancedMarkerElement({
+                    const marker = new google.maps.Marker({
                         position: position,
                         map: map,
-                        title: `${apt.task_id} - ${apt.address}`
+                        title: `${apt.task_id} - ${apt.address}`,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 8,
+                            fillColor: '#4CAF50',
+                            fillOpacity: 1,
+                            strokeWeight: 2,
+                            strokeColor: '#ffffff'
+                        }
                     });
 
                     markers.push(marker);
@@ -465,10 +473,23 @@
                             const priorityText = apt.priority_1 ? " [P1]" : "";
                             const equipmentText = apt.small_equipment ? " [SE]" : "";
 
-                            const marker = new google.maps.marker.AdvancedMarkerElement({
+                            const marker = new google.maps.Marker({
                                 position: position,
                                 map: map,
-                                title: `${index + 1}. ${apt.task_id} - ${apt.address}${priorityText}${equipmentText}`
+                                title: `${index + 1}. ${apt.task_id} - ${apt.address}${priorityText}${equipmentText}`,
+                                label: {
+                                    text: (index + 1).toString(),
+                                    color: 'white',
+                                    fontWeight: 'bold'
+                                },
+                                icon: {
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    scale: 15,
+                                    fillColor: apt.priority_1 ? '#ff4444' : '#4CAF50',
+                                    fillOpacity: 1,
+                                    strokeWeight: 2,
+                                    strokeColor: '#ffffff'
+                                }
                             });
 
                             // Info window con dettagli dell'appartamento
@@ -680,10 +701,23 @@
                 const isPriority = apt.checkin_time === '14:00' || apt.small_equipment;
                 const markerColor = isPriority ? '#ff4444' : '#3498db';
 
-                const marker = new google.maps.marker.AdvancedMarkerElement({
+                const marker = new google.maps.Marker({
                     position: position,
                     map: map,
-                    title: `${apt.structure_id} - ${apt.address}`
+                    title: `${apt.structure_id} - ${apt.address}`,
+                    label: {
+                        text: (index + 1).toString(),
+                        color: 'white',
+                        fontWeight: 'bold'
+                    },
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 12,
+                        fillColor: markerColor,
+                        fillOpacity: 1,
+                        strokeWeight: 2,
+                        strokeColor: '#ffffff'
+                    }
                 });
 
                 // Info window con dettagli dell'appartamento
