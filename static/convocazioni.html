@@ -190,9 +190,9 @@
                     loadingMessage = `Esecuzione ${scriptName} in corso...`;
                 }
 
-                showLoadingOverlay(loadingMessage);
+                // Aggiorna solo il testo se l'overlay è già visibile
+                updateLoadingText(loadingMessage);
                 updateProgress(15);
-                setButtonsEnabled(false);
 
                 await new Promise(resolve => setTimeout(resolve, 400));
                 updateProgress(35);
@@ -215,21 +215,16 @@
                 updateProgress(100);
 
                 await new Promise(resolve => setTimeout(resolve, 300));
-                hideLoadingOverlay();
 
                 if (result.success) {
-                    showMessage(`${scriptName} completato con successo`, 'success');
                     return true;
                 } else {
                     showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
                     return false;
                 }
             } catch (error) {
-                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
                 return false;
-            } finally {
-                setButtonsEnabled(true);
             }
         }
 
@@ -343,9 +338,18 @@
             // Ottieni la percentuale selezionata
             const percentage = document.getElementById('percentageSelect').value;
 
+            // Mostra immediatamente la barra di progresso
+            showLoadingOverlay('Generazione convocazioni in corso...');
+            updateProgress(5);
+            setButtonsEnabled(false);
+
             // Prima esegui cleaner_selection.py con la percentuale
             const success = await runPythonScriptWithPercentage('cleaner_selection.py', percentage);
-            if (!success) return;
+            if (!success) {
+                hideLoadingOverlay();
+                setButtonsEnabled(true);
+                return;
+            }
 
             // Ricarica la lista con le nuove selezioni
             try {
@@ -369,9 +373,13 @@
                         displayApartmentStats(selData.apartment_stats);
                     }
 
+                    hideLoadingOverlay();
+                    setButtonsEnabled(true);
                     showMessage(`Selezione automatica completata: ${selectedFromFile.length} cleaner selezionati`, 'success');
                 }
             } catch (error) {
+                hideLoadingOverlay();
+                setButtonsEnabled(true);
                 showMessage('Errore nel caricamento della selezione generata', 'error');
             }
         }
