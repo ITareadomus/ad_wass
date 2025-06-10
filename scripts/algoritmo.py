@@ -325,7 +325,7 @@ def create_assignments(packages):
 
 
 def save_assignments(assignments):
-    """Salva le assegnazioni su file"""
+    """Salva le assegnazioni su file nel formato corretto"""
     output_data = {
         'timestamp': datetime.now().isoformat(),
         'assignments': assignments,
