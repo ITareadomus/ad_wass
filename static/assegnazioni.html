@@ -257,19 +257,40 @@
             }
         }
 
+        // Colori per i cleaner (array di colori diversi)
+        const cleanerColors = [
+            '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', 
+            '#1abc9c', '#e67e22', '#34495e', '#16a085', '#27ae60',
+            '#2980b9', '#8e44ad', '#d35400', '#c0392b', '#7f8c8d'
+        ];
+        let cleanerColorMap = {};
+
         // Visualizza la tabella delle assegnazioni
         function displayAssignmentsTable(assignments) {
             const resultDiv = document.getElementById('assignmentResults');
             const listDiv = document.getElementById('assignmentList');
 
+            // Assegna colori ai cleaner
+            cleanerColorMap = {};
+            assignments.forEach((assignment, index) => {
+                cleanerColorMap[assignment.cleaner_id] = cleanerColors[index % cleanerColors.length];
+            });
+
             // Crea la tabella HTML
             let tableHtml = `
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <button onclick="resetMapView()" 
+                            style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        ✕ Rimuovi Filtro Percorso
+                    </button>
+                </div>
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <thead>
                             <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
                                 <th style="padding: 15px; text-align: left; font-weight: 600;">Codice ADAM</th>
                                 <th style="padding: 15px; text-align: left; font-weight: 600;">Indirizzo</th>
+                                <th style="padding: 15px; text-align: center; font-weight: 600;">Priorità</th>
                                 <th style="padding: 15px; text-align: left; font-weight: 600;">Cliente</th>
                                 <th style="padding: 15px; text-align: left; font-weight: 600;">Cleaner Assegnato</th>
                                 <th style="padding: 15px; text-align: center; font-weight: 600;">Azioni</th>
@@ -282,15 +303,13 @@
             assignments.forEach(assignment => {
                 assignment.sequence_details.forEach(apartment => {
                     const rowColor = rowCount % 2 === 0 ? '#f8f9fa' : 'white';
-                    const priorityBadge = apartment.priority_1 ? 
-                        '<span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">P1</span>' : '';
-                    const equipmentBadge = apartment.small_equipment ? 
-                        '<span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">SE</span>' : '';
+                    const premiumBadge = apartment.type === 'Premium' ? 
+                        '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">PREMIUM</span>' : '';
 
                     tableHtml += `
                         <tr style="background: ${rowColor}; border-bottom: 1px solid #dee2e6; transition: background-color 0.2s;">
                             <td style="padding: 12px; font-weight: 500; color: #495057;">
-                                ${apartment.task_id}${priorityBadge}${equipmentBadge}
+                                ${apartment.task_id}${premiumBadge}
                             </td>
                             <td style="padding: 12px; color: #6c757d; max-width: 250px;">
                                 ${apartment.address}
@@ -298,21 +317,26 @@
                                     Check-in: ${apartment.checkin_time} | Check-out: ${apartment.checkout_time}
                                 </div>
                             </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 50%; font-weight: bold; font-size: 12px;">
+                                    ${apartment.priority}
+                                </span>
+                            </td>
                             <td style="padding: 12px; color: #6c757d;">
                                 N/A
                             </td>
                             <td style="padding: 12px;">
                                 <div style="display: flex; align-items: center;">
-                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: ${assignment.role === 'Premium' ? '#28a745' : '#ffc107'}; margin-right: 8px;"></div>
+                                    <div style="width: 12px; height: 12px; border-radius: 50%; background: ${cleanerColorMap[assignment.cleaner_id]}; margin-right: 8px; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.3);"></div>
                                     <div>
                                         <div style="font-weight: 500; color: #495057;">${assignment.name} ${assignment.lastname}</div>
-                                        <div style="font-size: 12px; color: #868e96;">${assignment.role} (${assignment.expected_hours}h)</div>
+                                        <div style="font-size: 12px; color: #868e96;">${assignment.role}</div>
                                     </div>
                                 </div>
                             </td>
                             <td style="padding: 12px; text-align: center;">
                                 <button onclick="showCleanerRoute(${assignment.cleaner_id}, '${assignment.name} ${assignment.lastname}')" 
-                                        style="background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background-color 0.2s;">
+                                        style="background: ${cleanerColorMap[assignment.cleaner_id]}; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background-color 0.2s;">
                                     Visualizza Percorso
                                 </button>
                             </td>
@@ -409,6 +433,7 @@
                 clearMap();
 
                 const apartments = cleanerAssignment.sequence_details;
+                const cleanerColor = cleanerColorMap[cleanerId] || '#4CAF50';
 
                 if (apartments.length === 0) {
                     showMessage(`Nessun appartamento assegnato a ${cleanerName}`, 'info');
@@ -424,10 +449,15 @@
                         position: position,
                         map: map,
                         title: `${apt.task_id} - ${apt.address}`,
+                        label: {
+                            text: apt.priority.toString(),
+                            color: 'white',
+                            fontWeight: 'bold'
+                        },
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
-                            scale: 8,
-                            fillColor: '#4CAF50',
+                            scale: 15,
+                            fillColor: cleanerColor,
                             fillOpacity: 1,
                             strokeWeight: 2,
                             strokeColor: '#ffffff'
@@ -467,25 +497,24 @@
                     if (status === 'OK') {
                         directionsRenderer.setDirections(response);
 
-                        // Aggiungi marker numerati per ogni appartamento
+                        // Aggiungi marker numerati per ogni appartamento con il numero di priorità
                         apartments.forEach((apt, index) => {
                             const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
-                            const priorityText = apt.priority_1 ? " [P1]" : "";
-                            const equipmentText = apt.small_equipment ? " [SE]" : "";
+                            const premiumText = apt.type === 'Premium' ? " [PREMIUM]" : "";
 
                             const marker = new google.maps.Marker({
                                 position: position,
                                 map: map,
-                                title: `${index + 1}. ${apt.task_id} - ${apt.address}${priorityText}${equipmentText}`,
+                                title: `Priorità ${apt.priority}. ${apt.task_id} - ${apt.address}${premiumText}`,
                                 label: {
-                                    text: (index + 1).toString(),
+                                    text: apt.priority.toString(),
                                     color: 'white',
                                     fontWeight: 'bold'
                                 },
                                 icon: {
                                     path: google.maps.SymbolPath.CIRCLE,
                                     scale: 15,
-                                    fillColor: apt.priority_1 ? '#ff4444' : '#4CAF50',
+                                    fillColor: cleanerColor,
                                     fillOpacity: 1,
                                     strokeWeight: 2,
                                     strokeColor: '#ffffff'
@@ -498,11 +527,11 @@
                                     <div style="font-size: 12px;">
                                         <strong>${apt.task_id}</strong><br>
                                         ${apt.address}<br>
+                                        <strong>Priorità: ${apt.priority}</strong><br>
                                         Check-in: ${apt.checkin_time}<br>
                                         Check-out: ${apt.checkout_time}<br>
-                                        Tempo pulizia: ${apt.cleaning_time} min
-                                        ${apt.priority_1 ? '<br><span style="color: red; font-weight: bold;">PRIORITÀ 1</span>' : ''}
-                                        ${apt.small_equipment ? '<br><span style="color: blue; font-weight: bold;">SMALL EQUIPMENT</span>' : ''}
+                                        Cleaner: ${cleanerName}
+                                        ${apt.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
                                     </div>
                                 `
                             });
@@ -618,19 +647,15 @@
 
             let html = '';
             apartments.forEach((apt, index) => {
-                const priorityBadge = apt.checkin_time === '14:00' || apt.small_equipment ? 
-                    '<span style="background: #ff4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 8px;">P1</span>' : '';
-
-                const equipmentBadge = apt.small_equipment ? 
-                    '<span style="background: #3498db; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 4px;">SE</span>' : '';
+                const premiumBadge = apt.type === 'Premium' ? 
+                    '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 8px;">PREMIUM</span>' : '';
 
                 html += `
                     <div class="apartment-item" style="padding: 8px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; background: white; cursor: pointer;"
                          onclick="focusApartmentOnMap(${index})">
                         <div style="font-weight: bold; color: #2c3e50;">
                             Codice ADAM: ${apt.structure_id || 'N/A'}
-                            ${priorityBadge}
-                            ${equipmentBadge}
+                            ${premiumBadge}
                         </div>
                         <div style="color: #34495e; margin-top: 4px;">${apt.address || 'Indirizzo non disponibile'}</div>
                         <div style="font-size: 12px; color: #7f8c8d; margin-top: 4px;">
@@ -680,7 +705,7 @@
             container.innerHTML = html;
         }
 
-        // Mostra tutti gli appartamenti sulla mappa
+        // Mostra tutti gli appartamenti sulla mappa (senza numeri, marker grigi)
         function showApartmentsOnMap() {
             if (!map) {
                 initializeMap();
@@ -705,22 +730,14 @@
                     lng: parseFloat(apt.lng) 
                 };
 
-                const isPriority = apt.checkin_time === '14:00' || apt.small_equipment;
-                const markerColor = isPriority ? '#ff4444' : '#3498db';
-
                 const marker = new google.maps.Marker({
                     position: position,
                     map: map,
                     title: `${apt.structure_id} - ${apt.address}`,
-                    label: {
-                        text: (index + 1).toString(),
-                        color: 'white',
-                        fontWeight: 'bold'
-                    },
                     icon: {
                         path: google.maps.SymbolPath.CIRCLE,
-                        scale: 12,
-                        fillColor: markerColor,
+                        scale: 8,
+                        fillColor: '#95a5a6',
                         fillOpacity: 1,
                         strokeWeight: 2,
                         strokeColor: '#ffffff'
@@ -738,8 +755,7 @@
                             <strong>Check-out:</strong> ${apt.checkout_time || 'N/A'}<br>
                             <strong>Pax in:</strong> ${apt.pax_in || 0}<br>
                             <strong>Pax out:</strong> ${apt.pax_out || 0}<br>
-                            ${isPriority ? '<br><span style="color: red; font-weight: bold;">PRIORITÀ 1</span>' : ''}
-                            ${apt.small_equipment ? '<br><span style="color: blue; font-weight: bold;">SMALL EQUIPMENT</span>' : ''}
+                            ${apt.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
                         </div>
                     `
                 });
@@ -765,6 +781,29 @@
             }
 
             showMessage(`${apartments.length} appartamenti visualizzati sulla mappa`, 'success');
+        }
+
+        // Resetta la vista della mappa per mostrare tutti gli appartamenti
+        async function resetMapView() {
+            try {
+                showMessage('Caricamento vista generale...', 'info');
+                
+                // Pulisci la mappa
+                clearMap();
+                
+                // Carica tutti gli appartamenti e mostrali sulla mappa
+                if (apartments.length > 0) {
+                    showApartmentsOnMap();
+                } else {
+                    // Ricarica gli appartamenti se non sono disponibili
+                    await loadApartments();
+                }
+                
+                showMessage('Vista generale ripristinata', 'success');
+            } catch (error) {
+                console.error('Errore nel reset della mappa:', error);
+                showMessage(`Errore nel reset della mappa: ${error.message}`, 'error');
+            }
         }
 
         // Centra la mappa su un appartamento specifico
