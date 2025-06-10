@@ -129,8 +129,13 @@
 
     <!-- Overlay di caricamento -->
     <div id="loadingOverlay">
-        <div class="loading-spinner"></div>
         <div id="loadingText">Caricamento...</div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-percentage" id="progressPercentage">0%</div>
+        </div>
     </div>
 
     <script>
@@ -155,27 +160,32 @@
         }
 
         // Funzioni per controllare l'overlay di caricamento
-        function showLoadingOverlay(message = 'Caricamento...', showSpinner = true) {
+        function showLoadingOverlay(message = 'Caricamento...') {
             const overlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
-            const spinner = document.querySelector('.loading-spinner');
 
             loadingText.textContent = message;
             overlay.style.display = 'flex';
-
-            if (showSpinner) {
-                spinner.style.display = 'block';
-            } else {
-                spinner.style.display = 'none';
-            }
+            updateProgress(0);
         }
 
         function updateLoadingText(message) {
             document.getElementById('loadingText').textContent = message;
         }
 
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            const progressPercentage = document.getElementById('progressPercentage');
+            
+            if (progressFill && progressPercentage) {
+                progressFill.style.width = percentage + '%';
+                progressPercentage.textContent = percentage + '%';
+            }
+        }
+
         function hideLoadingOverlay() {
             document.getElementById('loadingOverlay').style.display = 'none';
+            updateProgress(0);
         }
 
         // Esegui script Python tramite fetch
@@ -190,8 +200,12 @@
                     loadingMessage = `Esecuzione ${scriptName} in corso...`;
                 }
 
-                showMessage(loadingMessage, 'info');
+                showLoadingOverlay(loadingMessage);
+                updateProgress(10);
                 setButtonsEnabled(false);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                updateProgress(25);
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
@@ -201,7 +215,14 @@
                     body: JSON.stringify({ script: scriptName })
                 });
 
+                updateProgress(75);
+                await new Promise(resolve => setTimeout(resolve, 200));
+
                 const result = await response.json();
+                updateProgress(100);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 if (result.success) {
                     if (showSuccessMessage) {
@@ -213,6 +234,7 @@
                     return false;
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
                 return false;
             } finally {
@@ -232,8 +254,12 @@
                     loadingMessage = `Esecuzione ${scriptName} in corso...`;
                 }
 
-                showMessage(loadingMessage, 'info');
+                showLoadingOverlay(loadingMessage);
+                updateProgress(15);
                 setButtonsEnabled(false);
+
+                await new Promise(resolve => setTimeout(resolve, 400));
+                updateProgress(35);
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
@@ -246,7 +272,14 @@
                     })
                 });
 
+                updateProgress(80);
+                await new Promise(resolve => setTimeout(resolve, 300));
+
                 const result = await response.json();
+                updateProgress(100);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 if (result.success) {
                     showMessage(`${scriptName} completato con successo`, 'success');
@@ -256,6 +289,7 @@
                     return false;
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
                 return false;
             } finally {
@@ -273,29 +307,47 @@
         async function loadCleaners(forceRefresh = false) {
             try {
                 if (forceRefresh) {
-                    showLoadingOverlay('Aggiornamento dati dal database...', true);
+                    showLoadingOverlay('Aggiornamento dati dal database...');
+                    updateProgress(10);
                     updateLoadingText('Connessione al database...');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    updateProgress(25);
+                    
                     await runPythonScript('cleaner_list.py', false);
+                    updateProgress(50);
                     updateLoadingText('Elaborazione dati cleaners...');
+                    await new Promise(resolve => setTimeout(resolve, 600));
                 } else {
-                    showLoadingOverlay('Caricamento cleaners...', true);
+                    showLoadingOverlay('Caricamento cleaners...');
+                    updateProgress(15);
                     updateLoadingText('Lettura file di configurazione...');
+                    await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
-                // Simula un breve delay per mostrare il progresso
-                await new Promise(resolve => setTimeout(resolve, 300));
-
+                updateProgress(60);
                 updateLoadingText('Caricamento dati cleaners...');
+                await new Promise(resolve => setTimeout(resolve, 400));
+                
                 const response = await fetch('/data/modello_cleaner.json');
+                updateProgress(75);
+                
+                updateLoadingText('Elaborazione lista cleaners...');
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
                 const data = await response.json();
                 cleaners = data.cleaners;
+                updateProgress(90);
 
                 updateLoadingText('Preparazione interfaccia...');
-                await new Promise(resolve => setTimeout(resolve, 200));
-
+                await new Promise(resolve => setTimeout(resolve, 600));
+                
                 displayCleaners();
                 updateStats();
+                updateProgress(100);
 
+                // Piccola pausa per mostrare il 100%
+                await new Promise(resolve => setTimeout(resolve, 300));
                 hideLoadingOverlay();
                 showMessage(`Cleaner caricati con successo (${cleaners.length} disponibili)`, 'success');
             } catch (error) {
@@ -499,10 +551,16 @@
         // Genera assegnazioni utilizzando i cleaner selezionati
         async function generateAssignments() {
             const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
-            showAssegnazioniMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
-
+            
             try {
+                showLoadingOverlay(`Generazione assegnazioni in modalità ${mode}...`);
+                updateProgress(10);
+
                 // Carica i cleaner selezionati dal file sel_cleaners.json
+                updateLoadingText('Caricamento cleaner selezionati...');
+                await new Promise(resolve => setTimeout(resolve, 300));
+                updateProgress(25);
+
                 const selCleanersResponse = await fetch('/data/sel_cleaners.json');
                 if (!selCleanersResponse.ok) {
                     throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
@@ -512,16 +570,30 @@
                 const selectedCleaners = selCleanersData.cleaners || [];
 
                 if (selectedCleaners.length === 0) {
+                    hideLoadingOverlay();
                     showAssegnazioniMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'error');
                     return;
                 }
 
+                updateProgress(40);
+                updateLoadingText('Generazione algoritmo assegnazioni...');
+                await new Promise(resolve => setTimeout(resolve, 500));
+
                 // Esegui lo script algoritmo.py per generare le assegnazioni
                 const success = await runPythonScript('algoritmo.py', false);
                 if (!success) {
+                    hideLoadingOverlay();
                     showAssegnazioniMessage('Errore durante la generazione delle assegnazioni', 'error');
                     return;
                 }
+
+                updateProgress(90);
+                updateLoadingText('Preparazione risultati...');
+                await new Promise(resolve => setTimeout(resolve, 400));
+
+                updateProgress(100);
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 showAssegnazioniMessage('Assegnazioni generate con successo!', 'success');
                 document.getElementById('viewReportBtn').style.display = 'inline-block';
@@ -548,6 +620,7 @@
                 resultDiv.style.display = 'block';
 
             } catch (error) {
+                hideLoadingOverlay();
                 showAssegnazioniMessage(`Errore: ${error.message}`, 'error');
             }
         }
