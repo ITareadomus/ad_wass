@@ -791,12 +791,12 @@
             "lat": "45.4425697",
             "lng": "9.1790945",
             "cleaning_time": null,
-            "checkin": "2025-06-12",
+            "checkin": "2025-06-11",
             "checkout": "2025-06-11",
-            "checkin_time": "15:00",
+            "checkin_time": null,
             "checkout_time": null,
             "pax_in": 3,
-            "pax_out": 2,
+            "pax_out": 0,
             "small_equipment": false
         },
         {
