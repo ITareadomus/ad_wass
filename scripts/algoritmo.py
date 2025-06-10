@@ -47,6 +47,9 @@ def load_apartments():
             valid_apartments = []
             for apt in apartments:
                 if apt.get('lat') and apt.get('lng') and apt.get('address'):
+                    # Normalizza checkout_time se è None
+                    if apt.get('checkout_time') is None:
+                        apt['checkout_time'] = '15:00'
                     valid_apartments.append(apt)
                 else:
                     logging.warning(f"Appartamento {apt.get('task_id')} ignorato per dati mancanti")
@@ -203,7 +206,10 @@ def optimize_route_within_cluster(apartments):
 
     # Ordina per orario di checkout, poi per small_equipment
     def sort_key(apt):
-        checkout_time = apt.get('checkout_time', '23:59')
+        checkout_time = apt.get('checkout_time')
+        # Se checkout_time è None, imposta a 15:00
+        if checkout_time is None:
+            checkout_time = '15:00'
         has_small_equipment = apt.get('small_equipment', False)
         return (checkout_time, not has_small_equipment)  # small_equipment prima
 
