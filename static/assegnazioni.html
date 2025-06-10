@@ -556,7 +556,7 @@
                 }
 
                 const data = await response.json();
-                apartments = data.apt || [];
+                apartments = Array.isArray(data.apt) ? data.apt : [];
 
                 await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -568,6 +568,7 @@
 
             } catch (error) {
                 hideLoadingOverlay();
+                apartments = []; // Assicura che sia sempre un array
                 console.error('Errore nel caricamento degli appartamenti:', error);
                 showMessage(`Errore nel caricamento degli appartamenti: ${error.message}`, 'error');
             }
@@ -584,7 +585,7 @@
                 }
 
                 const data = await response.json();
-                selectedCleaners = data.cleaners || [];
+                selectedCleaners = Array.isArray(data.cleaners) ? data.cleaners : [];
 
                 displayCleaners();
                 hideLoadingOverlay();
@@ -592,6 +593,7 @@
 
             } catch (error) {
                 hideLoadingOverlay();
+                selectedCleaners = []; // Assicura che sia sempre un array
                 console.error('Errore nel caricamento dei cleaners:', error);
                 showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
             }
@@ -601,6 +603,11 @@
         function displayApartments() {
             const container = document.getElementById('apartmentsList');
             const countSpan = document.getElementById('apartmentCount');
+
+            // Verifica che apartments sia un array
+            if (!Array.isArray(apartments)) {
+                apartments = [];
+            }
 
             countSpan.textContent = `${apartments.length} appartamenti`;
 
@@ -808,6 +815,88 @@
                 hideLoadingOverlay();
                 showMessage('Errore nel caricamento delle assegnazioni esistenti', 'error');
             }
+        }
+
+        // Carica i cleaners selezionati
+        async function loadCleaners() {
+            try {
+                showLoadingOverlay();
+
+                const response = await fetch('/data/sel_cleaners.json');
+                if (!response.ok) {
+                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
+                }
+
+                const data = await response.json();
+                selectedCleaners = Array.isArray(data.cleaners) ? data.cleaners : [];
+
+                displayCleaners();
+                hideLoadingOverlay();
+                showMessage(`${selectedCleaners.length} cleaners caricati con successo`, 'success');
+
+            } catch (error) {
+                hideLoadingOverlay();
+                selectedCleaners = []; // Assicura che sia sempre un array
+                console.error('Errore nel caricamento dei cleaners:', error);
+                showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
+            }
+        }
+
+        // Carica le assegnazioni generate
+        async function loadAssignments() {
+            try {
+                showLoadingOverlay();
+
+                const timestamp = Date.now();
+                const response = await fetch(`/data/assignments.json?t=${timestamp}`);
+                if (!response.ok) {
+                    throw new Error('File assignments.json non trovato. Genera prima le assegnazioni.');
+                }
+
+                const data = await response.json();
+                assignments = Array.isArray(data.assignments) ? data.assignments : [];
+
+                displayAssignments();
+                hideLoadingOverlay();
+                showMessage(`${assignments.length} assegnazioni caricate con successo`, 'success');
+
+            } catch (error) {
+                hideLoadingOverlay();
+                assignments = []; // Assicura che sia sempre un array
+                console.error('Errore nel caricamento delle assegnazioni:', error);
+                showMessage(`Errore nel caricamento delle assegnazioni: ${error.message}`, 'error');
+            }
+        }
+
+        // Visualizza le assegnazioni nella lista
+        function displayAssignments() {
+            const container = document.getElementById('assignmentsList');
+            const countSpan = document.getElementById('assignmentCount');
+
+            // Verifica che assignments sia un array
+            if (!Array.isArray(assignments)) {
+                assignments = [];
+            }
+
+            countSpan.textContent = `${assignments.length} assegnazioni`;
+
+            if (assignments.length === 0) {
+                container.innerHTML = '<div class="no-data">Nessuna assegnazione disponibile.</div>';
+                return;
+            }
+
+            let html = '';
+            assignments.forEach((assignment, index) => {
+                html += `
+                    <div class="assignment-item" style="padding: 8px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; background: white;">
+                        <div style="font-weight: bold; color: #2c3e50;">
+                            Assegnazione ${index + 1}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
         }
 
         // Carica i dati all'avvio
