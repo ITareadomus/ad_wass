@@ -1,0 +1,280 @@
+{
+    "assignment": [
+        {
+            "cleaner_id": 934,
+            "name": "SINETH",
+            "lastname": "ANGUNNA",
+            "role": "Premium",
+            "expected_hours": 4.09,
+            "apartments": [
+                209265,
+                209270
+            ]
+        },
+        {
+            "cleaner_id": 132,
+            "name": "JOHOISER ERNESTO",
+            "lastname": "LOPEZ GIRON",
+            "role": "Premium",
+            "expected_hours": 4.63,
+            "apartments": [
+                209269,
+                209273
+            ]
+        },
+        {
+            "cleaner_id": 18,
+            "name": "MUTURI DANIEL",
+            "lastname": "NGANGA",
+            "role": "Standard",
+            "expected_hours": 6.17,
+            "apartments": [
+                209231,
+                209271,
+                192633
+            ]
+        },
+        {
+            "cleaner_id": 24,
+            "name": "HUSSAIN",
+            "lastname": "SYED SHUJIAHAT",
+            "role": "Standard",
+            "expected_hours": 10.0,
+            "apartments": [
+                202227,
+                209274
+            ]
+        },
+        {
+            "cleaner_id": 249,
+            "name": "Ogbodo Chidi",
+            "lastname": "Igwe",
+            "role": "Standard",
+            "expected_hours": 8.0,
+            "apartments": [
+                209009,
+                208833,
+                209012,
+                209150
+            ]
+        },
+        {
+            "cleaner_id": 287,
+            "name": "BAH",
+            "lastname": "ISMAILA",
+            "role": "Standard",
+            "expected_hours": 4.09,
+            "apartments": [
+                209272,
+                208776
+            ]
+        },
+        {
+            "cleaner_id": 321,
+            "name": "BOUBACAR",
+            "lastname": "BARRY",
+            "role": "Standard",
+            "expected_hours": 6.19,
+            "apartments": [
+                208907,
+                209026,
+                209066
+            ]
+        },
+        {
+            "cleaner_id": 326,
+            "name": "FESTUS OSARO",
+            "lastname": "AIHIVBERE",
+            "role": "Standard",
+            "expected_hours": 4.0,
+            "apartments": [
+                207040,
+                207067
+            ]
+        },
+        {
+            "cleaner_id": 404,
+            "name": "RASEL",
+            "lastname": "MOLLA",
+            "role": "Standard",
+            "expected_hours": 5.13,
+            "apartments": [
+                209055,
+                209017
+            ]
+        },
+        {
+            "cleaner_id": 445,
+            "name": "IBRAHIM",
+            "lastname": "SANYANG",
+            "role": "Standard",
+            "expected_hours": 6.24,
+            "apartments": [
+                209232,
+                209228,
+                209227
+            ]
+        },
+        {
+            "cleaner_id": 469,
+            "name": "LAMIN",
+            "lastname": "SOLY",
+            "role": "Standard",
+            "expected_hours": 8.32,
+            "apartments": [
+                209201,
+                209067,
+                209221,
+                208788
+            ]
+        },
+        {
+            "cleaner_id": 476,
+            "name": "BLESSING",
+            "lastname": "UGBOME",
+            "role": "Standard",
+            "expected_hours": 4.16,
+            "apartments": [
+                208302,
+                200442
+            ]
+        },
+        {
+            "cleaner_id": 555,
+            "name": "SEYNI",
+            "lastname": "DRAME",
+            "role": "Standard",
+            "expected_hours": 8.09,
+            "apartments": [
+                209057,
+                208832,
+                209010,
+                209211
+            ]
+        },
+        {
+            "cleaner_id": 596,
+            "name": "TRACY",
+            "lastname": "OKE",
+            "role": "Standard",
+            "expected_hours": 4.24,
+            "apartments": [
+                209065,
+                209062
+            ]
+        },
+        {
+            "cleaner_id": 771,
+            "name": "PRECIOUS",
+            "lastname": "GYABAAH",
+            "role": "Standard",
+            "expected_hours": 9.03,
+            "apartments": [
+                209052,
+                209266,
+                209193,
+                209144
+            ]
+        },
+        {
+            "cleaner_id": 895,
+            "name": "ESTHER DORCAS",
+            "lastname": "LANDA PANEZ",
+            "role": "Standard",
+            "expected_hours": 6.07,
+            "apartments": [
+                199441,
+                200841,
+                208690
+            ]
+        },
+        {
+            "cleaner_id": 911,
+            "name": "AIDA",
+            "lastname": "DIONE",
+            "role": "Standard",
+            "expected_hours": 8.24,
+            "apartments": [
+                209229,
+                201917,
+                208831,
+                209008
+            ]
+        },
+        {
+            "cleaner_id": 927,
+            "name": "NAME JULIE",
+            "lastname": "ADOU",
+            "role": "Standard",
+            "expected_hours": 2.0,
+            "apartments": [
+                209230
+            ]
+        },
+        {
+            "cleaner_id": 937,
+            "name": "LOVETH",
+            "lastname": "IGUDIA",
+            "role": "Standard",
+            "expected_hours": 4.11,
+            "apartments": [
+                208752,
+                209220
+            ]
+        },
+        {
+            "cleaner_id": 966,
+            "name": "YENCI MARICELA",
+            "lastname": "PILIA LINARES",
+            "role": "Standard",
+            "expected_hours": 8.55,
+            "apartments": [
+                209068,
+                206698,
+                209233,
+                209267
+            ]
+        },
+        {
+            "cleaner_id": 967,
+            "name": "ADEL FAYEZ ABDELKRIM",
+            "lastname": "DESSOUKI",
+            "role": "Standard",
+            "expected_hours": 4.15,
+            "apartments": [
+                208352,
+                209037
+            ]
+        },
+        {
+            "cleaner_id": 985,
+            "name": "HODA MAHMOUD SALAMA",
+            "lastname": "HUSSEIN",
+            "role": "Standard",
+            "expected_hours": 2.0,
+            "apartments": [
+                209056
+            ]
+        },
+        {
+            "cleaner_id": 987,
+            "name": "MARIE LAURE",
+            "lastname": "PENKA",
+            "role": "Standard",
+            "expected_hours": 2.0,
+            "apartments": [
+                209063
+            ]
+        },
+        {
+            "cleaner_id": 989,
+            "name": "SEYDOU",
+            "lastname": "DIAKITE",
+            "role": "Standard",
+            "expected_hours": 2.0,
+            "apartments": [
+                209047
+            ]
+        }
+    ]
+}

@@ -1,6 +1,32 @@
 {
-    "timestamp": "2025-06-10T10:45:29.359387",
+    "timestamp": "2025-06-10T11:44:23.806925",
     "cleaners": [
+        {
+            "id": 934,
+            "name": "SINETH",
+            "lastname": "ANGUNNA",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": "A",
+            "deficit_hours": 20.0
+        },
+        {
+            "id": 132,
+            "name": "JOHOISER ERNESTO",
+            "lastname": "LOPEZ GIRON",
+            "role": "Premium",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
         {
             "id": 18,
             "name": "MUTURI DANIEL",
@@ -260,13 +286,39 @@
             "available": true,
             "contract_type": 0,
             "deficit_hours": 0.0
+        },
+        {
+            "id": 987,
+            "name": "MARIE LAURE",
+            "lastname": "PENKA",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
+        },
+        {
+            "id": 989,
+            "name": "SEYDOU",
+            "lastname": "DIAKITE",
+            "role": "Standard",
+            "active": true,
+            "ranking": 0,
+            "counter_hours": 0.0,
+            "counter_days": 0,
+            "available": true,
+            "contract_type": 0,
+            "deficit_hours": 0.0
         }
     ],
-    "total_selected": 20,
+    "total_selected": 24,
     "total_available": 0,
     "apartment_stats": {
-        "total_apartments": 55,
-        "extra_apartments": 5,
+        "total_apartments": 64,
+        "extra_apartments": 6,
         "percentage_used": 10.0
     }
 }
