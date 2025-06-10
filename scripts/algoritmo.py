@@ -332,10 +332,10 @@ def save_assignments(assignments):
         'total_assignments': len(assignments)
     }
 
-    with open('assignments.json', 'w', encoding='utf-8') as f:
+    with open('data/assignments.json', 'w', encoding='utf-8') as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-    logging.info(f"Assegnazioni salvate in assignments.json - {len(assignments)} assegnazioni totali")
+    logging.info(f"Assegnazioni salvate in data/assignments.json - {len(assignments)} assegnazioni totali")
 
 
 def save_detailed_report(assignments, apartments):
