@@ -1,5 +1,5 @@
 === REPORT ASSEGNAZIONI ===
-Data: 2025-06-10 12:12:04
+Data: 2025-06-10 12:44:55
 Totale assegnazioni: 24
 
 1. CLEANER: SINETH ANGUNNA (Premium)
@@ -235,7 +235,7 @@ Totale assegnazioni: 24
 
 9. CLEANER: RASEL MOLLA (Standard)
    ID: 404
-   Ore previste: 3.3
+   Ore previste: 3.22
    Appartamenti: 2
 
    1. Task 209063
@@ -256,7 +256,7 @@ Totale assegnazioni: 24
 
 10. CLEANER: IBRAHIM SANYANG (Standard)
    ID: 445
-   Ore previste: 3.72
+   Ore previste: 3.75
    Appartamenti: 3
 
    1. Task 209229
@@ -347,7 +347,7 @@ Totale assegnazioni: 24
 
 14. CLEANER: TRACY OKE (Standard)
    ID: 596
-   Ore previste: 3.21
+   Ore previste: 3.26
    Appartamenti: 2
 
    1. Task 209281
@@ -515,7 +515,7 @@ Totale assegnazioni: 24
 
 20. CLEANER: YENCI MARICELA PILIA LINARES (Standard)
    ID: 966
-   Ore previste: 3.41
+   Ore previste: 3.37
    Appartamenti: 2
 
    1. Task 208352

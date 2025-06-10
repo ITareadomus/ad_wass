@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-10T12:12:04.993399",
+  "timestamp": "2025-06-10T12:44:55.124424",
   "assignments": [
     {
       "cleaner_id": 934,
@@ -552,8 +552,8 @@
       "name": "RASEL",
       "lastname": "MOLLA",
       "role": "Standard",
-      "expected_hours": 3.3,
-      "travel_hours": 0.63,
+      "expected_hours": 3.22,
+      "travel_hours": 0.55,
       "apartments": [
         209063,
         209274
@@ -600,8 +600,8 @@
       "name": "IBRAHIM",
       "lastname": "SANYANG",
       "role": "Standard",
-      "expected_hours": 3.72,
-      "travel_hours": 0.22,
+      "expected_hours": 3.75,
+      "travel_hours": 0.25,
       "apartments": [
         209229,
         209231,
@@ -810,8 +810,8 @@
       "name": "TRACY",
       "lastname": "OKE",
       "role": "Standard",
-      "expected_hours": 3.21,
-      "travel_hours": 0.54,
+      "expected_hours": 3.26,
+      "travel_hours": 0.59,
       "apartments": [
         209281,
         209230
@@ -1206,8 +1206,8 @@
       "name": "YENCI MARICELA",
       "lastname": "PILIA LINARES",
       "role": "Standard",
-      "expected_hours": 3.41,
-      "travel_hours": 0.16,
+      "expected_hours": 3.37,
+      "travel_hours": 0.12,
       "apartments": [
         208352,
         209037
