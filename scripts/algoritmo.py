@@ -44,12 +44,12 @@ def refresh_cleaner_selection():
 
 # Caricamento dati dai JSON di input
 def load_selected_cleaners():
-    with open('../data/sel_cleaners.json', 'r', encoding='utf-8') as f:
+    with open('data/sel_cleaners.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('cleaners', [])
 
 
 def load_apartments():
-    with open('../data/modello_apt.json', 'r', encoding='utf-8') as f:
+    with open('data/modello_apt.json', 'r', encoding='utf-8') as f:
         return json.load(f).get('apt', [])
 
 
@@ -395,7 +395,7 @@ def phase3_assign_to_cleaners(ordered, cleaners):
 # Genera un report dettagliato in testo
 def save_detailed_report(assignments, apartments):
     map_apt = {a['task_id']: a for a in apartments}
-    with open('../report.txt', 'w', encoding='utf-8') as f:
+    with open('report.txt', 'w', encoding='utf-8') as f:
         for asg in assignments:
             f.write(
                 f"Cleaner: {asg['name']} {asg['lastname']} ({asg['role']})\n")
@@ -433,7 +433,7 @@ def save_detailed_report(assignments, apartments):
 
 # Salvataggio JSON e report
 def save_assignments(assignments):
-    with open('../assignments.json', 'w', encoding='utf-8') as f:
+    with open('assignments.json', 'w', encoding='utf-8') as f:
         json.dump({'assignment': assignments}, f, indent=4, ensure_ascii=False)
     logging.info("Assegnazioni salvate in 'assignments.json'.")
 
