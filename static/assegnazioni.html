@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -172,7 +171,7 @@
         async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
                 showLoadingOverlay(`Esecuzione ${scriptName} in corso...`, true);
-                
+
                 const response = await fetch('/run-script', {
                     method: 'POST',
                     headers: {
@@ -266,7 +265,7 @@
         let directionsService = null;
         let directionsRenderer = null;
         let markers = [];
-        
+
         // Variabili globali per dati
         let apartments = [];
         let selectedCleaners = [];
@@ -459,7 +458,7 @@
             try {
                 showLoadingOverlay('Aggiornamento lista appartamenti...', true);
                 updateLoadingText('Esecuzione task_selection.py...');
-                
+
                 // Esegui task_selection.py per aggiornare modello_apt.json
                 const success = await runPythonScript('task_selection.py', false);
                 if (!success) {
@@ -500,7 +499,7 @@
         async function loadSelectedCleaners() {
             try {
                 showLoadingOverlay('Caricamento cleaners selezionati...', true);
-                
+
                 const response = await fetch('/data/sel_cleaners.json');
                 if (!response.ok) {
                     throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
@@ -524,7 +523,7 @@
         function displayApartments() {
             const container = document.getElementById('apartmentsList');
             const countSpan = document.getElementById('apartmentCount');
-            
+
             countSpan.textContent = `${apartments.length} appartamenti`;
 
             if (apartments.length === 0) {
@@ -536,7 +535,7 @@
             apartments.forEach((apt, index) => {
                 const priorityBadge = apt.checkin_time === '14:00' || apt.small_equipment ? 
                     '<span style="background: #ff4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 8px;">P1</span>' : '';
-                
+
                 const equipmentBadge = apt.small_equipment ? 
                     '<span style="background: #3498db; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-left: 4px;">SE</span>' : '';
 
@@ -565,7 +564,7 @@
         function displayCleaners() {
             const container = document.getElementById('cleanersList');
             const countSpan = document.getElementById('cleanerCount');
-            
+
             countSpan.textContent = `${selectedCleaners.length} cleaners`;
 
             if (selectedCleaners.length === 0) {
@@ -720,7 +719,7 @@
         async function refreshAssignments() {
             try {
                 showLoadingOverlay('Caricamento cleaner selezionati...', true);
-                
+
                 const response = await fetch('/data/sel_cleaners.json');
                 if (response.ok) {
                     const data = await response.json();
