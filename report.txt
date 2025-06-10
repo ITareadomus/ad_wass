@@ -1,188 +1,620 @@
-Cleaner: SINETH ANGUNNA (Premium)
-  1. Task 209265: VIA DE AMICIS, 4 - checkin: 2025-06-11 18:00 | checkout: 2025-06-11 None
-     -> distanza: 459m, durata: 6.2 min
-  2. Task 209270: via Caminadella 13 - checkin: 2025-06-11 21:00 | checkout: 2025-06-11 None
+=== REPORT ASSEGNAZIONI ===
+Data: 2025-06-10 12:05:15
+Totale assegnazioni: 24
 
-  ➤ Totale ore assegnate: 4.09
+1. CLEANER: SINETH ANGUNNA (Premium)
+   ID: 934
+   Ore previste: 5.85
+   Appartamenti: 2
 
-Cleaner: JOHOISER ERNESTO LOPEZ GIRON (Premium)
-  1. Task 209269: Corso di Porta Nuova 36 - checkin: 2025-06-11 19:00 | checkout: 2025-06-11 None
-     -> distanza: 3199m, durata: 23.0 min
-  2. Task 209273: VIALE MONTENERO 59 - checkin: 2025-06-11 19:00 | checkout: 2025-06-11 None
+   1. Task 209265
+      Indirizzo: VIA DE AMICIS, 4
+      Check-in: 2025-06-11 18:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 180 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 4.63
+   2. Task 209270
+      Indirizzo: via Caminadella 13
+      Check-in: 2025-06-11 21:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 165 min
+      Small equipment: False
 
-Cleaner: MUTURI DANIEL NGANGA (Standard)
-  1. Task 209231: VIA GIANGIACOMO MORA 9 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 2643m, durata: 18.8 min
-  2. Task 209144: CORSO LODI 9 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 232m, durata: 3.1 min
-  3. Task 209274: VIA BURLAMACCHI, 11 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 6.57
+2. CLEANER: JOHOISER ERNESTO LOPEZ GIRON (Premium)
+   ID: 132
+   Ore previste: 5.38
+   Appartamenti: 2
 
-Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
-  1. Task 209233: VIA GAUDENZIO FERRARI 10 - checkin: 2025-06-11 17:45 | checkout: 2025-06-11 17:30
-     -> distanza: 28493m, durata: 62.8 min
-  2. Task 202227: VIA MILANO 51/53 - checkin: None None | checkout: 2025-06-11 None
+   1. Task 209269
+      Indirizzo: Corso di Porta Nuova 36
+      Check-in: 2025-06-11 19:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 165 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 9.65
+   2. Task 209273
+      Indirizzo: VIALE MONTENERO 59
+      Check-in: 2025-06-11 19:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 135 min
+      Small equipment: False
 
-Cleaner: Ogbodo Chidi Igwe (Standard)
-  1. Task 208907: VIA TIZIANO 6 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 309m, durata: 4.2 min
-  2. Task 209026: VIA GIACOMO GRIZIOTTI, 3 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 645m, durata: 8.8 min
-  3. Task 209066: VIA VINCENZO MONTI, 77 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 6.19
+3. CLEANER: MUTURI DANIEL NGANGA (Standard)
+   ID: 18
+   Ore previste: 6.0
+   Appartamenti: 4
 
-Cleaner: BAH ISMAILA (Standard)
-  1. Task 209271: VIA AUSONIO, 6 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
-     -> distanza: 1881m, durata: 13.1 min
-  2. Task 206698: RIPA TICINESE 43 - checkin: 2025-06-22 None | checkout: 2025-06-11 11:00
-     -> distanza: 1455m, durata: 11.4 min
-  3. Task 192633: VIA SAN CALOCERO, 29 - checkin: None None | checkout: 2025-06-11 None
-     -> distanza: 1319m, durata: 12.8 min
-  4. Task 209267: Via Vigevano 9 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
+   1. Task 208833
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 14:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 8.92
+   2. Task 209012
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 14:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: BOUBACAR BARRY (Standard)
-  1. Task 209065: VIA NICOLA PICCINNI, 5 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 1225m, durata: 12.2 min
-  2. Task 209062: VIA FERRANTE APORTI, 24 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+   3. Task 209150
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 14:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 4.24
+   4. Task 209009
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: FESTUS OSARO AIHIVBERE (Standard)
-  1. Task 209067: CORSO GARIBALDI, 55 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 414m, durata: 5.7 min
-  2. Task 209201: VIA FIORI CHIARI, 26 A - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-  3. Task 209221: VIA FIORI CHIARI, 26 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 6.08
+4. CLEANER: HUSSAIN SYED SHUJIAHAT (Standard)
+   ID: 24
+   Ore previste: 4.07
+   Appartamenti: 2
 
-Cleaner: RASEL MOLLA (Standard)
-  1. Task 209057: via Principe Eugenio 15 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
-     -> distanza: 464m, durata: 6.5 min
-  2. Task 208832: VIA BULLONA 18 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-  3. Task 209010: VIA BULLONA 18 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-  4. Task 209211: VIA BULLONA 18 - checkin: 2025-06-11 None | checkout: 2025-06-11 17:00
+   1. Task 202227
+      Indirizzo: VIA MILANO 51/53
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 8.09
+   2. Task 209282
+      Indirizzo: RIPA TICINESE 53 B
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: IBRAHIM SANYANG (Standard)
-  1. Task 209230: VIA TREVI, 4 ANGOLO VIA VALEGGIO - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 6951m, durata: 24.4 min
-  2. Task 209017: VIA DISCIPLINI 5 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:30
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 5.38
+5. CLEANER: Ogbodo Chidi Igwe (Standard)
+   ID: 249
+   Ore previste: 6.29
+   Appartamenti: 4
 
-Cleaner: LAMIN SOLY (Standard)
-  1. Task 209229: VIA MEDICI 8 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 548m, durata: 7.5 min
-  2. Task 201917: P.ZZA SEPOLCRO 1 - checkin: None None | checkout: 2025-06-11 None
-     -> distanza: 679m, durata: 9.1 min
-  3. Task 208831: VIA DISCIPLINI 5 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-  4. Task 209008: VIA DISCIPLINI 5 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+   1. Task 206698
+      Indirizzo: RIPA TICINESE 43
+      Check-in: 2025-06-22 None
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-  ➤ Totale ore assegnate: 8.24
+   2. Task 209267
+      Indirizzo: Via Vigevano 9
+      Check-in: 2025-06-13 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 120 min
+      Small equipment: False
 
-Cleaner: BLESSING UGBOME (Standard)
-  1. Task 207040: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
-  2. Task 207067: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
+   3. Task 209233
+      Indirizzo: VIA GAUDENZIO FERRARI 10
+      Check-in: 2025-06-11 17:45
+      Check-out: 2025-06-11 17:30
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 4.0
+   4. Task 209068
+      Indirizzo: VIA ASCANIO SFORZA, 9
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-Cleaner: SEYNI DRAME (Standard)
-  1. Task 208352: VIA CIRO MENOTTI 18 - checkin: 2025-06-12 None | checkout: 2025-06-11 None
-     -> distanza: 1056m, durata: 9.3 min
-  2. Task 209037: VIA AMEDEO D'AOSTA 9 - checkin: 2025-08-10 None | checkout: 2025-06-11 None
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 4.21
+6. CLEANER: BAH ISMAILA (Standard)
+   ID: 287
+   Ore previste: 5.77
+   Appartamenti: 4
 
-Cleaner: TRACY OKE (Standard)
-  1. Task 209279: VIA VOGHERA, 4 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
-     -> distanza: 431m, durata: 5.9 min
-  2. Task 199441: Via Bergognone 31 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 366m, durata: 5.0 min
-  3. Task 200841: VIA FORCELLA 15 - checkin: None None | checkout: 2025-06-11 None
-  4. Task 208690: VIA FORCELLA 15 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
+   1. Task 209057
+      Indirizzo: via Principe Eugenio 15
+      Check-in: 2025-06-13 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-  ➤ Totale ore assegnate: 8.16
+   2. Task 208832
+      Indirizzo: VIA BULLONA 18
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: PRECIOUS GYABAAH (Standard)
-  1. Task 209232: VIA MONREALE 12 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 1222m, durata: 9.3 min
-  2. Task 209228: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-  3. Task 209227: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+   3. Task 209010
+      Indirizzo: VIA BULLONA 18
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 6.24
+   4. Task 209211
+      Indirizzo: VIA BULLONA 18
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 17:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: ESTHER DORCAS LANDA PANEZ (Standard)
-  1. Task 209055: VIALE ZARA, 118 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 6626m, durata: 31.2 min
-  2. Task 209281: VIA TORTONA, 10 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 5.31
+7. CLEANER: BOUBACAR BARRY (Standard)
+   ID: 321
+   Ore previste: 6.25
+   Appartamenti: 4
 
-Cleaner: AIDA DIONE (Standard)
-  1. Task 209009: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-  2. Task 208833: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
-  3. Task 209012: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
-  4. Task 209150: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
+   1. Task 209052
+      Indirizzo: via della Commenda 28
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-  ➤ Totale ore assegnate: 8.0
+   2. Task 209193
+      Indirizzo: VIA ORTI 16D
+      Check-in: 2025-06-12 15:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 105 min
+      Small equipment: False
 
-Cleaner: NAME JULIE ADOU (Standard)
-  1. Task 209052: via della Commenda 28 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 None
-     -> distanza: 1464m, durata: 13.9 min
-  2. Task 209266: Viale Montenero, 73 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 1104m, durata: 12.1 min
-  3. Task 209193: VIA ORTI 16D - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
+   3. Task 209144
+      Indirizzo: CORSO LODI 9
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 6.51
+   4. Task 209266
+      Indirizzo: Viale Montenero, 73
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 85 min
+      Small equipment: True
 
-Cleaner: LOVETH IGUDIA (Standard)
-  1. Task 208752: VIA IMPERIA 3/B - checkin: None None | checkout: 2025-06-11 None
-     -> distanza: 578m, durata: 8.1 min
-  2. Task 209220: Via Giuseppe Meda 27 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+--------------------------------------------------
 
-  ➤ Totale ore assegnate: 4.11
+8. CLEANER: FESTUS OSARO AIHIVBERE (Standard)
+   ID: 326
+   Ore previste: 4.0
+   Appartamenti: 3
 
-Cleaner: YENCI MARICELA PILIA LINARES (Standard)
-  1. Task 208302: VIA POMA 61 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 792m, durata: 11.2 min
-  2. Task 200442: Via Privata Ozieri 7 - checkin: None None | checkout: 2025-06-11 09:00
+   1. Task 209228
+      Indirizzo: PIAZZALE BRESCIA 1
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-  ➤ Totale ore assegnate: 4.16
+   2. Task 209227
+      Indirizzo: PIAZZALE BRESCIA 1
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-Cleaner: ADEL FAYEZ ABDELKRIM DESSOUKI (Standard)
-  1. Task 209272: Via Crivelli, 15/1 - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
-     -> distanza: 436m, durata: 6.2 min
-  2. Task 208776: Via Salasco 18 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
+   3. Task 209232
+      Indirizzo: VIA MONREALE 12
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-  ➤ Totale ore assegnate: 4.09
+--------------------------------------------------
 
-Cleaner: HODA MAHMOUD SALAMA HUSSEIN (Standard)
-  1. Task 209068: VIA ASCANIO SFORZA, 9 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 6255m, durata: 35.0 min
-  2. Task 209047: Via dei Transiti 21 - checkin: 2025-06-11 19:00 | checkout: 2025-06-11 None
+9. CLEANER: RASEL MOLLA (Standard)
+   ID: 404
+   Ore previste: 3.27
+   Appartamenti: 2
 
-  ➤ Totale ore assegnate: 5.24
+   1. Task 209063
+      Indirizzo: Via L. Cagnola, 12
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
 
-Cleaner: MARIE LAURE PENKA (Standard)
-  1. Task 209063: Via L. Cagnola, 12 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 2986m, durata: 20.2 min
-  2. Task 208788: VIA SANTA MARTA 11 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 11:00
+   2. Task 209274
+      Indirizzo: VIA BURLAMACCHI, 11
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
 
-  ➤ Totale ore assegnate: 4.59
+--------------------------------------------------
 
-Cleaner: SEYDOU DIAKITE (Standard)
-  1. Task 209056: VIA MALACHIA MARCHESI DE TADDEI 14 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
-     -> distanza: 2742m, durata: 27.8 min
-  2. Task 209280: VIA VOGHERA, 4 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
+10. CLEANER: IBRAHIM SANYANG (Standard)
+   ID: 445
+   Ore previste: 3.75
+   Appartamenti: 3
 
-  ➤ Totale ore assegnate: 4.54
+   1. Task 209229
+      Indirizzo: VIA MEDICI 8
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 209231
+      Indirizzo: VIA GIANGIACOMO MORA 9
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   3. Task 201917
+      Indirizzo: P.ZZA SEPOLCRO 1
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+11. CLEANER: LAMIN SOLY (Standard)
+   ID: 469
+   Ore previste: 3.0
+   Appartamenti: 2
+
+   1. Task 207040
+      Indirizzo: VIA BARRILI 31
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 207067
+      Indirizzo: VIA BARRILI 31
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+--------------------------------------------------
+
+12. CLEANER: BLESSING UGBOME (Standard)
+   ID: 476
+   Ore previste: 2.85
+   Appartamenti: 2
+
+   1. Task 209280
+      Indirizzo: VIA VOGHERA, 4
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 09:30
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 209055
+      Indirizzo: VIALE ZARA, 118
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+13. CLEANER: SEYNI DRAME (Standard)
+   ID: 555
+   Ore previste: 3.1
+   Appartamenti: 2
+
+   1. Task 200442
+      Indirizzo: Via Privata Ozieri 7
+      Check-in: None None
+      Check-out: 2025-06-11 09:00
+      Tempo pulizia: 105 min
+      Small equipment: False
+
+   2. Task 208302
+      Indirizzo: VIA POMA 61
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+14. CLEANER: TRACY OKE (Standard)
+   ID: 596
+   Ore previste: 3.26
+   Appartamenti: 2
+
+   1. Task 209281
+      Indirizzo: VIA TORTONA, 10
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 09:30
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 209230
+      Indirizzo: VIA TREVI, 4 ANGOLO VIA VALEGGIO
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 10:15
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+15. CLEANER: PRECIOUS GYABAAH (Standard)
+   ID: 771
+   Ore previste: 4.43
+   Appartamenti: 3
+
+   1. Task 209026
+      Indirizzo: VIA GIACOMO GRIZIOTTI, 3
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 208907
+      Indirizzo: VIA TIZIANO 6
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   3. Task 209066
+      Indirizzo: VIA VINCENZO MONTI, 77
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+--------------------------------------------------
+
+16. CLEANER: ESTHER DORCAS LANDA PANEZ (Standard)
+   ID: 895
+   Ore previste: 3.9
+   Appartamenti: 3
+
+   1. Task 209065
+      Indirizzo: VIA NICOLA PICCINNI, 5
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 209062
+      Indirizzo: VIA FERRANTE APORTI, 24
+      Check-in: 2025-06-11 15:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   3. Task 209047
+      Indirizzo: Via dei Transiti 21
+      Check-in: 2025-06-11 19:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+17. CLEANER: AIDA DIONE (Standard)
+   ID: 911
+   Ore previste: 5.4
+   Appartamenti: 4
+
+   1. Task 208788
+      Indirizzo: VIA SANTA MARTA 11
+      Check-in: 2025-06-11 15:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 209201
+      Indirizzo: VIA FIORI CHIARI, 26 A
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   3. Task 209221
+      Indirizzo: VIA FIORI CHIARI, 26
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 100 min
+      Small equipment: True
+
+   4. Task 209067
+      Indirizzo: CORSO GARIBALDI, 55
+      Check-in: 2025-06-11 14:00
+      Check-out: 2025-06-11 11:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+18. CLEANER: NAME JULIE ADOU (Standard)
+   ID: 927
+   Ore previste: 2.75
+   Appartamenti: 2
+
+   1. Task 209271
+      Indirizzo: VIA AUSONIO, 6
+      Check-in: 2025-06-11 15:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 192633
+      Indirizzo: VIA SAN CALOCERO, 29
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+--------------------------------------------------
+
+19. CLEANER: LOVETH IGUDIA (Standard)
+   ID: 937
+   Ore previste: 7.34
+   Appartamenti: 4
+
+   1. Task 209279
+      Indirizzo: VIA VOGHERA, 4
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 09:30
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 200841
+      Indirizzo: VIA FORCELLA 15
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   3. Task 208690
+      Indirizzo: VIA FORCELLA 15
+      Check-in: 2025-06-13 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   4. Task 199441
+      Indirizzo: Via Bergognone 31
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 180 min
+      Small equipment: False
+
+--------------------------------------------------
+
+20. CLEANER: YENCI MARICELA PILIA LINARES (Standard)
+   ID: 966
+   Ore previste: 3.37
+   Appartamenti: 2
+
+   1. Task 208352
+      Indirizzo: VIA CIRO MENOTTI 18
+      Check-in: 2025-06-12 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 209037
+      Indirizzo: VIA AMEDEO D'AOSTA 9
+      Check-in: 2025-08-10 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 105 min
+      Small equipment: False
+
+--------------------------------------------------
+
+21. CLEANER: ADEL FAYEZ ABDELKRIM DESSOUKI (Standard)
+   ID: 967
+   Ore previste: 2.8
+   Appartamenti: 2
+
+   1. Task 208752
+      Indirizzo: VIA IMPERIA 3/B
+      Check-in: None None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+   2. Task 209220
+      Indirizzo: Via Giuseppe Meda 27
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+--------------------------------------------------
+
+22. CLEANER: HODA MAHMOUD SALAMA HUSSEIN (Standard)
+   ID: 985
+   Ore previste: 1.17
+   Appartamenti: 1
+
+   1. Task 209056
+      Indirizzo: VIA MALACHIA MARCHESI DE TADDEI 14
+      Check-in: 2025-06-11 15:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 70 min
+      Small equipment: True
+
+--------------------------------------------------
+
+23. CLEANER: MARIE LAURE PENKA (Standard)
+   ID: 987
+   Ore previste: 3.36
+   Appartamenti: 2
+
+   1. Task 208776
+      Indirizzo: Via Salasco 18
+      Check-in: 2025-06-13 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 209272
+      Indirizzo: Via Crivelli, 15/1
+      Check-in: 2025-06-12 15:00
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 105 min
+      Small equipment: False
+
+--------------------------------------------------
+
+24. CLEANER: SEYDOU DIAKITE (Standard)
+   ID: 989
+   Ore previste: 4.5
+   Appartamenti: 3
+
+   1. Task 209017
+      Indirizzo: VIA DISCIPLINI 5
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 14:30
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   2. Task 208831
+      Indirizzo: VIA DISCIPLINI 5
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+   3. Task 209008
+      Indirizzo: VIA DISCIPLINI 5
+      Check-in: 2025-06-11 None
+      Check-out: 2025-06-11 15:00
+      Tempo pulizia: 90 min
+      Small equipment: False
+
+--------------------------------------------------
 
