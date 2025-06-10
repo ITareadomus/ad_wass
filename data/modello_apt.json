@@ -1087,6 +1087,57 @@
             "pax_in": 1,
             "pax_out": 1,
             "small_equipment": false
+        },
+        {
+            "task_id": 209279,
+            "structure_id": 1072,
+            "client_id": 67,
+            "type": "Standard",
+            "address": "VIA VOGHERA, 4",
+            "lat": "45.454632",
+            "lng": "9.168536",
+            "cleaning_time": null,
+            "checkin": "2025-06-11",
+            "checkout": "2025-06-11",
+            "checkin_time": null,
+            "checkout_time": "09:30",
+            "pax_in": 1,
+            "pax_out": 0,
+            "small_equipment": true
+        },
+        {
+            "task_id": 209280,
+            "structure_id": 1073,
+            "client_id": 67,
+            "type": "Standard",
+            "address": "VIA VOGHERA, 4",
+            "lat": "45.454632",
+            "lng": "9.168536",
+            "cleaning_time": null,
+            "checkin": "2025-06-11",
+            "checkout": "2025-06-11",
+            "checkin_time": null,
+            "checkout_time": "09:30",
+            "pax_in": 1,
+            "pax_out": 0,
+            "small_equipment": true
+        },
+        {
+            "task_id": 209281,
+            "structure_id": 1074,
+            "client_id": 67,
+            "type": "Standard",
+            "address": "VIA TORTONA, 10",
+            "lat": "45.4542397",
+            "lng": "9.1686792",
+            "cleaning_time": null,
+            "checkin": "2025-06-11",
+            "checkout": "2025-06-11",
+            "checkin_time": null,
+            "checkout_time": "09:30",
+            "pax_in": 2,
+            "pax_out": 0,
+            "small_equipment": false
         }
     ]
 }
