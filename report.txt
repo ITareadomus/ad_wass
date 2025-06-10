@@ -1,27 +1,27 @@
 === REPORT ASSEGNAZIONI CASUALI ===
-Data: 2025-06-10 12:48:45
+Data: 2025-06-10 12:50:50
 Totale assegnazioni: 22
 
 1. CLEANER: SINETH ANGUNNA (Premium)
    ID: 934
-   Ore previste: 4.48
-   Ore viaggio: 0.2
+   Ore previste: 4.64
+   Ore viaggio: 0.32
    Appartamenti: 3
 
-   1. Task 209274
-      Indirizzo: VIA BURLAMACCHI, 11
-      Check-out: 2025-06-11 15:00
+   1. Task 209230
+      Indirizzo: VIA TREVI, 4 ANGOLO VIA VALEGGIO
+      Check-out: 2025-06-11 10:15
       Tipo: Standard
+      Small equipment: True
+
+   2. Task 209273 [PRIORITÀ]
+      Indirizzo: VIALE MONTENERO 59
+      Check-out: 2025-06-11 15:00
+      Tipo: Premium
       Small equipment: False
 
-   2. Task 209008 [PRIORITÀ]
-      Indirizzo: VIA DISCIPLINI 5
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   3. Task 209062 [PRIORITÀ]
-      Indirizzo: VIA FERRANTE APORTI, 24
+   3. Task 208302 [PRIORITÀ]
+      Indirizzo: VIA POMA 61
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: True
@@ -30,50 +30,50 @@ Totale assegnazioni: 22
 
 2. CLEANER: JOHOISER ERNESTO LOPEZ GIRON (Premium)
    ID: 132
-   Ore previste: 5.99
+   Ore previste: 2.97
    Ore viaggio: 0.12
    Appartamenti: 3
 
-   1. Task 192633 [PRIORITÀ]
-      Indirizzo: VIA SAN CALOCERO, 29
+   1. Task 209274 [PRIORITÀ]
+      Indirizzo: VIA BURLAMACCHI, 11
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
 
-   2. Task 207040 [PRIORITÀ]
-      Indirizzo: VIA BARRILI 31
+   2. Task 200841
+      Indirizzo: VIA FORCELLA 15
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
 
-   3. Task 209282
-      Indirizzo: RIPA TICINESE 53 B
-      Check-out: 2025-06-11 15:00
+   3. Task 209068 [PRIORITÀ]
+      Indirizzo: VIA ASCANIO SFORZA, 9
+      Check-out: 2025-06-11 11:00
       Tipo: Standard
-      Small equipment: False
+      Small equipment: True
 
 --------------------------------------------------
 
 3. CLEANER: MUTURI DANIEL NGANGA (Standard)
    ID: 18
-   Ore previste: 5.61
-   Ore viaggio: 0.26
+   Ore previste: 3.86
+   Ore viaggio: 0.47
    Appartamenti: 3
 
-   1. Task 199441 [PRIORITÀ]
-      Indirizzo: Via Bergognone 31
+   1. Task 209062 [PRIORITÀ]
+      Indirizzo: VIA FERRANTE APORTI, 24
       Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 206698 [PRIORITÀ]
-      Indirizzo: RIPA TICINESE 43
-      Check-out: 2025-06-11 11:00
       Tipo: Standard
       Small equipment: True
 
-   3. Task 209272 [PRIORITÀ]
-      Indirizzo: Via Crivelli, 15/1
+   2. Task 209056 [PRIORITÀ]
+      Indirizzo: VIA MALACHIA MARCHESI DE TADDEI 14
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+   3. Task 202227 [PRIORITÀ]
+      Indirizzo: VIA MILANO 51/53
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
@@ -82,25 +82,25 @@ Totale assegnazioni: 22
 
 4. CLEANER: HUSSAIN SYED SHUJIAHAT (Standard)
    ID: 24
-   Ore previste: 5.08
-   Ore viaggio: 0.46
+   Ore previste: 2.17
+   Ore viaggio: 0.45
    Appartamenti: 3
 
-   1. Task 209017
-      Indirizzo: VIA DISCIPLINI 5
-      Check-out: 2025-06-11 14:30
+   1. Task 199441 [PRIORITÀ]
+      Indirizzo: Via Bergognone 31
+      Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
 
-   2. Task 209063 [PRIORITÀ]
-      Indirizzo: Via L. Cagnola, 12
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209266 [PRIORITÀ]
-      Indirizzo: Viale Montenero, 73
+   2. Task 208831
+      Indirizzo: VIA DISCIPLINI 5
       Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 206698 [PRIORITÀ]
+      Indirizzo: RIPA TICINESE 43
+      Check-out: 2025-06-11 11:00
       Tipo: Standard
       Small equipment: True
 
@@ -108,25 +108,25 @@ Totale assegnazioni: 22
 
 5. CLEANER: Ogbodo Chidi Igwe (Standard)
    ID: 249
-   Ore previste: 3.96
-   Ore viaggio: 0.16
+   Ore previste: 2.22
+   Ore viaggio: 0.42
    Appartamenti: 3
 
-   1. Task 208788
-      Indirizzo: VIA SANTA MARTA 11
-      Check-out: 2025-06-11 11:00
+   1. Task 209227 [PRIORITÀ]
+      Indirizzo: PIAZZALE BRESCIA 1
+      Check-out: 2025-06-11 10:15
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209231
+      Indirizzo: VIA GIANGIACOMO MORA 9
+      Check-out: 2025-06-11 10:15
       Tipo: Standard
       Small equipment: True
 
-   2. Task 208752 [PRIORITÀ]
-      Indirizzo: VIA IMPERIA 3/B
+   3. Task 192633 [PRIORITÀ]
+      Indirizzo: VIA SAN CALOCERO, 29
       Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209012 [PRIORITÀ]
-      Indirizzo: VIA ANGELO SECCHI 2
-      Check-out: 2025-06-11 14:00
       Tipo: Standard
       Small equipment: False
 
@@ -134,24 +134,24 @@ Totale assegnazioni: 22
 
 6. CLEANER: BAH ISMAILA (Standard)
    ID: 287
-   Ore previste: 5.42
-   Ore viaggio: 0.21
+   Ore previste: 2.05
+   Ore viaggio: 0.46
    Appartamenti: 3
 
-   1. Task 209232 [PRIORITÀ]
-      Indirizzo: VIA MONREALE 12
+   1. Task 209233 [PRIORITÀ]
+      Indirizzo: VIA GAUDENZIO FERRARI 10
+      Check-out: 2025-06-11 17:30
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209228
+      Indirizzo: PIAZZALE BRESCIA 1
       Check-out: 2025-06-11 10:15
       Tipo: Standard
       Small equipment: True
 
-   2. Task 207067 [PRIORITÀ]
-      Indirizzo: VIA BARRILI 31
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   3. Task 209267 [PRIORITÀ]
-      Indirizzo: Via Vigevano 9
+   3. Task 208832 [PRIORITÀ]
+      Indirizzo: VIA BULLONA 18
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
@@ -160,25 +160,25 @@ Totale assegnazioni: 22
 
 7. CLEANER: BOUBACAR BARRY (Standard)
    ID: 321
-   Ore previste: 5.67
-   Ore viaggio: 0.15
+   Ore previste: 3.74
+   Ore viaggio: 0.35
    Appartamenti: 3
 
-   1. Task 209037
-      Indirizzo: VIA AMEDEO D'AOSTA 9
+   1. Task 209201 [PRIORITÀ]
+      Indirizzo: VIA FIORI CHIARI, 26 A
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 208752
+      Indirizzo: VIA IMPERIA 3/B
       Check-out: 2025-06-11 15:00
       Tipo: Standard
-      Small equipment: False
+      Small equipment: True
 
-   2. Task 209211
-      Indirizzo: VIA BULLONA 18
-      Check-out: 2025-06-11 17:00
-      Tipo: Standard
-      Small equipment: False
-
-   3. Task 209150 [PRIORITÀ]
-      Indirizzo: VIA ANGELO SECCHI 2
-      Check-out: 2025-06-11 14:00
+   3. Task 200442 [PRIORITÀ]
+      Indirizzo: Via Privata Ozieri 7
+      Check-out: 2025-06-11 09:00
       Tipo: Standard
       Small equipment: False
 
@@ -186,24 +186,24 @@ Totale assegnazioni: 22
 
 8. CLEANER: FESTUS OSARO AIHIVBERE (Standard)
    ID: 326
-   Ore previste: 5.18
-   Ore viaggio: 0.41
+   Ore previste: 4.12
+   Ore viaggio: 0.45
    Appartamenti: 3
 
-   1. Task 209193 [PRIORITÀ]
-      Indirizzo: VIA ORTI 16D
-      Check-out: 2025-06-11 15:00
+   1. Task 209066
+      Indirizzo: VIA VINCENZO MONTI, 77
+      Check-out: 2025-06-11 11:00
       Tipo: Standard
       Small equipment: False
 
-   2. Task 201917
-      Indirizzo: P.ZZA SEPOLCRO 1
+   2. Task 208907
+      Indirizzo: VIA TIZIANO 6
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: True
 
-   3. Task 209220
-      Indirizzo: Via Giuseppe Meda 27
+   3. Task 207040
+      Indirizzo: VIA BARRILI 31
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
@@ -212,18 +212,278 @@ Totale assegnazioni: 22
 
 9. CLEANER: RASEL MOLLA (Standard)
    ID: 404
-   Ore previste: 2.88
+   Ore previste: 3.76
+   Ore viaggio: 0.48
+   Appartamenti: 3
+
+   1. Task 209279 [PRIORITÀ]
+      Indirizzo: VIA VOGHERA, 4
+      Check-out: 2025-06-11 09:30
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 209012 [PRIORITÀ]
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-out: 2025-06-11 14:00
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 208690
+      Indirizzo: VIA FORCELLA 15
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+--------------------------------------------------
+
+10. CLEANER: IBRAHIM SANYANG (Standard)
+   ID: 445
+   Ore previste: 4.2
+   Ore viaggio: 0.39
+   Appartamenti: 3
+
+   1. Task 209150 [PRIORITÀ]
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-out: 2025-06-11 14:00
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209265 [PRIORITÀ]
+      Indirizzo: VIA DE AMICIS, 4
+      Check-out: 2025-06-11 15:00
+      Tipo: Premium
+      Small equipment: False
+
+   3. Task 208788
+      Indirizzo: VIA SANTA MARTA 11
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+--------------------------------------------------
+
+11. CLEANER: LAMIN SOLY (Standard)
+   ID: 469
+   Ore previste: 2.7
+   Ore viaggio: 0.22
+   Appartamenti: 3
+
+   1. Task 209266 [PRIORITÀ]
+      Indirizzo: Viale Montenero, 73
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 209270 [PRIORITÀ]
+      Indirizzo: via Caminadella 13
+      Check-out: 2025-06-11 15:00
+      Tipo: Premium
+      Small equipment: False
+
+   3. Task 209037 [PRIORITÀ]
+      Indirizzo: VIA AMEDEO D'AOSTA 9
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+--------------------------------------------------
+
+12. CLEANER: BLESSING UGBOME (Standard)
+   ID: 476
+   Ore previste: 2.56
    Ore viaggio: 0.2
    Appartamenti: 3
 
-   1. Task 209010
+   1. Task 209065
+      Indirizzo: VIA NICOLA PICCINNI, 5
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 201917 [PRIORITÀ]
+      Indirizzo: P.ZZA SEPOLCRO 1
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+   3. Task 209057 [PRIORITÀ]
+      Indirizzo: via Principe Eugenio 15
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+--------------------------------------------------
+
+13. CLEANER: SEYNI DRAME (Standard)
+   ID: 555
+   Ore previste: 3.3
+   Ore viaggio: 0.21
+   Appartamenti: 3
+
+   1. Task 209144
+      Indirizzo: CORSO LODI 9
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209010
       Indirizzo: VIA BULLONA 18
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
 
-   2. Task 200841 [PRIORITÀ]
-      Indirizzo: VIA FORCELLA 15
+   3. Task 209269 [PRIORITÀ]
+      Indirizzo: Corso di Porta Nuova 36
+      Check-out: 2025-06-11 15:00
+      Tipo: Premium
+      Small equipment: False
+
+--------------------------------------------------
+
+14. CLEANER: TRACY OKE (Standard)
+   ID: 596
+   Ore previste: 3.53
+   Ore viaggio: 0.25
+   Appartamenti: 3
+
+   1. Task 209220 [PRIORITÀ]
+      Indirizzo: Via Giuseppe Meda 27
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209272
+      Indirizzo: Via Crivelli, 15/1
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 209009 [PRIORITÀ]
+      Indirizzo: VIA ANGELO SECCHI 2
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+--------------------------------------------------
+
+15. CLEANER: PRECIOUS GYABAAH (Standard)
+   ID: 771
+   Ore previste: 3.11
+   Ore viaggio: 0.11
+   Appartamenti: 3
+
+   1. Task 209026 [PRIORITÀ]
+      Indirizzo: VIA GIACOMO GRIZIOTTI, 3
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209267
+      Indirizzo: Via Vigevano 9
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 209221 [PRIORITÀ]
+      Indirizzo: VIA FIORI CHIARI, 26
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+--------------------------------------------------
+
+16. CLEANER: ESTHER DORCAS LANDA PANEZ (Standard)
+   ID: 895
+   Ore previste: 3.86
+   Ore viaggio: 0.39
+   Appartamenti: 3
+
+   1. Task 209008
+      Indirizzo: VIA DISCIPLINI 5
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   2. Task 209067 [PRIORITÀ]
+      Indirizzo: CORSO GARIBALDI, 55
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+   3. Task 208776
+      Indirizzo: Via Salasco 18
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+--------------------------------------------------
+
+17. CLEANER: AIDA DIONE (Standard)
+   ID: 911
+   Ore previste: 3.14
+   Ore viaggio: 0.27
+   Appartamenti: 3
+
+   1. Task 209055
+      Indirizzo: VIALE ZARA, 118
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 207067
+      Indirizzo: VIA BARRILI 31
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 209193 [PRIORITÀ]
+      Indirizzo: VIA ORTI 16D
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: False
+
+--------------------------------------------------
+
+18. CLEANER: NAME JULIE ADOU (Standard)
+   ID: 927
+   Ore previste: 5.06
+   Ore viaggio: 0.49
+   Appartamenti: 3
+
+   1. Task 209052
+      Indirizzo: via della Commenda 28
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 209232
+      Indirizzo: VIA MONREALE 12
+      Check-out: 2025-06-11 10:15
+      Tipo: Standard
+      Small equipment: True
+
+   3. Task 209047
+      Indirizzo: Via dei Transiti 21
+      Check-out: 2025-06-11 15:00
+      Tipo: Standard
+      Small equipment: True
+
+--------------------------------------------------
+
+19. CLEANER: LOVETH IGUDIA (Standard)
+   ID: 937
+   Ore previste: 4.67
+   Ore viaggio: 0.19
+   Appartamenti: 3
+
+   1. Task 209063 [PRIORITÀ]
+      Indirizzo: Via L. Cagnola, 12
+      Check-out: 2025-06-11 11:00
+      Tipo: Standard
+      Small equipment: True
+
+   2. Task 208352
+      Indirizzo: VIA CIRO MENOTTI 18
       Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
@@ -236,41 +496,15 @@ Totale assegnazioni: 22
 
 --------------------------------------------------
 
-10. CLEANER: IBRAHIM SANYANG (Standard)
-   ID: 445
-   Ore previste: 4.72
-   Ore viaggio: 0.43
+20. CLEANER: YENCI MARICELA PILIA LINARES (Standard)
+   ID: 966
+   Ore previste: 4.79
+   Ore viaggio: 0.39
    Appartamenti: 3
 
-   1. Task 209273
-      Indirizzo: VIALE MONTENERO 59
-      Check-out: 2025-06-11 15:00
-      Tipo: Premium
-      Small equipment: False
-
-   2. Task 209055 [PRIORITÀ]
-      Indirizzo: VIALE ZARA, 118
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209056
-      Indirizzo: VIA MALACHIA MARCHESI DE TADDEI 14
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
---------------------------------------------------
-
-11. CLEANER: LAMIN SOLY (Standard)
-   ID: 469
-   Ore previste: 4.09
-   Ore viaggio: 0.33
-   Appartamenti: 3
-
-   1. Task 209227
-      Indirizzo: PIAZZALE BRESCIA 1
-      Check-out: 2025-06-11 10:15
+   1. Task 209281
+      Indirizzo: VIA TORTONA, 10
+      Check-out: 2025-06-11 09:30
       Tipo: Standard
       Small equipment: False
 
@@ -280,269 +514,35 @@ Totale assegnazioni: 22
       Tipo: Standard
       Small equipment: True
 
-   3. Task 209221 [PRIORITÀ]
-      Indirizzo: VIA FIORI CHIARI, 26
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: True
-
---------------------------------------------------
-
-12. CLEANER: BLESSING UGBOME (Standard)
-   ID: 476
-   Ore previste: 2.0
-   Ore viaggio: 0.36
-   Appartamenti: 3
-
-   1. Task 209052 [PRIORITÀ]
-      Indirizzo: via della Commenda 28
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
-   2. Task 209279 [PRIORITÀ]
-      Indirizzo: VIA VOGHERA, 4
-      Check-out: 2025-06-11 09:30
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 208832
-      Indirizzo: VIA BULLONA 18
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
---------------------------------------------------
-
-13. CLEANER: SEYNI DRAME (Standard)
-   ID: 555
-   Ore previste: 4.12
-   Ore viaggio: 0.14
-   Appartamenti: 3
-
-   1. Task 209269 [PRIORITÀ]
-      Indirizzo: Corso di Porta Nuova 36
-      Check-out: 2025-06-11 15:00
-      Tipo: Premium
-      Small equipment: False
-
-   2. Task 209057
-      Indirizzo: via Principe Eugenio 15
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209144
-      Indirizzo: CORSO LODI 9
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
---------------------------------------------------
-
-14. CLEANER: TRACY OKE (Standard)
-   ID: 596
-   Ore previste: 2.06
-   Ore viaggio: 0.15
-   Appartamenti: 3
-
-   1. Task 209265
-      Indirizzo: VIA DE AMICIS, 4
-      Check-out: 2025-06-11 15:00
-      Tipo: Premium
-      Small equipment: False
-
-   2. Task 209228
-      Indirizzo: PIAZZALE BRESCIA 1
-      Check-out: 2025-06-11 10:15
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209068 [PRIORITÀ]
-      Indirizzo: VIA ASCANIO SFORZA, 9
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: True
-
---------------------------------------------------
-
-15. CLEANER: PRECIOUS GYABAAH (Standard)
-   ID: 771
-   Ore previste: 2.06
-   Ore viaggio: 0.18
-   Appartamenti: 3
-
-   1. Task 208776
-      Indirizzo: Via Salasco 18
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 208907
-      Indirizzo: VIA TIZIANO 6
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209047
-      Indirizzo: Via dei Transiti 21
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
---------------------------------------------------
-
-16. CLEANER: ESTHER DORCAS LANDA PANEZ (Standard)
-   ID: 895
-   Ore previste: 4.11
-   Ore viaggio: 0.43
-   Appartamenti: 3
-
-   1. Task 200442
-      Indirizzo: Via Privata Ozieri 7
-      Check-out: 2025-06-11 09:00
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 208833
+   3. Task 208833 [PRIORITÀ]
       Indirizzo: VIA ANGELO SECCHI 2
       Check-out: 2025-06-11 14:00
       Tipo: Standard
       Small equipment: False
 
-   3. Task 208831
-      Indirizzo: VIA DISCIPLINI 5
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
---------------------------------------------------
-
-17. CLEANER: AIDA DIONE (Standard)
-   ID: 911
-   Ore previste: 4.43
-   Ore viaggio: 0.32
-   Appartamenti: 3
-
-   1. Task 209270
-      Indirizzo: via Caminadella 13
-      Check-out: 2025-06-11 15:00
-      Tipo: Premium
-      Small equipment: False
-
-   2. Task 209201 [PRIORITÀ]
-      Indirizzo: VIA FIORI CHIARI, 26 A
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 208352
-      Indirizzo: VIA CIRO MENOTTI 18
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
---------------------------------------------------
-
-18. CLEANER: NAME JULIE ADOU (Standard)
-   ID: 927
-   Ore previste: 5.91
-   Ore viaggio: 0.12
-   Appartamenti: 3
-
-   1. Task 209009
-      Indirizzo: VIA ANGELO SECCHI 2
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 202227 [PRIORITÀ]
-      Indirizzo: VIA MILANO 51/53
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   3. Task 209065 [PRIORITÀ]
-      Indirizzo: VIA NICOLA PICCINNI, 5
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: True
-
---------------------------------------------------
-
-19. CLEANER: LOVETH IGUDIA (Standard)
-   ID: 937
-   Ore previste: 4.95
-   Ore viaggio: 0.42
-   Appartamenti: 3
-
-   1. Task 208690 [PRIORITÀ]
-      Indirizzo: VIA FORCELLA 15
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 209280 [PRIORITÀ]
-      Indirizzo: VIA VOGHERA, 4
-      Check-out: 2025-06-11 09:30
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 209066 [PRIORITÀ]
-      Indirizzo: VIA VINCENZO MONTI, 77
-      Check-out: 2025-06-11 11:00
-      Tipo: Standard
-      Small equipment: False
-
---------------------------------------------------
-
-20. CLEANER: YENCI MARICELA PILIA LINARES (Standard)
-   ID: 966
-   Ore previste: 4.61
-   Ore viaggio: 0.32
-   Appartamenti: 3
-
-   1. Task 209233
-      Indirizzo: VIA GAUDENZIO FERRARI 10
-      Check-out: 2025-06-11 17:30
-      Tipo: Standard
-      Small equipment: False
-
-   2. Task 209231 [PRIORITÀ]
-      Indirizzo: VIA GIANGIACOMO MORA 9
-      Check-out: 2025-06-11 10:15
-      Tipo: Standard
-      Small equipment: True
-
-   3. Task 208302
-      Indirizzo: VIA POMA 61
-      Check-out: 2025-06-11 15:00
-      Tipo: Standard
-      Small equipment: True
-
 --------------------------------------------------
 
 21. CLEANER: ADEL FAYEZ ABDELKRIM DESSOUKI (Standard)
    ID: 967
-   Ore previste: 5.62
-   Ore viaggio: 0.18
+   Ore previste: 2.71
+   Ore viaggio: 0.45
    Appartamenti: 3
 
-   1. Task 209230
-      Indirizzo: VIA TREVI, 4 ANGOLO VIA VALEGGIO
-      Check-out: 2025-06-11 10:15
-      Tipo: Standard
-      Small equipment: True
-
-   2. Task 209281
-      Indirizzo: VIA TORTONA, 10
-      Check-out: 2025-06-11 09:30
+   1. Task 209211 [PRIORITÀ]
+      Indirizzo: VIA BULLONA 18
+      Check-out: 2025-06-11 17:00
       Tipo: Standard
       Small equipment: False
 
-   3. Task 209067
-      Indirizzo: CORSO GARIBALDI, 55
-      Check-out: 2025-06-11 11:00
+   2. Task 209017
+      Indirizzo: VIA DISCIPLINI 5
+      Check-out: 2025-06-11 14:30
+      Tipo: Standard
+      Small equipment: False
+
+   3. Task 209280 [PRIORITÀ]
+      Indirizzo: VIA VOGHERA, 4
+      Check-out: 2025-06-11 09:30
       Tipo: Standard
       Small equipment: True
 
@@ -550,13 +550,13 @@ Totale assegnazioni: 22
 
 22. CLEANER: HODA MAHMOUD SALAMA HUSSEIN (Standard)
    ID: 985
-   Ore previste: 2.01
-   Ore viaggio: 0.36
+   Ore previste: 4.06
+   Ore viaggio: 0.2
    Appartamenti: 1
 
-   1. Task 209026
-      Indirizzo: VIA GIACOMO GRIZIOTTI, 3
-      Check-out: 2025-06-11 11:00
+   1. Task 209282 [PRIORITÀ]
+      Indirizzo: RIPA TICINESE 53 B
+      Check-out: 2025-06-11 15:00
       Tipo: Standard
       Small equipment: False
 
