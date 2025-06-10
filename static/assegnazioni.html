@@ -270,10 +270,12 @@
             const resultDiv = document.getElementById('assignmentResults');
             const listDiv = document.getElementById('assignmentList');
 
-            // Assegna colori ai cleaner
+            // Assegna colori ai cleaner in modo deterministico
             cleanerColorMap = {};
             assignments.forEach((assignment, index) => {
-                cleanerColorMap[assignment.cleaner_id] = cleanerColors[index % cleanerColors.length];
+                const colorIndex = index % cleanerColors.length;
+                cleanerColorMap[assignment.cleaner_id] = cleanerColors[colorIndex];
+                console.log(`Assegnato colore ${cleanerColors[colorIndex]} al cleaner ${assignment.cleaner_id} (${assignment.name} ${assignment.lastname})`);
             });
 
             // Crea la tabella HTML
@@ -410,16 +412,19 @@
             showMessage(`Caricamento percorso per ${cleanerName}...`, 'info');
 
             try {
-                // Carica le assegnazioni dal file assignments.json
-                const response = await fetch('/data/assignments.json');
+                // Carica le assegnazioni dal file assignments.json con timestamp per evitare cache
+                const response = await fetch(`/data/assignments.json?t=${Date.now()}`);
                 if (!response.ok) {
                     throw new Error('File assignments.json non trovato');
                 }
 
                 const assignmentsData = await response.json();
-                const cleanerAssignment = assignmentsData.assignments.find(a => a.cleaner_id === cleanerId);
+                console.log('Dati assegnazioni caricati:', assignmentsData);
+                
+                const cleanerAssignment = assignmentsData.assignments.find(a => a.cleaner_id == cleanerId);
+                console.log('Assegnazione trovata per cleaner', cleanerId, ':', cleanerAssignment);
 
-                if (!cleanerAssignment || !cleanerAssignment.sequence_details) {
+                if (!cleanerAssignment || !cleanerAssignment.sequence_details || cleanerAssignment.sequence_details.length === 0) {
                     showMessage(`Nessuna assegnazione trovata per ${cleanerName}`, 'error');
                     return;
                 }
@@ -433,129 +438,123 @@
                 clearMap();
 
                 const apartments = cleanerAssignment.sequence_details;
-                const cleanerColor = cleanerColorMap[cleanerId] || '#4CAF50';
+                const cleanerColor = cleanerColorMap[cleanerId] || '#e74c3c';
 
-                if (apartments.length === 0) {
-                    showMessage(`Nessun appartamento assegnato a ${cleanerName}`, 'info');
-                    return;
-                }
+                console.log(`Visualizzando ${apartments.length} appartamenti per ${cleanerName} con colore ${cleanerColor}`);
 
-                // Se c'è solo un appartamento, mostra solo il marker
-                if (apartments.length === 1) {
-                    const apt = apartments[0];
+                // Aggiungi marker per ogni appartamento
+                let bounds = new google.maps.LatLngBounds();
+                
+                apartments.forEach((apt, index) => {
+                    if (!apt.lat || !apt.lng) {
+                        console.warn('Appartamento senza coordinate:', apt);
+                        return;
+                    }
+
                     const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
+                    const premiumText = apt.type === 'Premium' ? " [PREMIUM]" : "";
+
+                    console.log(`Creando marker per appartamento ${apt.task_id} con priorità ${apt.priority} e colore ${cleanerColor}`);
 
                     const marker = new google.maps.Marker({
                         position: position,
                         map: map,
-                        title: `${apt.task_id} - ${apt.address}`,
+                        title: `Priorità ${apt.priority}. ${apt.task_id} - ${apt.address}${premiumText}`,
                         label: {
-                            text: apt.priority.toString(),
+                            text: apt.priority ? apt.priority.toString() : (index + 1).toString(),
                             color: 'white',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            fontSize: '12px'
                         },
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
-                            scale: 15,
+                            scale: 20,
                             fillColor: cleanerColor,
                             fillOpacity: 1,
-                            strokeWeight: 2,
+                            strokeWeight: 3,
                             strokeColor: '#ffffff'
                         }
                     });
 
-                    markers.push(marker);
-                    map.setCenter(position);
-                    map.setZoom(15);
-
-                    showMessage(`Visualizzato appartamento per ${cleanerName}`, 'success');
-                    return;
-                }
-
-                // Crea i waypoints per il percorso
-                const origin = { lat: parseFloat(apartments[0].lat), lng: parseFloat(apartments[0].lng) };
-                const destination = { lat: parseFloat(apartments[apartments.length - 1].lat), lng: parseFloat(apartments[apartments.length - 1].lng) };
-
-                const waypoints = [];
-                for (let i = 1; i < apartments.length - 1; i++) {
-                    waypoints.push({
-                        location: { lat: parseFloat(apartments[i].lat), lng: parseFloat(apartments[i].lng) },
-                        stopover: true
+                    // Info window con dettagli dell'appartamento
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `
+                            <div style="font-size: 12px; max-width: 250px;">
+                                <strong>Codice ADAM: ${apt.task_id}</strong><br>
+                                <strong>Indirizzo:</strong> ${apt.address}<br>
+                                <strong>Priorità: ${apt.priority || (index + 1)}</strong><br>
+                                <strong>Check-in:</strong> ${apt.checkin_time || 'N/A'}<br>
+                                <strong>Check-out:</strong> ${apt.checkout_time || 'N/A'}<br>
+                                <strong>Cleaner:</strong> ${cleanerName}
+                                ${apt.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
+                            </div>
+                        `
                     });
-                }
 
-                // Calcola e visualizza il percorso
-                const request = {
-                    origin: origin,
-                    destination: destination,
-                    waypoints: waypoints,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    optimizeWaypoints: false
-                };
+                    marker.addListener('click', () => {
+                        // Chiudi altre info windows
+                        markers.forEach(m => {
+                            if (m.infoWindow) {
+                                m.infoWindow.close();
+                            }
+                        });
+                        infoWindow.open(map, marker);
+                    });
 
-                directionsService.route(request, (response, status) => {
-                    if (status === 'OK') {
-                        directionsRenderer.setDirections(response);
+                    marker.infoWindow = infoWindow;
+                    markers.push(marker);
+                    bounds.extend(position);
+                });
 
-                        // Aggiungi marker numerati per ogni appartamento con il numero di priorità
-                        apartments.forEach((apt, index) => {
-                            const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
-                            const premiumText = apt.type === 'Premium' ? " [PREMIUM]" : "";
+                // Se ci sono più appartamenti, calcola e mostra il percorso
+                if (apartments.length > 1) {
+                    const origin = { lat: parseFloat(apartments[0].lat), lng: parseFloat(apartments[0].lng) };
+                    const destination = { lat: parseFloat(apartments[apartments.length - 1].lat), lng: parseFloat(apartments[apartments.length - 1].lng) };
 
-                            const marker = new google.maps.Marker({
-                                position: position,
-                                map: map,
-                                title: `Priorità ${apt.priority}. ${apt.task_id} - ${apt.address}${premiumText}`,
-                                label: {
-                                    text: apt.priority.toString(),
-                                    color: 'white',
-                                    fontWeight: 'bold'
-                                },
-                                icon: {
-                                    path: google.maps.SymbolPath.CIRCLE,
-                                    scale: 15,
-                                    fillColor: cleanerColor,
-                                    fillOpacity: 1,
-                                    strokeWeight: 2,
-                                    strokeColor: '#ffffff'
+                    const waypoints = [];
+                    for (let i = 1; i < apartments.length - 1; i++) {
+                        if (apartments[i].lat && apartments[i].lng) {
+                            waypoints.push({
+                                location: { lat: parseFloat(apartments[i].lat), lng: parseFloat(apartments[i].lng) },
+                                stopover: true
+                            });
+                        }
+                    }
+
+                    // Calcola e visualizza il percorso
+                    const request = {
+                        origin: origin,
+                        destination: destination,
+                        waypoints: waypoints,
+                        travelMode: google.maps.TravelMode.DRIVING,
+                        optimizeWaypoints: false
+                    };
+
+                    directionsService.route(request, (response, status) => {
+                        if (status === 'OK') {
+                            // Personalizza il colore del percorso
+                            directionsRenderer.setOptions({
+                                polylineOptions: {
+                                    strokeColor: cleanerColor,
+                                    strokeWeight: 4,
+                                    strokeOpacity: 0.8
                                 }
                             });
-
-                            // Info window con dettagli dell'appartamento
-                            const infoWindow = new google.maps.InfoWindow({
-                                content: `
-                                    <div style="font-size: 12px;">
-                                        <strong>${apt.task_id}</strong><br>
-                                        ${apt.address}<br>
-                                        <strong>Priorità: ${apt.priority}</strong><br>
-                                        Check-in: ${apt.checkin_time}<br>
-                                        Check-out: ${apt.checkout_time}<br>
-                                        Cleaner: ${cleanerName}
-                                        ${apt.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
-                                    </div>
-                                `
-                            });
-
-                            marker.addListener('click', () => {
-                                // Chiudi altre info windows
-                                markers.forEach(m => {
-                                    if (m.infoWindow) {
-                                        m.infoWindow.close();
-                                    }
-                                });
-                                infoWindow.open(map, marker);
-                            });
-
-                            marker.infoWindow = infoWindow;
-                            markers.push(marker);
-                        });
-
-                        showMessage(`Percorso di ${cleanerName} visualizzato sulla mappa (${apartments.length} appartamenti)`, 'success');
-                    } else {
-                        console.error('Errore nel calcolo del percorso:', status);
-                        showMessage(`Errore nel calcolo del percorso: ${status}`, 'error');
-                    }
-                });
+                            directionsRenderer.setDirections(response);
+                            showMessage(`Percorso di ${cleanerName} visualizzato sulla mappa (${apartments.length} appartamenti)`, 'success');
+                        } else {
+                            console.error('Errore nel calcolo del percorso:', status);
+                            // Anche se il percorso fallisce, mostra i marker
+                            map.fitBounds(bounds);
+                            showMessage(`Marker visualizzati per ${cleanerName} (${apartments.length} appartamenti)`, 'success');
+                        }
+                    });
+                } else {
+                    // Un solo appartamento, centra la mappa su di esso
+                    map.fitBounds(bounds);
+                    map.setZoom(15);
+                    showMessage(`Visualizzato appartamento per ${cleanerName}`, 'success');
+                }
 
             } catch (error) {
                 console.error('Errore nel caricamento del percorso:', error);
@@ -714,14 +713,17 @@
             // Pulisci la mappa
             clearMap();
 
-            if (apartments.length === 0) {
+            if (!apartments || apartments.length === 0) {
+                console.log('Nessun appartamento da visualizzare');
                 return;
             }
 
             let bounds = new google.maps.LatLngBounds();
+            let validApartments = 0;
 
             apartments.forEach((apt, index) => {
                 if (!apt.lat || !apt.lng) {
+                    console.warn('Appartamento senza coordinate:', apt);
                     return;
                 }
 
@@ -733,10 +735,10 @@
                 const marker = new google.maps.Marker({
                     position: position,
                     map: map,
-                    title: `${apt.structure_id} - ${apt.address}`,
+                    title: `${apt.task_id || apt.structure_id} - ${apt.address}`,
                     icon: {
                         path: google.maps.SymbolPath.CIRCLE,
-                        scale: 8,
+                        scale: 10,
                         fillColor: '#95a5a6',
                         fillOpacity: 1,
                         strokeWeight: 2,
@@ -748,7 +750,7 @@
                 const infoWindow = new google.maps.InfoWindow({
                     content: `
                         <div style="font-size: 12px; max-width: 250px;">
-                            <strong>Codice ADAM: ${apt.structure_id}</strong><br>
+                            <strong>Codice ADAM: ${apt.task_id || apt.structure_id}</strong><br>
                             <strong>Indirizzo:</strong> ${apt.address}<br>
                             <strong>Tipo:</strong> ${apt.type}<br>
                             <strong>Check-in:</strong> ${apt.checkin_time || 'N/A'}<br>
@@ -773,14 +775,19 @@
                 marker.infoWindow = infoWindow;
                 markers.push(marker);
                 bounds.extend(position);
+                validApartments++;
             });
 
             // Centra la mappa per mostrare tutti i marker
-            if (apartments.length > 0) {
+            if (validApartments > 0) {
                 map.fitBounds(bounds);
+                if (validApartments === 1) {
+                    map.setZoom(15); // Zoom maggiore se c'è un solo appartamento
+                }
             }
 
-            showMessage(`${apartments.length} appartamenti visualizzati sulla mappa`, 'success');
+            console.log(`Visualizzati ${validApartments} appartamenti sulla mappa`);
+            showMessage(`${validApartments} appartamenti visualizzati sulla mappa`, 'success');
         }
 
         // Resetta la vista della mappa per mostrare tutti gli appartamenti
