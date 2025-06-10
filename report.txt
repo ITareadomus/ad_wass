@@ -1,5 +1,5 @@
 === REPORT ASSEGNAZIONI ===
-Data: 2025-06-10 12:05:15
+Data: 2025-06-10 12:07:19
 Totale assegnazioni: 24
 
 1. CLEANER: SINETH ANGUNNA (Premium)
@@ -172,7 +172,7 @@ Totale assegnazioni: 24
 
 7. CLEANER: BOUBACAR BARRY (Standard)
    ID: 321
-   Ore previste: 6.25
+   Ore previste: 6.23
    Appartamenti: 4
 
    1. Task 209052
@@ -207,7 +207,7 @@ Totale assegnazioni: 24
 
 8. CLEANER: FESTUS OSARO AIHIVBERE (Standard)
    ID: 326
-   Ore previste: 4.0
+   Ore previste: 3.99
    Appartamenti: 3
 
    1. Task 209228
@@ -235,7 +235,7 @@ Totale assegnazioni: 24
 
 9. CLEANER: RASEL MOLLA (Standard)
    ID: 404
-   Ore previste: 3.27
+   Ore previste: 3.36
    Appartamenti: 2
 
    1. Task 209063
@@ -424,7 +424,7 @@ Totale assegnazioni: 24
 
 17. CLEANER: AIDA DIONE (Standard)
    ID: 911
-   Ore previste: 5.4
+   Ore previste: 5.44
    Appartamenti: 4
 
    1. Task 208788
@@ -515,7 +515,7 @@ Totale assegnazioni: 24
 
 20. CLEANER: YENCI MARICELA PILIA LINARES (Standard)
    ID: 966
-   Ore previste: 3.37
+   Ore previste: 3.4
    Appartamenti: 2
 
    1. Task 208352
