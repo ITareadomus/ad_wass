@@ -38,11 +38,11 @@ db_config = {
 connection = mysql.connector.connect(**db_config)
 cursor = connection.cursor(dictionary=True)
 
-# Query con JOIN su structures e recupero anche customer_id come client_id
+# Query con JOIN su structures e recupero anche customer_id come client_id, usando logistic_code come structure_id
 cursor.execute("""
     SELECT 
         h.id,
-        h.structure_id,
+        s.logistic_code AS structure_id,
         h.checkin,
         h.checkout,
         h.checkin_time,
