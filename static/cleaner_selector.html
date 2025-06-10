@@ -129,7 +129,6 @@
 
     <!-- Overlay di caricamento -->
     <div id="loadingOverlay">
-        <div id="loadingText">Caricamento...</div>
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -162,15 +161,12 @@
         // Funzioni per controllare l'overlay di caricamento
         function showLoadingOverlay(message = 'Caricamento...') {
             const overlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-
-            loadingText.textContent = message;
             overlay.style.display = 'flex';
             updateProgress(0);
         }
 
         function updateLoadingText(message) {
-            document.getElementById('loadingText').textContent = message;
+            // Funzione vuota - testo rimosso
         }
 
         function updateProgress(percentage) {
