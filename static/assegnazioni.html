@@ -249,6 +249,9 @@
 
                 // Mostra la tabella con tutti gli appartamenti e i cleaner assegnati
                 displayAssignmentsTable(assignments);
+                
+                // Aggiorna la mappa con i marker colorati e numerati
+                updateMapWithAssignments(assignments);
 
             } catch (error) {
                 hideLoadingOverlay();
@@ -790,6 +793,94 @@
             showMessage(`${validApartments} appartamenti visualizzati sulla mappa`, 'success');
         }
 
+        // Aggiorna la mappa con tutti i marker colorati delle assegnazioni
+        function updateMapWithAssignments(assignments) {
+            if (!map) {
+                initializeMap();
+            }
+
+            // Pulisci la mappa
+            clearMap();
+
+            let bounds = new google.maps.LatLngBounds();
+            let totalMarkers = 0;
+
+            assignments.forEach(assignment => {
+                const cleanerColor = cleanerColorMap[assignment.cleaner_id] || '#e74c3c';
+                
+                assignment.sequence_details.forEach(apartment => {
+                    if (!apartment.lat || !apartment.lng) {
+                        console.warn('Appartamento senza coordinate:', apartment);
+                        return;
+                    }
+
+                    const position = { lat: parseFloat(apartment.lat), lng: parseFloat(apartment.lng) };
+                    const premiumText = apartment.type === 'Premium' ? " [PREMIUM]" : "";
+
+                    const marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: `${assignment.name} ${assignment.lastname} - Priorità ${apartment.priority}. ${apartment.task_id} - ${apartment.address}${premiumText}`,
+                        label: {
+                            text: apartment.priority.toString(),
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: '12px'
+                        },
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 20,
+                            fillColor: cleanerColor,
+                            fillOpacity: 1,
+                            strokeWeight: 3,
+                            strokeColor: '#ffffff'
+                        }
+                    });
+
+                    // Info window con dettagli dell'appartamento
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `
+                            <div style="font-size: 12px; max-width: 250px;">
+                                <strong>Codice ADAM: ${apartment.task_id}</strong><br>
+                                <strong>Indirizzo:</strong> ${apartment.address}<br>
+                                <strong>Priorità: ${apartment.priority}</strong><br>
+                                <strong>Check-in:</strong> ${apartment.checkin_time || 'N/A'}<br>
+                                <strong>Check-out:</strong> ${apartment.checkout_time || 'N/A'}<br>
+                                <strong>Cleaner:</strong> ${assignment.name} ${assignment.lastname}
+                                ${apartment.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
+                            </div>
+                        `
+                    });
+
+                    marker.addListener('click', () => {
+                        // Chiudi altre info windows
+                        markers.forEach(m => {
+                            if (m.infoWindow) {
+                                m.infoWindow.close();
+                            }
+                        });
+                        infoWindow.open(map, marker);
+                    });
+
+                    marker.infoWindow = infoWindow;
+                    markers.push(marker);
+                    bounds.extend(position);
+                    totalMarkers++;
+                });
+            });
+
+            // Centra la mappa per mostrare tutti i marker
+            if (totalMarkers > 0) {
+                map.fitBounds(bounds);
+                if (totalMarkers === 1) {
+                    map.setZoom(15);
+                }
+            }
+
+            console.log(`Visualizzati ${totalMarkers} appartamenti colorati sulla mappa`);
+            showMessage(`Mappa aggiornata con ${totalMarkers} appartamenti assegnati`, 'success');
+        }
+
         // Resetta la vista della mappa per mostrare tutti gli appartamenti
         async function resetMapView() {
             try {
@@ -798,7 +889,7 @@
                 // Pulisci la mappa
                 clearMap();
                 
-                // Carica tutti gli appartamenti e mostrali sulla mappa
+                // Carica tutti gli appartamenti e mostrali sulla mappa con marker grigi
                 if (apartments.length > 0) {
                     showApartmentsOnMap();
                 } else {
@@ -806,7 +897,7 @@
                     await loadApartments();
                 }
                 
-                showMessage('Vista generale ripristinata', 'success');
+                showMessage('Vista generale ripristinata - marker grigi', 'success');
             } catch (error) {
                 console.error('Errore nel reset della mappa:', error);
                 showMessage(`Errore nel reset della mappa: ${error.message}`, 'error');
