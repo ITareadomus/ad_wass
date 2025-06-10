@@ -82,7 +82,7 @@
             </div>
 
             <div id="assignmentResults" style="display: none;">
-                <h3>Risultati Assegnazioni</h3>
+                <h3>Tabella Assegnazioni Appartamenti</h3>
                 <div id="assignmentList"></div>
             </div>
         </div>
@@ -200,33 +200,103 @@
                     return;
                 }
 
+                // Carica le assegnazioni generate
+                const assignmentsResponse = await fetch('/data/assignments.json');
+                if (!assignmentsResponse.ok) {
+                    throw new Error('File assignments.json non trovato');
+                }
+
+                const assignmentsData = await assignmentsResponse.json();
+                const assignments = assignmentsData.assignments || [];
+
                 showMessage('Assegnazioni generate con successo!', 'success');
                 document.getElementById('viewReportBtn').style.display = 'inline-block';
 
-                // Mostra i cleaner selezionati con le loro assegnazioni
-                const resultDiv = document.getElementById('assignmentResults');
-                const listDiv = document.getElementById('assignmentList');
-
-                let assignmentsHtml = '';
-                selectedCleaners.forEach((cleaner, index) => {
-                    const roleClass = cleaner.role.toLowerCase() === 'premium' ? '#28a745' : '#ffc107';
-                    const roleColor = cleaner.role.toLowerCase() === 'premium' ? 'white' : '#333';
-
-                    assignmentsHtml += `
-                        <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid ${roleClass}; cursor: pointer;" 
-                             onclick="showCleanerRoute(${cleaner.id}, '${cleaner.name} ${cleaner.lastname}')">
-                            <strong>${cleaner.name} ${cleaner.lastname} (${cleaner.role})</strong><br>
-                            <small>Assegnazione in fase di calcolo - Clicca per visualizzare il percorso</small>
-                        </div>
-                    `;
-                });
-
-                listDiv.innerHTML = assignmentsHtml;
-                resultDiv.style.display = 'block';
+                // Mostra la tabella con tutti gli appartamenti e i cleaner assegnati
+                displayAssignmentsTable(assignments);
 
             } catch (error) {
                 showMessage(`Errore: ${error.message}`, 'error');
             }
+        }
+
+        // Visualizza la tabella delle assegnazioni
+        function displayAssignmentsTable(assignments) {
+            const resultDiv = document.getElementById('assignmentResults');
+            const listDiv = document.getElementById('assignmentList');
+
+            // Crea la tabella HTML
+            let tableHtml = `
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Codice ADAM</th>
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Indirizzo</th>
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Cliente</th>
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Cleaner Assegnato</th>
+                                <th style="padding: 15px; text-align: center; font-weight: 600;">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            let rowCount = 0;
+            assignments.forEach(assignment => {
+                assignment.sequence_details.forEach(apartment => {
+                    const rowColor = rowCount % 2 === 0 ? '#f8f9fa' : 'white';
+                    const priorityBadge = apartment.priority_1 ? 
+                        '<span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">P1</span>' : '';
+                    const equipmentBadge = apartment.small_equipment ? 
+                        '<span style="background: #17a2b8; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">SE</span>' : '';
+
+                    tableHtml += `
+                        <tr style="background: ${rowColor}; border-bottom: 1px solid #dee2e6; transition: background-color 0.2s;">
+                            <td style="padding: 12px; font-weight: 500; color: #495057;">
+                                ${apartment.task_id}${priorityBadge}${equipmentBadge}
+                            </td>
+                            <td style="padding: 12px; color: #6c757d; max-width: 250px;">
+                                ${apartment.address}
+                                <div style="font-size: 12px; color: #868e96; margin-top: 4px;">
+                                    Check-in: ${apartment.checkin_time} | Check-out: ${apartment.checkout_time}
+                                </div>
+                            </td>
+                            <td style="padding: 12px; color: #6c757d;">
+                                N/A
+                            </td>
+                            <td style="padding: 12px;">
+                                <div style="display: flex; align-items: center;">
+                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: ${assignment.role === 'Premium' ? '#28a745' : '#ffc107'}; margin-right: 8px;"></div>
+                                    <div>
+                                        <div style="font-weight: 500; color: #495057;">${assignment.name} ${assignment.lastname}</div>
+                                        <div style="font-size: 12px; color: #868e96;">${assignment.role} (${assignment.expected_hours}h)</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding: 12px; text-align: center;">
+                                <button onclick="showCleanerRoute(${assignment.cleaner_id}, '${assignment.name} ${assignment.lastname}')" 
+                                        style="background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background-color 0.2s;">
+                                    Visualizza Percorso
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    rowCount++;
+                });
+            });
+
+            tableHtml += `
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 8px; text-align: center;">
+                    <strong>Totale appartamenti assegnati: ${rowCount}</strong>
+                    <span style="margin-left: 20px;">Totale cleaner utilizzati: ${assignments.length}</span>
+                </div>
+            `;
+
+            listDiv.innerHTML = tableHtml;
+            resultDiv.style.display = 'block';
         }
 
         // Visualizza report assegnazioni
