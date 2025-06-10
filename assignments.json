@@ -9,6 +9,42 @@
             "apartments": [
                 209265,
                 209270
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209265,
+                    "structure_id": 946,
+                    "client_id": 3,
+                    "type": "Premium",
+                    "address": "VIA DE AMICIS, 4",
+                    "lat": "45.4579076",
+                    "lng": "9.1804356",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "18:00",
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 6,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209270,
+                    "structure_id": 1739,
+                    "client_id": 3,
+                    "type": "Premium",
+                    "address": "via Caminadella 13",
+                    "lat": "45.4597769",
+                    "lng": "9.1770378",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "21:00",
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 5,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -20,6 +56,42 @@
             "apartments": [
                 209269,
                 209273
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209269,
+                    "structure_id": 1635,
+                    "client_id": 3,
+                    "type": "Premium",
+                    "address": "Corso di Porta Nuova 36",
+                    "lat": "45.4773296",
+                    "lng": "9.1923369",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "19:00",
+                    "checkout_time": null,
+                    "pax_in": 5,
+                    "pax_out": 5,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209273,
+                    "structure_id": 111,
+                    "client_id": 3,
+                    "type": "Premium",
+                    "address": "VIALE MONTENERO 59",
+                    "lat": "45.45962",
+                    "lng": "9.2067142",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "19:00",
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 3,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -27,11 +99,64 @@
             "name": "MUTURI DANIEL",
             "lastname": "NGANGA",
             "role": "Standard",
-            "expected_hours": 6.17,
+            "expected_hours": 6.57,
             "apartments": [
                 209231,
-                209271,
-                192633
+                209144,
+                209274
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209231,
+                    "structure_id": 2019,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "VIA GIANGIACOMO MORA 9",
+                    "lat": "45.4586858",
+                    "lng": "9.1797549",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209144,
+                    "structure_id": 215,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "CORSO LODI 9",
+                    "lat": "45.4510426",
+                    "lng": "9.2048216",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209274,
+                    "structure_id": 2364,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "VIA BURLAMACCHI, 11",
+                    "lat": "45.4516629",
+                    "lng": "9.2061433",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -39,10 +164,46 @@
             "name": "HUSSAIN",
             "lastname": "SYED SHUJIAHAT",
             "role": "Standard",
-            "expected_hours": 10.0,
+            "expected_hours": 9.65,
             "apartments": [
-                202227,
-                209274
+                209233,
+                202227
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209233,
+                    "structure_id": 2307,
+                    "client_id": 119,
+                    "type": "Standard",
+                    "address": "VIA GAUDENZIO FERRARI 10",
+                    "lat": "45.4553562",
+                    "lng": "9.1758457",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "17:45",
+                    "checkout_time": "17:30",
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 202227,
+                    "structure_id": 545,
+                    "client_id": 37,
+                    "type": "Standard",
+                    "address": "VIA MILANO 51/53",
+                    "lat": "45.594592",
+                    "lng": "8.927403",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -50,12 +211,64 @@
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
             "role": "Standard",
-            "expected_hours": 8.0,
+            "expected_hours": 6.19,
             "apartments": [
-                209009,
-                208833,
-                209012,
-                209150
+                208907,
+                209026,
+                209066
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 208907,
+                    "structure_id": 278,
+                    "client_id": 14,
+                    "type": "Standard",
+                    "address": "VIA TIZIANO 6",
+                    "lat": "45.4709657",
+                    "lng": "9.1566242",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209026,
+                    "structure_id": 2294,
+                    "client_id": 115,
+                    "type": "Standard",
+                    "address": "VIA GIACOMO GRIZIOTTI, 3",
+                    "lat": "45.471557",
+                    "lng": "9.1592311",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209066,
+                    "structure_id": 1502,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "VIA VINCENZO MONTI, 77",
+                    "lat": "45.4759969",
+                    "lng": "9.1622847",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -63,10 +276,82 @@
             "name": "BAH",
             "lastname": "ISMAILA",
             "role": "Standard",
-            "expected_hours": 4.09,
+            "expected_hours": 8.94,
             "apartments": [
-                209272,
-                208776
+                209271,
+                206698,
+                192633,
+                209267
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209271,
+                    "structure_id": 1714,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "VIA AUSONIO, 6",
+                    "lat": "45.4599303",
+                    "lng": "9.1743487",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 206698,
+                    "structure_id": 465,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "RIPA TICINESE 43",
+                    "lat": "45.4512117",
+                    "lng": "9.1735639",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-22",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "11:00",
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 192633,
+                    "structure_id": 1024,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA SAN CALOCERO, 29",
+                    "lat": "45.4576824",
+                    "lng": "9.1719732",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 1,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209267,
+                    "structure_id": 1669,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "Via Vigevano 9",
+                    "lat": "45.4527254",
+                    "lng": "9.1748049",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 4,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -74,11 +359,46 @@
             "name": "BOUBACAR",
             "lastname": "BARRY",
             "role": "Standard",
-            "expected_hours": 6.19,
+            "expected_hours": 4.24,
             "apartments": [
-                208907,
-                209026,
-                209066
+                209065,
+                209062
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209065,
+                    "structure_id": 2286,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "VIA NICOLA PICCINNI, 5",
+                    "lat": "45.4829445",
+                    "lng": "9.2151596",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209062,
+                    "structure_id": 2297,
+                    "client_id": 94,
+                    "type": "Standard",
+                    "address": "VIA FERRANTE APORTI, 24",
+                    "lat": "45.4899784",
+                    "lng": "9.2102764",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                }
             ]
         },
         {
@@ -86,10 +406,64 @@
             "name": "FESTUS OSARO",
             "lastname": "AIHIVBERE",
             "role": "Standard",
-            "expected_hours": 4.0,
+            "expected_hours": 6.08,
             "apartments": [
-                207040,
-                207067
+                209067,
+                209201,
+                209221
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209067,
+                    "structure_id": 2078,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "CORSO GARIBALDI, 55",
+                    "lat": "45.4743685",
+                    "lng": "9.1833014",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209201,
+                    "structure_id": 1094,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "VIA FIORI CHIARI, 26 A",
+                    "lat": "45.4720175",
+                    "lng": "9.185447",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209221,
+                    "structure_id": 1783,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "VIA FIORI CHIARI, 26",
+                    "lat": "45.4720175",
+                    "lng": "9.185447",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 4,
+                    "pax_out": 4,
+                    "small_equipment": true
+                }
             ]
         },
         {
@@ -97,10 +471,82 @@
             "name": "RASEL",
             "lastname": "MOLLA",
             "role": "Standard",
-            "expected_hours": 5.13,
+            "expected_hours": 8.09,
             "apartments": [
-                209055,
-                209017
+                209057,
+                208832,
+                209010,
+                209211
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209057,
+                    "structure_id": 2379,
+                    "client_id": 61,
+                    "type": "Standard",
+                    "address": "via Principe Eugenio 15",
+                    "lat": "45.48931",
+                    "lng": "9.1635183",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 208832,
+                    "structure_id": 2329,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA BULLONA 18",
+                    "lat": "45.4862126",
+                    "lng": "9.1618831",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209010,
+                    "structure_id": 2329,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA BULLONA 18",
+                    "lat": "45.4862126",
+                    "lng": "9.1618831",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209211,
+                    "structure_id": 2329,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA BULLONA 18",
+                    "lat": "45.4862126",
+                    "lng": "9.1618831",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "17:00",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -108,11 +554,46 @@
             "name": "IBRAHIM",
             "lastname": "SANYANG",
             "role": "Standard",
-            "expected_hours": 6.24,
+            "expected_hours": 5.38,
             "apartments": [
-                209232,
-                209228,
-                209227
+                209230,
+                209017
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209230,
+                    "structure_id": 2048,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "VIA TREVI, 4 ANGOLO VIA VALEGGIO",
+                    "lat": "45.507307688",
+                    "lng": "9.1792152534",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209017,
+                    "structure_id": 2177,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA DISCIPLINI 5",
+                    "lat": "45.4582683",
+                    "lng": "9.1856601",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "14:30",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -120,12 +601,82 @@
             "name": "LAMIN",
             "lastname": "SOLY",
             "role": "Standard",
-            "expected_hours": 8.32,
+            "expected_hours": 8.24,
             "apartments": [
-                209201,
-                209067,
-                209221,
-                208788
+                209229,
+                201917,
+                208831,
+                209008
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209229,
+                    "structure_id": 2094,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "VIA MEDICI 8",
+                    "lat": "45.461148",
+                    "lng": "9.180851",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 201917,
+                    "structure_id": 620,
+                    "client_id": 43,
+                    "type": "Standard",
+                    "address": "P.ZZA SEPOLCRO 1",
+                    "lat": "45.4629709",
+                    "lng": "9.1851578",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 208831,
+                    "structure_id": 2177,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA DISCIPLINI 5",
+                    "lat": "45.4582683",
+                    "lng": "9.1856601",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209008,
+                    "structure_id": 2177,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA DISCIPLINI 5",
+                    "lat": "45.4582683",
+                    "lng": "9.1856601",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -133,10 +684,46 @@
             "name": "BLESSING",
             "lastname": "UGBOME",
             "role": "Standard",
-            "expected_hours": 4.16,
+            "expected_hours": 4.0,
             "apartments": [
-                208302,
-                200442
+                207040,
+                207067
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 207040,
+                    "structure_id": 1002,
+                    "client_id": 1,
+                    "type": "Standard",
+                    "address": "VIA BARRILI 31",
+                    "lat": "45.4342758",
+                    "lng": "9.1803654",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 207067,
+                    "structure_id": 1002,
+                    "client_id": 1,
+                    "type": "Standard",
+                    "address": "VIA BARRILI 31",
+                    "lat": "45.4342758",
+                    "lng": "9.1803654",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -144,12 +731,46 @@
             "name": "SEYNI",
             "lastname": "DRAME",
             "role": "Standard",
-            "expected_hours": 8.09,
+            "expected_hours": 4.15,
             "apartments": [
-                209057,
-                208832,
-                209010,
-                209211
+                208352,
+                209037
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 208352,
+                    "structure_id": 433,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA CIRO MENOTTI 18",
+                    "lat": "45.470917",
+                    "lng": "9.2133773",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-12",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209037,
+                    "structure_id": 5,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA AMEDEO D'AOSTA 9",
+                    "lat": "45.4749828",
+                    "lng": "9.2176226",
+                    "cleaning_time": null,
+                    "checkin": "2025-08-10",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 3,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -157,10 +778,82 @@
             "name": "TRACY",
             "lastname": "OKE",
             "role": "Standard",
-            "expected_hours": 4.24,
+            "expected_hours": 8.16,
             "apartments": [
-                209065,
-                209062
+                209279,
+                199441,
+                200841,
+                208690
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209279,
+                    "structure_id": 1072,
+                    "client_id": 67,
+                    "type": "Standard",
+                    "address": "VIA VOGHERA, 4",
+                    "lat": "45.454632",
+                    "lng": "9.168536",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "09:30",
+                    "pax_in": 1,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 199441,
+                    "structure_id": 1894,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "Via Bergognone 31",
+                    "lat": "45.453707852983",
+                    "lng": "9.1641459982137",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 9,
+                    "pax_out": 8,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 200841,
+                    "structure_id": 1012,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA FORCELLA 15",
+                    "lat": "45.452359",
+                    "lng": "9.1668683",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 1,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 208690,
+                    "structure_id": 1012,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA FORCELLA 15",
+                    "lat": "45.452359",
+                    "lng": "9.1668683",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 1,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -168,12 +861,64 @@
             "name": "PRECIOUS",
             "lastname": "GYABAAH",
             "role": "Standard",
-            "expected_hours": 9.03,
+            "expected_hours": 6.24,
             "apartments": [
-                209052,
-                209266,
-                209193,
-                209144
+                209232,
+                209228,
+                209227
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209232,
+                    "structure_id": 2041,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "VIA MONREALE 12",
+                    "lat": "45.4760985",
+                    "lng": "9.1400074",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209228,
+                    "structure_id": 2039,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "PIAZZALE BRESCIA 1",
+                    "lat": "45.4697344",
+                    "lng": "9.1448534",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209227,
+                    "structure_id": 2038,
+                    "client_id": 102,
+                    "type": "Standard",
+                    "address": "PIAZZALE BRESCIA 1",
+                    "lat": "45.4697344",
+                    "lng": "9.1448534",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "10:15",
+                    "pax_in": 1,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -181,11 +926,46 @@
             "name": "ESTHER DORCAS",
             "lastname": "LANDA PANEZ",
             "role": "Standard",
-            "expected_hours": 6.07,
+            "expected_hours": 5.31,
             "apartments": [
-                199441,
-                200841,
-                208690
+                209055,
+                209281
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209055,
+                    "structure_id": 2117,
+                    "client_id": 61,
+                    "type": "Standard",
+                    "address": "VIALE ZARA, 118",
+                    "lat": "45.4987885",
+                    "lng": "9.1968263",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209281,
+                    "structure_id": 1074,
+                    "client_id": 67,
+                    "type": "Standard",
+                    "address": "VIA TORTONA, 10",
+                    "lat": "45.4542397",
+                    "lng": "9.1686792",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "09:30",
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -193,12 +973,82 @@
             "name": "AIDA",
             "lastname": "DIONE",
             "role": "Standard",
-            "expected_hours": 8.24,
+            "expected_hours": 8.0,
             "apartments": [
-                209229,
-                201917,
-                208831,
-                209008
+                209009,
+                208833,
+                209012,
+                209150
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209009,
+                    "structure_id": 2344,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA ANGELO SECCHI 2",
+                    "lat": "45.4766126",
+                    "lng": "9.2079659",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 208833,
+                    "structure_id": 2344,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA ANGELO SECCHI 2",
+                    "lat": "45.4766126",
+                    "lng": "9.2079659",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "14:00",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209012,
+                    "structure_id": 2344,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA ANGELO SECCHI 2",
+                    "lat": "45.4766126",
+                    "lng": "9.2079659",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "14:00",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209150,
+                    "structure_id": 2344,
+                    "client_id": 108,
+                    "type": "Standard",
+                    "address": "VIA ANGELO SECCHI 2",
+                    "lat": "45.4766126",
+                    "lng": "9.2079659",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "14:00",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -206,9 +1056,64 @@
             "name": "NAME JULIE",
             "lastname": "ADOU",
             "role": "Standard",
-            "expected_hours": 2.0,
+            "expected_hours": 6.53,
             "apartments": [
-                209230
+                209052,
+                209266,
+                209193
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209052,
+                    "structure_id": 1983,
+                    "client_id": 61,
+                    "type": "Standard",
+                    "address": "via della Commenda 28",
+                    "lat": "45.4551641",
+                    "lng": "9.1994733",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 1,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209266,
+                    "structure_id": 1127,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "Viale Montenero, 73",
+                    "lat": "45.4611895",
+                    "lng": "9.2074787",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 3,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209193,
+                    "structure_id": 2222,
+                    "client_id": 94,
+                    "type": "Standard",
+                    "address": "VIA ORTI 16D",
+                    "lat": "45.454729",
+                    "lng": "9.2015875",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-12",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 3,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -220,6 +1125,42 @@
             "apartments": [
                 208752,
                 209220
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 208752,
+                    "structure_id": 463,
+                    "client_id": 1,
+                    "type": "Standard",
+                    "address": "VIA IMPERIA 3/B",
+                    "lat": "45.4416781",
+                    "lng": "9.1752361",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209220,
+                    "structure_id": 2095,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "Via Giuseppe Meda 27",
+                    "lat": "45.4425697",
+                    "lng": "9.1790945",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -227,12 +1168,46 @@
             "name": "YENCI MARICELA",
             "lastname": "PILIA LINARES",
             "role": "Standard",
-            "expected_hours": 8.55,
+            "expected_hours": 4.16,
             "apartments": [
-                209068,
-                206698,
-                209233,
-                209267
+                208302,
+                200442
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 208302,
+                    "structure_id": 81,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "VIA POMA 61",
+                    "lat": "45.4632092",
+                    "lng": "9.216221",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 0,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 200442,
+                    "structure_id": 1904,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "Via Privata Ozieri 7",
+                    "lat": "45.4649366",
+                    "lng": "9.2223437",
+                    "cleaning_time": null,
+                    "checkin": null,
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "09:00",
+                    "pax_in": 0,
+                    "pax_out": 3,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -240,10 +1215,46 @@
             "name": "ADEL FAYEZ ABDELKRIM",
             "lastname": "DESSOUKI",
             "role": "Standard",
-            "expected_hours": 4.15,
+            "expected_hours": 4.09,
             "apartments": [
-                208352,
-                209037
+                209272,
+                208776
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209272,
+                    "structure_id": 2053,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "Via Crivelli, 15/1",
+                    "lat": "45.4534737",
+                    "lng": "9.1937547",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-12",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": null,
+                    "pax_in": 3,
+                    "pax_out": 3,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 208776,
+                    "structure_id": 1794,
+                    "client_id": 2,
+                    "type": "Standard",
+                    "address": "Via Salasco 18",
+                    "lat": "45.45025",
+                    "lng": "9.1946341",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 1,
+                    "small_equipment": false
+                }
             ]
         },
         {
@@ -251,9 +1262,46 @@
             "name": "HODA MAHMOUD SALAMA",
             "lastname": "HUSSEIN",
             "role": "Standard",
-            "expected_hours": 2.0,
+            "expected_hours": 5.27,
             "apartments": [
-                209056
+                209068,
+                209047
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209068,
+                    "structure_id": 1671,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "VIA ASCANIO SFORZA, 9",
+                    "lat": "45.4506703",
+                    "lng": "9.1779826",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209047,
+                    "structure_id": 2375,
+                    "client_id": 61,
+                    "type": "Standard",
+                    "address": "Via dei Transiti 21",
+                    "lat": "45.490856",
+                    "lng": "9.2194138",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "19:00",
+                    "checkout_time": null,
+                    "pax_in": 1,
+                    "pax_out": 2,
+                    "small_equipment": true
+                }
             ]
         },
         {
@@ -261,9 +1309,46 @@
             "name": "MARIE LAURE",
             "lastname": "PENKA",
             "role": "Standard",
-            "expected_hours": 2.0,
+            "expected_hours": 4.59,
             "apartments": [
-                209063
+                209063,
+                208788
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209063,
+                    "structure_id": 1235,
+                    "client_id": 64,
+                    "type": "Standard",
+                    "address": "Via L. Cagnola, 12",
+                    "lat": "45.4776",
+                    "lng": "9.17287",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "14:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 208788,
+                    "structure_id": 2104,
+                    "client_id": 75,
+                    "type": "Standard",
+                    "address": "VIA SANTA MARTA 11",
+                    "lat": "45.4654219",
+                    "lng": "9.1859243",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": "11:00",
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                }
             ]
         },
         {
@@ -271,9 +1356,46 @@
             "name": "SEYDOU",
             "lastname": "DIAKITE",
             "role": "Standard",
-            "expected_hours": 2.0,
+            "expected_hours": 4.82,
             "apartments": [
-                209047
+                209056,
+                209280
+            ],
+            "apartment_details": [
+                {
+                    "task_id": 209056,
+                    "structure_id": 1551,
+                    "client_id": 80,
+                    "type": "Standard",
+                    "address": "VIA MALACHIA MARCHESI DE TADDEI 14",
+                    "lat": "45.4623076",
+                    "lng": "9.1502571",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": "15:00",
+                    "checkout_time": null,
+                    "pax_in": 2,
+                    "pax_out": 2,
+                    "small_equipment": true
+                },
+                {
+                    "task_id": 209280,
+                    "structure_id": 1073,
+                    "client_id": 67,
+                    "type": "Standard",
+                    "address": "VIA VOGHERA, 4",
+                    "lat": "45.454632",
+                    "lng": "9.168536",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": "09:30",
+                    "pax_in": 1,
+                    "pax_out": 0,
+                    "small_equipment": true
+                }
             ]
         }
     ]

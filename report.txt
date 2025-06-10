@@ -14,36 +14,21 @@ Cleaner: JOHOISER ERNESTO LOPEZ GIRON (Premium)
 
 Cleaner: MUTURI DANIEL NGANGA (Standard)
   1. Task 209231: VIA GIANGIACOMO MORA 9 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 521m, durata: 7.2 min
-  2. Task 209271: VIA AUSONIO, 6 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
-     -> distanza: 358m, durata: 4.9 min
-  3. Task 192633: VIA SAN CALOCERO, 29 - checkin: None None | checkout: 2025-06-11 None
+     -> distanza: 2643m, durata: 18.8 min
+  2. Task 209144: CORSO LODI 9 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+     -> distanza: 232m, durata: 3.1 min
+  3. Task 209274: VIA BURLAMACCHI, 11 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 6.17
+  ➤ Totale ore assegnate: 6.57
 
 Cleaner: HUSSAIN SYED SHUJIAHAT (Standard)
-  1. Task 202227: VIA MILANO 51/53 - checkin: None None | checkout: 2025-06-11 None
-     -> distanza: 30245m, durata: 73.1 min
-  2. Task 209274: VIA BURLAMACCHI, 11 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+  1. Task 209233: VIA GAUDENZIO FERRARI 10 - checkin: 2025-06-11 17:45 | checkout: 2025-06-11 17:30
+     -> distanza: 28493m, durata: 62.8 min
+  2. Task 202227: VIA MILANO 51/53 - checkin: None None | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 10.0
+  ➤ Totale ore assegnate: 9.65
 
 Cleaner: Ogbodo Chidi Igwe (Standard)
-  1. Task 209009: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-  2. Task 208833: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
-  3. Task 209012: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
-  4. Task 209150: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
-
-  ➤ Totale ore assegnate: 8.0
-
-Cleaner: BAH ISMAILA (Standard)
-  1. Task 209272: Via Crivelli, 15/1 - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
-     -> distanza: 436m, durata: 6.2 min
-  2. Task 208776: Via Salasco 18 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
-
-  ➤ Totale ore assegnate: 4.09
-
-Cleaner: BOUBACAR BARRY (Standard)
   1. Task 208907: VIA TIZIANO 6 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
      -> distanza: 309m, durata: 4.2 min
   2. Task 209026: VIA GIACOMO GRIZIOTTI, 3 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
@@ -52,46 +37,33 @@ Cleaner: BOUBACAR BARRY (Standard)
 
   ➤ Totale ore assegnate: 6.19
 
-Cleaner: FESTUS OSARO AIHIVBERE (Standard)
-  1. Task 207040: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
-  2. Task 207067: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
+Cleaner: BAH ISMAILA (Standard)
+  1. Task 209271: VIA AUSONIO, 6 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+     -> distanza: 1881m, durata: 13.1 min
+  2. Task 206698: RIPA TICINESE 43 - checkin: 2025-06-22 None | checkout: 2025-06-11 11:00
+     -> distanza: 1420m, durata: 11.4 min
+  3. Task 192633: VIA SAN CALOCERO, 29 - checkin: None None | checkout: 2025-06-11 None
+     -> distanza: 1428m, durata: 11.0 min
+  4. Task 209267: Via Vigevano 9 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 4.0
+  ➤ Totale ore assegnate: 8.94
+
+Cleaner: BOUBACAR BARRY (Standard)
+  1. Task 209065: VIA NICOLA PICCINNI, 5 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+     -> distanza: 1225m, durata: 12.2 min
+  2. Task 209062: VIA FERRANTE APORTI, 24 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+
+  ➤ Totale ore assegnate: 4.24
+
+Cleaner: FESTUS OSARO AIHIVBERE (Standard)
+  1. Task 209067: CORSO GARIBALDI, 55 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+     -> distanza: 414m, durata: 5.7 min
+  2. Task 209201: VIA FIORI CHIARI, 26 A - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+  3. Task 209221: VIA FIORI CHIARI, 26 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+
+  ➤ Totale ore assegnate: 6.08
 
 Cleaner: RASEL MOLLA (Standard)
-  1. Task 209055: VIALE ZARA, 118 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 5687m, durata: 28.9 min
-  2. Task 209017: VIA DISCIPLINI 5 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:30
-
-  ➤ Totale ore assegnate: 5.13
-
-Cleaner: IBRAHIM SANYANG (Standard)
-  1. Task 209232: VIA MONREALE 12 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-     -> distanza: 1222m, durata: 9.3 min
-  2. Task 209228: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-  3. Task 209227: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
-
-  ➤ Totale ore assegnate: 6.24
-
-Cleaner: LAMIN SOLY (Standard)
-  1. Task 209201: VIA FIORI CHIARI, 26 A - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 414m, durata: 5.7 min
-  2. Task 209067: CORSO GARIBALDI, 55 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 414m, durata: 5.7 min
-  3. Task 209221: VIA FIORI CHIARI, 26 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 797m, durata: 10.8 min
-  4. Task 208788: VIA SANTA MARTA 11 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 11:00
-
-  ➤ Totale ore assegnate: 8.32
-
-Cleaner: BLESSING UGBOME (Standard)
-  1. Task 208302: VIA POMA 61 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 792m, durata: 11.2 min
-  2. Task 200442: Via Privata Ozieri 7 - checkin: None None | checkout: 2025-06-11 09:00
-
-  ➤ Totale ore assegnate: 4.16
-
-Cleaner: SEYNI DRAME (Standard)
   1. Task 209057: via Principe Eugenio 15 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
      -> distanza: 464m, durata: 6.5 min
   2. Task 208832: VIA BULLONA 18 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
@@ -100,33 +72,14 @@ Cleaner: SEYNI DRAME (Standard)
 
   ➤ Totale ore assegnate: 8.09
 
-Cleaner: TRACY OKE (Standard)
-  1. Task 209065: VIA NICOLA PICCINNI, 5 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 1225m, durata: 12.2 min
-  2. Task 209062: VIA FERRANTE APORTI, 24 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+Cleaner: IBRAHIM SANYANG (Standard)
+  1. Task 209230: VIA TREVI, 4 ANGOLO VIA VALEGGIO - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+     -> distanza: 6951m, durata: 23.9 min
+  2. Task 209017: VIA DISCIPLINI 5 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:30
 
-  ➤ Totale ore assegnate: 4.24
+  ➤ Totale ore assegnate: 5.38
 
-Cleaner: PRECIOUS GYABAAH (Standard)
-  1. Task 209052: via della Commenda 28 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 None
-     -> distanza: 3249m, durata: 20.7 min
-  2. Task 209266: Viale Montenero, 73 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 1104m, durata: 12.1 min
-  3. Task 209193: VIA ORTI 16D - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
-     -> distanza: 814m, durata: 11.4 min
-  4. Task 209144: CORSO LODI 9 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-
-  ➤ Totale ore assegnate: 9.03
-
-Cleaner: ESTHER DORCAS LANDA PANEZ (Standard)
-  1. Task 199441: Via Bergognone 31 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
-     -> distanza: 366m, durata: 5.0 min
-  2. Task 200841: VIA FORCELLA 15 - checkin: None None | checkout: 2025-06-11 None
-  3. Task 208690: VIA FORCELLA 15 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
-
-  ➤ Totale ore assegnate: 6.07
-
-Cleaner: AIDA DIONE (Standard)
+Cleaner: LAMIN SOLY (Standard)
   1. Task 209229: VIA MEDICI 8 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
      -> distanza: 548m, durata: 7.5 min
   2. Task 201917: P.ZZA SEPOLCRO 1 - checkin: None None | checkout: 2025-06-11 None
@@ -136,10 +89,60 @@ Cleaner: AIDA DIONE (Standard)
 
   ➤ Totale ore assegnate: 8.24
 
-Cleaner: NAME JULIE ADOU (Standard)
-  1. Task 209230: VIA TREVI, 4 ANGOLO VIA VALEGGIO - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+Cleaner: BLESSING UGBOME (Standard)
+  1. Task 207040: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
+  2. Task 207067: VIA BARRILI 31 - checkin: None None | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 2.0
+  ➤ Totale ore assegnate: 4.0
+
+Cleaner: SEYNI DRAME (Standard)
+  1. Task 208352: VIA CIRO MENOTTI 18 - checkin: 2025-06-12 None | checkout: 2025-06-11 None
+     -> distanza: 762m, durata: 7.3 min
+  2. Task 209037: VIA AMEDEO D'AOSTA 9 - checkin: 2025-08-10 None | checkout: 2025-06-11 None
+
+  ➤ Totale ore assegnate: 4.15
+
+Cleaner: TRACY OKE (Standard)
+  1. Task 209279: VIA VOGHERA, 4 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
+     -> distanza: 431m, durata: 5.9 min
+  2. Task 199441: Via Bergognone 31 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+     -> distanza: 366m, durata: 5.0 min
+  3. Task 200841: VIA FORCELLA 15 - checkin: None None | checkout: 2025-06-11 None
+  4. Task 208690: VIA FORCELLA 15 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
+
+  ➤ Totale ore assegnate: 8.16
+
+Cleaner: PRECIOUS GYABAAH (Standard)
+  1. Task 209232: VIA MONREALE 12 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+     -> distanza: 1222m, durata: 9.3 min
+  2. Task 209228: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+  3. Task 209227: PIAZZALE BRESCIA 1 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 10:15
+
+  ➤ Totale ore assegnate: 6.24
+
+Cleaner: ESTHER DORCAS LANDA PANEZ (Standard)
+  1. Task 209055: VIALE ZARA, 118 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+     -> distanza: 6622m, durata: 31.2 min
+  2. Task 209281: VIA TORTONA, 10 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
+
+  ➤ Totale ore assegnate: 5.31
+
+Cleaner: AIDA DIONE (Standard)
+  1. Task 209009: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+  2. Task 208833: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
+  3. Task 209012: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
+  4. Task 209150: VIA ANGELO SECCHI 2 - checkin: 2025-06-11 None | checkout: 2025-06-11 14:00
+
+  ➤ Totale ore assegnate: 8.0
+
+Cleaner: NAME JULIE ADOU (Standard)
+  1. Task 209052: via della Commenda 28 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 None
+     -> distanza: 1464m, durata: 13.9 min
+  2. Task 209266: Viale Montenero, 73 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+     -> distanza: 1194m, durata: 11.5 min
+  3. Task 209193: VIA ORTI 16D - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
+
+  ➤ Totale ore assegnate: 6.53
 
 Cleaner: LOVETH IGUDIA (Standard)
   1. Task 208752: VIA IMPERIA 3/B - checkin: None None | checkout: 2025-06-11 None
@@ -149,35 +152,37 @@ Cleaner: LOVETH IGUDIA (Standard)
   ➤ Totale ore assegnate: 4.11
 
 Cleaner: YENCI MARICELA PILIA LINARES (Standard)
-  1. Task 209068: VIA ASCANIO SFORZA, 9 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
-     -> distanza: 584m, durata: 8.0 min
-  2. Task 206698: RIPA TICINESE 43 - checkin: 2025-06-22 None | checkout: 2025-06-11 11:00
-     -> distanza: 928m, durata: 13.2 min
-  3. Task 209233: VIA GAUDENZIO FERRARI 10 - checkin: 2025-06-11 17:45 | checkout: 2025-06-11 17:30
-     -> distanza: 1260m, durata: 11.2 min
-  4. Task 209267: Via Vigevano 9 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
+  1. Task 208302: VIA POMA 61 - checkin: 2025-06-11 None | checkout: 2025-06-11 None
+     -> distanza: 792m, durata: 11.2 min
+  2. Task 200442: Via Privata Ozieri 7 - checkin: None None | checkout: 2025-06-11 09:00
 
-  ➤ Totale ore assegnate: 8.55
+  ➤ Totale ore assegnate: 4.16
 
 Cleaner: ADEL FAYEZ ABDELKRIM DESSOUKI (Standard)
-  1. Task 208352: VIA CIRO MENOTTI 18 - checkin: 2025-06-12 None | checkout: 2025-06-11 None
-     -> distanza: 762m, durata: 7.3 min
-  2. Task 209037: VIA AMEDEO D'AOSTA 9 - checkin: 2025-08-10 None | checkout: 2025-06-11 None
+  1. Task 209272: Via Crivelli, 15/1 - checkin: 2025-06-12 15:00 | checkout: 2025-06-11 None
+     -> distanza: 436m, durata: 6.2 min
+  2. Task 208776: Via Salasco 18 - checkin: 2025-06-13 None | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 4.15
+  ➤ Totale ore assegnate: 4.09
 
 Cleaner: HODA MAHMOUD SALAMA HUSSEIN (Standard)
-  1. Task 209056: VIA MALACHIA MARCHESI DE TADDEI 14 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+  1. Task 209068: VIA ASCANIO SFORZA, 9 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+     -> distanza: 6388m, durata: 33.9 min
+  2. Task 209047: Via dei Transiti 21 - checkin: 2025-06-11 19:00 | checkout: 2025-06-11 None
 
-  ➤ Totale ore assegnate: 2.0
+  ➤ Totale ore assegnate: 5.27
 
 Cleaner: MARIE LAURE PENKA (Standard)
   1. Task 209063: Via L. Cagnola, 12 - checkin: 2025-06-11 14:00 | checkout: 2025-06-11 11:00
+     -> distanza: 2986m, durata: 20.2 min
+  2. Task 208788: VIA SANTA MARTA 11 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 11:00
 
-  ➤ Totale ore assegnate: 2.0
+  ➤ Totale ore assegnate: 4.59
 
 Cleaner: SEYDOU DIAKITE (Standard)
-  1. Task 209047: Via dei Transiti 21 - checkin: 2025-06-11 19:00 | checkout: 2025-06-11 None
+  1. Task 209056: VIA MALACHIA MARCHESI DE TADDEI 14 - checkin: 2025-06-11 15:00 | checkout: 2025-06-11 None
+     -> distanza: 4108m, durata: 30.8 min
+  2. Task 209280: VIA VOGHERA, 4 - checkin: 2025-06-11 None | checkout: 2025-06-11 09:30
 
-  ➤ Totale ore assegnate: 2.0
+  ➤ Totale ore assegnate: 4.82
 
