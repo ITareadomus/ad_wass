@@ -2,11 +2,13 @@ import json
 import mysql.connector
 from datetime import datetime, date
 
+
 # Funzione per convertire i campi di tipo date e datetime in stringhe
 def date_to_str(value):
     if isinstance(value, (datetime, date)):
         return value.strftime('%Y-%m-%d')
     return value
+
 
 # Funzione per convertire i valori VARCHAR (anche None) in stringa
 def varchar_to_str(value):
@@ -14,18 +16,15 @@ def varchar_to_str(value):
         return None
     return str(value)
 
+
 def normalize_coord(coord):
     if coord is None:
         return None
-    return str(coord).replace(',', '.').strip() 
+    return str(coord).replace(',', '.').strip()
 
-# Caricamento configurazione da file JSON
-try:
-    with open("modello_apt.json", "r") as f:
-        config = json.load(f)
-except json.decoder.JSONDecodeError as e:
-    print(f"Errore nel caricamento del JSON: {e}")
-    config = {"apt": []}
+
+# Inizializza la configurazione da zero
+config = {"apt": []}
 
 # Configurazione del database
 db_config = {
@@ -84,35 +83,54 @@ static_params = {
     "small_equipment": False,
 }
 
-
-
 # Prepara la lista dei dati appartamenti
 apt_data = []
 
 for apt in results:
     structure_type_id = apt.get("structure_type_id", None)
-    small_equipment = True if structure_type_id in (1, 2) else static_params["small_equipment"]
+    small_equipment = True if structure_type_id in (
+        1, 2) else static_params["small_equipment"]
     apt_entry = {
-        "task_id": apt.get("id", static_params["task_id"]),
-        "structure_id": apt.get("structure_id", static_params["structure_id"]),
-        "client_id": apt.get("client_id", static_params["client_id"]),
-        "type": "Premium" if apt.get("premium") == 1 else "Standard",
-        "address": apt.get("address", static_params["address"]),
-        "lat": normalize_coord(apt.get("lat")),
-        "lng": normalize_coord(apt.get("lng")),
-        "cleaning_time": static_params["cleaning_time"],
-        "checkin": date_to_str(apt.get("checkin")) if apt.get("checkin") else static_params["checkin"],
-        "checkout": date_to_str(apt.get("checkout")) if apt.get("checkout") else static_params["checkout"],
-        "checkin_time": varchar_to_str(apt.get("checkin_time")) if apt.get("checkin_time") else static_params["checkin_time"],
-        "checkout_time": varchar_to_str(apt.get("checkout_time")) if apt.get("checkout_time") else static_params["checkout_time"],
-        "pax_in": apt.get("pax_in", static_params["pax_in"]),
-        "pax_out": apt.get("pax_out", static_params["pax_out"]),
-        "small_equipment": small_equipment,
+        "task_id":
+        apt.get("id", static_params["task_id"]),
+        "structure_id":
+        apt.get("structure_id", static_params["structure_id"]),
+        "client_id":
+        apt.get("client_id", static_params["client_id"]),
+        "type":
+        "Premium" if apt.get("premium") == 1 else "Standard",
+        "address":
+        apt.get("address", static_params["address"]),
+        "lat":
+        normalize_coord(apt.get("lat")),
+        "lng":
+        normalize_coord(apt.get("lng")),
+        "cleaning_time":
+        static_params["cleaning_time"],
+        "checkin":
+        date_to_str(apt.get("checkin"))
+        if apt.get("checkin") else static_params["checkin"],
+        "checkout":
+        date_to_str(apt.get("checkout"))
+        if apt.get("checkout") else static_params["checkout"],
+        "checkin_time":
+        varchar_to_str(apt.get("checkin_time"))
+        if apt.get("checkin_time") else static_params["checkin_time"],
+        "checkout_time":
+        varchar_to_str(apt.get("checkout_time"))
+        if apt.get("checkout_time") else static_params["checkout_time"],
+        "pax_in":
+        apt.get("pax_in", static_params["pax_in"]),
+        "pax_out":
+        apt.get("pax_out", static_params["pax_out"]),
+        "small_equipment":
+        small_equipment,
     }
     apt_data.append(apt_entry)
 
 # Aggiorna la configurazione
 config["apt"] = apt_data
+
 
 # Salva nel file JSON
 def custom_serializer(obj):
@@ -120,7 +138,8 @@ def custom_serializer(obj):
         return obj.strftime('%Y-%m-%d')
     raise TypeError(f'Tipo {obj.__class__.__name__} non serializzabile')
 
-with open("modello_apt.json", "w") as f:
+
+with open("modello_apt.json", "w", encoding="utf-8") as f:
     json.dump(config, f, indent=4, default=custom_serializer)
 
 print(f"Aggiornato modello_apt.json con {len(results)} appartamenti.")
