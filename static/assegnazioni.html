@@ -422,10 +422,17 @@
         // Carica le assegnazioni e verifica i cleaner selezionati
         async function refreshAssignments() {
             try {
+                showLoadingOverlay('Caricamento cleaner selezionati...', true);
+                
                 const response = await fetch('/data/sel_cleaners.json');
                 if (response.ok) {
                     const data = await response.json();
                     const selectedCount = data.cleaners ? data.cleaners.length : 0;
+
+                    updateLoadingText('Preparazione interfaccia...');
+                    await new Promise(resolve => setTimeout(resolve, 200));
+
+                    hideLoadingOverlay();
 
                     if (selectedCount > 0) {
                         showMessage(`${selectedCount} cleaner disponibili per le assegnazioni`, 'success');
@@ -433,9 +440,11 @@
                         showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'info');
                     }
                 } else {
+                    hideLoadingOverlay();
                     showMessage('File sel_cleaners.json non trovato. Genera prima le convocazioni.', 'info');
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage('Errore nel caricamento dei cleaner selezionati', 'error');
             }
         }
