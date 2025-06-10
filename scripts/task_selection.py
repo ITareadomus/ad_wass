@@ -88,8 +88,8 @@ apt_data = []
 
 for apt in results:
     structure_type_id = apt.get("structure_type_id", None)
-    small_equipment = True if structure_type_id in (
-        1, 2) else static_params["small_equipment"]
+    small_equipment = True if structure_type_id == 1 else static_params[
+        "small_equipment"]
     apt_entry = {
         "task_id":
         apt.get("id", static_params["task_id"]),
