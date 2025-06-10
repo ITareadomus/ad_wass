@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-10T12:10:02.496874",
+  "timestamp": "2025-06-10T12:12:04.993399",
   "assignments": [
     {
       "cleaner_id": 934,
@@ -402,8 +402,8 @@
       "name": "BOUBACAR",
       "lastname": "BARRY",
       "role": "Standard",
-      "expected_hours": 6.23,
-      "travel_hours": 0.4,
+      "expected_hours": 6.25,
+      "travel_hours": 0.42,
       "apartments": [
         209052,
         209193,
@@ -552,8 +552,8 @@
       "name": "RASEL",
       "lastname": "MOLLA",
       "role": "Standard",
-      "expected_hours": 3.36,
-      "travel_hours": 0.69,
+      "expected_hours": 3.3,
+      "travel_hours": 0.63,
       "apartments": [
         209063,
         209274

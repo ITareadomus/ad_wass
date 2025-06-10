@@ -1,5 +1,5 @@
 === REPORT ASSEGNAZIONI ===
-Data: 2025-06-10 12:10:02
+Data: 2025-06-10 12:12:04
 Totale assegnazioni: 24
 
 1. CLEANER: SINETH ANGUNNA (Premium)
@@ -172,7 +172,7 @@ Totale assegnazioni: 24
 
 7. CLEANER: BOUBACAR BARRY (Standard)
    ID: 321
-   Ore previste: 6.23
+   Ore previste: 6.25
    Appartamenti: 4
 
    1. Task 209052
@@ -235,7 +235,7 @@ Totale assegnazioni: 24
 
 9. CLEANER: RASEL MOLLA (Standard)
    ID: 404
-   Ore previste: 3.36
+   Ore previste: 3.3
    Appartamenti: 2
 
    1. Task 209063
