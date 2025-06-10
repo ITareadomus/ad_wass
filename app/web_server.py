@@ -132,9 +132,11 @@ class CustomHandler(SimpleHTTPRequestHandler):
             if os.path.exists(assignments_file):
                 with open(assignments_file, 'r', encoding='utf-8') as f:
                     assignments_data = json.load(f)
+                    # Forza refresh del file
+                    print(f"Caricato assignments.json con timestamp: {assignments_data.get('timestamp', 'N/A')}")
                 self.send_json_response({'success': True, 'assignments': assignments_data})
             else:
-                self.send_json_response({'success': False, 'error': 'File assignments.json non trovato'})
+                self.send_json_response({'success': False, 'error': 'File data/assignments.json non trovato'})
         except Exception as e:
             self.send_json_response({'success': False, 'error': str(e)})
 

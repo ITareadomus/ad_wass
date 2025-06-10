@@ -228,8 +228,8 @@
                 // Attendi un momento per permettere al file di essere scritto
                 await new Promise(resolve => setTimeout(resolve, 500));
 
-                // Carica le assegnazioni generate
-                const assignmentsResponse = await fetch('/data/assignments.json');
+                // Carica le assegnazioni generate (con timestamp per evitare cache)
+                const assignmentsResponse = await fetch(`/data/assignments.json?t=${Date.now()}`);
                 if (!assignmentsResponse.ok) {
                     throw new Error('File assignments.json non trovato dopo l\'esecuzione dell\'algoritmo');
                 }
