@@ -438,3 +438,37 @@ input:checked + .slider:before {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
 }
+
+/* Stili per le sezioni dati */
+.data-sections {
+    margin: 20px 0;
+}
+
+.apartments-section, .cleaners-section {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.apartment-item, .cleaner-item {
+    transition: background-color 0.2s ease;
+}
+
+.apartment-item:hover {
+    background-color: #f8f9fa !important;
+    transform: translateX(2px);
+}
+
+.loading-message, .no-data {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
