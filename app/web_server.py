@@ -94,7 +94,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
                 result = subprocess.run(cmd,
                                       capture_output=True,
                                       text=True,
-                                      timeout=60,
+                                      timeout=120,  # Aumentato a 120 secondi
                                       cwd=os.getcwd())
 
                 if result.returncode == 0:
@@ -103,9 +103,9 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     self.send_json_response({'success': False, 'error': result.stderr or 'Errore sconosciuto'})
 
             except subprocess.TimeoutExpired:
-                self.send_json_response({'success': False, 'error': 'Script timeout (>60s)'})
+                self.send_json_response({'success': False, 'error': f'Script timeout (>120s): {scriptName}'})
             except Exception as e:
-                self.send_json_response({'success': False, 'error': str(e)})
+                self.send_json_response({'success': False, 'error': f'Errore esecuzione script {scriptName}: {str(e)}'})
 
         except Exception as e:
             self.send_json_response({'success': False, 'error': f'Errore parsing richiesta: {str(e)}'})

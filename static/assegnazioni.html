@@ -145,15 +145,23 @@
         // Esegui script Python tramite fetch
         async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
-                showLoadingOverlay();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 120000); // 120 secondi timeout
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ script: scriptName })
+                    body: JSON.stringify({ script: scriptName }),
+                    signal: controller.signal
                 });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP: ${response.status}`);
+                }
 
                 const result = await response.json();
 
@@ -163,22 +171,29 @@
                     }
                     return true;
                 } else {
-                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    const errorMsg = result.error || 'Errore sconosciuto';
+                    showMessage(`Errore esecuzione ${scriptName}: ${errorMsg}`, 'error');
+                    console.error(`Errore script ${scriptName}:`, errorMsg);
                     return false;
                 }
             } catch (error) {
-                showMessage(`Errore di rete: ${error.message}`, 'error');
+                if (error.name === 'AbortError') {
+                    showMessage(`Timeout: ${scriptName} ha impiegato troppo tempo (>120s)`, 'error');
+                } else {
+                    showMessage(`Errore di rete per ${scriptName}: ${error.message}`, 'error');
+                }
+                console.error(`Errore runPythonScript ${scriptName}:`, error);
                 return false;
-            } finally {
-                hideLoadingOverlay();
             }
         }
 
         // Genera assegnazioni utilizzando i cleaner selezionati
         async function generateAssignments() {
-            showMessage('Generazione assegnazioni in corso...', 'info');
-
             try {
+                showLoadingOverlay();
+                updateProgress(10);
+                showMessage('Verifica cleaner selezionati...', 'info');
+
                 // Carica i cleaner selezionati dal file sel_cleaners.json
                 const selCleanersResponse = await fetch('/data/sel_cleaners.json');
                 if (!selCleanersResponse.ok) {
@@ -189,25 +204,45 @@
                 const selectedCleaners = selCleanersData.cleaners || [];
 
                 if (selectedCleaners.length === 0) {
+                    hideLoadingOverlay();
                     showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'error');
                     return;
                 }
 
+                updateProgress(30);
+                showMessage(`${selectedCleaners.length} cleaner selezionati. Generazione assegnazioni in corso...`, 'info');
+
                 // Esegui lo script algoritmo.py per generare le assegnazioni
+                updateProgress(50);
                 const success = await runPythonScript('algoritmo.py', false);
+                
                 if (!success) {
+                    hideLoadingOverlay();
                     showMessage('Errore durante la generazione delle assegnazioni', 'error');
                     return;
                 }
 
+                updateProgress(80);
+                showMessage('Caricamento risultati...', 'info');
+
+                // Attendi un momento per permettere al file di essere scritto
+                await new Promise(resolve => setTimeout(resolve, 500));
+
                 // Carica le assegnazioni generate
                 const assignmentsResponse = await fetch('/data/assignments.json');
                 if (!assignmentsResponse.ok) {
-                    throw new Error('File assignments.json non trovato');
+                    throw new Error('File assignments.json non trovato dopo l\'esecuzione dell\'algoritmo');
                 }
 
                 const assignmentsData = await assignmentsResponse.json();
                 const assignments = assignmentsData.assignments || [];
+
+                if (assignments.length === 0) {
+                    throw new Error('Nessuna assegnazione generata dall\'algoritmo');
+                }
+
+                updateProgress(100);
+                hideLoadingOverlay();
 
                 showMessage('Assegnazioni generate con successo!', 'success');
                 document.getElementById('viewReportBtn').style.display = 'inline-block';
@@ -216,6 +251,8 @@
                 displayAssignmentsTable(assignments);
 
             } catch (error) {
+                hideLoadingOverlay();
+                console.error('Errore durante la generazione delle assegnazioni:', error);
                 showMessage(`Errore: ${error.message}`, 'error');
             }
         }
