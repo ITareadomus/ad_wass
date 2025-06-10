@@ -416,6 +416,7 @@
                         <option value="30">30%</option>
                     </select>
                 </div>
+                <button class="btn" style="background-color: #f39c12; color: white;" onclick="refreshCleanerData()">🔄 Aggiorna DB</button>
                 <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
             </div>
 
@@ -599,12 +600,15 @@
         }
 
         // Carica cleaners dal JSON senza selezioni precedenti
-        async function loadCleaners() {
+        async function loadCleaners(forceRefresh = false) {
             try {
-                // Prima esegui cleaner_list.py per aggiornare i dati
-                await runPythonScript('cleaner_list.py', false);
+                if (forceRefresh) {
+                    // Solo se richiesto esplicitamente, aggiorna i dati dal DB
+                    showMessage('Aggiornamento dati dal database...', 'info');
+                    await runPythonScript('cleaner_list.py', false);
+                }
 
-                // Carica i cleaner aggiornati
+                // Carica i cleaner
                 const response = await fetch('/data/modello_cleaner.json');
                 const data = await response.json();
                 cleaners = data.cleaners;
@@ -614,11 +618,16 @@
 
                 displayCleaners();
                 updateStats();
-                showMessage('Cleaner caricati con successo', 'success');
+                showMessage(`Cleaner caricati con successo (${cleaners.length} disponibili)`, 'success');
             } catch (error) {
                 console.error('Errore nel caricamento dei cleaner:', error);
                 showMessage('Errore nel caricamento dei dati dei cleaner', 'error');
             }
+        }
+
+        // Aggiorna i dati dei cleaner dal database
+        async function refreshCleanerData() {
+            await loadCleaners(true);
         }
 
         // Mostra cleaners nella lista
@@ -1121,7 +1130,7 @@
         // Carica i dati all'avvio
         window.addEventListener('load', function() {
             initializeDate();
-            loadCleaners();
+            loadCleaners(false); // Carica velocemente senza aggiornare il DB
 
             // Carica le assegnazioni se siamo nella sezione assegnazioni
             if (document.getElementById('assegnazioniSection').style.display !== 'none') {
