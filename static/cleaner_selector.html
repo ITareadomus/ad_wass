@@ -365,6 +365,37 @@
             max-height: 400px;
             overflow-y: auto;
         }
+
+        /* Stili per l'overlay di caricamento */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -487,6 +518,12 @@
         </div>
     </div>
 
+    <!-- Overlay di caricamento -->
+    <div id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">Caricamento...</div>
+    </div>
+
     <script>
         let cleaners = [];
         let selectedFromFile = [];
@@ -506,6 +543,30 @@
                     container.removeChild(message);
                 }
             }, 5000);
+        }
+
+        // Funzioni per controllare l'overlay di caricamento
+        function showLoadingOverlay(message = 'Caricamento...', showSpinner = true) {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const spinner = document.querySelector('.loading-spinner');
+
+            loadingText.textContent = message;
+            overlay.style.display = 'flex';
+
+            if (showSpinner) {
+                spinner.style.display = 'block';
+            } else {
+                spinner.style.display = 'none';
+            }
+        }
+
+        function updateLoadingText(message) {
+            document.getElementById('loadingText').textContent = message;
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'none';
         }
 
         // Esegui script Python tramite fetch
@@ -603,23 +664,33 @@
         async function loadCleaners(forceRefresh = false) {
             try {
                 if (forceRefresh) {
-                    // Solo se richiesto esplicitamente, aggiorna i dati dal DB
-                    showMessage('Aggiornamento dati dal database...', 'info');
+                    showLoadingOverlay('Aggiornamento dati dal database...', true);
+                    updateLoadingText('Connessione al database...');
                     await runPythonScript('cleaner_list.py', false);
+                    updateLoadingText('Elaborazione dati cleaners...');
+                } else {
+                    showLoadingOverlay('Caricamento cleaners...', true);
+                    updateLoadingText('Lettura file di configurazione...');
                 }
 
-                // Carica i cleaner
+                // Simula un breve delay per mostrare il progresso
+                await new Promise(resolve => setTimeout(resolve, 300));
+
+                updateLoadingText('Caricamento dati cleaners...');
                 const response = await fetch('/data/modello_cleaner.json');
                 const data = await response.json();
                 cleaners = data.cleaners;
 
-                // Non caricare selezioni precedenti - inizia sempre con nessun cleaner selezionato
-                selectedFromFile = [];
+                updateLoadingText('Preparazione interfaccia...');
+                await new Promise(resolve => setTimeout(resolve, 200));
 
                 displayCleaners();
                 updateStats();
+
+                hideLoadingOverlay();
                 showMessage(`Cleaner caricati con successo (${cleaners.length} disponibili)`, 'success');
             } catch (error) {
+                hideLoadingOverlay();
                 console.error('Errore nel caricamento dei cleaner:', error);
                 showMessage('Errore nel caricamento dei dati dei cleaner', 'error');
             }
@@ -827,7 +898,7 @@
                 if (!selCleanersResponse.ok) {
                     throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
                 }
-                
+
                 const selCleanersData = await selCleanersResponse.json();
                 const selectedCleaners = selCleanersData.cleaners || [];
 
@@ -849,12 +920,12 @@
                 // Mostra i cleaner selezionati con le loro assegnazioni
                 const resultDiv = document.getElementById('assignmentResults');
                 const listDiv = document.getElementById('assignmentList');
-                
+
                 let assignmentsHtml = '';
                 selectedCleaners.forEach((cleaner, index) => {
                     const roleClass = cleaner.role.toLowerCase() === 'premium' ? '#28a745' : '#ffc107';
                     const roleColor = cleaner.role.toLowerCase() === 'premium' ? 'white' : '#333';
-                    
+
                     assignmentsHtml += `
                         <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid ${roleClass}; cursor: pointer;" 
                              onclick="showCleanerRoute(${cleaner.id}, '${cleaner.name} ${cleaner.lastname}')">
@@ -887,7 +958,7 @@
         function initializeMap() {
             // Centro della mappa su Milano
             const milanCenter = { lat: 45.4642, lng: 9.1900 };
-            
+
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: milanCenter,
@@ -907,7 +978,7 @@
             if (directionsRenderer) {
                 directionsRenderer.setDirections({routes: []});
             }
-            
+
             // Rimuovi tutti i marker
             markers.forEach(marker => marker.setMap(null));
             markers = [];
@@ -916,17 +987,17 @@
         // Mostra il percorso del cleaner sulla mappa
         async function showCleanerRoute(cleanerId, cleanerName) {
             showAssegnazioniMessage(`Caricamento percorso per ${cleanerName}...`, 'info');
-            
+
             try {
                 // Carica le assegnazioni dal file assignments.json
                 const response = await fetch('/data/assignments.json');
                 if (!response.ok) {
                     throw new Error('File assignments.json non trovato');
                 }
-                
+
                 const assignmentsData = await response.json();
                 const cleanerAssignment = assignmentsData.assignments.find(a => a.cleaner_id === cleanerId);
-                
+
                 if (!cleanerAssignment || !cleanerAssignment.sequence_details) {
                     showAssegnazioniMessage(`Nessuna assegnazione trovata per ${cleanerName}`, 'error');
                     return;
@@ -941,7 +1012,7 @@
                 clearMap();
 
                 const apartments = cleanerAssignment.sequence_details;
-                
+
                 if (apartments.length === 0) {
                     showAssegnazioniMessage(`Nessun appartamento assegnato a ${cleanerName}`, 'info');
                     return;
@@ -951,7 +1022,7 @@
                 if (apartments.length === 1) {
                     const apt = apartments[0];
                     const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
-                    
+
                     const marker = new google.maps.Marker({
                         position: position,
                         map: map,
@@ -965,11 +1036,11 @@
                             strokeColor: '#ffffff'
                         }
                     });
-                    
+
                     markers.push(marker);
                     map.setCenter(position);
                     map.setZoom(15);
-                    
+
                     showAssegnazioniMessage(`Visualizzato appartamento per ${cleanerName}`, 'success');
                     return;
                 }
@@ -977,7 +1048,7 @@
                 // Crea i waypoints per il percorso
                 const origin = { lat: parseFloat(apartments[0].lat), lng: parseFloat(apartments[0].lng) };
                 const destination = { lat: parseFloat(apartments[apartments.length - 1].lat), lng: parseFloat(apartments[apartments.length - 1].lng) };
-                
+
                 const waypoints = [];
                 for (let i = 1; i < apartments.length - 1; i++) {
                     waypoints.push({
@@ -998,13 +1069,13 @@
                 directionsService.route(request, (response, status) => {
                     if (status === 'OK') {
                         directionsRenderer.setDirections(response);
-                        
+
                         // Aggiungi marker numerati per ogni appartamento
                         apartments.forEach((apt, index) => {
                             const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
                             const priorityText = apt.priority_1 ? " [P1]" : "";
                             const equipmentText = apt.small_equipment ? " [SE]" : "";
-                            
+
                             const marker = new google.maps.Marker({
                                 position: position,
                                 map: map,
@@ -1023,7 +1094,7 @@
                                     strokeColor: '#ffffff'
                                 }
                             });
-                            
+
                             // Info window con dettagli dell'appartamento
                             const infoWindow = new google.maps.InfoWindow({
                                 content: `
@@ -1038,7 +1109,7 @@
                                     </div>
                                 `
                             });
-                            
+
                             marker.addListener('click', () => {
                                 // Chiudi altre info windows
                                 markers.forEach(m => {
@@ -1048,7 +1119,7 @@
                                 });
                                 infoWindow.open(map, marker);
                             });
-                            
+
                             marker.infoWindow = infoWindow;
                             markers.push(marker);
                         });
@@ -1113,7 +1184,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     const selectedCount = data.cleaners ? data.cleaners.length : 0;
-                    
+
                     if (selectedCount > 0) {
                         showAssegnazioniMessage(`${selectedCount} cleaner disponibili per le assegnazioni`, 'success');
                     } else {
