@@ -215,7 +215,7 @@
                 // Esegui lo script algoritmo.py per generare le assegnazioni
                 updateProgress(50);
                 const success = await runPythonScript('algoritmo.py', false);
-                
+
                 if (!success) {
                     hideLoadingOverlay();
                     showMessage('Errore durante la generazione delle assegnazioni', 'error');
@@ -796,29 +796,17 @@
         // Carica le assegnazioni e verifica i cleaner selezionati
         async function refreshAssignments() {
             try {
-                showLoadingOverlay();
-
-                const response = await fetch('/data/sel_cleaners.json');
+                const response = await fetch('/assignments.json');
                 if (response.ok) {
                     const data = await response.json();
-                    const selectedCount = data.cleaners ? data.cleaners.length : 0;
-
-                    await new Promise(resolve => setTimeout(resolve, 200));
-
-                    hideLoadingOverlay();
-
-                    if (selectedCount > 0) {
-                        showMessage(`${selectedCount} cleaner disponibili per le assegnazioni`, 'success');
-                    } else {
-                        showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'info');
-                    }
+                    displayAssignmentResults(data.assignment || data.assignments || []);
                 } else {
-                    hideLoadingOverlay();
-                    showMessage('File sel_cleaners.json non trovato. Genera prima le convocazioni.', 'info');
+                    console.log('File assignments.json non trovato. Genera prima le assegnazioni.');
+                    showMessage('File assignments.json non trovato. Genera prima le assegnazioni.', 'info');
                 }
             } catch (error) {
                 hideLoadingOverlay();
-                showMessage('Errore nel caricamento dei cleaner selezionati', 'error');
+                showMessage('Errore nel caricamento delle assegnazioni esistenti', 'error');
             }
         }
 
