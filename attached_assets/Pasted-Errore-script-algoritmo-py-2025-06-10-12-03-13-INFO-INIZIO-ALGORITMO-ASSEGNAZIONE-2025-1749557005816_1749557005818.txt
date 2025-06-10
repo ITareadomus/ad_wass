@@ -1,0 +1,52 @@
+Errore script algoritmo.py: 2025-06-10 12:03:13 - INFO - === INIZIO ALGORITMO ASSEGNAZIONE ===
+2025-06-10 12:03:13 - INFO - Caricati 24 cleaner attivi e disponibili su 24 totali
+2025-06-10 12:03:13 - WARNING - Appartamento 207117 ignorato per dati mancanti
+2025-06-10 12:03:13 - WARNING - Appartamento 207251 ignorato per dati mancanti
+2025-06-10 12:03:13 - WARNING - Appartamento 207385 ignorato per dati mancanti
+2025-06-10 12:03:13 - WARNING - Appartamento 207519 ignorato per dati mancanti
+2025-06-10 12:03:13 - INFO - Caricati 64 appartamenti validi su 68 totali
+2025-06-10 12:03:13 - INFO - Cleaner caricati: 24
+2025-06-10 12:03:13 - INFO -   - SINETH ANGUNNA (Premium) - ID: 934
+2025-06-10 12:03:13 - INFO -   - JOHOISER ERNESTO LOPEZ GIRON (Premium) - ID: 132
+2025-06-10 12:03:13 - INFO -   - MUTURI DANIEL NGANGA (Standard) - ID: 18
+2025-06-10 12:03:13 - INFO -   - HUSSAIN SYED SHUJIAHAT (Standard) - ID: 24
+2025-06-10 12:03:13 - INFO -   - Ogbodo Chidi Igwe (Standard) - ID: 249
+2025-06-10 12:03:13 - INFO -   - BAH ISMAILA (Standard) - ID: 287
+2025-06-10 12:03:13 - INFO -   - BOUBACAR BARRY (Standard) - ID: 321
+2025-06-10 12:03:13 - INFO -   - FESTUS OSARO AIHIVBERE (Standard) - ID: 326
+2025-06-10 12:03:13 - INFO -   - RASEL MOLLA (Standard) - ID: 404
+2025-06-10 12:03:13 - INFO -   - IBRAHIM SANYANG (Standard) - ID: 445
+2025-06-10 12:03:13 - INFO -   - LAMIN SOLY (Standard) - ID: 469
+2025-06-10 12:03:13 - INFO -   - BLESSING UGBOME (Standard) - ID: 476
+2025-06-10 12:03:13 - INFO -   - SEYNI DRAME (Standard) - ID: 555
+2025-06-10 12:03:13 - INFO -   - TRACY OKE (Standard) - ID: 596
+2025-06-10 12:03:13 - INFO -   - PRECIOUS GYABAAH (Standard) - ID: 771
+2025-06-10 12:03:13 - INFO -   - ESTHER DORCAS LANDA PANEZ (Standard) - ID: 895
+2025-06-10 12:03:13 - INFO -   - AIDA DIONE (Standard) - ID: 911
+2025-06-10 12:03:13 - INFO -   - NAME JULIE ADOU (Standard) - ID: 927
+2025-06-10 12:03:13 - INFO -   - LOVETH IGUDIA (Standard) - ID: 937
+2025-06-10 12:03:13 - INFO -   - YENCI MARICELA PILIA LINARES (Standard) - ID: 966
+2025-06-10 12:03:13 - INFO -   - ADEL FAYEZ ABDELKRIM DESSOUKI (Standard) - ID: 967
+2025-06-10 12:03:13 - INFO -   - HODA MAHMOUD SALAMA HUSSEIN (Standard) - ID: 985
+2025-06-10 12:03:13 - INFO -   - MARIE LAURE PENKA (Standard) - ID: 987
+2025-06-10 12:03:13 - INFO -   - SEYDOU DIAKITE (Standard) - ID: 989
+2025-06-10 12:03:13 - INFO - Appartamenti caricati: 64
+2025-06-10 12:03:13 - INFO - === CREAZIONE PACCHETTI ===
+2025-06-10 12:03:13 - INFO - Appartamenti Premium: 4, Standard: 60
+2025-06-10 12:03:13 - INFO - Cleaner Premium: 2, Standard: 22
+Traceback (most recent call last):
+  File "/home/runner/workspace/scripts/algoritmo.py", line 405, in <module>
+    main()
+  File "/home/runner/workspace/scripts/algoritmo.py", line 389, in main
+    packages = create_cleaner_packages(apartments, cleaners)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/scripts/algoritmo.py", line 112, in create_cleaner_packages
+    packages['Standard'] = distribute_apartments_geographically(standard_apts, standard_cleaners)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/scripts/algoritmo.py", line 161, in distribute_apartments_geographically
+    optimized_cluster = optimize_route_within_cluster(cluster)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/scripts/algoritmo.py", line 210, in optimize_route_within_cluster
+    sorted_apts = sorted(apartments, key=sort_key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'NoneType' and 'str'

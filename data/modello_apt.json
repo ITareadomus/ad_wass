@@ -1138,6 +1138,23 @@
             "pax_in": 2,
             "pax_out": 0,
             "small_equipment": false
+        },
+        {
+            "task_id": 209282,
+            "structure_id": 892,
+            "client_id": 2,
+            "type": "Standard",
+            "address": "RIPA TICINESE 53 B",
+            "lat": "45.4510644",
+            "lng": "9.1724026",
+            "cleaning_time": null,
+            "checkin": "2025-06-11",
+            "checkout": "2025-06-11",
+            "checkin_time": null,
+            "checkout_time": null,
+            "pax_in": 1,
+            "pax_out": 1,
+            "small_equipment": false
         }
     ]
 }
