@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genera Convocazioni - Area Domus</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Area Domus</div>
+        <ul class="navbar-menu">
+            <li class="navbar-item">
+                <a href="convocazioni.html" class="navbar-link active">
+                    Genera convocazioni
+                </a>
+            </li>
+            <li class="navbar-item">
+                <a href="assegnazioni.html" class="navbar-link">
+                    Genera assegnazioni
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 id="convocazioniTitle">Genera convocazioni per <span id="selectedDate"></span></h1>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="dateSelector" style="font-size: 14px; color: #666;">Data:</label>
+                    <input type="date" id="dateSelector" onchange="updateSelectedDate()" 
+                           style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="stats">
+                <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
+            </div>
+
+            <div class="cleaner-list" id="cleanerList">
+                <div class="loading">Caricamento cleaner in corso...</div>
+            </div>
+
+            <div class="controls">
+                <div class="generate-section">
+                    <button class="btn btn-generate" id="generateBtn" onclick="generateSelection()">Genera</button>
+                    <select class="percentage-select" id="percentageSelect">
+                        <option value="0">0%</option>
+                        <option value="10" selected>10%</option>
+                        <option value="20">20%</option>
+                        <option value="30">30%</option>
+                    </select>
+                </div>
+                <button class="btn" style="background-color: #f39c12; color: white;" onclick="refreshCleanerData()">🔄 Aggiorna DB</button>
+                <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
+            </div>
+
+            <div id="apartmentStatsContainer" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Overlay di caricamento -->
+    <div id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">Caricamento...</div>
+    </div>
+
+    <script>
+        let cleaners = [];
+        let selectedFromFile = [];
+
+        // Mostra messaggio all'utente
+        function showMessage(text, type = 'info') {
+            const container = document.getElementById('messageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+
+        // Funzioni per controllare l'overlay di caricamento
+        function showLoadingOverlay(message = 'Caricamento...', showSpinner = true) {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const spinner = document.querySelector('.loading-spinner');
+
+            loadingText.textContent = message;
+            overlay.style.display = 'flex';
+
+            if (showSpinner) {
+                spinner.style.display = 'block';
+            } else {
+                spinner.style.display = 'none';
+            }
+        }
+
+        function updateLoadingText(message) {
+            document.getElementById('loadingText').textContent = message;
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Esegui script Python tramite fetch
+        async function runPythonScript(scriptName, showSuccessMessage = true) {
+            try {
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+
+                showMessage(loadingMessage, 'info');
+                setButtonsEnabled(false);
+
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ script: scriptName })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (showSuccessMessage) {
+                        showMessage(`${scriptName} completato con successo`, 'success');
+                    }
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+
+        // Esegui script Python con percentuale
+        async function runPythonScriptWithPercentage(scriptName, percentage) {
+            try {
+                let loadingMessage = '';
+                if (scriptName === 'cleaner_list.py') {
+                    loadingMessage = 'Importazione cleaners in corso...';
+                } else if (scriptName === 'cleaner_selection.py') {
+                    loadingMessage = 'Generazione scelte cleaner in corso...';
+                } else {
+                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
+                }
+
+                showMessage(loadingMessage, 'info');
+                setButtonsEnabled(false);
+
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        script: scriptName,
+                        percentage: percentage
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(`${scriptName} completato con successo`, 'success');
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+
+        // Abilita/disabilita pulsanti
+        function setButtonsEnabled(enabled) {
+            document.getElementById('generateBtn').disabled = !enabled;
+            document.getElementById('confirmBtn').disabled = !enabled;
+        }
+
+        // Carica cleaners dal JSON senza selezioni precedenti
+        async function loadCleaners(forceRefresh = false) {
+            try {
+                if (forceRefresh) {
+                    showLoadingOverlay('Aggiornamento dati dal database...', true);
+                    updateLoadingText('Connessione al database...');
+                    await runPythonScript('cleaner_list.py', false);
+                    updateLoadingText('Elaborazione dati cleaners...');
+                } else {
+                    showLoadingOverlay('Caricamento cleaners...', true);
+                    updateLoadingText('Lettura file di configurazione...');
+                }
+
+                // Simula un breve delay per mostrare il progresso
+                await new Promise(resolve => setTimeout(resolve, 300));
+
+                updateLoadingText('Caricamento dati cleaners...');
+                const response = await fetch('/data/modello_cleaner.json');
+                const data = await response.json();
+                cleaners = data.cleaners;
+
+                updateLoadingText('Preparazione interfaccia...');
+                await new Promise(resolve => setTimeout(resolve, 200));
+
+                displayCleaners();
+                updateStats();
+
+                hideLoadingOverlay();
+                showMessage(`Cleaner caricati con successo (${cleaners.length} disponibili)`, 'success');
+            } catch (error) {
+                hideLoadingOverlay();
+                console.error('Errore nel caricamento dei cleaner:', error);
+                showMessage('Errore nel caricamento dei dati dei cleaner', 'error');
+            }
+        }
+
+        // Aggiorna i dati dei cleaner dal database
+        async function refreshCleanerData() {
+            await loadCleaners(true);
+        }
+
+        // Mostra cleaners nella lista
+        function displayCleaners() {
+            const cleanerList = document.getElementById('cleanerList');
+            cleanerList.innerHTML = '';
+
+            cleaners.forEach((cleaner, index) => {
+                const cleanerItem = document.createElement('div');
+                cleanerItem.className = 'cleaner-item';
+
+                const isSelected = selectedFromFile.some(sel => sel.id === cleaner.id);
+                const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
+
+                cleanerItem.innerHTML = `
+                    <div class="cleaner-name">
+                        ${cleaner.name} ${cleaner.lastname}
+                        <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="cleaner-${index}" 
+                               ${isSelected ? 'checked' : ''} 
+                               onchange="updateStats()" 
+                               data-cleaner-id="${cleaner.id}">
+                        <span class="slider"></span>
+                    </label>
+                `;
+
+                cleanerList.appendChild(cleanerItem);
+            });
+        }
+
+        // Aggiorna statistiche
+        function updateStats() {
+            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const totalCount = checkboxes.length;
+
+            document.getElementById('selectedCount').textContent = selectedCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+
+        // Genera selezione basata su percentuale
+        async function generateSelection() {
+            // Ottieni la percentuale selezionata
+            const percentage = document.getElementById('percentageSelect').value;
+
+            // Prima esegui cleaner_selection.py con la percentuale
+            const success = await runPythonScriptWithPercentage('cleaner_selection.py', percentage);
+            if (!success) return;
+
+            // Ricarica la lista con le nuove selezioni
+            try {
+                const selResponse = await fetch('/data/sel_cleaners.json');
+                if (selResponse.ok) {
+                    const selData = await selResponse.json();
+                    selectedFromFile = selData.cleaners || [];
+
+                    // Aggiorna le checkbox in base al file generato
+                    const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+                    checkboxes.forEach((checkbox, index) => {
+                        const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                        const isSelected = selectedFromFile.some(sel => sel.id === cleanerId);
+                        checkbox.checked = isSelected;
+                    });
+
+                    updateStats();
+
+                    // Mostra le statistiche degli appartamenti se disponibili
+                    if (selData.apartment_stats) {
+                        displayApartmentStats(selData.apartment_stats);
+                    }
+
+                    showMessage(`Selezione automatica completata: ${selectedFromFile.length} cleaner selezionati`, 'success');
+                }
+            } catch (error) {
+                showMessage('Errore nel caricamento della selezione generata', 'error');
+            }
+        }
+
+        // Mostra le statistiche degli appartamenti
+        function displayApartmentStats(apartmentStats) {
+            const container = document.getElementById('apartmentStatsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="apartment-stats">
+                        <p><strong>Appartamenti da pulire:</strong> ${apartmentStats.total_apartments}</p>
+                        <p><strong>Appartamenti aggiuntivi stimati (${apartmentStats.percentage_used}%):</strong> ${apartmentStats.extra_apartments}</p>
+                    </div>
+                `;
+                container.style.display = 'block';
+            }
+        }
+
+        // Conferma selezione e salva nel file
+        async function confirmSelection() {
+            const selectedCleaners = [];
+            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                    const cleaner = cleaners.find(c => c.id === cleanerId);
+                    if (cleaner) {
+                        selectedCleaners.push(cleaner);
+                    }
+                }
+            });
+
+            if (selectedCleaners.length === 0) {
+                showMessage('Seleziona almeno un cleaner prima di confermare.', 'error');
+                return;
+            }
+
+            // Salva la selezione nel file sel_cleaners.json
+            const selectionData = {
+                timestamp: new Date().toISOString(),
+                cleaners: selectedCleaners,
+                total_selected: selectedCleaners.length,
+                total_available: cleaners.length
+            };
+
+            try {
+                setButtonsEnabled(false);
+                showMessage('Conferma cleaner selezionati in corso...', 'info');
+
+                const response = await fetch('/save-selection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(selectionData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`, 'success');
+                } else {
+                    showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+            } finally {
+                setButtonsEnabled(true);
+            }
+        }
+
+        // Inizializza la data al caricamento della pagina
+        function initializeDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            const year = tomorrow.getFullYear();
+            const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const day = String(tomorrow.getDate()).padStart(2, '0');
+
+            const tomorrowString = `${year}-${month}-${day}`;
+            const displayDate = `${day}/${month}/${year}`;
+
+            document.getElementById('dateSelector').value = tomorrowString;
+            document.getElementById('selectedDate').textContent = displayDate;
+        }
+
+        // Aggiorna la data selezionata
+        function updateSelectedDate() {
+            const selectedDateValue = document.getElementById('dateSelector').value;
+            if (selectedDateValue) {
+                const [year, month, day] = selectedDateValue.split('-');
+                const displayDate = `${day}/${month}/${year}`;
+                document.getElementById('selectedDate').textContent = displayDate;
+
+                showMessage(`Data aggiornata a: ${displayDate}`, 'info');
+            }
+        }
+
+        // Ottieni la data selezionata nel formato YYYY-MM-DD
+        function getSelectedDate() {
+            return document.getElementById('dateSelector').value;
+        }
+
+        // Carica i dati all'avvio
+        window.addEventListener('load', function() {
+            initializeDate();
+            loadCleaners(false); // Carica velocemente senza aggiornare il DB
+        });
+    </script>
+</body>
+</html>

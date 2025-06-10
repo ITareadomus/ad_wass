@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genera Assegnazioni - Area Domus</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRKGlNnryWd0psedJholmVPlaxQUmSlY0&libraries=geometry&loading=async"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">Area Domus</div>
+        <ul class="navbar-menu">
+            <li class="navbar-item">
+                <a href="convocazioni.html" class="navbar-link">
+                    Genera convocazioni
+                </a>
+            </li>
+            <li class="navbar-item">
+                <a href="assegnazioni.html" class="navbar-link active">
+                    Genera assegnazioni
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Genera Assegnazioni</h1>
+
+            <div id="messageContainer"></div>
+
+            <!-- Mappa di Google Maps -->
+            <div id="mapContainer" style="margin-bottom: 20px;">
+                <div id="map" style="height: 400px; width: 100%; border: 1px solid #ddd; border-radius: 5px; background-color: #f8f9fa;">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666; font-size: 16px;">
+                        <span>Clicca su un'assegnazione per visualizzare il percorso sulla mappa</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assignment-controls">
+                <div class="info-section">
+                    <h3>Informazioni Sistema</h3>
+                    <p>Questa sezione genera le assegnazioni automatiche degli appartamenti ai cleaner selezionati dal file sel_cleaners.json.</p>
+                    <p>Le assegnazioni vengono create in base a:</p>
+                    <ul>
+                        <li>Appartamenti con check-in alle 14:00 o small_equipment = true (priorità 1)</li>
+                        <li>Distanza massima di 800 metri tra appartamenti consecutivi</li>
+                        <li>Sequenze di mediamente 3 appartamenti per cleaner</li>
+                        <li>Ottimizzazione dei percorsi tramite Google Maps</li>
+                    </ul>
+                    <p><strong>Prerequisito:</strong> Seleziona prima i cleaner nella sezione "Genera convocazioni"</p>
+                </div>
+
+                <div class="assignment-options">
+                    <h3>Opzioni di Assegnazione</h3>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="automatic" checked>
+                            Assegnazione Automatica
+                        </label>
+                        <p class="option-description">Il sistema assegnerà automaticamente gli appartamenti in base all'algoritmo di ottimizzazione.</p>
+                    </div>
+                    <div class="option-group">
+                        <label>
+                            <input type="radio" name="assignmentMode" value="manual">
+                            Assegnazione Manuale
+                        </label>
+                        <p class="option-description">Permette di assegnare manualmente specifici appartamenti a cleaner selezionati.</p>
+                    </div>
+                </div>
+
+                <div class="assignment-actions">
+                    <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
+                        Genera Assegnazioni
+                    </button>
+                    <button class="btn btn-confirm" id="viewReportBtn" onclick="viewAssignmentReport()" style="display: none;">
+                        Visualizza Report
+                    </button>
+                </div>
+            </div>
+
+            <div id="assignmentResults" style="display: none;">
+                <h3>Risultati Assegnazioni</h3>
+                <div id="assignmentList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay di caricamento -->
+    <div id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div id="loadingText">Caricamento...</div>
+    </div>
+
+    <script>
+        // Mostra messaggio all'utente
+        function showMessage(text, type = 'info') {
+            const container = document.getElementById('messageContainer');
+            const message = document.createElement('div');
+            message.className = `message message-${type}`;
+            message.textContent = text;
+            container.innerHTML = '';
+            container.appendChild(message);
+
+            // Rimuovi il messaggio dopo 5 secondi
+            setTimeout(() => {
+                if (container.contains(message)) {
+                    container.removeChild(message);
+                }
+            }, 5000);
+        }
+
+        // Funzioni per controllare l'overlay di caricamento
+        function showLoadingOverlay(message = 'Caricamento...', showSpinner = true) {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const spinner = document.querySelector('.loading-spinner');
+
+            loadingText.textContent = message;
+            overlay.style.display = 'flex';
+
+            if (showSpinner) {
+                spinner.style.display = 'block';
+            } else {
+                spinner.style.display = 'none';
+            }
+        }
+
+        function updateLoadingText(message) {
+            document.getElementById('loadingText').textContent = message;
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Esegui script Python tramite fetch
+        async function runPythonScript(scriptName, showSuccessMessage = true) {
+            try {
+                showLoadingOverlay(`Esecuzione ${scriptName} in corso...`, true);
+                
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ script: scriptName })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (showSuccessMessage) {
+                        showMessage(`${scriptName} completato con successo`, 'success');
+                    }
+                    return true;
+                } else {
+                    showMessage(`Errore esecuzione ${scriptName}: ${result.error}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
+                return false;
+            } finally {
+                hideLoadingOverlay();
+            }
+        }
+
+        // Genera assegnazioni utilizzando i cleaner selezionati
+        async function generateAssignments() {
+            const mode = document.querySelector('input[name="assignmentMode"]:checked').value;
+            showMessage(`Generazione assegnazioni in modalità ${mode}...`, 'info');
+
+            try {
+                // Carica i cleaner selezionati dal file sel_cleaners.json
+                const selCleanersResponse = await fetch('/data/sel_cleaners.json');
+                if (!selCleanersResponse.ok) {
+                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
+                }
+
+                const selCleanersData = await selCleanersResponse.json();
+                const selectedCleaners = selCleanersData.cleaners || [];
+
+                if (selectedCleaners.length === 0) {
+                    showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'error');
+                    return;
+                }
+
+                // Esegui lo script algoritmo.py per generare le assegnazioni
+                const success = await runPythonScript('algoritmo.py', false);
+                if (!success) {
+                    showMessage('Errore durante la generazione delle assegnazioni', 'error');
+                    return;
+                }
+
+                showMessage('Assegnazioni generate con successo!', 'success');
+                document.getElementById('viewReportBtn').style.display = 'inline-block';
+
+                // Mostra i cleaner selezionati con le loro assegnazioni
+                const resultDiv = document.getElementById('assignmentResults');
+                const listDiv = document.getElementById('assignmentList');
+
+                let assignmentsHtml = '';
+                selectedCleaners.forEach((cleaner, index) => {
+                    const roleClass = cleaner.role.toLowerCase() === 'premium' ? '#28a745' : '#ffc107';
+                    const roleColor = cleaner.role.toLowerCase() === 'premium' ? 'white' : '#333';
+
+                    assignmentsHtml += `
+                        <div style="margin-bottom: 15px; padding: 10px; border-left: 3px solid ${roleClass}; cursor: pointer;" 
+                             onclick="showCleanerRoute(${cleaner.id}, '${cleaner.name} ${cleaner.lastname}')">
+                            <strong>${cleaner.name} ${cleaner.lastname} (${cleaner.role})</strong><br>
+                            <small>Assegnazione in fase di calcolo - Clicca per visualizzare il percorso</small>
+                        </div>
+                    `;
+                });
+
+                listDiv.innerHTML = assignmentsHtml;
+                resultDiv.style.display = 'block';
+
+            } catch (error) {
+                showMessage(`Errore: ${error.message}`, 'error');
+            }
+        }
+
+        // Visualizza report assegnazioni
+        function viewAssignmentReport() {
+            showMessage('Report dettagliato disponibile in report.txt', 'info');
+        }
+
+        // Variabili globali per la mappa
+        let map = null;
+        let directionsService = null;
+        let directionsRenderer = null;
+        let markers = [];
+
+        // Inizializza la mappa di Google Maps
+        function initializeMap() {
+            // Centro della mappa su Milano
+            const milanCenter = { lat: 45.4642, lng: 9.1900 };
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: milanCenter,
+                mapTypeId: 'roadmap'
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                suppressMarkers: false,
+                draggable: false
+            });
+            directionsRenderer.setMap(map);
+        }
+
+        // Pulisci la mappa dai percorsi precedenti
+        function clearMap() {
+            if (directionsRenderer) {
+                directionsRenderer.setDirections({routes: []});
+            }
+
+            // Rimuovi tutti i marker
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+        }
+
+        // Mostra il percorso del cleaner sulla mappa
+        async function showCleanerRoute(cleanerId, cleanerName) {
+            showMessage(`Caricamento percorso per ${cleanerName}...`, 'info');
+
+            try {
+                // Carica le assegnazioni dal file assignments.json
+                const response = await fetch('/data/assignments.json');
+                if (!response.ok) {
+                    throw new Error('File assignments.json non trovato');
+                }
+
+                const assignmentsData = await response.json();
+                const cleanerAssignment = assignmentsData.assignments.find(a => a.cleaner_id === cleanerId);
+
+                if (!cleanerAssignment || !cleanerAssignment.sequence_details) {
+                    showMessage(`Nessuna assegnazione trovata per ${cleanerName}`, 'error');
+                    return;
+                }
+
+                // Inizializza la mappa se non è ancora stata inizializzata
+                if (!map) {
+                    initializeMap();
+                }
+
+                // Pulisci la mappa
+                clearMap();
+
+                const apartments = cleanerAssignment.sequence_details;
+
+                if (apartments.length === 0) {
+                    showMessage(`Nessun appartamento assegnato a ${cleanerName}`, 'info');
+                    return;
+                }
+
+                // Se c'è solo un appartamento, mostra solo il marker
+                if (apartments.length === 1) {
+                    const apt = apartments[0];
+                    const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
+
+                    const marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: `${apt.task_id} - ${apt.address}`,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 8,
+                            fillColor: '#4CAF50',
+                            fillOpacity: 1,
+                            strokeWeight: 2,
+                            strokeColor: '#ffffff'
+                        }
+                    });
+
+                    markers.push(marker);
+                    map.setCenter(position);
+                    map.setZoom(15);
+
+                    showMessage(`Visualizzato appartamento per ${cleanerName}`, 'success');
+                    return;
+                }
+
+                // Crea i waypoints per il percorso
+                const origin = { lat: parseFloat(apartments[0].lat), lng: parseFloat(apartments[0].lng) };
+                const destination = { lat: parseFloat(apartments[apartments.length - 1].lat), lng: parseFloat(apartments[apartments.length - 1].lng) };
+
+                const waypoints = [];
+                for (let i = 1; i < apartments.length - 1; i++) {
+                    waypoints.push({
+                        location: { lat: parseFloat(apartments[i].lat), lng: parseFloat(apartments[i].lng) },
+                        stopover: true
+                    });
+                }
+
+                // Calcola e visualizza il percorso
+                const request = {
+                    origin: origin,
+                    destination: destination,
+                    waypoints: waypoints,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    optimizeWaypoints: false
+                };
+
+                directionsService.route(request, (response, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+
+                        // Aggiungi marker numerati per ogni appartamento
+                        apartments.forEach((apt, index) => {
+                            const position = { lat: parseFloat(apt.lat), lng: parseFloat(apt.lng) };
+                            const priorityText = apt.priority_1 ? " [P1]" : "";
+                            const equipmentText = apt.small_equipment ? " [SE]" : "";
+
+                            const marker = new google.maps.Marker({
+                                position: position,
+                                map: map,
+                                title: `${index + 1}. ${apt.task_id} - ${apt.address}${priorityText}${equipmentText}`,
+                                label: {
+                                    text: (index + 1).toString(),
+                                    color: 'white',
+                                    fontWeight: 'bold'
+                                },
+                                icon: {
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    scale: 15,
+                                    fillColor: apt.priority_1 ? '#ff4444' : '#4CAF50',
+                                    fillOpacity: 1,
+                                    strokeWeight: 2,
+                                    strokeColor: '#ffffff'
+                                }
+                            });
+
+                            // Info window con dettagli dell'appartamento
+                            const infoWindow = new google.maps.InfoWindow({
+                                content: `
+                                    <div style="font-size: 12px;">
+                                        <strong>${apt.task_id}</strong><br>
+                                        ${apt.address}<br>
+                                        Check-in: ${apt.checkin_time}<br>
+                                        Check-out: ${apt.checkout_time}<br>
+                                        Tempo pulizia: ${apt.cleaning_time} min
+                                        ${apt.priority_1 ? '<br><span style="color: red; font-weight: bold;">PRIORITÀ 1</span>' : ''}
+                                        ${apt.small_equipment ? '<br><span style="color: blue; font-weight: bold;">SMALL EQUIPMENT</span>' : ''}
+                                    </div>
+                                `
+                            });
+
+                            marker.addListener('click', () => {
+                                // Chiudi altre info windows
+                                markers.forEach(m => {
+                                    if (m.infoWindow) {
+                                        m.infoWindow.close();
+                                    }
+                                });
+                                infoWindow.open(map, marker);
+                            });
+
+                            marker.infoWindow = infoWindow;
+                            markers.push(marker);
+                        });
+
+                        showMessage(`Percorso di ${cleanerName} visualizzato sulla mappa (${apartments.length} appartamenti)`, 'success');
+                    } else {
+                        console.error('Errore nel calcolo del percorso:', status);
+                        showMessage(`Errore nel calcolo del percorso: ${status}`, 'error');
+                    }
+                });
+
+            } catch (error) {
+                console.error('Errore nel caricamento del percorso:', error);
+                showMessage(`Errore nel caricamento del percorso: ${error.message}`, 'error');
+            }
+        }
+
+        // Carica le assegnazioni e verifica i cleaner selezionati
+        async function refreshAssignments() {
+            try {
+                const response = await fetch('/data/sel_cleaners.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    const selectedCount = data.cleaners ? data.cleaners.length : 0;
+
+                    if (selectedCount > 0) {
+                        showMessage(`${selectedCount} cleaner disponibili per le assegnazioni`, 'success');
+                    } else {
+                        showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'info');
+                    }
+                } else {
+                    showMessage('File sel_cleaners.json non trovato. Genera prima le convocazioni.', 'info');
+                }
+            } catch (error) {
+                showMessage('Errore nel caricamento dei cleaner selezionati', 'error');
+            }
+        }
+
+        // Carica i dati all'avvio
+        window.addEventListener('load', function() {
+            // Inizializza la mappa quando si entra nella sezione assegnazioni
+            setTimeout(() => {
+                initializeMap();
+            }, 100);
+
+            refreshAssignments();
+        });
+    </script>
+</body>
+</html>

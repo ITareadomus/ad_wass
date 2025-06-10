@@ -21,7 +21,11 @@ class CustomHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/':
-            self.path = '/static/cleaner_selector.html'
+            self.path = '/static/convocazioni.html'
+        elif self.path == '/convocazioni' or self.path == '/convocazioni.html':
+            self.path = '/static/convocazioni.html'
+        elif self.path == '/assegnazioni' or self.path == '/assegnazioni.html':
+            self.path = '/static/assegnazioni.html'
         elif self.path.startswith('/static/'):
             # Serve files from static directory
             pass
