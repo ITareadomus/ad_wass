@@ -218,16 +218,20 @@
                     updateLoadingText('Lettura file di configurazione...');
                 }
 
-                // Simula un breve delay per mostrare il progresso
-                await new Promise(resolve => setTimeout(resolve, 300));
+                // Ritardo minimo per garantire la visibilità del loading
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 updateLoadingText('Caricamento dati cleaners...');
                 const response = await fetch('/data/modello_cleaner.json');
+                
+                updateLoadingText('Elaborazione lista cleaners...');
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
                 const data = await response.json();
                 cleaners = data.cleaners;
 
                 updateLoadingText('Preparazione interfaccia...');
-                await new Promise(resolve => setTimeout(resolve, 200));
+                await new Promise(resolve => setTimeout(resolve, 400));
 
                 displayCleaners();
                 updateStats();
@@ -428,7 +432,14 @@
         // Carica i dati all'avvio
         window.addEventListener('load', function() {
             initializeDate();
-            loadCleaners(false); // Carica velocemente senza aggiornare il DB
+            
+            // Mostra immediatamente il loading all'avvio
+            showLoadingOverlay('Inizializzazione pagina...', true);
+            
+            // Avvia il caricamento dei cleaners con un piccolo ritardo
+            setTimeout(() => {
+                loadCleaners(false); // Carica velocemente senza aggiornare il DB
+            }, 100);
         });
     </script>
 </body>
