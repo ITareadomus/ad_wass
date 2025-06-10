@@ -65,7 +65,6 @@
 
     <!-- Overlay di caricamento -->
     <div id="loadingOverlay">
-        <div id="loadingText">Caricamento...</div>
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -98,15 +97,12 @@
         // Funzioni per controllare l'overlay di caricamento
         function showLoadingOverlay(message = 'Caricamento...') {
             const overlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-
-            loadingText.textContent = message;
             overlay.style.display = 'flex';
             updateProgress(0);
         }
 
         function updateLoadingText(message) {
-            document.getElementById('loadingText').textContent = message;
+            // Funzione vuota - testo rimosso
         }
 
         function updateProgress(percentage) {
@@ -127,16 +123,7 @@
         // Esegui script Python tramite fetch
         async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
-                let loadingMessage = '';
-                if (scriptName === 'cleaner_list.py') {
-                    loadingMessage = 'Importazione cleaners in corso...';
-                } else if (scriptName === 'cleaner_selection.py') {
-                    loadingMessage = 'Generazione scelte cleaner in corso...';
-                } else {
-                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
-                }
-
-                showLoadingOverlay(loadingMessage);
+                showLoadingOverlay();
                 updateProgress(10);
                 setButtonsEnabled(false);
 
@@ -181,17 +168,7 @@
         // Esegui script Python con percentuale
         async function runPythonScriptWithPercentage(scriptName, percentage) {
             try {
-                let loadingMessage = '';
-                if (scriptName === 'cleaner_list.py') {
-                    loadingMessage = 'Importazione cleaners in corso...';
-                } else if (scriptName === 'cleaner_selection.py') {
-                    loadingMessage = 'Generazione scelte cleaner in corso...';
-                } else {
-                    loadingMessage = `Esecuzione ${scriptName} in corso...`;
-                }
-
-                // Aggiorna solo il testo se l'overlay è già visibile
-                updateLoadingText(loadingMessage);
+                // Nessun aggiornamento del testo - solo progresso
                 updateProgress(15);
 
                 await new Promise(resolve => setTimeout(resolve, 400));
@@ -238,39 +215,33 @@
         async function loadCleaners(forceRefresh = false) {
             try {
                 if (forceRefresh) {
-                    showLoadingOverlay('Aggiornamento dati dal database...');
+                    showLoadingOverlay();
                     updateProgress(10);
-                    updateLoadingText('Connessione al database...');
                     
                     await new Promise(resolve => setTimeout(resolve, 800));
                     updateProgress(25);
                     
                     await runPythonScript('cleaner_list.py', false);
                     updateProgress(50);
-                    updateLoadingText('Elaborazione dati cleaners...');
                     await new Promise(resolve => setTimeout(resolve, 600));
                 } else {
-                    showLoadingOverlay('Caricamento cleaners...');
+                    showLoadingOverlay();
                     updateProgress(15);
-                    updateLoadingText('Lettura file di configurazione...');
                     await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
                 updateProgress(60);
-                updateLoadingText('Caricamento dati cleaners...');
                 await new Promise(resolve => setTimeout(resolve, 400));
                 
                 const response = await fetch('/data/modello_cleaner.json');
                 updateProgress(75);
                 
-                updateLoadingText('Elaborazione lista cleaners...');
                 await new Promise(resolve => setTimeout(resolve, 500));
                 
                 const data = await response.json();
                 cleaners = data.cleaners;
                 updateProgress(90);
 
-                updateLoadingText('Preparazione interfaccia...');
                 await new Promise(resolve => setTimeout(resolve, 600));
                 
                 displayCleaners();
@@ -427,7 +398,7 @@
             };
 
             try {
-                showLoadingOverlay('Conferma cleaner selezionati in corso...');
+                showLoadingOverlay();
                 updateProgress(20);
                 setButtonsEnabled(false);
 
@@ -502,7 +473,7 @@
             initializeDate();
             
             // Mostra immediatamente il loading all'avvio
-            showLoadingOverlay('Inizializzazione pagina...');
+            showLoadingOverlay();
             updateProgress(5);
             
             // Avvia il caricamento dei cleaners con un piccolo ritardo

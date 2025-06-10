@@ -90,7 +90,6 @@
 
     <!-- Overlay di caricamento -->
     <div id="loadingOverlay">
-        <div id="loadingText">Caricamento...</div>
         <div class="progress-container">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
@@ -120,15 +119,12 @@
         // Funzioni per controllare l'overlay di caricamento
         function showLoadingOverlay(message = 'Caricamento...') {
             const overlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-
-            loadingText.textContent = message;
             overlay.style.display = 'flex';
             updateProgress(0);
         }
 
         function updateLoadingText(message) {
-            document.getElementById('loadingText').textContent = message;
+            // Funzione vuota - testo rimosso
         }
 
         function updateProgress(percentage) {
@@ -149,7 +145,7 @@
         // Esegui script Python tramite fetch
         async function runPythonScript(scriptName, showSuccessMessage = true) {
             try {
-                showLoadingOverlay(`Esecuzione ${scriptName} in corso...`);
+                showLoadingOverlay();
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
@@ -434,8 +430,7 @@
         // Carica gli appartamenti eseguendo task_selection.py
         async function loadApartments() {
             try {
-                showLoadingOverlay('Aggiornamento lista appartamenti...');
-                updateLoadingText('Esecuzione task_selection.py...');
+                showLoadingOverlay();
 
                 // Esegui task_selection.py per aggiornare modello_apt.json
                 const success = await runPythonScript('task_selection.py', false);
@@ -445,7 +440,6 @@
                     return;
                 }
 
-                updateLoadingText('Caricamento dati appartamenti...');
                 await new Promise(resolve => setTimeout(resolve, 500));
 
                 // Carica i dati aggiornati
@@ -457,7 +451,6 @@
                 const data = await response.json();
                 apartments = data.apt || [];
 
-                updateLoadingText('Visualizzazione appartamenti...');
                 await new Promise(resolve => setTimeout(resolve, 300));
 
                 displayApartments();
@@ -476,7 +469,7 @@
         // Carica i cleaners selezionati da sel_cleaners.json
         async function loadSelectedCleaners() {
             try {
-                showLoadingOverlay('Caricamento cleaners selezionati...');
+                showLoadingOverlay();
 
                 const response = await fetch('/data/sel_cleaners.json');
                 if (!response.ok) {
@@ -696,14 +689,13 @@
         // Carica le assegnazioni e verifica i cleaner selezionati
         async function refreshAssignments() {
             try {
-                showLoadingOverlay('Caricamento cleaner selezionati...');
+                showLoadingOverlay();
 
                 const response = await fetch('/data/sel_cleaners.json');
                 if (response.ok) {
                     const data = await response.json();
                     const selectedCount = data.cleaners ? data.cleaners.length : 0;
 
-                    updateLoadingText('Preparazione interfaccia...');
                     await new Promise(resolve => setTimeout(resolve, 200));
 
                     hideLoadingOverlay();
