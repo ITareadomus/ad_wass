@@ -26,6 +26,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
             self.path = '/static/convocazioni.html'
         elif self.path == '/assegnazioni' or self.path == '/assegnazioni.html':
             self.path = '/static/assegnazioni.html'
+        elif self.path == '/styles.css':
+            self.path = '/static/styles.css'
         elif self.path.startswith('/static/'):
             # Serve files from static directory
             pass
