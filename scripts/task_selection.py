@@ -139,7 +139,7 @@ def custom_serializer(obj):
     raise TypeError(f'Tipo {obj.__class__.__name__} non serializzabile')
 
 
-with open("modello_apt.json", "w", encoding="utf-8") as f:
+with open("data/modello_apt.json", "w", encoding="utf-8") as f:
     json.dump(config, f, indent=4, default=custom_serializer)
 
 print(f"Aggiornato modello_apt.json con {len(results)} appartamenti.")
