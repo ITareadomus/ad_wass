@@ -97,19 +97,13 @@
         }
 
         // Funzioni per controllare l'overlay di caricamento
-        function showLoadingOverlay(message = 'Caricamento...', showSpinner = true) {
+        function showLoadingOverlay(message = 'Caricamento...') {
             const overlay = document.getElementById('loadingOverlay');
             const loadingText = document.getElementById('loadingText');
-            const spinner = document.querySelector('.loading-spinner');
 
             loadingText.textContent = message;
             overlay.style.display = 'flex';
-
-            if (showSpinner) {
-                spinner.style.display = 'block';
-            } else {
-                spinner.style.display = 'none';
-            }
+            updateProgress(0);
         }
 
         function updateLoadingText(message) {
@@ -128,7 +122,6 @@
 
         function hideLoadingOverlay() {
             document.getElementById('loadingOverlay').style.display = 'none';
-            // Reset progress quando si nasconde l'overlay
             updateProgress(0);
         }
 
@@ -144,8 +137,12 @@
                     loadingMessage = `Esecuzione ${scriptName} in corso...`;
                 }
 
-                showMessage(loadingMessage, 'info');
+                showLoadingOverlay(loadingMessage);
+                updateProgress(10);
                 setButtonsEnabled(false);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                updateProgress(25);
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
@@ -155,7 +152,14 @@
                     body: JSON.stringify({ script: scriptName })
                 });
 
+                updateProgress(75);
+                await new Promise(resolve => setTimeout(resolve, 200));
+
                 const result = await response.json();
+                updateProgress(100);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 if (result.success) {
                     if (showSuccessMessage) {
@@ -167,6 +171,7 @@
                     return false;
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
                 return false;
             } finally {
@@ -186,8 +191,12 @@
                     loadingMessage = `Esecuzione ${scriptName} in corso...`;
                 }
 
-                showMessage(loadingMessage, 'info');
+                showLoadingOverlay(loadingMessage);
+                updateProgress(15);
                 setButtonsEnabled(false);
+
+                await new Promise(resolve => setTimeout(resolve, 400));
+                updateProgress(35);
 
                 const response = await fetch('/run-script', {
                     method: 'POST',
@@ -200,7 +209,14 @@
                     })
                 });
 
+                updateProgress(80);
+                await new Promise(resolve => setTimeout(resolve, 300));
+
                 const result = await response.json();
+                updateProgress(100);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 if (result.success) {
                     showMessage(`${scriptName} completato con successo`, 'success');
@@ -210,6 +226,7 @@
                     return false;
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
                 return false;
             } finally {
@@ -227,7 +244,7 @@
         async function loadCleaners(forceRefresh = false) {
             try {
                 if (forceRefresh) {
-                    showLoadingOverlay('Aggiornamento dati dal database...', true);
+                    showLoadingOverlay('Aggiornamento dati dal database...');
                     updateProgress(10);
                     updateLoadingText('Connessione al database...');
                     
@@ -239,7 +256,7 @@
                     updateLoadingText('Elaborazione dati cleaners...');
                     await new Promise(resolve => setTimeout(resolve, 600));
                 } else {
-                    showLoadingOverlay('Caricamento cleaners...', true);
+                    showLoadingOverlay('Caricamento cleaners...');
                     updateProgress(15);
                     updateLoadingText('Lettura file di configurazione...');
                     await new Promise(resolve => setTimeout(resolve, 500));
@@ -403,8 +420,12 @@
             };
 
             try {
+                showLoadingOverlay('Conferma cleaner selezionati in corso...');
+                updateProgress(20);
                 setButtonsEnabled(false);
-                showMessage('Conferma cleaner selezionati in corso...', 'info');
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                updateProgress(50);
 
                 const response = await fetch('/save-selection', {
                     method: 'POST',
@@ -414,7 +435,14 @@
                     body: JSON.stringify(selectionData)
                 });
 
+                updateProgress(80);
+                await new Promise(resolve => setTimeout(resolve, 200));
+
                 const result = await response.json();
+                updateProgress(100);
+
+                await new Promise(resolve => setTimeout(resolve, 300));
+                hideLoadingOverlay();
 
                 if (result.success) {
                     showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`, 'success');
@@ -422,6 +450,7 @@
                     showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
                 }
             } catch (error) {
+                hideLoadingOverlay();
                 showMessage(`Errore di rete: ${error.message}`, 'error');
             } finally {
                 setButtonsEnabled(true);
@@ -466,7 +495,8 @@
             initializeDate();
             
             // Mostra immediatamente il loading all'avvio
-            showLoadingOverlay('Inizializzazione pagina...', true);
+            showLoadingOverlay('Inizializzazione pagina...');
+            updateProgress(5);
             
             // Avvia il caricamento dei cleaners con un piccolo ritardo
             setTimeout(() => {
