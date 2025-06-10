@@ -67,6 +67,12 @@
     <div id="loadingOverlay">
         <div class="loading-spinner"></div>
         <div id="loadingText">Caricamento...</div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-percentage" id="progressPercentage">0%</div>
+        </div>
     </div>
 
     <script>
@@ -110,8 +116,20 @@
             document.getElementById('loadingText').textContent = message;
         }
 
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            const progressPercentage = document.getElementById('progressPercentage');
+            
+            if (progressFill && progressPercentage) {
+                progressFill.style.width = percentage + '%';
+                progressPercentage.textContent = percentage + '%';
+            }
+        }
+
         function hideLoadingOverlay() {
             document.getElementById('loadingOverlay').style.display = 'none';
+            // Reset progress quando si nasconde l'overlay
+            updateProgress(0);
         }
 
         // Esegui script Python tramite fetch
@@ -210,32 +228,46 @@
             try {
                 if (forceRefresh) {
                     showLoadingOverlay('Aggiornamento dati dal database...', true);
+                    updateProgress(10);
                     updateLoadingText('Connessione al database...');
+                    
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    updateProgress(25);
+                    
                     await runPythonScript('cleaner_list.py', false);
+                    updateProgress(50);
                     updateLoadingText('Elaborazione dati cleaners...');
+                    await new Promise(resolve => setTimeout(resolve, 600));
                 } else {
                     showLoadingOverlay('Caricamento cleaners...', true);
+                    updateProgress(15);
                     updateLoadingText('Lettura file di configurazione...');
+                    await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
-                // Ritardo minimo per garantire la visibilità del loading
-                await new Promise(resolve => setTimeout(resolve, 500));
-
+                updateProgress(60);
                 updateLoadingText('Caricamento dati cleaners...');
+                await new Promise(resolve => setTimeout(resolve, 400));
+                
                 const response = await fetch('/data/modello_cleaner.json');
+                updateProgress(75);
                 
                 updateLoadingText('Elaborazione lista cleaners...');
-                await new Promise(resolve => setTimeout(resolve, 300));
+                await new Promise(resolve => setTimeout(resolve, 500));
                 
                 const data = await response.json();
                 cleaners = data.cleaners;
+                updateProgress(90);
 
                 updateLoadingText('Preparazione interfaccia...');
-                await new Promise(resolve => setTimeout(resolve, 400));
-
+                await new Promise(resolve => setTimeout(resolve, 600));
+                
                 displayCleaners();
                 updateStats();
+                updateProgress(100);
 
+                // Piccola pausa per mostrare il 100%
+                await new Promise(resolve => setTimeout(resolve, 300));
                 hideLoadingOverlay();
                 showMessage(`Cleaner caricati con successo (${cleaners.length} disponibili)`, 'success');
             } catch (error) {
