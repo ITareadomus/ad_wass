@@ -60,7 +60,6 @@
                         <option value="30">30%</option>
                     </select>
                 </div>
-                <button class="btn btn-refresh" onclick="refreshCleanerData()">🔄 Aggiorna DB</button>
                 <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
             </div>
 
@@ -382,7 +381,7 @@
                 cleanerItem.innerHTML = `
                     <div class="cleaner-info">
                         <div class="cleaner-avatar">
-                            ${cleaner.name.charAt(0)}${cleaner.lastname.charAt(0)}
+                            👤
                         </div>
                         <div class="cleaner-details">
                             <div class="cleaner-name">${cleaner.name} ${cleaner.lastname}</div>
