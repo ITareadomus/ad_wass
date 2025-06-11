@@ -32,6 +32,9 @@ class CustomHandler(SimpleHTTPRequestHandler):
         elif self.path.startswith('/get-cleaners-by-date'):
             self.handle_get_cleaners_by_date()
             return
+        elif self.path.startswith('/get-apartments-by-date'):
+            self.handle_get_apartments_by_date()
+            return
         elif self.path.startswith('/static/'):
             # Serve files from static directory
             pass
@@ -99,6 +102,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     if selected_date:
                         cmd.append(selected_date)
                 elif script_name == 'algoritmo.py' and selected_date:
+                    cmd.append(selected_date)
+                elif script_name == 'task_selection.py' and selected_date:
                     cmd.append(selected_date)
 
                 result = subprocess.run(cmd,
@@ -207,6 +212,50 @@ class CustomHandler(SimpleHTTPRequestHandler):
                 self.send_json_response({
                     'success': True, 
                     'cleaners': [],
+                    'date_data': None
+                })
+
+        except Exception as e:
+            self.send_json_response({'success': False, 'error': str(e)})
+
+    def handle_get_apartments_by_date(self):
+        try:
+            # Estrai la data dal query parameter
+            parsed_url = urlparse(self.path)
+            query_params = parse_qs(parsed_url.query)
+            selected_date = query_params.get('date', [None])[0]
+
+            if not selected_date:
+                self.send_json_response({'success': False, 'error': 'Data mancante'})
+                return
+
+            # Carica i dati dal file modello_apt.json
+            apt_file = 'data/modello_apt.json'
+            if os.path.exists(apt_file):
+                with open(apt_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                
+                # Controlla se esiste la struttura "dates"
+                if "dates" in data and selected_date in data["dates"]:
+                    date_data = data["dates"][selected_date]
+                    apartments = date_data.get("apt", [])
+                    self.send_json_response({
+                        'success': True, 
+                        'apartments': apartments,
+                        'date_data': date_data
+                    })
+                else:
+                    # Nessun appartamento trovato per questa data
+                    self.send_json_response({
+                        'success': True, 
+                        'apartments': [],
+                        'date_data': None
+                    })
+            else:
+                # File non trovato
+                self.send_json_response({
+                    'success': True, 
+                    'apartments': [],
                     'date_data': None
                 })
 

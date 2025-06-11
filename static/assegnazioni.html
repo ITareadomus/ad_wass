@@ -661,13 +661,20 @@
             }
         }
 
-        // Carica gli appartamenti eseguendo task_selection.py
+        // Carica gli appartamenti per la data selezionata
         async function loadApartments() {
             try {
                 showLoadingOverlay();
 
-                // Esegui task_selection.py per aggiornare modello_apt.json
-                const success = await runPythonScript('task_selection.py', false);
+                const selectedDate = getSelectedAssignmentDate();
+                if (!selectedDate) {
+                    hideLoadingOverlay();
+                    showMessage('Seleziona una data per caricare gli appartamenti', 'error');
+                    return;
+                }
+
+                // Esegui task_selection.py per aggiornare modello_apt.json con la data specifica
+                const success = await runPythonScriptWithDate('task_selection.py', selectedDate, false);
                 if (!success) {
                     hideLoadingOverlay();
                     showMessage('Errore durante l\'aggiornamento degli appartamenti', 'error');
@@ -676,14 +683,18 @@
 
                 await new Promise(resolve => setTimeout(resolve, 500));
 
-                // Carica i dati aggiornati
-                const response = await fetch('/data/modello_apt.json');
+                // Carica i dati aggiornati per la data specifica
+                const response = await fetch(`/get-apartments-by-date?date=${selectedDate}`);
                 if (!response.ok) {
-                    throw new Error('Errore nel caricamento del file modello_apt.json');
+                    throw new Error('Errore nel caricamento degli appartamenti per la data selezionata');
                 }
 
-                const data = await response.json();
-                apartments = Array.isArray(data.apt) ? data.apt : [];
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.error || 'Errore nel caricamento degli appartamenti');
+                }
+
+                apartments = Array.isArray(result.apartments) ? result.apartments : [];
 
                 await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -691,7 +702,7 @@
                 showApartmentsOnMap();
 
                 hideLoadingOverlay();
-                showMessage(`${apartments.length} appartamenti caricati con successo`, 'success');
+                showMessage(`${apartments.length} appartamenti caricati per ${selectedDate}`, 'success');
 
             } catch (error) {
                 hideLoadingOverlay();
@@ -1187,9 +1198,10 @@
 
             // Carica automaticamente appartamenti e cleaners per la data di oggi
             setTimeout(() => {
-                loadApartments();
                 const today = getSelectedAssignmentDate();
                 loadSelectedCleanersForDate(today);
+                // loadApartments() ora userà automaticamente la data selezionata
+                loadApartments();
             }, 500);
 
             refreshAssignments();

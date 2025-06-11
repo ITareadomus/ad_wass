@@ -137,8 +137,21 @@ def main(selected_date=None):
         print("Nessun cleaner trovato nel file sel_cleaners.json")
         cleaners = []
     
+    # Carica i dati degli appartamenti dal nuovo formato con date
     apartments_data = load_json("data/modello_apt.json")
-    apartments = apartments_data.get("apt", [])
+    
+    # Usa la data specificata o cerca la data più recente per gli appartamenti
+    if selected_date and "dates" in apartments_data and selected_date in apartments_data["dates"]:
+        apartments = apartments_data["dates"][selected_date].get("apt", [])
+        print(f"Usando appartamenti dalla data specifica: {selected_date}")
+    elif "dates" in apartments_data and apartments_data["dates"]:
+        latest_date = max(apartments_data["dates"].keys())
+        apartments = apartments_data["dates"][latest_date].get("apt", [])
+        print(f"Usando appartamenti dalla data più recente: {latest_date}")
+    else:
+        # Fallback al formato vecchio per compatibilità
+        apartments = apartments_data.get("apt", [])
+        print("Usando appartamenti dal formato compatibilità (senza date)")
 
     if not cleaners:
         print("Errore: Nessun cleaner selezionato trovato!")
