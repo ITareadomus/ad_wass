@@ -43,6 +43,27 @@
                         <span class="selected-date">Data selezionata: <strong id="selectedAssignmentDate"></strong></span>
                     </div>
                 </div>
+
+                <!-- Selezione Algoritmo -->
+                <div class="algorithm-selection-section">
+                    <h3>🧮 Algoritmo Calcolo Distanze</h3>
+                    <div class="algorithm-selection-controls">
+                        <div class="algorithm-option">
+                            <label>
+                                <input type="radio" name="algorithmType" value="haversine" checked>
+                                <span class="algorithm-name">Formula di Haversine</span>
+                            </label>
+                            <p class="algorithm-description">Calcolo rapido delle distanze "in linea d'aria" utilizzando la formula matematica di Haversine</p>
+                        </div>
+                        <div class="algorithm-option">
+                            <label>
+                                <input type="radio" name="algorithmType" value="gmaps">
+                                <span class="algorithm-name">Google Maps</span>
+                            </label>
+                            <p class="algorithm-description">Calcolo preciso dei percorsi reali utilizzando le API di Google Maps (più lento ma più accurato)</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Mappa di Google Maps -->
@@ -284,9 +305,15 @@
                 updateProgress(30);
                 showMessage(`${selectedCleanersForDate.length} cleaner selezionati per ${selectedDate}. Generazione assegnazioni in corso...`, 'info');
 
-                // Esegui lo script algoritmo.py per generare le assegnazioni con la data selezionata
+                // Determina quale algoritmo utilizzare
+                const selectedAlgorithm = getSelectedAlgorithm();
+                const scriptName = selectedAlgorithm === 'gmaps' ? 'algoritmo_gmaps.py' : 'algoritmo.py';
+                
                 updateProgress(50);
-                const success = await runPythonScriptWithDate('algoritmo.py', selectedDate, false);
+                showMessage(`Utilizzando algoritmo: ${selectedAlgorithm === 'gmaps' ? 'Google Maps' : 'Haversine'}...`, 'info');
+                
+                // Esegui lo script algoritmo selezionato per generare le assegnazioni con la data selezionata
+                const success = await runPythonScriptWithDate(scriptName, selectedDate, false);
 
                 if (!success) {
                     hideLoadingOverlay();
@@ -1156,6 +1183,12 @@
         // Ottieni la data selezionata nel formato YYYY-MM-DD
         function getSelectedAssignmentDate() {
             return document.getElementById('assignmentDateSelector').value;
+        }
+
+        // Ottieni l'algoritmo selezionato
+        function getSelectedAlgorithm() {
+            const selectedRadio = document.querySelector('input[name="algorithmType"]:checked');
+            return selectedRadio ? selectedRadio.value : 'haversine';
         }
 
         // Carica i cleaners selezionati per una data specifica

@@ -85,6 +85,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
                 script_path = 'scripts/route_optimizer.py'
             elif script_name == 'task_selection.py':
                 script_path = 'scripts/task_selection.py'
+            elif script_name == 'algoritmo_gmaps.py':
+                script_path = 'scripts/algoritmo_gmaps.py'
             else:
                 self.send_json_response({'success': False, 'error': 'Script non riconosciuto'})
                 return
@@ -106,6 +108,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     if selected_date:
                         cmd.append(selected_date)
                 elif script_name == 'algoritmo.py' and selected_date:
+                    cmd.append(selected_date)
+                elif script_name == 'algoritmo_gmaps.py' and selected_date:
                     cmd.append(selected_date)
                 elif script_name == 'task_selection.py' and selected_date:
                     cmd.append(selected_date)
