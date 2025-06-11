@@ -656,6 +656,264 @@
                 "extra_apartments": 4,
                 "percentage_used": 10.0
             }
+        },
+        "2025-06-15": {
+            "timestamp": "2025-06-11T10:42:33.673050",
+            "cleaners": [
+                {
+                    "id": 18,
+                    "name": "MUTURI DANIEL",
+                    "lastname": "NGANGA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 24,
+                    "name": "HUSSAIN",
+                    "lastname": "SYED SHUJIAHAT",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 249,
+                    "name": "Ogbodo Chidi",
+                    "lastname": "Igwe",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 287,
+                    "name": "BAH",
+                    "lastname": "ISMAILA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 321,
+                    "name": "BOUBACAR",
+                    "lastname": "BARRY",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 326,
+                    "name": "FESTUS OSARO",
+                    "lastname": "AIHIVBERE",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 404,
+                    "name": "RASEL",
+                    "lastname": "MOLLA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 445,
+                    "name": "IBRAHIM",
+                    "lastname": "SANYANG",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 469,
+                    "name": "LAMIN",
+                    "lastname": "SOLY",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 476,
+                    "name": "BLESSING",
+                    "lastname": "UGBOME",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                }
+            ],
+            "total_selected": 10,
+            "total_available": 0,
+            "apartment_stats": {
+                "total_apartments": 26,
+                "extra_apartments": 2,
+                "percentage_used": 10.0
+            }
+        },
+        "2025-06-17": {
+            "timestamp": "2025-06-11T10:43:39.043562",
+            "cleaners": [
+                {
+                    "id": 18,
+                    "name": "MUTURI DANIEL",
+                    "lastname": "NGANGA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 24,
+                    "name": "HUSSAIN",
+                    "lastname": "SYED SHUJIAHAT",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 249,
+                    "name": "Ogbodo Chidi",
+                    "lastname": "Igwe",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 287,
+                    "name": "BAH",
+                    "lastname": "ISMAILA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 321,
+                    "name": "BOUBACAR",
+                    "lastname": "BARRY",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 326,
+                    "name": "FESTUS OSARO",
+                    "lastname": "AIHIVBERE",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 404,
+                    "name": "RASEL",
+                    "lastname": "MOLLA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                },
+                {
+                    "id": 445,
+                    "name": "IBRAHIM",
+                    "lastname": "SANYANG",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 0.0,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 0,
+                    "deficit_hours": 0.0
+                }
+            ],
+            "total_selected": 8,
+            "total_available": 0,
+            "apartment_stats": {
+                "total_apartments": 21,
+                "extra_apartments": 2,
+                "percentage_used": 10.0
+            }
         }
     }
 }
