@@ -62,7 +62,7 @@ def get_apartments_for_date(selected_date):
         JOIN app_structures s ON h.structure_id = s.id
         WHERE h.checkout = %s
     """, (selected_date,))
-results = cursor.fetchall()
+    results = cursor.fetchall()
 
     cursor.close()
     connection.close()
