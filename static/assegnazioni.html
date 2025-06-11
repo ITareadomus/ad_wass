@@ -33,7 +33,7 @@
 
             <div class="content-section">
                 <div id="messageContainer"></div>
-                
+
                 <!-- Filtro data -->
                 <div class="date-filter-section">
                     <h3>📅 Seleziona Data per Assegnazioni</h3>
@@ -728,9 +728,7 @@
                 apartments = [];
             }
 
-            countSpan.textContent = `${apartments.length} appartamenti`;
-
-            if (apartments.length === 0) {
+            countSpan.textContent = `${apartments.length} appartamenti`;            if (apartments.length === 0) {
                 container.innerHTML = '<div class="no-data">Nessun appartamento trovato per la giornata</div>';
                 return;
             }
@@ -1047,7 +1045,9 @@
             try {
                 showLoadingOverlay();
 
-                const response = await fetch('/data/sel_cleaners.json');
+                
+                const response = await fetch('/data/modello_cleaners.json');
+                
                 if (!response.ok) {
                     throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
                 }
@@ -1147,7 +1147,7 @@
                 document.getElementById('selectedAssignmentDate').textContent = displayDate;
 
                 showMessage(`Data aggiornata a: ${displayDate}`, 'info');
-                
+
                 // Ricarica i cleaner per la nuova data
                 loadSelectedCleanersForDate(selectedDateValue);
             }
@@ -1190,7 +1190,7 @@
         window.addEventListener('load', function() {
             // Inizializza la data
             initializeAssignmentDate();
-            
+
             // Inizializza la mappa quando si entra nella sezione assegnazioni
             setTimeout(() => {
                 initializeMap();

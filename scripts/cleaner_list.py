@@ -167,8 +167,8 @@ connection.close()
 # Aggiorna il JSON con i cleaners
 config["cleaners"] = cleaners_data
 
-# Sovrascrive il file modello.json con i dati aggiornati
-with open("data/modello_cleaner.json", "w") as f:
+# Sovrascrive il file modello_cleaners.json con i dati aggiornati nella cartella data
+with open("data/modello_cleaners.json", "w") as f:
     json.dump(config, f, indent=4)
 
-print(f"Aggiornato modello_cleaner.json con {len(results)} cleaners.")
+print(f"Aggiornato data/modello_cleaners.json con {len(results)} cleaners.")
