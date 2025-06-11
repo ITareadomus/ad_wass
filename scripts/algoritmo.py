@@ -21,55 +21,63 @@ def load_json(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def time_between_apartments(apt1, apt2):
+    result = calcola_distanza(
+        apt1["lat"], apt1["lng"],
+        apt2["lat"], apt2["lng"],
+        mode="walking"
+    )
+    if result is None:
+        return float("inf")  # Scarta coppie non calcolabili
+    return result["durata"]  # in secondi
+
 
 # ---- 3. CLEANER ASSIGNMENT LOGIC ----
 def build_assignments(cleaners, apartments, sel_cleaners):
     # Filtra i cleaners selezionati
     cleaners = [c for c in cleaners if c["id"] in sel_cleaners]
-
+    
     # Aggiungi priorità agli apt
     for apt in apartments:
         apt["priority"] = get_priority(apt)
-
+    
     # Ordina appartamenti per priorità crescente
     apartments.sort(key=lambda a: a["priority"])
-
+    
     # Appartamenti non ancora assegnati
     unassigned_apts = apartments[:]
     assignments = []
-
+    
     for cleaner in cleaners:
         cleaner_id = cleaner["id"]
-        apt_pool = []
-
-        # Prova a creare pacchetti a partire dagli apt più prioritari
+    
         for apt in unassigned_apts[:]:  # copia
-            if apt["assigned"] if "assigned" in apt else False:
+            if apt.get("assigned", False):
                 continue
-
-            # Inizia a costruire un pacchetto
+    
             current_pack = [apt]
-            walk_total = 0
+            walk_total_min = 0
             clean_total = apt.get("cleaning_time", 60)  # default 60 minuti
-
+    
             for candidate in unassigned_apts:
-                if candidate == apt or ("assigned" in candidate and candidate["assigned"]):
+                if candidate == apt or candidate.get("assigned", False):
                     continue
-
-                # Calcolo distanza a piedi
-                walk_time = get_walk_time(current_pack[-1]["address"], candidate["address"])
-
-                if walk_time <= 15:
-                    potential_clean_time = candidate.get("cleaning_time", 60)
-                    if clean_total + potential_clean_time + walk_total + walk_time <= 240:
-                        current_pack.append(candidate)
-                        clean_total += potential_clean_time
-                        walk_total += walk_time
-
+    
+                # Calcola tempo di percorrenza a piedi in secondi e converti in minuti
+                walk_time_sec = time_between_apartments(current_pack[-1], candidate)
+                walk_time_min = walk_time_sec / 60 if walk_time_sec != float("inf") else float("inf")
+    
+                potential_clean_time = candidate.get("cleaning_time", 60)
+    
+                if walk_time_min <= 15 and clean_total + potential_clean_time + walk_total_min + walk_time_min <= 240:
+                    current_pack.append(candidate)
+                    clean_total += potential_clean_time
+                    walk_total_min += walk_time_min
+    
             # Segna come assegnati
             for ap in current_pack:
                 ap["assigned"] = True
-
+    
             # Salva pacchetto
             assignments.append({
                 "cleaner_id": cleaner_id,
@@ -77,28 +85,33 @@ def build_assignments(cleaners, apartments, sel_cleaners):
                 "apartments": [{"apt_id": a["id"], "address": a["address"]} for a in current_pack],
                 "priority_levels": [a["priority"] for a in current_pack],
                 "total_cleaning_time_min": clean_total,
-                "total_walk_time_min": walk_total,
+                "total_walk_time_min": int(round(walk_total_min)),
                 "zone": cleaner.get("zone", "N/D")
             })
-
+    
         # Rimuove apt assegnati da unassigned_apts
         unassigned_apts = [a for a in unassigned_apts if not a.get("assigned", False)]
-
+    
     # Se rimangono apt non assegnati (es. > 4h), assegnali singolarmente
     if unassigned_apts:
         for apt in unassigned_apts:
-            closest_cleaner = min(cleaners, key=lambda c: get_walk_time(c["address"], apt["address"]))
+            closest_cleaner = min(cleaners, key=lambda c: time_between_apartments(c, apt))
+    
+            walk_time_sec = time_between_apartments(closest_cleaner, apt)
+            walk_time_min = walk_time_sec / 60 if walk_time_sec != float("inf") else 0
+    
             assignments.append({
                 "cleaner_id": closest_cleaner["id"],
                 "cleaner_name": closest_cleaner["name"],
                 "apartments": [{"apt_id": apt["id"], "address": apt["address"]}],
                 "priority_levels": [apt["priority"]],
                 "total_cleaning_time_min": apt.get("cleaning_time", 60),
-                "total_walk_time_min": get_walk_time(closest_cleaner["address"], apt["address"]),
+                "total_walk_time_min": int(round(walk_time_min)),
                 "zone": closest_cleaner.get("zone", "N/D")
             })
 
     return assignments
+
 
 
 # ---- 4. MAIN ----
