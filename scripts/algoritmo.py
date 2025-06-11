@@ -103,12 +103,28 @@ def build_assignments(cleaners, apartments, sel_cleaners):
 
 # ---- 4. MAIN ----
 def main():
-    cleaners = load_json("sel_cleaners.json")  # ora contiene TUTTI i dati dei cleaner selezionati
-    apartments = load_json("modello_apt.json")
+    # Carica i dati dal nuovo formato con date
+    sel_cleaners_data = load_json("data/sel_cleaners.json")
+    
+    # Cerca la data più recente se non specificata
+    if "dates" in sel_cleaners_data and sel_cleaners_data["dates"]:
+        latest_date = max(sel_cleaners_data["dates"].keys())
+        cleaners = sel_cleaners_data["dates"][latest_date].get("cleaners", [])
+        print(f"Usando cleaners dalla data: {latest_date}")
+    else:
+        print("Nessun cleaner trovato nel file sel_cleaners.json")
+        cleaners = []
+    
+    apartments_data = load_json("data/modello_apt.json")
+    apartments = apartments_data.get("apt", [])
+
+    if not cleaners:
+        print("Errore: Nessun cleaner selezionato trovato!")
+        return
 
     assignments = build_assignments(cleaners, apartments, [c["id"] for c in cleaners])
 
-    with open("assignments.json", "w", encoding="utf-8") as f:
+    with open("data/assignments.json", "w", encoding="utf-8") as f:
         json.dump(assignments, f, indent=2, ensure_ascii=False)
 
     print(f"Assegnazioni completate. Totale pacchetti: {len(assignments)}")

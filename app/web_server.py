@@ -29,6 +29,9 @@ class CustomHandler(SimpleHTTPRequestHandler):
             self.path = '/static/assegnazioni.html'
         elif self.path == '/styles.css':
             self.path = '/static/styles.css'
+        elif self.path.startswith('/get-cleaners-by-date'):
+            self.handle_get_cleaners_by_date()
+            return
         elif self.path.startswith('/static/'):
             # Serve files from static directory
             pass
@@ -161,6 +164,50 @@ class CustomHandler(SimpleHTTPRequestHandler):
                 self.send_json_response({'success': True, 'assignments': assignments_data})
             else:
                 self.send_json_response({'success': False, 'error': 'File data/assignments.json non trovato'})
+        except Exception as e:
+            self.send_json_response({'success': False, 'error': str(e)})
+
+    def handle_get_cleaners_by_date(self):
+        try:
+            # Estrai la data dal query parameter
+            parsed_url = urlparse(self.path)
+            query_params = parse_qs(parsed_url.query)
+            selected_date = query_params.get('date', [None])[0]
+
+            if not selected_date:
+                self.send_json_response({'success': False, 'error': 'Data mancante'})
+                return
+
+            # Carica i dati dal file sel_cleaners.json
+            sel_cleaners_file = 'data/sel_cleaners.json'
+            if os.path.exists(sel_cleaners_file):
+                with open(sel_cleaners_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                
+                # Controlla se esiste la struttura "dates"
+                if "dates" in data and selected_date in data["dates"]:
+                    date_data = data["dates"][selected_date]
+                    cleaners = date_data.get("cleaners", [])
+                    self.send_json_response({
+                        'success': True, 
+                        'cleaners': cleaners,
+                        'date_data': date_data
+                    })
+                else:
+                    # Nessun cleaner trovato per questa data
+                    self.send_json_response({
+                        'success': True, 
+                        'cleaners': [],
+                        'date_data': None
+                    })
+            else:
+                # File non trovato
+                self.send_json_response({
+                    'success': True, 
+                    'cleaners': [],
+                    'date_data': None
+                })
+
         except Exception as e:
             self.send_json_response({'success': False, 'error': str(e)})
 
