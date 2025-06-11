@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -112,7 +111,7 @@
         function updateProgress(percentage) {
             const progressFill = document.getElementById('progressFill');
             const progressPercentage = document.getElementById('progressPercentage');
-            
+
             if (progressFill && progressPercentage) {
                 progressFill.style.width = percentage + '%';
                 progressPercentage.textContent = percentage + '%';
@@ -175,7 +174,7 @@
                 // Prima esegui task_selection.py per caricare gli appartamenti della data selezionata
                 const selectedDate = getSelectedDate();
                 updateProgress(10);
-                
+
                 const taskSelectionResponse = await fetch('/run-script', {
                     method: 'POST',
                     headers: {
@@ -243,10 +242,10 @@
                 if (forceRefresh) {
                     showLoadingOverlay();
                     updateProgress(10);
-                    
+
                     await new Promise(resolve => setTimeout(resolve, 800));
                     updateProgress(25);
-                    
+
                     await runPythonScript('cleaner_list.py', false);
                     updateProgress(50);
                     await new Promise(resolve => setTimeout(resolve, 600));
@@ -258,18 +257,18 @@
 
                 updateProgress(60);
                 await new Promise(resolve => setTimeout(resolve, 400));
-                
+
                 const response = await fetch('/data/modello_cleaners.json');
                 updateProgress(75);
-                
+
                 await new Promise(resolve => setTimeout(resolve, 500));
-                
+
                 const data = await response.json();
                 cleaners = data.cleaners;
                 updateProgress(90);
 
                 await new Promise(resolve => setTimeout(resolve, 600));
-                
+
                 displayCleaners();
                 updateStats();
                 updateProgress(100);
@@ -493,7 +492,7 @@
                 document.getElementById('selectedDate').textContent = displayDate;
 
                 showMessage(`Data aggiornata a: ${displayDate}`, 'info');
-                
+
                 // Carica i cleaner selezionati per questa data
                 loadCleanersForDate(selectedDateValue);
             }
@@ -507,7 +506,7 @@
 
                 if (result.success) {
                     selectedFromFile = result.cleaners || [];
-                    
+
                     // Aggiorna le checkbox in base ai cleaner selezionati per questa data
                     const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
                     checkboxes.forEach((checkbox, index) => {
@@ -550,15 +549,15 @@
         // Carica i dati all'avvio
         window.addEventListener('load', function() {
             initializeDate();
-            
+
             // Mostra immediatamente il loading all'avvio
             showLoadingOverlay();
             updateProgress(5);
-            
+
             // Avvia il caricamento dei cleaners con un piccolo ritardo
             setTimeout(async () => {
                 await loadCleaners(false); // Carica velocemente senza aggiornare il DB
-                
+
                 // Dopo aver caricato i cleaner, carica le selezioni per la data iniziale
                 const initialDate = getSelectedDate();
                 if (initialDate) {

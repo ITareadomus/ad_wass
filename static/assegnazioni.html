@@ -1045,9 +1045,9 @@
             try {
                 showLoadingOverlay();
 
-                
+
                 const response = await fetch('/data/modello_cleaners.json');
-                
+
                 if (!response.ok) {
                     throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
                 }
@@ -1184,6 +1184,18 @@
                 console.error('Errore nel caricamento dei cleaners per data:', error);
                 showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
             }
+        }
+
+        // Funzione per aggiornare le statistiche
+        function updateStatistics() {
+            const assignedCleanersCount = assignments.length;
+            const assignedApartmentsCount = assignments.reduce((total, assignment) => {
+                return total + (assignment.sequence_details ? assignment.sequence_details.length : 0);
+            }, 0);
+
+            document.getElementById('assigned-cleaners-count').textContent = assignedCleanersCount;
+            document.getElementById('assigned-apartments-count').textContent = assignedApartmentsCount;
+            document.getElementById('total-apartments-count').textContent = apartments.length;
         }
 
         // Carica i dati all'avvio
