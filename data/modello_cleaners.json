@@ -25,7 +25,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 46.0,
+            "counter_hours": 47.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -37,7 +37,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 64.5,
+            "counter_hours": 65.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "C"
@@ -61,7 +61,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 41.0,
+            "counter_hours": 42.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -121,7 +121,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 49.0,
+            "counter_hours": 51.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -145,7 +145,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 37.0,
+            "counter_hours": 38.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -157,7 +157,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 41.0,
+            "counter_hours": 42.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -193,7 +193,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 60.0,
+            "counter_hours": 61.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -205,7 +205,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 37.0,
+            "counter_hours": 41.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -253,7 +253,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 47.0,
+            "counter_hours": 48.5,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -349,7 +349,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 18.25,
+            "counter_hours": 22.25,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -397,7 +397,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 1.5,
+            "counter_hours": 2.5,
             "counter_days": 0,
             "available": true,
             "contract_type": 4

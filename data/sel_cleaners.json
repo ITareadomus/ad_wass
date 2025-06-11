@@ -1,7 +1,7 @@
 {
     "dates": {
         "2025-06-12": {
-            "timestamp": "2025-06-11T11:44:16.956Z",
+            "timestamp": "2025-06-11T14:55:05.961Z",
             "cleaners": [
                 {
                     "id": 18,
@@ -22,7 +22,7 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 46,
+                    "counter_hours": 47,
                     "counter_days": 0,
                     "available": true,
                     "contract_type": "B"
@@ -46,7 +46,7 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 41,
+                    "counter_hours": 42.5,
                     "counter_days": 0,
                     "available": true,
                     "contract_type": "B"
@@ -118,7 +118,7 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 37,
+                    "counter_hours": 38,
                     "counter_days": 0,
                     "available": true,
                     "contract_type": "B"
@@ -154,7 +154,7 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 47,
+                    "counter_hours": 48.5,
                     "counter_days": 0,
                     "available": true,
                     "contract_type": 4
@@ -818,6 +818,62 @@
                 "extra_apartments": 2,
                 "percentage_used": 10.0
             }
+        },
+        "2025-06-30": {
+            "timestamp": "2025-06-11T14:11:47.129Z",
+            "cleaners": [
+                {
+                    "id": 18,
+                    "name": "MUTURI DANIEL",
+                    "lastname": "NGANGA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 33,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 4
+                },
+                {
+                    "id": 24,
+                    "name": "HUSSAIN",
+                    "lastname": "SYED SHUJIAHAT",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 47,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": "B"
+                },
+                {
+                    "id": 249,
+                    "name": "Ogbodo Chidi",
+                    "lastname": "Igwe",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 32.5,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": 4
+                },
+                {
+                    "id": 287,
+                    "name": "BAH",
+                    "lastname": "ISMAILA",
+                    "role": "Standard",
+                    "active": true,
+                    "ranking": 0,
+                    "counter_hours": 42.5,
+                    "counter_days": 0,
+                    "available": true,
+                    "contract_type": "B"
+                }
+            ],
+            "total_selected": 4,
+            "total_available": 33,
+            "date": "2025-06-30"
         }
     }
 }
