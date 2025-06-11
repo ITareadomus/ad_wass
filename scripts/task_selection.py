@@ -1,5 +1,3 @@
-# Applied indentation fix in cleaner_selection.py
-
 import json
 import mysql.connector
 import sys
@@ -186,4 +184,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-`
