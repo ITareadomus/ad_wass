@@ -1,170 +1,267 @@
+
 import json
-from gmaps import get_walk_time  # funzione esterna per ottenere tempo di cammino tra due indirizzi
-from itertools import combinations
-from datetime import timedelta
+import sys
+from datetime import datetime
+import math
 
+def haversine_distance(lat1, lng1, lat2, lng2):
+    """
+    Calcola la distanza in metri tra due punti usando la formula di Haversine
+    """
+    R = 6371000  # Raggio della Terra in metri
+    
+    lat1_rad = math.radians(lat1)
+    lat2_rad = math.radians(lat2)
+    delta_lat = math.radians(lat2 - lat1)
+    delta_lng = math.radians(lng2 - lng1)
+    
+    a = math.sin(delta_lat/2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(delta_lng/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    
+    return R * c
 
-# ---- 1. PRIORITY RULES ----
+def calcola_distanza(lat1, lng1, lat2, lng2, mode="walking"):
+    """
+    Calcola tempo di percorrenza tra due punti
+    """
+    try:
+        lat1, lng1, lat2, lng2 = float(lat1), float(lng1), float(lat2), float(lng2)
+        distance_m = haversine_distance(lat1, lng1, lat2, lng2)
+        
+        # Velocità media a piedi: 5 km/h = 1.39 m/s
+        speed_ms = 1.39
+        time_seconds = distance_m / speed_ms
+        
+        return {
+            "durata": time_seconds,
+            "distanza": distance_m
+        }
+    except:
+        return None
+
 def get_priority(apt):
-    check_in = apt.get("check_in", "")
+    """Calcola priorità appartamento"""
+    checkin_time = apt.get("checkin_time", "")
     small_equipment = apt.get("small_equipment", False)
-    if check_in == "14:00" or small_equipment:
+    
+    if checkin_time == "14:00" or small_equipment:
         return 1
-    elif check_in == "15:00":
+    elif checkin_time == "15:00":
         return 2
     else:
         return 3
 
-
-# ---- 2. LOAD DATA ----
 def load_json(path):
+    """Carica file JSON"""
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def time_between_apartments(apt1, apt2):
+    """Calcola tempo tra due appartamenti"""
+    if not apt1.get("lat") or not apt1.get("lng") or not apt2.get("lat") or not apt2.get("lng"):
+        return float("inf")
+        
     result = calcola_distanza(
         apt1["lat"], apt1["lng"],
         apt2["lat"], apt2["lng"],
         mode="walking"
     )
+    
     if result is None:
-        return float("inf")  # Scarta coppie non calcolabili
+        return float("inf")
     return result["durata"]  # in secondi
 
-
-# ---- 3. CLEANER ASSIGNMENT LOGIC ----
-def build_assignments(cleaners, apartments, sel_cleaners):
-    # Filtra i cleaners selezionati
-    cleaners = [c for c in cleaners if c["id"] in sel_cleaners]
+def build_assignments(cleaners, apartments):
+    """Costruisce le assegnazioni"""
+    # Filtra appartamenti con coordinate valide
+    valid_apartments = []
+    for apt in apartments:
+        if apt.get("lat") and apt.get("lng"):
+            try:
+                float(apt["lat"])
+                float(apt["lng"])
+                valid_apartments.append(apt)
+            except (ValueError, TypeError):
+                continue
     
-    # Aggiungi priorità agli apt
+    apartments = valid_apartments
+    print(f"Appartamenti validi con coordinate: {len(apartments)}")
+    
+    if not apartments:
+        print("Nessun appartamento con coordinate valide trovato!")
+        return []
+    
+    # Aggiungi priorità agli appartamenti
     for apt in apartments:
         apt["priority"] = get_priority(apt)
+        apt["assigned"] = False
     
     # Ordina appartamenti per priorità crescente
     apartments.sort(key=lambda a: a["priority"])
     
-    # Appartamenti non ancora assegnati
-    unassigned_apts = apartments[:]
     assignments = []
     
     for cleaner in cleaners:
+        if not cleaner.get("available", True):
+            continue
+            
         cleaner_id = cleaner["id"]
-    
-        for apt in unassigned_apts[:]:  # copia
-            if apt.get("assigned", False):
+        cleaner_name = cleaner.get("name", "")
+        cleaner_lastname = cleaner.get("lastname", "")
+        cleaner_role = cleaner.get("role", "Standard")
+        
+        # Trova appartamenti non assegnati
+        unassigned_apts = [apt for apt in apartments if not apt.get("assigned", False)]
+        
+        if not unassigned_apts:
+            break
+        
+        # Prendi il primo appartamento disponibile
+        current_apt = unassigned_apts[0]
+        current_pack = [current_apt]
+        current_apt["assigned"] = True
+        
+        walk_total_sec = 0
+        clean_total_min = current_apt.get("cleaning_time", 60) or 60
+        
+        # Cerca appartamenti vicini
+        for candidate in unassigned_apts[1:]:
+            if candidate.get("assigned", False):
                 continue
-    
-            current_pack = [apt]
-            walk_total_min = 0
-            clean_total = apt.get("cleaning_time", 60)  # default 60 minuti
-    
-            for candidate in unassigned_apts:
-                if candidate == apt or candidate.get("assigned", False):
-                    continue
-    
-                # Calcola tempo di percorrenza a piedi in secondi e converti in minuti
-                walk_time_sec = time_between_apartments(current_pack[-1], candidate)
-                walk_time_min = walk_time_sec / 60 if walk_time_sec != float("inf") else float("inf")
-    
-                potential_clean_time = candidate.get("cleaning_time", 60)
-    
-                if walk_time_min <= 15 and clean_total + potential_clean_time + walk_total_min + walk_time_min <= 240:
-                    current_pack.append(candidate)
-                    clean_total += potential_clean_time
-                    walk_total_min += walk_time_min
-    
-            # Segna come assegnati
-            for ap in current_pack:
-                ap["assigned"] = True
-    
-            # Salva pacchetto
-            assignments.append({
-                "cleaner_id": cleaner_id,
-                "cleaner_name": cleaner["name"],
-                "apartments": [{"apt_id": a["id"], "address": a["address"]} for a in current_pack],
-                "priority_levels": [a["priority"] for a in current_pack],
-                "total_cleaning_time_min": clean_total,
-                "total_walk_time_min": int(round(walk_total_min)),
-                "zone": cleaner.get("zone", "N/D")
+                
+            # Calcola tempo di percorrenza
+            walk_time_sec = time_between_apartments(current_pack[-1], candidate)
+            walk_time_min = walk_time_sec / 60 if walk_time_sec != float("inf") else float("inf")
+            
+            potential_clean_time = candidate.get("cleaning_time", 60) or 60
+            
+            # Verifica se può essere aggiunto (max 15 min di cammino, max 4h totali)
+            if (walk_time_min <= 15 and 
+                clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60 <= 240):
+                
+                current_pack.append(candidate)
+                candidate["assigned"] = True
+                clean_total_min += potential_clean_time
+                walk_total_sec += walk_time_sec
+        
+        # Crea i dettagli della sequenza nel formato atteso dalle maschere
+        sequence_details = []
+        for i, apt in enumerate(current_pack):
+            sequence_details.append({
+                "task_id": apt.get("task_id") or apt.get("structure_id", "N/A"),
+                "structure_id": apt.get("structure_id"),
+                "address": apt.get("address", "Indirizzo non disponibile"),
+                "lat": str(apt.get("lat", "")),
+                "lng": str(apt.get("lng", "")),
+                "type": apt.get("type", "Standard"),
+                "priority": i + 1,  # Sequenza nell'ordine di visita
+                "checkin_time": apt.get("checkin_time"),
+                "checkout_time": apt.get("checkout_time"),
+                "cleaning_time": apt.get("cleaning_time", 60)
             })
+        
+        # Crea l'assegnazione nel formato atteso dalle maschere
+        assignment = {
+            "cleaner_id": cleaner_id,
+            "name": cleaner_name,
+            "lastname": cleaner_lastname,
+            "role": cleaner_role,
+            "sequence_details": sequence_details,
+            "total_apartments": len(current_pack),
+            "total_cleaning_time_min": clean_total_min,
+            "total_walk_time_min": int(round(walk_total_sec / 60)),
+            "priority_levels": [apt["priority"] for apt in current_pack]
+        }
+        
+        assignments.append(assignment)
+        print(f"Assegnato a {cleaner_name} {cleaner_lastname}: {len(current_pack)} appartamenti")
     
-        # Rimuove apt assegnati da unassigned_apts
-        unassigned_apts = [a for a in unassigned_apts if not a.get("assigned", False)]
-    
-    # Se rimangono apt non assegnati (es. > 4h), assegnali singolarmente
-    if unassigned_apts:
-        for apt in unassigned_apts:
-            closest_cleaner = min(cleaners, key=lambda c: time_between_apartments(c, apt))
-    
-            walk_time_sec = time_between_apartments(closest_cleaner, apt)
-            walk_time_min = walk_time_sec / 60 if walk_time_sec != float("inf") else 0
-    
-            assignments.append({
-                "cleaner_id": closest_cleaner["id"],
-                "cleaner_name": closest_cleaner["name"],
-                "apartments": [{"apt_id": apt["id"], "address": apt["address"]}],
-                "priority_levels": [apt["priority"]],
-                "total_cleaning_time_min": apt.get("cleaning_time", 60),
-                "total_walk_time_min": int(round(walk_time_min)),
-                "zone": closest_cleaner.get("zone", "N/D")
-            })
-
     return assignments
 
-
-
-# ---- 4. MAIN ----
 def main(selected_date=None):
-    import sys
+    """Funzione principale"""
+    print("🔄 INIZIO ALGORITMO ASSEGNAZIONE")
     
     # Se viene passata una data come parametro da linea di comando
     if len(sys.argv) > 1:
         selected_date = sys.argv[1]
     
-    # Carica i dati dal nuovo formato con date
-    sel_cleaners_data = load_json("data/sel_cleaners.json")
+    print(f"📅 Data selezionata: {selected_date}")
     
-    # Usa la data specificata o cerca la data più recente
-    if selected_date and "dates" in sel_cleaners_data and selected_date in sel_cleaners_data["dates"]:
-        cleaners = sel_cleaners_data["dates"][selected_date].get("cleaners", [])
-        print(f"Usando cleaners dalla data specifica: {selected_date}")
-    elif "dates" in sel_cleaners_data and sel_cleaners_data["dates"]:
-        latest_date = max(sel_cleaners_data["dates"].keys())
-        cleaners = sel_cleaners_data["dates"][latest_date].get("cleaners", [])
-        print(f"Usando cleaners dalla data più recente: {latest_date}")
-    else:
-        print("Nessun cleaner trovato nel file sel_cleaners.json")
-        cleaners = []
-    
-    # Carica i dati degli appartamenti dal nuovo formato con date
-    apartments_data = load_json("data/modello_apt.json")
-    
-    # Usa la data specificata o cerca la data più recente per gli appartamenti
-    if selected_date and "dates" in apartments_data and selected_date in apartments_data["dates"]:
-        apartments = apartments_data["dates"][selected_date].get("apt", [])
-        print(f"Usando appartamenti dalla data specifica: {selected_date}")
-    elif "dates" in apartments_data and apartments_data["dates"]:
-        latest_date = max(apartments_data["dates"].keys())
-        apartments = apartments_data["dates"][latest_date].get("apt", [])
-        print(f"Usando appartamenti dalla data più recente: {latest_date}")
-    else:
-        # Fallback al formato vecchio per compatibilità
-        apartments = apartments_data.get("apt", [])
-        print("Usando appartamenti dal formato compatibilità (senza date)")
+    try:
+        # Carica i cleaners selezionati
+        sel_cleaners_data = load_json("data/sel_cleaners.json")
+        
+        # Usa la data specificata o cerca la data più recente
+        if selected_date and "dates" in sel_cleaners_data and selected_date in sel_cleaners_data["dates"]:
+            cleaners = sel_cleaners_data["dates"][selected_date].get("cleaners", [])
+            print(f"✅ Usando cleaners dalla data specifica: {selected_date}")
+        elif "dates" in sel_cleaners_data and sel_cleaners_data["dates"]:
+            latest_date = max(sel_cleaners_data["dates"].keys())
+            cleaners = sel_cleaners_data["dates"][latest_date].get("cleaners", [])
+            print(f"⚠️ Usando cleaners dalla data più recente: {latest_date}")
+        else:
+            print("❌ Nessun cleaner trovato nel file sel_cleaners.json")
+            return
+        
+        # Carica gli appartamenti
+        apartments_data = load_json("data/modello_apt.json")
+        
+        # Usa la data specificata o cerca la data più recente per gli appartamenti
+        if selected_date and "dates" in apartments_data and selected_date in apartments_data["dates"]:
+            apartments = apartments_data["dates"][selected_date].get("apt", [])
+            print(f"✅ Usando appartamenti dalla data specifica: {selected_date}")
+        elif "dates" in apartments_data and apartments_data["dates"]:
+            latest_date = max(apartments_data["dates"].keys())
+            apartments = apartments_data["dates"][latest_date].get("apt", [])
+            print(f"⚠️ Usando appartamenti dalla data più recente: {latest_date}")
+        else:
+            # Fallback al formato vecchio per compatibilità
+            apartments = apartments_data.get("apt", [])
+            print("⚠️ Usando appartamenti dal formato compatibilità (senza date)")
 
-    if not cleaners:
-        print("Errore: Nessun cleaner selezionato trovato!")
-        return
+        if not cleaners:
+            print("❌ Errore: Nessun cleaner selezionato trovato!")
+            return
+            
+        if not apartments:
+            print("❌ Errore: Nessun appartamento trovato!")
+            return
 
-    assignments = build_assignments(cleaners, apartments, [c["id"] for c in cleaners])
+        print(f"👥 Cleaners disponibili: {len(cleaners)}")
+        print(f"🏠 Appartamenti da assegnare: {len(apartments)}")
+        
+        # Genera le assegnazioni
+        assignments = build_assignments(cleaners, apartments)
+        
+        if not assignments:
+            print("❌ Nessuna assegnazione generata!")
+            return
+        
+        # Salva nel formato atteso dalle maschere
+        output_data = {
+            "timestamp": datetime.now().isoformat(),
+            "date": selected_date,
+            "assignments": assignments,
+            "total_cleaners": len(assignments),
+            "total_apartments": sum(a["total_apartments"] for a in assignments)
+        }
+        
+        with open("data/assignments.json", "w", encoding="utf-8") as f:
+            json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-    with open("data/assignments.json", "w", encoding="utf-8") as f:
-        json.dump(assignments, f, indent=2, ensure_ascii=False)
+        print(f"✅ Assegnazioni completate!")
+        print(f"📊 Totale pacchetti: {len(assignments)}")
+        print(f"🏠 Appartamenti assegnati: {sum(a['total_apartments'] for a in assignments)}")
+        
+        # Stampa riepilogo
+        for i, assignment in enumerate(assignments, 1):
+            print(f"  {i}. {assignment['name']} {assignment['lastname']}: {assignment['total_apartments']} apt")
 
-    print(f"Assegnazioni completate. Totale pacchetti: {len(assignments)}")
-
-
+    except Exception as e:
+        print(f"❌ Errore durante l'esecuzione: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()

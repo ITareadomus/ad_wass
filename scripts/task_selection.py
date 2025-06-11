@@ -65,7 +65,7 @@ def get_apartments_for_date(selected_date):
     results = cursor.fetchall()
 
     cursor.close()
-    connection.close()
+        connection.close()
 
     # Parametri statici
     static_params = {
