@@ -1,5 +1,5 @@
 {
-    "timestamp": "2025-06-11T07:05:13.220Z",
+    "timestamp": "2025-06-11T08:00:20.674787",
     "cleaners": [
         {
             "id": 18,
@@ -8,10 +8,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 24,
@@ -20,10 +21,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 249,
@@ -32,10 +34,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 287,
@@ -44,10 +47,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 321,
@@ -56,10 +60,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 326,
@@ -68,10 +73,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 404,
@@ -80,10 +86,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 445,
@@ -92,10 +99,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 469,
@@ -104,10 +112,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 476,
@@ -116,10 +125,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 555,
@@ -128,10 +138,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 596,
@@ -140,10 +151,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 771,
@@ -152,10 +164,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 895,
@@ -164,10 +177,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 911,
@@ -176,10 +190,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 927,
@@ -188,22 +203,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
-        },
-        {
-            "id": 934,
-            "name": "SINETH",
-            "lastname": "ANGUNNA",
-            "role": "Premium",
-            "active": true,
-            "ranking": 0,
-            "counter_hours": 0,
-            "counter_days": 0,
-            "available": true,
-            "contract_type": "A"
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 937,
@@ -212,10 +216,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 966,
@@ -224,10 +229,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 967,
@@ -236,10 +242,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 985,
@@ -248,10 +255,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 987,
@@ -260,10 +268,11 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         },
         {
             "id": 989,
@@ -272,36 +281,18 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 0,
+            "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 0
-        },
-        {
-            "id": 990,
-            "name": "ABDINASIR",
-            "lastname": "MOHAMED ABDILAHI",
-            "role": "Standard",
-            "active": true,
-            "ranking": 0,
-            "counter_hours": 0,
-            "counter_days": 0,
-            "available": true,
-            "contract_type": 0
-        },
-        {
-            "id": 993,
-            "name": "MISLEIDYS",
-            "lastname": "PENA HERNANDEZ",
-            "role": "Standard",
-            "active": true,
-            "ranking": 0,
-            "counter_hours": 0,
-            "counter_days": 0,
-            "available": true,
-            "contract_type": 0
+            "contract_type": 0,
+            "deficit_hours": 0.0
         }
     ],
-    "total_selected": 25,
-    "total_available": 49
+    "total_selected": 22,
+    "total_available": 0,
+    "apartment_stats": {
+        "total_apartments": 60,
+        "extra_apartments": 6,
+        "percentage_used": 10.0
+    }
 }
