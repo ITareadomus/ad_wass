@@ -1,3 +1,5 @@
+# Applied indentation fix in cleaner_selection.py
+
 import json
 import mysql.connector
 import sys
@@ -136,12 +138,12 @@ def get_apartments_for_date(selected_date):
 
 def main():
     selected_date = None
-    
+
     # Controlla i parametri della riga di comando
     if len(sys.argv) > 1:
         selected_date = sys.argv[1]
         print(f"Usando data specifica: {selected_date}")
-    
+
     # Se non viene fornita una data, usa quella di domani (default)
     if not selected_date:
         tomorrow = datetime.now() + timedelta(days=1)
@@ -184,3 +186,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+`

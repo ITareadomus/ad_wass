@@ -3,7 +3,7 @@ import json
 import math
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Percentuale di appartamenti extra da considerare (es: 20% in più)
 EXTRA_APT_PERCENTAGE = 0.2  # 20% - valore di default
@@ -135,12 +135,31 @@ def main():
     # Aggiorna la lista dei cleaner dal DB
     refresh_cleaner_list()
 
-    # Carica i dati dei cleaner e degli appartamenti
+    # Carica i dati dei cleaner
     with open("data/modello_cleaner.json") as f:
         cleaners = json.load(f)["cleaners"]
 
+    # Carica gli appartamenti dalla data specifica
     with open("data/modello_apt.json") as f:
-        apartments = json.load(f)["apt"]
+        apartments_data = json.load(f)
+    
+    # Usa la data specificata o cerca la data più recente per gli appartamenti
+    if selected_date and "dates" in apartments_data and selected_date in apartments_data["dates"]:
+        apartments = apartments_data["dates"][selected_date].get("apt", [])
+        print(f"Usando appartamenti dalla data specifica: {selected_date}")
+    elif "dates" in apartments_data and apartments_data["dates"]:
+        latest_date = max(apartments_data["dates"].keys())
+        apartments = apartments_data["dates"][latest_date].get("apt", [])
+        print(f"Usando appartamenti dalla data più recente: {latest_date}")
+    else:
+        # Fallback al formato vecchio per compatibilità
+        apartments = apartments_data.get("apt", [])
+        print("Usando appartamenti dal formato compatibilità (senza date)")
+
+    if not apartments:
+        print("ATTENZIONE: Nessun appartamento trovato per la data selezionata!")
+        print("Esegui prima task_selection.py per caricare gli appartamenti.")
+        return
 
     # Log del numero di appartamenti da pulire
     total_apartments = len(apartments)
