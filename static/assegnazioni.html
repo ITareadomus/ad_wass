@@ -26,9 +26,13 @@
 
     <div class="main-content">
         <div class="container">
-            <h1>Genera Assegnazioni</h1>
+            <div class="header-section">
+                <h1 class="header-title">🗺️ Genera Assegnazioni</h1>
+                <p class="header-subtitle">Crea assegnazioni automatiche degli appartamenti ai cleaner selezionati</p>
+            </div>
 
-            <div id="messageContainer"></div>
+            <div class="content-section">
+                <div id="messageContainer"></div></div>
 
             <!-- Mappa di Google Maps -->
             <div id="mapContainer" style="margin-bottom: 20px;">
@@ -51,39 +55,40 @@
             </div>
 
             <!-- Sezione Appartamenti e Cleaners -->
-            <div class="data-sections" style="display: flex; gap: 20px; margin: 20px 0;">
-                <!-- Lista Appartamenti -->
-                <div class="apartments-section" style="flex: 1;">
-                    <h3>Appartamenti della Giornata</h3>
-                    <div class="section-controls" style="margin-bottom: 10px;">
-                        <button class="btn" onclick="loadApartments()" style="background-color: #3498db; color: white;">
-                            🔄 Carica Appartamenti
-                        </button>
-                        <span id="apartmentCount" style="margin-left: 10px; font-size: 14px; color: #666;">0 appartamenti</span>
+                <div class="data-sections">
+                    <!-- Lista Appartamenti -->
+                    <div class="apartments-section">
+                        <h3>🏠 Appartamenti della Giornata</h3>
+                        <div class="section-controls">
+                            <button class="btn btn-generate" onclick="loadApartments()">
+                                🔄 Carica Appartamenti
+                            </button>
+                            <span id="apartmentCount">0 appartamenti</span>
+                        </div>
+                        <div id="apartmentsList" style="max-height: 400px; overflow-y: auto;">
+                            <div class="loading-message">Clicca "Carica Appartamenti" per visualizzare gli appartamenti della giornata</div>
+                        </div>
                     </div>
-                    <div id="apartmentsList" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background: #f9f9f9;">
-                        <div class="loading-message">Clicca "Carica Appartamenti" per visualizzare gli appartamenti della giornata</div>
-                    </div>
-                </div>
 
-                <!-- Lista Cleaners Selezionati -->
-                <div class="cleaners-section" style="flex: 1;">
-                    <h3>Cleaners Selezionati</h3>
-                    <div class="section-controls" style="margin-bottom: 10px;">
-                        <button class="btn" onclick="loadSelectedCleaners()" style="background-color: #27ae60; color: white;">
-                            🔄 Carica Cleaners
-                        </button>
-                        <span id="cleanerCount" style="margin-left: 10px; font-size: 14px; color: #666;">0 cleaners</span>
-                    </div>
-                    <div id="cleanersList" style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background: #f9f9f9;">
-                        <div class="loading-message">Clicca "Carica Cleaners" per visualizzare i cleaners selezionati</div>
+                    <!-- Lista Cleaners Selezionati -->
+                    <div class="cleaners-section">
+                        <h3>👥 Cleaners Selezionati</h3>
+                        <div class="section-controls">
+                            <button class="btn btn-confirm" onclick="loadSelectedCleaners()">
+                                🔄 Carica Cleaners
+                            </button>
+                            <span id="cleanerCount">0 cleaners</span>
+                        </div>
+                        <div id="cleanersList" style="max-height: 400px; overflow-y: auto;">
+                            <div class="loading-message">Clicca "Carica Cleaners" per visualizzare i cleaners selezionati</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div id="assignmentResults" style="display: none;">
-                <h3>Tabella Assegnazioni Appartamenti</h3>
-                <div id="assignmentList"></div>
+                    <h3>📋 Tabella Assegnazioni Appartamenti</h3>
+                    <div id="assignmentList"></div>
+                </div>
             </div>
         </div>
     </div>

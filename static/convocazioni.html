@@ -26,20 +26,24 @@
 
     <div class="main-content">
         <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h1 id="convocazioniTitle">Genera convocazioni per <span id="selectedDate"></span></h1>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label for="dateSelector" style="font-size: 14px; color: #666;">Data:</label>
-                    <input type="date" id="dateSelector" onchange="updateSelectedDate()" 
-                           style="padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+            <div class="header-section">
+                <h1 class="header-title">Genera convocazioni per <span id="selectedDate"></span></h1>
+                <p class="header-subtitle">Seleziona i cleaner che verranno convocati per la giornata</p>
+                <div class="date-selector-container">
+                    <label for="dateSelector">📅 Seleziona data:</label>
+                    <input type="date" id="dateSelector" onchange="updateSelectedDate()">
                 </div>
             </div>
 
-            <div id="messageContainer"></div>
+            <div class="content-section">
+                <div id="messageContainer"></div>
 
-            <div class="stats">
-                <span id="selectedCount">0</span> cleaner selezionati di <span id="totalCount">0</span>
-            </div>
+                <div class="stats">
+                    <div class="stats-content">
+                        <span>👥 <span class="stats-number" id="selectedCount">0</span> cleaner selezionati</span>
+                        <span>di <span class="stats-number" id="totalCount">0</span> disponibili</span>
+                    </div>
+                </div></div>
 
             <div class="cleaner-list" id="cleanerList">
                 <div class="loading">Caricamento cleaner in corso...</div>
@@ -55,11 +59,12 @@
                         <option value="30">30%</option>
                     </select>
                 </div>
-                <button class="btn" style="background-color: #f39c12; color: white;" onclick="refreshCleanerData()">🔄 Aggiorna DB</button>
+                <button class="btn btn-refresh" onclick="refreshCleanerData()">🔄 Aggiorna DB</button>
                 <button class="btn btn-confirm" id="confirmBtn" onclick="confirmSelection()">Conferma</button>
             </div>
 
             <div id="apartmentStatsContainer" style="display: none;"></div>
+            </div>
         </div>
     </div>
 
@@ -277,9 +282,14 @@
                 const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
 
                 cleanerItem.innerHTML = `
-                    <div class="cleaner-name">
-                        ${cleaner.name} ${cleaner.lastname}
-                        <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                    <div class="cleaner-info">
+                        <div class="cleaner-avatar">
+                            ${cleaner.name.charAt(0)}${cleaner.lastname.charAt(0)}
+                        </div>
+                        <div class="cleaner-details">
+                            <div class="cleaner-name">${cleaner.name} ${cleaner.lastname}</div>
+                            <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                        </div>
                     </div>
                     <label class="switch">
                         <input type="checkbox" id="cleaner-${index}" 
