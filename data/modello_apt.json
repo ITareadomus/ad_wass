@@ -1,7 +1,7 @@
 {
     "dates": {
         "2025-06-11": {
-            "timestamp": "2025-06-11T10:48:36.318414",
+            "timestamp": "2025-06-11T11:30:59.981629",
             "apt": [
                 {
                     "task_id": 192633,
@@ -1311,9 +1311,26 @@
                     "pax_in": 2,
                     "pax_out": 0,
                     "small_equipment": true
+                },
+                {
+                    "task_id": 209322,
+                    "structure_id": 1567,
+                    "client_id": 119,
+                    "type": "Standard",
+                    "address": "PIAZZA ZAVATTARI 6",
+                    "lat": "45.476094",
+                    "lng": "9.1439747",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-11",
+                    "checkout": "2025-06-11",
+                    "checkin_time": null,
+                    "checkout_time": null,
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
                 }
             ],
-            "total_apartments": 77,
+            "total_apartments": 78,
             "date": "2025-06-11"
         },
         "2025-06-14": {

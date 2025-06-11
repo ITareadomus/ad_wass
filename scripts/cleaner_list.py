@@ -7,7 +7,7 @@ db_config = {
     "host": "139.59.132.41",
     "user": "admin",
     "password": "ed329a875c6c4ebdf4e87e2bbe53a15771b5844ef6606dde",
-    "database": "adam"
+    "database": "adamdb"
 }
 
 # Crea il modello base da zero
@@ -118,7 +118,7 @@ for cleaner in results:
         """
         SELECT 1
         FROM app_attendance
-        WHERE user_id = %s AND %s BETWEEN start_date AND end_date;
+        WHERE user_id = %s AND %s BETWEEN start_date AND stop_date;
     """, (cleaner["id"], tomorrow))
     attendance_result = cursor.fetchone()
 
@@ -168,7 +168,7 @@ connection.close()
 config["cleaners"] = cleaners_data
 
 # Sovrascrive il file modello.json con i dati aggiornati
-with open("modello_cleaner.json", "w") as f:
+with open("data/modello_cleaner.json", "w") as f:
     json.dump(config, f, indent=4)
 
 print(f"Aggiornato modello_cleaner.json con {len(results)} cleaners.")
