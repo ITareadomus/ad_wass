@@ -169,7 +169,7 @@
             }
         }
 
-        // Esegui script Python con percentuale
+        // Esegui script Python con percentuale e data
         async function runPythonScriptWithPercentage(scriptName, percentage) {
             try {
                 // Nessun aggiornamento del testo - solo progresso
@@ -178,6 +178,7 @@
                 await new Promise(resolve => setTimeout(resolve, 400));
                 updateProgress(35);
 
+                const selectedDate = getSelectedDate();
                 const response = await fetch('/run-script', {
                     method: 'POST',
                     headers: {
@@ -185,7 +186,8 @@
                     },
                     body: JSON.stringify({ 
                         script: scriptName,
-                        percentage: percentage
+                        percentage: percentage,
+                        date: selectedDate
                     })
                 });
 
@@ -398,11 +400,13 @@
             }
 
             // Salva la selezione nel file sel_cleaners.json
+            const selectedDate = getSelectedDate();
             const selectionData = {
                 timestamp: new Date().toISOString(),
                 cleaners: selectedCleaners,
                 total_selected: selectedCleaners.length,
-                total_available: cleaners.length
+                total_available: cleaners.length,
+                date: selectedDate
             };
 
             try {
@@ -431,7 +435,8 @@
                 hideLoadingOverlay();
 
                 if (result.success) {
-                    showMessage(`Selezione confermata! ${selectedCleaners.length} cleaner selezionati.`, 'success');
+                    const displayDate = selectedDate.split('-').reverse().join('/');
+                    showMessage(`Selezione confermata per il ${displayDate}! ${selectedCleaners.length} cleaner selezionati.`, 'success');
                 } else {
                     showMessage(`Errore nel salvataggio: ${result.error}`, 'error');
                 }
@@ -459,7 +464,7 @@
             document.getElementById('selectedDate').textContent = displayDate;
         }
 
-        // Aggiorna la data selezionata
+        // Aggiorna la data selezionata e carica i cleaner per quella data
         function updateSelectedDate() {
             const selectedDateValue = document.getElementById('dateSelector').value;
             if (selectedDateValue) {
@@ -468,6 +473,52 @@
                 document.getElementById('selectedDate').textContent = displayDate;
 
                 showMessage(`Data aggiornata a: ${displayDate}`, 'info');
+                
+                // Carica i cleaner selezionati per questa data
+                loadCleanersForDate(selectedDateValue);
+            }
+        }
+
+        // Carica i cleaner selezionati per una data specifica
+        async function loadCleanersForDate(selectedDate) {
+            try {
+                const response = await fetch(`/get-cleaners-by-date?date=${selectedDate}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    selectedFromFile = result.cleaners || [];
+                    
+                    // Aggiorna le checkbox in base ai cleaner selezionati per questa data
+                    const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+                    checkboxes.forEach((checkbox, index) => {
+                        const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                        const isSelected = selectedFromFile.some(sel => sel.id === cleanerId);
+                        checkbox.checked = isSelected;
+                    });
+
+                    updateStats();
+
+                    // Mostra le statistiche degli appartamenti se disponibili
+                    if (result.date_data && result.date_data.apartment_stats) {
+                        displayApartmentStats(result.date_data.apartment_stats);
+                    } else {
+                        // Nascondi le statistiche se non ci sono dati per questa data
+                        const container = document.getElementById('apartmentStatsContainer');
+                        if (container) {
+                            container.style.display = 'none';
+                        }
+                    }
+
+                    if (selectedFromFile.length > 0) {
+                        showMessage(`Caricati ${selectedFromFile.length} cleaner selezionati per il ${selectedDate.split('-').reverse().join('/')}`, 'success');
+                    } else {
+                        showMessage(`Nessun cleaner selezionato per il ${selectedDate.split('-').reverse().join('/')}`, 'info');
+                    }
+                } else {
+                    showMessage(`Errore nel caricamento dei cleaner per la data: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Errore di rete: ${error.message}`, 'error');
             }
         }
 
@@ -485,8 +536,14 @@
             updateProgress(5);
             
             // Avvia il caricamento dei cleaners con un piccolo ritardo
-            setTimeout(() => {
-                loadCleaners(false); // Carica velocemente senza aggiornare il DB
+            setTimeout(async () => {
+                await loadCleaners(false); // Carica velocemente senza aggiornare il DB
+                
+                // Dopo aver caricato i cleaner, carica le selezioni per la data iniziale
+                const initialDate = getSelectedDate();
+                if (initialDate) {
+                    loadCleanersForDate(initialDate);
+                }
             }, 100);
         });
     </script>

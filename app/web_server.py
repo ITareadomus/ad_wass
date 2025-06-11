@@ -7,6 +7,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import threading
 import time
+from datetime import datetime, timedelta
 
 class CustomHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -57,6 +58,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
 
             script_name = data.get('script')
             percentage = data.get('percentage')  # Nuovo parametro per la percentuale
+            selected_date = data.get('date', '')  # Data selezionata
+
             if not script_name:
                 self.send_json_response({'success': False, 'error': 'Nome script mancante'})
                 return
@@ -86,10 +89,12 @@ class CustomHandler(SimpleHTTPRequestHandler):
 
             # Esegui lo script
             try:
-                # Aggiungi il parametro percentuale se è cleaner_selection.py
+                # Prepara il comando con la percentuale e data se fornite
                 cmd = [sys.executable, script_path]
-                if script_name == 'cleaner_selection.py' and percentage is not None:
+                if script_name == 'cleaner_selection.py':
                     cmd.append(str(percentage))
+                    if selected_date:
+                        cmd.append(selected_date)
 
                 result = subprocess.run(cmd,
                                       capture_output=True,
@@ -115,10 +120,29 @@ class CustomHandler(SimpleHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
+            selected_date = data.get('date', '')
 
-            # Salva nel file data/sel_cleaners.json
+            # Se non viene fornita una data, usa quella di domani
+            if not selected_date:
+                tomorrow = datetime.now() + timedelta(days=1)
+                selected_date = tomorrow.strftime("%Y-%m-%d")
+
+            # Carica i dati esistenti o crea una struttura vuota
+            try:
+                with open('data/sel_cleaners.json', 'r', encoding='utf-8') as f:
+                    existing_data = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                existing_data = {"dates": {}}
+
+            # Assicurati che la struttura contenga la chiave "dates"
+            if "dates" not in existing_data:
+                existing_data = {"dates": {}}
+
+            # Aggiorna i dati per la data specifica
+            existing_data["dates"][selected_date] = data
+
             with open('data/sel_cleaners.json', 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=4, ensure_ascii=False)
+                json.dump(existing_data, f, indent=4, ensure_ascii=False)
 
             self.send_json_response({'success': True})
 

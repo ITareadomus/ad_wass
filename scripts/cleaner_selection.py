@@ -78,8 +78,25 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
     return selected_cleaners
 
 # Salva i cleaner selezionati in un file JSON nella cartella data
-def save_selected_cleaners(selected_cleaners, total_apartments=0, extra_apartments=0, output_file="data/sel_cleaners.json"):
-    data = {
+def save_selected_cleaners(selected_cleaners, selected_date=None, total_apartments=0, extra_apartments=0, output_file="data/sel_cleaners.json"):
+    # Se non viene fornita una data, usa quella di domani
+    if selected_date is None:
+        tomorrow = datetime.now() + timedelta(days=1)
+        selected_date = tomorrow.strftime("%Y-%m-%d")
+    
+    # Carica i dati esistenti o crea una struttura vuota
+    try:
+        with open(output_file, "r") as f:
+            existing_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = {"dates": {}}
+    
+    # Assicurati che la struttura contenga la chiave "dates"
+    if "dates" not in existing_data:
+        existing_data = {"dates": {}}
+    
+    # Aggiorna i dati per la data specifica
+    existing_data["dates"][selected_date] = {
         "timestamp": datetime.now().isoformat(),
         "cleaners": selected_cleaners,
         "total_selected": len(selected_cleaners),
@@ -90,21 +107,30 @@ def save_selected_cleaners(selected_cleaners, total_apartments=0, extra_apartmen
             "percentage_used": EXTRA_APT_PERCENTAGE * 100
         }
     }
+    
     with open(output_file, "w") as f:
-        json.dump(data, f, indent=4)
+        json.dump(existing_data, f, indent=4)
 
 # Funzione principale per selezionare i cleaner
 def main():
     global EXTRA_APT_PERCENTAGE
     
-    # Controlla se è stata passata una percentuale come parametro
+    selected_date = None
+    
+    # Controlla i parametri della riga di comando
     if len(sys.argv) > 1:
         try:
+            # Primo parametro: percentuale
             percentage = float(sys.argv[1])
-            EXTRA_APT_PERCENTAGE = percentage / 100.0  # Converte da percentuale a decimale
+            EXTRA_APT_PERCENTAGE = percentage / 100.0
             print(f"Usando percentuale custom: {percentage}%")
         except ValueError:
             print("Parametro percentuale non valido, uso valore di default")
+    
+    if len(sys.argv) > 2:
+        # Secondo parametro: data
+        selected_date = sys.argv[2]
+        print(f"Usando data specifica: {selected_date}")
     
     # Aggiorna la lista dei cleaner dal DB
     refresh_cleaner_list()
@@ -139,7 +165,7 @@ def main():
     print(f"Cleaner selezionati: {len(selected_cleaners)}")
 
     # Salva i cleaner selezionati in un file JSON con statistiche
-    save_selected_cleaners(selected_cleaners, total_apartments, extra_apartments)
+    save_selected_cleaners(selected_cleaners, selected_date, total_apartments, extra_apartments)
 
 if __name__ == "__main__":
     main()
