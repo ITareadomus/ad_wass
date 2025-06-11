@@ -309,7 +309,7 @@
             "date": "2025-06-12"
         },
         "2025-06-13": {
-            "timestamp": "2025-06-11T09:36:16.172701",
+            "timestamp": "2025-06-11T10:28:49.156Z",
             "cleaners": [
                 {
                     "id": 18,
@@ -318,11 +318,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 24,
@@ -331,11 +330,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 249,
@@ -344,11 +342,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 287,
@@ -357,11 +354,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 321,
@@ -370,11 +366,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 326,
@@ -383,11 +378,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 404,
@@ -396,11 +390,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 445,
@@ -409,11 +402,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 469,
@@ -422,11 +414,10 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 },
                 {
                     "id": 476,
@@ -435,215 +426,15 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 0.0,
+                    "counter_hours": 0,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 555,
-                    "name": "SEYNI",
-                    "lastname": "DRAME",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 596,
-                    "name": "TRACY",
-                    "lastname": "OKE",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 771,
-                    "name": "PRECIOUS",
-                    "lastname": "GYABAAH",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 895,
-                    "name": "ESTHER DORCAS",
-                    "lastname": "LANDA PANEZ",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 911,
-                    "name": "AIDA",
-                    "lastname": "DIONE",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 927,
-                    "name": "NAME JULIE",
-                    "lastname": "ADOU",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 937,
-                    "name": "LOVETH",
-                    "lastname": "IGUDIA",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 966,
-                    "name": "YENCI MARICELA",
-                    "lastname": "PILIA LINARES",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 967,
-                    "name": "ADEL FAYEZ ABDELKRIM",
-                    "lastname": "DESSOUKI",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 985,
-                    "name": "HODA MAHMOUD SALAMA",
-                    "lastname": "HUSSEIN",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 987,
-                    "name": "MARIE LAURE",
-                    "lastname": "PENKA",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 989,
-                    "name": "SEYDOU",
-                    "lastname": "DIAKITE",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 990,
-                    "name": "ABDINASIR",
-                    "lastname": "MOHAMED ABDILAHI",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 993,
-                    "name": "MISLEIDYS",
-                    "lastname": "PENA HERNANDEZ",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
-                },
-                {
-                    "id": 994,
-                    "name": "NURUL",
-                    "lastname": "ISLAM",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0.0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 0,
-                    "deficit_hours": 0.0
+                    "contract_type": 0
                 }
             ],
-            "total_selected": 25,
-            "total_available": 0,
-            "apartment_stats": {
-                "total_apartments": 67,
-                "extra_apartments": 6,
-                "percentage_used": 10.0
-            }
+            "total_selected": 10,
+            "total_available": 49,
+            "date": "2025-06-13"
         },
         "2025-06-14": {
             "timestamp": "2025-06-11T10:22:04.012171",
