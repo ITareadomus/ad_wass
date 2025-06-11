@@ -172,13 +172,33 @@
         // Esegui script Python con percentuale e data
         async function runPythonScriptWithPercentage(scriptName, percentage) {
             try {
-                // Nessun aggiornamento del testo - solo progresso
-                updateProgress(15);
+                // Prima esegui task_selection.py per caricare gli appartamenti della data selezionata
+                const selectedDate = getSelectedDate();
+                updateProgress(10);
+                
+                const taskSelectionResponse = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        script: 'task_selection.py',
+                        date: selectedDate
+                    })
+                });
 
+                updateProgress(25);
                 await new Promise(resolve => setTimeout(resolve, 400));
+
+                const taskResult = await taskSelectionResponse.json();
+                if (!taskResult.success) {
+                    showMessage(`Errore caricamento appartamenti: ${taskResult.error}`, 'error');
+                    return false;
+                }
+
                 updateProgress(35);
 
-                const selectedDate = getSelectedDate();
+                // Ora esegui cleaner_selection.py con la percentuale e la data
                 const response = await fetch('/run-script', {
                     method: 'POST',
                     headers: {

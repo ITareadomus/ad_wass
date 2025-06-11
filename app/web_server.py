@@ -101,6 +101,10 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     cmd.append(str(percentage))
                     if selected_date:
                         cmd.append(selected_date)
+                elif script_name == 'task_selection.py':
+                    selected_date = data.get('date')
+                    if selected_date:
+                        cmd.append(selected_date)
                 elif script_name == 'algoritmo.py' and selected_date:
                     cmd.append(selected_date)
                 elif script_name == 'task_selection.py' and selected_date:
@@ -190,7 +194,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
             if os.path.exists(sel_cleaners_file):
                 with open(sel_cleaners_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                
+
                 # Controlla se esiste la struttura "dates"
                 if "dates" in data and selected_date in data["dates"]:
                     date_data = data["dates"][selected_date]
@@ -234,7 +238,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
             if os.path.exists(apt_file):
                 with open(apt_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                
+
                 # Controlla se esiste la struttura "dates"
                 if "dates" in data and selected_date in data["dates"]:
                     date_data = data["dates"][selected_date]
