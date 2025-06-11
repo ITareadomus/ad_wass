@@ -1,110 +1,119 @@
 import json
-import random
-from datetime import datetime
+from gmaps import get_walk_time  # funzione esterna per ottenere tempo di cammino tra due indirizzi
+from itertools import combinations
+from datetime import timedelta
 
 
-def load_cleaners():
-    """Carica i cleaner dal file sel_cleaners.json"""
-    try:
-        with open('data/sel_cleaners.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            return data.get('cleaners', [])
-    except FileNotFoundError:
-        print("Errore: File data/sel_cleaners.json non trovato")
-        return []
+# ---- 1. PRIORITY RULES ----
+def get_priority(apt):
+    check_in = apt.get("check_in", "")
+    small_equipment = apt.get("small_equipment", False)
+    if check_in == "14:00" or small_equipment:
+        return 1
+    elif check_in == "15:00":
+        return 2
+    else:
+        return 3
 
 
-def load_apartments():
-    """Carica gli appartamenti dal file modello_apt.json"""
-    try:
-        with open('data/modello_apt.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            return data.get('apt', [])
-    except FileNotFoundError:
-        print("Errore: File data/modello_apt.json non trovato")
-        return []
+# ---- 2. LOAD DATA ----
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
-def create_simple_assignments(cleaners, apartments):
-    """Crea assegnazioni semplici: 3 appartamenti per cleaner con priorità casuali"""
+# ---- 3. CLEANER ASSIGNMENT LOGIC ----
+def build_assignments(cleaners, apartments, sel_cleaners):
+    # Filtra i cleaners selezionati
+    cleaners = [c for c in cleaners if c["id"] in sel_cleaners]
+
+    # Aggiungi priorità agli apt
+    for apt in apartments:
+        apt["priority"] = get_priority(apt)
+
+    # Ordina appartamenti per priorità crescente
+    apartments.sort(key=lambda a: a["priority"])
+
+    # Appartamenti non ancora assegnati
+    unassigned_apts = apartments[:]
     assignments = []
-    available_apartments = apartments.copy()
-
-    # Mescola gli appartamenti per renderli casuali
-    random.shuffle(available_apartments)
 
     for cleaner in cleaners:
-        # Prendi fino a 3 appartamenti per questo cleaner
-        assigned_apartments = []
+        cleaner_id = cleaner["id"]
+        apt_pool = []
 
-        for i in range(3):
-            if available_apartments:
-                apartment = available_apartments.pop(0)
+        # Prova a creare pacchetti a partire dagli apt più prioritari
+        for apt in unassigned_apts[:]:  # copia
+            if apt["assigned"] if "assigned" in apt else False:
+                continue
 
-                # Assegna priorità casuale da 1 a 3
-                apartment['priority'] = random.randint(1, 3)
+            # Inizia a costruire un pacchetto
+            current_pack = [apt]
+            walk_total = 0
+            clean_total = apt.get("cleaning_time", 60)  # default 60 minuti
 
-                assigned_apartments.append(apartment)
+            for candidate in unassigned_apts:
+                if candidate == apt or ("assigned" in candidate and candidate["assigned"]):
+                    continue
 
-        if assigned_apartments:
-            assignment = {
-                'cleaner_id': cleaner['id'],
-                'name': cleaner['name'],
-                'lastname': cleaner['lastname'],
-                'role': cleaner['role'],
-                'sequence_details': assigned_apartments
-            }
-            assignments.append(assignment)
+                # Calcolo distanza a piedi
+                walk_time = get_walk_time(current_pack[-1]["address"], candidate["address"])
+
+                if walk_time <= 15:
+                    potential_clean_time = candidate.get("cleaning_time", 60)
+                    if clean_total + potential_clean_time + walk_total + walk_time <= 240:
+                        current_pack.append(candidate)
+                        clean_total += potential_clean_time
+                        walk_total += walk_time
+
+            # Segna come assegnati
+            for ap in current_pack:
+                ap["assigned"] = True
+
+            # Salva pacchetto
+            assignments.append({
+                "cleaner_id": cleaner_id,
+                "cleaner_name": cleaner["name"],
+                "apartments": [{"apt_id": a["id"], "address": a["address"]} for a in current_pack],
+                "priority_levels": [a["priority"] for a in current_pack],
+                "total_cleaning_time_min": clean_total,
+                "total_walk_time_min": walk_total,
+                "zone": cleaner.get("zone", "N/D")
+            })
+
+        # Rimuove apt assegnati da unassigned_apts
+        unassigned_apts = [a for a in unassigned_apts if not a.get("assigned", False)]
+
+    # Se rimangono apt non assegnati (es. > 4h), assegnali singolarmente
+    if unassigned_apts:
+        for apt in unassigned_apts:
+            closest_cleaner = min(cleaners, key=lambda c: get_walk_time(c["address"], apt["address"]))
+            assignments.append({
+                "cleaner_id": closest_cleaner["id"],
+                "cleaner_name": closest_cleaner["name"],
+                "apartments": [{"apt_id": apt["id"], "address": apt["address"]}],
+                "priority_levels": [apt["priority"]],
+                "total_cleaning_time_min": apt.get("cleaning_time", 60),
+                "total_walk_time_min": get_walk_time(closest_cleaner["address"], apt["address"]),
+                "zone": closest_cleaner.get("zone", "N/D")
+            })
 
     return assignments
 
 
-def save_assignments(assignments):
-    """Salva le assegnazioni nel file data/assignments.json"""
-    output_data = {
-        'timestamp': datetime.now().isoformat(),
-        'assignments': assignments,
-        'total_assignments': len(assignments)
-    }
-
-    with open('data/assignments.json', 'w', encoding='utf-8') as f:
-        json.dump(output_data, f, indent=2, ensure_ascii=False)
-
-    print(f"Assegnazioni salvate in data/assignments.json - {len(assignments)} assegnazioni create")
-
-
+# ---- 4. MAIN ----
 def main():
-    """Funzione principale"""
-    print("=== ALGORITMO SEMPLICE ===")
+    cleaners = load_json("sel_cleaners.json")  # ora contiene TUTTI i dati dei cleaner selezionati
+    apartments = load_json("modello_apt.json")
 
-    # Carica dati
-    cleaners = load_cleaners()
-    apartments = load_apartments()
+    assignments = build_assignments(cleaners, apartments, [c["id"] for c in cleaners])
 
-    if not cleaners:
-        print("Errore: Nessun cleaner trovato")
-        return
+    with open("assignments.json", "w", encoding="utf-8") as f:
+        json.dump(assignments, f, indent=2, ensure_ascii=False)
 
-    if not apartments:
-        print("Errore: Nessun appartamento trovato")
-        return
-
-    print(f"Cleaner caricati: {len(cleaners)}")
-    print(f"Appartamenti caricati: {len(apartments)}")
-
-    # Crea assegnazioni casuali
-    assignments = create_simple_assignments(cleaners, apartments)
-
-    # Salva risultati
-    save_assignments(assignments)
-
-    print("=== COMPLETATO ===")
-    print(f"Totale assegnazioni create: {len(assignments)}")
-
-    # Stampa riepilogo
-    for assignment in assignments:
-        print(f"- {assignment['name']} {assignment['lastname']}: {len(assignment['sequence_details'])} appartamenti")
+    print(f"Assegnazioni completate. Totale pacchetti: {len(assignments)}")
 
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
