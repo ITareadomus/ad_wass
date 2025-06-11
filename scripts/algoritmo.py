@@ -102,15 +102,24 @@ def build_assignments(cleaners, apartments, sel_cleaners):
 
 
 # ---- 4. MAIN ----
-def main():
+def main(selected_date=None):
+    import sys
+    
+    # Se viene passata una data come parametro da linea di comando
+    if len(sys.argv) > 1:
+        selected_date = sys.argv[1]
+    
     # Carica i dati dal nuovo formato con date
     sel_cleaners_data = load_json("data/sel_cleaners.json")
     
-    # Cerca la data più recente se non specificata
-    if "dates" in sel_cleaners_data and sel_cleaners_data["dates"]:
+    # Usa la data specificata o cerca la data più recente
+    if selected_date and "dates" in sel_cleaners_data and selected_date in sel_cleaners_data["dates"]:
+        cleaners = sel_cleaners_data["dates"][selected_date].get("cleaners", [])
+        print(f"Usando cleaners dalla data specifica: {selected_date}")
+    elif "dates" in sel_cleaners_data and sel_cleaners_data["dates"]:
         latest_date = max(sel_cleaners_data["dates"].keys())
         cleaners = sel_cleaners_data["dates"][latest_date].get("cleaners", [])
-        print(f"Usando cleaners dalla data: {latest_date}")
+        print(f"Usando cleaners dalla data più recente: {latest_date}")
     else:
         print("Nessun cleaner trovato nel file sel_cleaners.json")
         cleaners = []

@@ -98,6 +98,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     cmd.append(str(percentage))
                     if selected_date:
                         cmd.append(selected_date)
+                elif script_name == 'algoritmo.py' and selected_date:
+                    cmd.append(selected_date)
 
                 result = subprocess.run(cmd,
                                       capture_output=True,

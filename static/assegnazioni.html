@@ -32,7 +32,18 @@
             </div>
 
             <div class="content-section">
-                <div id="messageContainer"></div></div>
+                <div id="messageContainer"></div>
+                
+                <!-- Filtro data -->
+                <div class="date-filter-section">
+                    <h3>📅 Seleziona Data per Assegnazioni</h3>
+                    <div class="date-filter-controls">
+                        <label for="assignmentDateSelector" class="date-label">Data assegnazioni:</label>
+                        <input type="date" id="assignmentDateSelector" class="date-input" onchange="updateAssignmentDate()">
+                        <span class="selected-date">Data selezionata: <strong id="selectedAssignmentDate"></strong></span>
+                    </div>
+                </div>
+            </div>
 
             <!-- Mappa di Google Maps -->
             <div id="mapContainer" style="margin-bottom: 20px;">
@@ -192,6 +203,51 @@
             }
         }
 
+        // Esegui script Python con data specifica
+        async function runPythonScriptWithDate(scriptName, selectedDate, showSuccessMessage = true) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 120000); // 120 secondi timeout
+
+                const response = await fetch('/run-script', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ script: scriptName, date: selectedDate }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (showSuccessMessage) {
+                        showMessage(`${scriptName} completato con successo`, 'success');
+                    }
+                    return true;
+                } else {
+                    const errorMsg = result.error || 'Errore sconosciuto';
+                    showMessage(`Errore esecuzione ${scriptName}: ${errorMsg}`, 'error');
+                    console.error(`Errore script ${scriptName}:`, errorMsg);
+                    return false;
+                }
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    showMessage(`Timeout: ${scriptName} ha impiegato troppo tempo (>120s)`, 'error');
+                } else {
+                    showMessage(`Errore di rete per ${scriptName}: ${error.message}`, 'error');
+                }
+                console.error(`Errore runPythonScript ${scriptName}:`, error);
+                return false;
+            }
+        }
+
         // Genera assegnazioni utilizzando i cleaner selezionati
         async function generateAssignments() {
             try {
@@ -199,27 +255,38 @@
                 updateProgress(10);
                 showMessage('Verifica cleaner selezionati...', 'info');
 
-                // Carica i cleaner selezionati dal file sel_cleaners.json
-                const selCleanersResponse = await fetch('/data/sel_cleaners.json');
+                const selectedDate = getSelectedAssignmentDate();
+                if (!selectedDate) {
+                    hideLoadingOverlay();
+                    showMessage('Seleziona una data per generare le assegnazioni', 'error');
+                    return;
+                }
+
+                // Carica i cleaner selezionati per la data specifica
+                const selCleanersResponse = await fetch(`/get-cleaners-by-date?date=${selectedDate}`);
                 if (!selCleanersResponse.ok) {
-                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
+                    throw new Error('Errore nel caricamento dei cleaners per la data selezionata.');
                 }
 
                 const selCleanersData = await selCleanersResponse.json();
-                const selectedCleaners = selCleanersData.cleaners || [];
+                if (!selCleanersData.success) {
+                    throw new Error(selCleanersData.error || 'Errore nel caricamento dei cleaners');
+                }
 
-                if (selectedCleaners.length === 0) {
+                const selectedCleanersForDate = selCleanersData.cleaners || [];
+
+                if (selectedCleanersForDate.length === 0) {
                     hideLoadingOverlay();
-                    showMessage('Nessun cleaner selezionato. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.', 'error');
+                    showMessage(`Nessun cleaner selezionato per la data ${selectedDate}. Vai alla sezione "Genera convocazioni" per selezionare i cleaner.`, 'error');
                     return;
                 }
 
                 updateProgress(30);
-                showMessage(`${selectedCleaners.length} cleaner selezionati. Generazione assegnazioni in corso...`, 'info');
+                showMessage(`${selectedCleanersForDate.length} cleaner selezionati per ${selectedDate}. Generazione assegnazioni in corso...`, 'info');
 
-                // Esegui lo script algoritmo.py per generare le assegnazioni
+                // Esegui lo script algoritmo.py per generare le assegnazioni con la data selezionata
                 updateProgress(50);
-                const success = await runPythonScript('algoritmo.py', false);
+                const success = await runPythonScriptWithDate('algoritmo.py', selectedDate, false);
 
                 if (!success) {
                     hideLoadingOverlay();
@@ -634,29 +701,10 @@
             }
         }
 
-        // Carica i cleaners selezionati da sel_cleaners.json
+        // Carica i cleaners selezionati da sel_cleaners.json per la data corrente
         async function loadSelectedCleaners() {
-            try {
-                showLoadingOverlay();
-
-                const response = await fetch('/data/sel_cleaners.json');
-                if (!response.ok) {
-                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
-                }
-
-                const data = await response.json();
-                selectedCleaners = Array.isArray(data.cleaners) ? data.cleaners : [];
-
-                displayCleaners();
-                hideLoadingOverlay();
-                showMessage(`${selectedCleaners.length} cleaners caricati con successo`, 'success');
-
-            } catch (error) {
-                hideLoadingOverlay();
-                selectedCleaners = []; // Assicura che sia sempre un array
-                console.error('Errore nel caricamento dei cleaners:', error);
-                showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
-            }
+            const selectedDate = getSelectedAssignmentDate();
+            await loadSelectedCleanersForDate(selectedDate);
         }
 
         // Visualizza gli appartamenti nella lista
@@ -1065,17 +1113,83 @@
             container.innerHTML = html;
         }
 
+        // Inizializza la data selezionata al caricamento della pagina
+        function initializeAssignmentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+
+            const todayString = `${year}-${month}-${day}`;
+            const displayDate = `${day}/${month}/${year}`;
+
+            document.getElementById('assignmentDateSelector').value = todayString;
+            document.getElementById('selectedAssignmentDate').textContent = displayDate;
+        }
+
+        // Aggiorna la data selezionata per le assegnazioni
+        function updateAssignmentDate() {
+            const selectedDateValue = document.getElementById('assignmentDateSelector').value;
+            if (selectedDateValue) {
+                const [year, month, day] = selectedDateValue.split('-');
+                const displayDate = `${day}/${month}/${year}`;
+                document.getElementById('selectedAssignmentDate').textContent = displayDate;
+
+                showMessage(`Data aggiornata a: ${displayDate}`, 'info');
+                
+                // Ricarica i cleaner per la nuova data
+                loadSelectedCleanersForDate(selectedDateValue);
+            }
+        }
+
+        // Ottieni la data selezionata nel formato YYYY-MM-DD
+        function getSelectedAssignmentDate() {
+            return document.getElementById('assignmentDateSelector').value;
+        }
+
+        // Carica i cleaners selezionati per una data specifica
+        async function loadSelectedCleanersForDate(selectedDate) {
+            try {
+                showLoadingOverlay();
+
+                const response = await fetch(`/get-cleaners-by-date?date=${selectedDate}`);
+                if (!response.ok) {
+                    throw new Error('Errore nel caricamento dei cleaners per la data selezionata');
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    selectedCleaners = Array.isArray(data.cleaners) ? data.cleaners : [];
+                    displayCleaners();
+                    hideLoadingOverlay();
+                    showMessage(`${selectedCleaners.length} cleaners caricati per la data ${selectedDate}`, 'success');
+                } else {
+                    throw new Error(data.error || 'Errore nel caricamento dei cleaners');
+                }
+
+            } catch (error) {
+                hideLoadingOverlay();
+                selectedCleaners = [];
+                console.error('Errore nel caricamento dei cleaners per data:', error);
+                showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
+            }
+        }
+
         // Carica i dati all'avvio
         window.addEventListener('load', function() {
+            // Inizializza la data
+            initializeAssignmentDate();
+            
             // Inizializza la mappa quando si entra nella sezione assegnazioni
             setTimeout(() => {
                 initializeMap();
             }, 100);
 
-            // Carica automaticamente appartamenti e cleaners
+            // Carica automaticamente appartamenti e cleaners per la data di oggi
             setTimeout(() => {
                 loadApartments();
-                loadSelectedCleaners();
+                const today = getSelectedAssignmentDate();
+                loadSelectedCleanersForDate(today);
             }, 500);
 
             refreshAssignments();
