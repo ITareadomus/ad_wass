@@ -25,7 +25,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 47.5,
+            "counter_hours": 49.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -37,7 +37,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 68.5,
+            "counter_hours": 72.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "C"
@@ -46,10 +46,10 @@
             "id": 249,
             "name": "Ogbodo Chidi",
             "lastname": "Igwe",
-            "role": "Standard",
+            "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 38.0,
+            "counter_hours": 39.0,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -61,7 +61,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 42.5,
+            "counter_hours": 45.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -73,7 +73,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 49.5,
+            "counter_hours": 50.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -85,7 +85,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 49.5,
+            "counter_hours": 50.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -97,7 +97,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 35.0,
+            "counter_hours": 37.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -109,7 +109,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 38.25,
+            "counter_hours": 39.25,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -133,7 +133,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 2.5,
+            "counter_hours": 3.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -145,7 +145,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 40.0,
+            "counter_hours": 41.5,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -217,7 +217,7 @@
             "role": "Premium",
             "active": true,
             "ranking": 0,
-            "counter_hours": 42.5,
+            "counter_hours": 44.0,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -226,7 +226,7 @@
             "id": 845,
             "name": "YOHANNES",
             "lastname": "TAMIRAT ALI",
-            "role": "Premium",
+            "role": "Standard",
             "active": true,
             "ranking": 0,
             "counter_hours": 49.0,
@@ -250,7 +250,7 @@
             "id": 937,
             "name": "LOVETH",
             "lastname": "IGUDIA",
-            "role": "Standard",
+            "role": "Premium",
             "active": true,
             "ranking": 0,
             "counter_hours": 50.5,
@@ -262,7 +262,7 @@
             "id": 966,
             "name": "YENCI MARICELA",
             "lastname": "PILIA LINARES",
-            "role": "Standard",
+            "role": "Premium",
             "active": true,
             "ranking": 0,
             "counter_hours": 40.0,
@@ -277,7 +277,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 10.0,
+            "counter_hours": 12.0,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -325,7 +325,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 1.0,
+            "counter_hours": 4.5,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -349,7 +349,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 22.25,
+            "counter_hours": 23.75,
             "counter_days": 0,
             "available": true,
             "contract_type": 4
@@ -373,7 +373,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 33.75,
+            "counter_hours": 35.25,
             "counter_days": 0,
             "available": true,
             "contract_type": 4

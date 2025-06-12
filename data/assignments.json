@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-12T11:35:44.735198",
+  "timestamp": "2025-06-12T13:22:01.924886",
   "date": "2025-06-12",
   "assignments": [
     {
@@ -137,21 +137,21 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209197,
-          "structure_id": 1530,
-          "address": "via Lanzone 39",
-          "lat": "45.461049",
-          "lng": "9.175446",
-          "type": "Premium",
+          "task_id": 209310,
+          "structure_id": 1317,
+          "address": "VIA PRIVATA.S. MANSUETO 3",
+          "lat": "45.450537",
+          "lng": "9.1933951",
+          "type": "Standard",
           "priority": 3,
-          "checkin_time": "14:15",
-          "checkout_time": "11:15",
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 26,
+      "total_walk_time_min": 27,
       "priority_levels": [
         1,
         1,
@@ -607,58 +607,6 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209310,
-          "structure_id": 1317,
-          "address": "VIA PRIVATA.S. MANSUETO 3",
-          "lat": "45.450537",
-          "lng": "9.1933951",
-          "type": "Standard",
-          "priority": 1,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209360,
-          "structure_id": 1329,
-          "address": "VIA SALASCO 3",
-          "lat": "45.450176",
-          "lng": "9.1940503",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": "10:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209028,
-          "structure_id": 1578,
-          "address": "VIA MOLINO DELLE ARMI, 13",
-          "lat": "45.456241",
-          "lng": "9.185713",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": "15:00",
-          "checkout_time": "11:00",
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 12,
-      "priority_levels": [
-        1,
-        1,
-        2
-      ]
-    },
-    {
-      "cleaner_id": 966,
-      "name": "YENCI MARICELA",
-      "lastname": "PILIA LINARES",
-      "role": "Standard",
-      "sequence_details": [
-        {
           "task_id": 209313,
           "structure_id": 1332,
           "address": "CORSO XXII MARZO 4",
@@ -683,12 +631,12 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209330,
-          "structure_id": 628,
-          "address": "Via Sabina, 11",
-          "lat": "45.4535353",
-          "lng": "9.206356",
-          "type": "Premium",
+          "task_id": 209333,
+          "structure_id": 1353,
+          "address": "Via Crivelli, 15/1",
+          "lat": "45.4534737",
+          "lng": "9.1937547",
+          "type": "Standard",
           "priority": 3,
           "checkin_time": "15:00",
           "checkout_time": null,
@@ -697,7 +645,7 @@
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 16,
+      "total_walk_time_min": 19,
       "priority_levels": [
         1,
         2,
@@ -705,9 +653,9 @@
       ]
     },
     {
-      "cleaner_id": 967,
-      "name": "ADEL FAYEZ ABDELKRIM",
-      "lastname": "DESSOUKI",
+      "cleaner_id": 966,
+      "name": "YENCI MARICELA",
+      "lastname": "PILIA LINARES",
       "role": "Standard",
       "sequence_details": [
         {
@@ -731,9 +679,9 @@
       ]
     },
     {
-      "cleaner_id": 985,
-      "name": "HODA MAHMOUD SALAMA",
-      "lastname": "HUSSEIN",
+      "cleaner_id": 967,
+      "name": "ADEL FAYEZ ABDELKRIM",
+      "lastname": "DESSOUKI",
       "role": "Standard",
       "sequence_details": [
         {
@@ -761,24 +709,76 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209234,
-          "structure_id": 1566,
-          "address": "VIA GAUDENZIO FERRARI 10",
-          "lat": "45.4553562",
-          "lng": "9.1758457",
+          "task_id": 209028,
+          "structure_id": 1578,
+          "address": "VIA MOLINO DELLE ARMI, 13",
+          "lat": "45.456241",
+          "lng": "9.185713",
           "type": "Standard",
           "priority": 3,
           "checkin_time": "15:00",
-          "checkout_time": "10:00",
+          "checkout_time": "11:00",
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 13,
+      "total_walk_time_min": 21,
       "priority_levels": [
         1,
         1,
+        2
+      ]
+    },
+    {
+      "cleaner_id": 985,
+      "name": "HODA MAHMOUD SALAMA",
+      "lastname": "HUSSEIN",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 209360,
+          "structure_id": 1329,
+          "address": "VIA SALASCO 3",
+          "lat": "45.450176",
+          "lng": "9.1940503",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": "10:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209284,
+          "structure_id": 410,
+          "address": "VIA GIAN GALEAZZO 7",
+          "lat": "45.4529136",
+          "lng": "9.1823451",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "15:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209334,
+          "structure_id": 1493,
+          "address": "Via Carlo Crivelli, 15/1",
+          "lat": "45.4534641",
+          "lng": "9.1937882",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 22,
+      "priority_levels": [
+        1,
+        2,
         2
       ]
     },
