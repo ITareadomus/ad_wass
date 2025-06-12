@@ -66,26 +66,6 @@
                 </div>
             </div>
 
-            <!-- Mappa di Google Maps -->
-            <div id="mapContainer" style="margin-bottom: 20px;">
-                <div id="map" style="height: 400px; width: 100%; border: 1px solid #ddd; border-radius: 5px; background-color: #f8f9fa;">
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666; font-size: 16px;">
-                        <span>Clicca su un'assegnazione per visualizzare il percorso sulla mappa</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="assignment-controls">
-                <div class="assignment-actions">
-                    <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
-                        Genera Assegnazioni
-                    </button>
-                    <button class="btn btn-confirm" id="viewReportBtn" onclick="viewAssignmentReport()" style="display: none;">
-                        Visualizza Report
-                    </button>
-                </div>
-            </div>
-
             <!-- Sezione Appartamenti e Cleaners -->
                 <div class="data-sections">
                     <!-- Lista Appartamenti -->
@@ -116,6 +96,27 @@
                         </div>
                     </div>
                 </div>
+
+            <!-- Mappa di Google Maps -->
+            <div id="mapContainer" style="margin: 30px 0;">
+                <h3>🗺️ Mappa Assegnazioni</h3>
+                <div id="map" style="height: 450px; width: 100%; border: 1px solid #ddd; border-radius: 8px; background-color: #f8f9fa; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #666; font-size: 16px;">
+                        <span>La mappa mostrerà gli appartamenti e i percorsi delle assegnazioni</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assignment-controls">
+                <div class="assignment-actions">
+                    <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
+                        Genera Assegnazioni
+                    </button>
+                    <button class="btn btn-confirm" id="viewReportBtn" onclick="viewAssignmentReport()" style="display: none;">
+                        Visualizza Report
+                    </button>
+                </div>
+            </div>
 
             <div id="assignmentResults" style="display: none;">
                     <h3>📋 Tabella Assegnazioni Appartamenti</h3>
@@ -308,10 +309,10 @@
                 // Determina quale algoritmo utilizzare
                 const selectedAlgorithm = getSelectedAlgorithm();
                 const scriptName = selectedAlgorithm === 'gmaps' ? 'algoritmo_gmaps.py' : 'algoritmo.py';
-                
+
                 updateProgress(50);
                 showMessage(`Utilizzando algoritmo: ${selectedAlgorithm === 'gmaps' ? 'Google Maps' : 'Haversine'}...`, 'info');
-                
+
                 // Esegui lo script algoritmo selezionato per generare le assegnazioni con la data selezionata
                 const success = await runPythonScriptWithDate(scriptName, selectedDate, false);
 
@@ -1010,7 +1011,7 @@
                     if (assignmentsResponse.ok) {
                         const assignmentsData = await assignmentsResponse.json();
                         const assignments = assignmentsData.assignments || [];
-                        
+
                         if (assignments.length > 0) {
                             // Mantieni i marker colorati delle assegnazioni
                             updateMapWithAssignments(assignments);
