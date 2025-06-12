@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-12T14:51:02.321921",
+  "timestamp": "2025-06-12T15:04:10.803026",
   "date": "2025-06-13",
   "assignments": [
     {
@@ -9,7 +9,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 170560,
+          "task_id": 229,
           "structure_id": 229,
           "address": "Viale Bligny 19",
           "lat": "45.4510472",
@@ -21,7 +21,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209206,
+          "task_id": 771,
           "structure_id": 771,
           "address": "VIA PIERLOMBARDO, 3",
           "lat": "45.4549994",
@@ -33,7 +33,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209240,
+          "task_id": 579,
           "structure_id": 579,
           "address": "VIA ATTO VANNUCCI 15",
           "lat": "45.4495699",
@@ -61,7 +61,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 201919,
+          "task_id": 1219,
           "structure_id": 1219,
           "address": "P.ZZA SEPOLCRO 1",
           "lat": "45.4629709",
@@ -73,7 +73,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 208780,
+          "task_id": 1366,
           "structure_id": 1366,
           "address": "VIA SANTA MARTA 11",
           "lat": "45.4629475",
@@ -85,7 +85,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 208790,
+          "task_id": 1392,
           "structure_id": 1392,
           "address": "VIA SANTA MARTA 11",
           "lat": "45.4654219",
@@ -113,7 +113,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209359,
+          "task_id": 1602,
           "structure_id": 1602,
           "address": "VIA BRERA 17",
           "lat": "45.47152",
@@ -125,7 +125,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209420,
+          "task_id": 595,
           "structure_id": 595,
           "address": "VIA PONTACCIO, 2",
           "lat": "45.4730879",
@@ -137,7 +137,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209427,
+          "task_id": 1393,
           "structure_id": 1393,
           "address": "Via San Carpoforo, 7",
           "lat": "45.4715316",
@@ -165,7 +165,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209413,
+          "task_id": 298,
           "structure_id": 298,
           "address": "STRADA DELLA CARITA', 2",
           "lat": "45.4493742",
@@ -177,7 +177,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209415,
+          "task_id": 144,
           "structure_id": 144,
           "address": "CORSO DI PORTA ROMANA 107",
           "lat": "45.4541963",
@@ -189,7 +189,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209428,
+          "task_id": 1577,
           "structure_id": 1577,
           "address": "VIA CROCEFISSO, 25",
           "lat": "45.4570059",
@@ -229,7 +229,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 204272,
+          "task_id": 80,
           "structure_id": 80,
           "address": "VIA POMA 61",
           "lat": "45.4632092",
@@ -241,7 +241,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209185,
+          "task_id": 1625,
           "structure_id": 1625,
           "address": "via Goffredo Mameli 9",
           "lat": "45.466406",
@@ -281,7 +281,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209411,
+          "task_id": 305,
           "structure_id": 305,
           "address": "RIPA TICINESE 43",
           "lat": "45.4512117",
@@ -293,7 +293,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209412,
+          "task_id": 287,
           "structure_id": 287,
           "address": "VIA CASTELBARCO, 3",
           "lat": "45.4494159",
@@ -321,7 +321,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209089,
+          "task_id": 1539,
           "structure_id": 1539,
           "address": "VIA GONIN, 58",
           "lat": "45.4423379",
@@ -333,7 +333,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209289,
+          "task_id": 514,
           "structure_id": 514,
           "address": "PIAZZA TIRANA 17",
           "lat": "45.443599",
@@ -345,7 +345,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209301,
+          "task_id": 1540,
           "structure_id": 1540,
           "address": "VIA GONIN, 58",
           "lat": "45.4423379",
@@ -373,7 +373,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209157,
+          "task_id": 1009,
           "structure_id": 1009,
           "address": "Via Fabio Filzi, 45",
           "lat": "45.48811",
@@ -385,7 +385,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209178,
+          "task_id": 930,
           "structure_id": 930,
           "address": "VIA LARIO, 17",
           "lat": "45.4928447",
@@ -397,7 +397,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209223,
+          "task_id": 1097,
           "structure_id": 1097,
           "address": "VIA LUIGI PORRO LAMBERTENGHI 20",
           "lat": "45.4889843",
@@ -425,7 +425,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209174,
+          "task_id": 519,
           "structure_id": 519,
           "address": "VIA STHENDAL 30",
           "lat": "45.4524816",
@@ -437,7 +437,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209180,
+          "task_id": 1084,
           "structure_id": 1084,
           "address": "VIA FORCELLA, 11",
           "lat": "45.4524898",
@@ -449,7 +449,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209186,
+          "task_id": 1543,
           "structure_id": 1543,
           "address": "via Forcella 11",
           "lat": "45.4524898",
@@ -477,7 +477,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209424,
+          "task_id": 738,
           "structure_id": 738,
           "address": "Via Gian Giacomo Mora 12",
           "lat": "45.4591723",
@@ -489,7 +489,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209176,
+          "task_id": 914,
           "structure_id": 914,
           "address": "VIA GAUDENZIO FERRARI, 9",
           "lat": "45.4555682",
@@ -501,7 +501,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209392,
+          "task_id": 617,
           "structure_id": 617,
           "address": "VIA VOGHERA, 4",
           "lat": "45.454632",
@@ -529,7 +529,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209175,
+          "task_id": 840,
           "structure_id": 840,
           "address": "VIA TULIPANI, 19",
           "lat": "45.4498056",
@@ -541,7 +541,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209177,
+          "task_id": 839,
           "structure_id": 839,
           "address": "Via dei Biancospini 13",
           "lat": "45.4494831",
@@ -553,7 +553,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209184,
+          "task_id": 1450,
           "structure_id": 1450,
           "address": "VIA VINCENZO MARIA CORONELLI 3",
           "lat": "45.4500396",
@@ -581,7 +581,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209182,
+          "task_id": 1627,
           "structure_id": 1627,
           "address": "via Nino Oxilia 24",
           "lat": "45.491965",
@@ -593,7 +593,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209204,
+          "task_id": 1545,
           "structure_id": 1545,
           "address": "VIA NICOLA PICCINNI, 5",
           "lat": "45.4829445",
@@ -605,7 +605,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209208,
+          "task_id": 795,
           "structure_id": 795,
           "address": "Via Nicola Piccinni, 5",
           "lat": "45.4829072",
@@ -633,7 +633,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209200,
+          "task_id": 1372,
           "structure_id": 1372,
           "address": "CORSO GARIBALDI, 55",
           "lat": "45.4743685",
@@ -645,7 +645,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209202,
+          "task_id": 763,
           "structure_id": 763,
           "address": "VIA FIORI CHIARI, 26",
           "lat": "45.4720175",
@@ -657,7 +657,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209203,
+          "task_id": 1262,
           "structure_id": 1262,
           "address": "VIA BORGONUOVO, 7",
           "lat": "45.4706507",
@@ -685,7 +685,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209205,
+          "task_id": 751,
           "structure_id": 751,
           "address": "Via L. Cagnola, 12",
           "lat": "45.4776",
@@ -697,7 +697,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209207,
+          "task_id": 1128,
           "structure_id": 1128,
           "address": "VIA FIORI CHIARI, 26",
           "lat": "45.4720175",
@@ -709,7 +709,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209213,
+          "task_id": 494,
           "structure_id": 494,
           "address": "P.ZZA S. MARCO, 1",
           "lat": "45.4730972",
@@ -737,7 +737,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209222,
+          "task_id": 637,
           "structure_id": 637,
           "address": "VIA FIORI CHIARI, 26 B",
           "lat": "45.4720175",
@@ -749,7 +749,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209442,
+          "task_id": 1496,
           "structure_id": 1496,
           "address": "VIA TORINO 44",
           "lat": "45.4613523",
@@ -761,7 +761,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209250,
+          "task_id": 35,
           "structure_id": 35,
           "address": "CORSO CRISTOFORO COLOMBO 1",
           "lat": "45.4549824",
@@ -789,7 +789,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209294,
+          "task_id": 986,
           "structure_id": 986,
           "address": "VIA WASHINGTON, 54",
           "lat": "45.4623642",
@@ -801,7 +801,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209396,
+          "task_id": 1339,
           "structure_id": 1339,
           "address": "PIAZZALE BRESCIA 1",
           "lat": "45.4697344",
@@ -813,7 +813,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209402,
+          "task_id": 1341,
           "structure_id": 1341,
           "address": "VIA MONREALE 12",
           "lat": "45.4760985",
@@ -841,7 +841,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209384,
+          "task_id": 1630,
           "structure_id": 1630,
           "address": "Via dei Transiti 21",
           "lat": "45.490856",
@@ -853,7 +853,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209167,
+          "task_id": 1382,
           "structure_id": 1382,
           "address": "VIA PONTE SEVESO 40",
           "lat": "45.4901211",
@@ -865,7 +865,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209425,
+          "task_id": 754,
           "structure_id": 754,
           "address": "VIA STRADIVARI, 4",
           "lat": "45.4842098",
@@ -893,7 +893,7 @@
       "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209385,
+          "task_id": 1401,
           "structure_id": 1401,
           "address": "VIALE ZARA, 118",
           "lat": "45.4987885",
@@ -905,7 +905,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209158,
+          "task_id": 1501,
           "structure_id": 1501,
           "address": "VIA VALASSINA 45",
           "lat": "45.5022144",
@@ -932,7 +932,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209393,
+          "task_id": 618,
           "structure_id": 618,
           "address": "VIA VOGHERA, 4",
           "lat": "45.454632",
@@ -944,7 +944,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209397,
+          "task_id": 1386,
           "structure_id": 1386,
           "address": "VIA MEDICI 8",
           "lat": "45.461148",
@@ -956,7 +956,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209400,
+          "task_id": 1315,
           "structure_id": 1315,
           "address": "VIA GAUDENZIO FERRARI 16",
           "lat": "45.4550128",
@@ -984,7 +984,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209398,
+          "task_id": 1336,
           "structure_id": 1336,
           "address": "PIAZZA SAN CAMILLO DE LELLIS 1",
           "lat": "45.4821797",
@@ -1023,7 +1023,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209399,
+          "task_id": 1330,
           "structure_id": 1330,
           "address": "VIA SALASCO 3",
           "lat": "45.4500486",
@@ -1035,7 +1035,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209416,
+          "task_id": 128,
           "structure_id": 128,
           "address": "VIA VERONA 11",
           "lat": "45.4497259",
@@ -1047,7 +1047,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209160,
+          "task_id": 1551,
           "structure_id": 1551,
           "address": "VIA ADAMELLO, 8",
           "lat": "45.4428459",
@@ -1075,7 +1075,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209401,
+          "task_id": 1319,
           "structure_id": 1319,
           "address": "VIA GIANGIACOMO MORA 9",
           "lat": "45.4586858",
@@ -1087,7 +1087,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 205696,
+          "task_id": 420,
           "structure_id": 420,
           "address": "VIA CESARE DA SESTO 20",
           "lat": "45.458444",
@@ -1099,7 +1099,7 @@
           "cleaning_time": null
         },
         {
-          "task_id": 207830,
+          "task_id": 1243,
           "structure_id": 1243,
           "address": "Via Cesare da Sesto 20",
           "lat": "45.458444",

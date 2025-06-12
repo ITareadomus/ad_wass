@@ -2589,7 +2589,7 @@
             "date": "2025-06-15"
         },
         "2025-06-12": {
-            "timestamp": "2025-06-12T15:01:30.405091",
+            "timestamp": "2025-06-12T15:03:51.265521",
             "apt": [
                 {
                     "task_id": 189544,
@@ -4752,7 +4752,7 @@
             "date": "2025-06-30"
         },
         "2025-06-13": {
-            "timestamp": "2025-06-12T14:59:11.694340",
+            "timestamp": "2025-06-12T15:04:00.184747",
             "apt": [
                 {
                     "task_id": 170560,
@@ -5222,11 +5222,11 @@
                     "lat": "45.4493298",
                     "lng": "9.1483939",
                     "cleaning_time": null,
-                    "checkin": "2025-06-13",
+                    "checkin": "2025-06-22",
                     "checkout": "2025-06-13",
                     "checkin_time": "15:00",
                     "checkout_time": null,
-                    "pax_in": 5,
+                    "pax_in": 6,
                     "pax_out": 1,
                     "small_equipment": false
                 },
@@ -5477,11 +5477,11 @@
                     "lat": "45.4438637",
                     "lng": "9.1281044",
                     "cleaning_time": null,
-                    "checkin": "2025-06-30",
+                    "checkin": "2025-06-14",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
                     "checkout_time": null,
-                    "pax_in": 2,
+                    "pax_in": 1,
                     "pax_out": 2,
                     "small_equipment": false
                 },
@@ -5545,11 +5545,11 @@
                     "lat": "45.4557027",
                     "lng": "9.2042573",
                     "cleaning_time": null,
-                    "checkin": "2025-06-17",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
                     "checkout_time": null,
-                    "pax_in": 4,
+                    "pax_in": 1,
                     "pax_out": 4,
                     "small_equipment": false
                 },
