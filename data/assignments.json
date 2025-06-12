@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-06-12T14:34:50.148074",
-  "date": "2025-06-12",
+  "timestamp": "2025-06-12T14:45:57.123435",
+  "date": "2025-06-13",
   "assignments": [
     {
       "cleaner_id": 18,
@@ -9,11 +9,11 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 196622,
-          "structure_id": null,
-          "address": "VIA IMPERIA 3/B",
-          "lat": "45.4416781",
-          "lng": "9.1752361",
+          "task_id": 170560,
+          "structure_id": 229,
+          "address": "Viale Bligny 19",
+          "lat": "45.4510472",
+          "lng": "9.1910628",
           "type": "Standard",
           "priority": 1,
           "checkin_time": null,
@@ -21,33 +21,33 @@
           "cleaning_time": null
         },
         {
-          "task_id": 202334,
-          "structure_id": null,
-          "address": "VIA IMPERIA 3/B",
-          "lat": "45.4416781",
-          "lng": "9.1752361",
+          "task_id": 209206,
+          "structure_id": 771,
+          "address": "VIA PIERLOMBARDO, 3",
+          "lat": "45.4549994",
+          "lng": "9.2049206",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": null,
-          "checkout_time": null,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
           "cleaning_time": null
         },
         {
-          "task_id": 204340,
-          "structure_id": 234,
-          "address": "RIPA TICINESE 17",
-          "lat": "45.4517936",
-          "lng": "9.1758474",
+          "task_id": 209240,
+          "structure_id": 579,
+          "address": "VIA ATTO VANNUCCI 15",
+          "lat": "45.4495699",
+          "lng": "9.199613",
           "type": "Standard",
           "priority": 3,
           "checkin_time": null,
-          "checkout_time": "09:00",
+          "checkout_time": null,
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 13,
+      "total_walk_time_min": 23,
       "priority_levels": [
         1,
         1,
@@ -61,7 +61,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 201918,
+          "task_id": 201919,
           "structure_id": 1219,
           "address": "P.ZZA SEPOLCRO 1",
           "lat": "45.4629709",
@@ -73,11 +73,11 @@
           "cleaning_time": null
         },
         {
-          "task_id": 208789,
-          "structure_id": 1392,
+          "task_id": 208780,
+          "structure_id": 1366,
           "address": "VIA SANTA MARTA 11",
-          "lat": "45.4654219",
-          "lng": "9.1859243",
+          "lat": "45.4629475",
+          "lng": "9.1837024",
           "type": "Standard",
           "priority": 2,
           "checkin_time": "15:00",
@@ -85,11 +85,167 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209093,
-          "structure_id": 494,
-          "address": "P.ZZA S. MARCO, 1",
-          "lat": "45.4730972",
-          "lng": "9.1883431",
+          "task_id": 208790,
+          "structure_id": 1392,
+          "address": "VIA SANTA MARTA 11",
+          "lat": "45.4654219",
+          "lng": "9.1859243",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "15:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 5,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 132,
+      "name": "JOHOISER ERNESTO",
+      "lastname": "LOPEZ GIRON",
+      "role": "Premium",
+      "sequence_details": [
+        {
+          "task_id": 209359,
+          "structure_id": 1602,
+          "address": "VIA BRERA 17",
+          "lat": "45.47152",
+          "lng": "9.186657",
+          "type": "Premium",
+          "priority": 1,
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209420,
+          "structure_id": 595,
+          "address": "VIA PONTACCIO, 2",
+          "lat": "45.4730879",
+          "lng": "9.1872098",
+          "type": "Premium",
+          "priority": 2,
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209427,
+          "structure_id": 1393,
+          "address": "Via San Carpoforo, 7",
+          "lat": "45.4715316",
+          "lng": "9.184796",
+          "type": "Premium",
+          "priority": 3,
+          "checkin_time": "18:30",
+          "checkout_time": null,
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 5,
+      "priority_levels": [
+        2,
+        2,
+        3
+      ]
+    },
+    {
+      "cleaner_id": 249,
+      "name": "Ogbodo Chidi",
+      "lastname": "Igwe",
+      "role": "Premium",
+      "sequence_details": [
+        {
+          "task_id": 209413,
+          "structure_id": 298,
+          "address": "STRADA DELLA CARITA', 2",
+          "lat": "45.4493742",
+          "lng": "9.2075671",
+          "type": "Premium",
+          "priority": 1,
+          "checkin_time": "16:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209415,
+          "structure_id": 144,
+          "address": "CORSO DI PORTA ROMANA 107",
+          "lat": "45.4541963",
+          "lng": "9.199497",
+          "type": "Premium",
+          "priority": 2,
+          "checkin_time": "22:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209428,
+          "structure_id": 1577,
+          "address": "VIA CROCEFISSO, 25",
+          "lat": "45.4570059",
+          "lng": "9.1848347",
+          "type": "Premium",
+          "priority": 3,
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 24,
+      "priority_levels": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "cleaner_id": 287,
+      "name": "BAH",
+      "lastname": "ISMAILA",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 202028,
+          "structure_id": null,
+          "address": "V.LE BIANCA MARIA 18",
+          "lat": "45.4655015",
+          "lng": "9.206687",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 204272,
+          "structure_id": 80,
+          "address": "VIA POMA 61",
+          "lat": "45.4632092",
+          "lng": "9.216221",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209185,
+          "structure_id": 1625,
+          "address": "via Goffredo Mameli 9",
+          "lat": "45.466406",
+          "lng": "9.2134926",
           "type": "Standard",
           "priority": 3,
           "checkin_time": "15:00",
@@ -107,13 +263,13 @@
       ]
     },
     {
-      "cleaner_id": 249,
-      "name": "Ogbodo Chidi",
-      "lastname": "Igwe",
+      "cleaner_id": 326,
+      "name": "FESTUS OSARO",
+      "lastname": "AIHIVBERE",
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 208753,
+          "task_id": 208754,
           "structure_id": null,
           "address": "VIA IMPERIA 3/B",
           "lat": "45.4416781",
@@ -125,137 +281,33 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209119,
-          "structure_id": 1050,
-          "address": "VIA ASCANIO SFORZA, 9",
-          "lat": "45.4506703",
-          "lng": "9.1779826",
+          "task_id": 209411,
+          "structure_id": 305,
+          "address": "RIPA TICINESE 43",
+          "lat": "45.4512117",
+          "lng": "9.1735639",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209310,
-          "structure_id": 1317,
-          "address": "VIA PRIVATA.S. MANSUETO 3",
-          "lat": "45.450537",
-          "lng": "9.1933951",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 27,
-      "priority_levels": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "cleaner_id": 287,
-      "name": "BAH",
-      "lastname": "ISMAILA",
-      "role": "Standard",
-      "sequence_details": [
-        {
-          "task_id": 208908,
-          "structure_id": null,
-          "address": "VIA TIZIANO 6",
-          "lat": "45.4709657",
-          "lng": "9.1566242",
-          "type": "Standard",
-          "priority": 1,
           "checkin_time": null,
           "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209120,
-          "structure_id": 986,
-          "address": "VIA WASHINGTON, 54",
-          "lat": "45.4623642",
-          "lng": "9.1543891",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209311,
-          "structure_id": 1322,
-          "address": "VIA DANIELE RANZONI 3",
-          "lat": "45.4673478",
-          "lng": "9.1456962",
+          "task_id": 209412,
+          "structure_id": 287,
+          "address": "VIA CASTELBARCO, 3",
+          "lat": "45.4494159",
+          "lng": "9.1862061",
           "type": "Standard",
           "priority": 3,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 22,
-      "priority_levels": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "cleaner_id": 326,
-      "name": "FESTUS OSARO",
-      "lastname": "AIHIVBERE",
-      "role": "Standard",
-      "sequence_details": [
-        {
-          "task_id": 208977,
-          "structure_id": 1539,
-          "address": "VIA GONIN, 58",
-          "lat": "45.4423379",
-          "lng": "9.1195717",
-          "type": "Standard",
-          "priority": 1,
-          "checkin_time": "15:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209088,
-          "structure_id": 1540,
-          "address": "VIA GONIN, 58",
-          "lat": "45.4423379",
-          "lng": "9.1195717",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": "15:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209095,
-          "structure_id": 514,
-          "address": "PIAZZA TIRANA 17",
-          "lat": "45.443599",
-          "lng": "9.1304471",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": "18:00",
+          "checkin_time": "16:30",
           "checkout_time": null,
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 10,
+      "total_walk_time_min": 25,
       "priority_levels": [
         1,
         1,
@@ -269,45 +321,45 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209016,
-          "structure_id": 1568,
-          "address": "VIA SOLARI, 45",
-          "lat": "45.4528402",
-          "lng": "9.1558544",
+          "task_id": 209089,
+          "structure_id": 1539,
+          "address": "VIA GONIN, 58",
+          "lat": "45.4423379",
+          "lng": "9.1195717",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
+          "checkin_time": "15:00",
+          "checkout_time": "10:15",
           "cleaning_time": null
         },
         {
-          "task_id": 209097,
-          "structure_id": 992,
-          "address": "VIA VOGHERA 14",
-          "lat": "45.4543398",
-          "lng": "9.1674386",
+          "task_id": 209289,
+          "structure_id": 514,
+          "address": "PIAZZA TIRANA 17",
+          "lat": "45.443599",
+          "lng": "9.1304471",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "12:00",
+          "checkin_time": "15:00",
           "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209116,
-          "structure_id": 1187,
-          "address": "Via Vetere, 10",
-          "lat": "45.456049",
-          "lng": "9.1811762",
+          "task_id": 209301,
+          "structure_id": 1540,
+          "address": "VIA GONIN, 58",
+          "lat": "45.4423379",
+          "lng": "9.1195717",
           "type": "Standard",
           "priority": 3,
           "checkin_time": "15:00",
-          "checkout_time": null,
+          "checkout_time": "10:15",
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 24,
+      "total_walk_time_min": 21,
       "priority_levels": [
         1,
         1,
@@ -321,83 +373,31 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209027,
-          "structure_id": 1503,
-          "address": "CORSO SEMPIONE 60",
-          "lat": "45.4835619",
-          "lng": "9.1629534",
-          "type": "Standard",
-          "priority": 1,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209099,
-          "structure_id": 1487,
-          "address": "viale monteceneri 58",
-          "lat": "45.4920654",
-          "lng": "9.1541396",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": "15:00",
-          "checkout_time": null,
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209449,
-          "structure_id": 1623,
-          "address": "via Principe Eugenio 15",
-          "lat": "45.48931",
-          "lng": "9.1635183",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": null,
-          "checkout_time": null,
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 24,
-      "priority_levels": [
-        1,
-        1,
-        1
-      ]
-    },
-    {
-      "cleaner_id": 469,
-      "name": "LAMIN",
-      "lastname": "SOLY",
-      "role": "Standard",
-      "sequence_details": [
-        {
-          "task_id": 209090,
+          "task_id": 209157,
           "structure_id": 1009,
           "address": "Via Fabio Filzi, 45",
           "lat": "45.48811",
           "lng": "9.20332",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": null,
+          "checkin_time": "17:30",
           "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209122,
-          "structure_id": 782,
-          "address": "Via Melchiorre Gioia 1",
-          "lat": "45.4813881",
-          "lng": "9.1910586",
+          "task_id": 209178,
+          "structure_id": 930,
+          "address": "VIA LARIO, 17",
+          "lat": "45.4928447",
+          "lng": "9.1902343",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
+          "checkin_time": "17:00",
+          "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209123,
+          "task_id": 209223,
           "structure_id": 1097,
           "address": "VIA LUIGI PORRO LAMBERTENGHI 20",
           "lat": "45.4889843",
@@ -411,9 +411,113 @@
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 25,
+      "total_walk_time_min": 20,
       "priority_levels": [
         1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 469,
+      "name": "LAMIN",
+      "lastname": "SOLY",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 209174,
+          "structure_id": 519,
+          "address": "VIA STHENDAL 30",
+          "lat": "45.4524816",
+          "lng": "9.1603617",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209180,
+          "structure_id": 1084,
+          "address": "VIA FORCELLA, 11",
+          "lat": "45.4524898",
+          "lng": "9.1673869",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209186,
+          "structure_id": 1543,
+          "address": "via Forcella 11",
+          "lat": "45.4524898",
+          "lng": "9.1673869",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "20:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 7,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 495,
+      "name": "EL HADJI",
+      "lastname": "BA",
+      "role": "Premium",
+      "sequence_details": [
+        {
+          "task_id": 209424,
+          "structure_id": 738,
+          "address": "Via Gian Giacomo Mora 12",
+          "lat": "45.4591723",
+          "lng": "9.1803896",
+          "type": "Premium",
+          "priority": 1,
+          "checkin_time": "23:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209176,
+          "structure_id": 914,
+          "address": "VIA GAUDENZIO FERRARI, 9",
+          "lat": "45.4555682",
+          "lng": "9.1761099",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209392,
+          "structure_id": 617,
+          "address": "VIA VOGHERA, 4",
+          "lat": "45.454632",
+          "lng": "9.168536",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": null,
+          "checkout_time": "09:30",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 13,
+      "priority_levels": [
+        3,
         1,
         1
       ]
@@ -425,35 +529,35 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209091,
-          "structure_id": 1401,
-          "address": "VIALE ZARA, 118",
-          "lat": "45.4987885",
-          "lng": "9.1968263",
+          "task_id": 209175,
+          "structure_id": 840,
+          "address": "VIA TULIPANI, 19",
+          "lat": "45.4498056",
+          "lng": "9.1372543",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": "15:00",
+          "checkin_time": "15:30",
           "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 208707,
-          "structure_id": 1210,
-          "address": "VIA TONALE 16",
-          "lat": "45.4890205",
-          "lng": "9.2028612",
+          "task_id": 209177,
+          "structure_id": 839,
+          "address": "Via dei Biancospini 13",
+          "lat": "45.4494831",
+          "lng": "9.1400384",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "15:00",
-          "checkout_time": "11:00",
+          "checkin_time": null,
+          "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 202080,
-          "structure_id": null,
-          "address": "VIA FELICE CASATI 18",
-          "lat": "45.4786808",
-          "lng": "9.2040633",
+          "task_id": 209184,
+          "structure_id": 1450,
+          "address": "VIA VINCENZO MARIA CORONELLI 3",
+          "lat": "45.4500396",
+          "lng": "9.1397483",
           "type": "Standard",
           "priority": 3,
           "checkin_time": null,
@@ -463,11 +567,11 @@
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 28,
+      "total_walk_time_min": 3,
       "priority_levels": [
         1,
-        2,
-        3
+        1,
+        1
       ]
     },
     {
@@ -477,22 +581,152 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209115,
-          "structure_id": 929,
-          "address": "VIA TIRSO 8",
-          "lat": "45.4388931",
-          "lng": "9.1989056",
+          "task_id": 209182,
+          "structure_id": 1627,
+          "address": "via Nino Oxilia 24",
+          "lat": "45.491965",
+          "lng": "9.2137771",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": "20:00",
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209204,
+          "structure_id": 1545,
+          "address": "VIA NICOLA PICCINNI, 5",
+          "lat": "45.4829445",
+          "lng": "9.2151596",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209208,
+          "structure_id": 795,
+          "address": "Via Nicola Piccinni, 5",
+          "lat": "45.4829072",
+          "lng": "9.2150899",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 12,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 644,
+      "name": "HENRY",
+      "lastname": "CHIDUBEM",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 209200,
+          "structure_id": 1372,
+          "address": "CORSO GARIBALDI, 55",
+          "lat": "45.4743685",
+          "lng": "9.1833014",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209202,
+          "structure_id": 763,
+          "address": "VIA FIORI CHIARI, 26",
+          "lat": "45.4720175",
+          "lng": "9.185447",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209203,
+          "structure_id": 1262,
+          "address": "VIA BORGONUOVO, 7",
+          "lat": "45.4706507",
+          "lng": "9.191199",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 9,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 722,
+      "name": "KONE LASSINE",
+      "lastname": "KONE",
+      "role": "Premium",
+      "sequence_details": [
+        {
+          "task_id": 209205,
+          "structure_id": 751,
+          "address": "Via L. Cagnola, 12",
+          "lat": "45.4776",
+          "lng": "9.17287",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209207,
+          "structure_id": 1128,
+          "address": "VIA FIORI CHIARI, 26",
+          "lat": "45.4720175",
+          "lng": "9.185447",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209213,
+          "structure_id": 494,
+          "address": "P.ZZA S. MARCO, 1",
+          "lat": "45.4730972",
+          "lng": "9.1883431",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "15:00",
           "checkout_time": null,
           "cleaning_time": null
         }
       ],
-      "total_apartments": 1,
-      "total_cleaning_time_min": 60,
-      "total_walk_time_min": 0,
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 17,
       "priority_levels": [
+        1,
+        1,
         1
       ]
     },
@@ -503,7 +737,7 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209121,
+          "task_id": 209222,
           "structure_id": 637,
           "address": "VIA FIORI CHIARI, 26 B",
           "lat": "45.4720175",
@@ -515,37 +749,37 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209124,
-          "structure_id": 751,
-          "address": "Via L. Cagnola, 12",
-          "lat": "45.4776",
-          "lng": "9.17287",
+          "task_id": 209442,
+          "structure_id": 1496,
+          "address": "VIA TORINO 44",
+          "lat": "45.4613523",
+          "lng": "9.1849551",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "14:00",
-          "checkout_time": "11:00",
+          "checkin_time": null,
+          "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209312,
-          "structure_id": 1342,
-          "address": "VIA BRAMANTE 15",
-          "lat": "45.4800193",
-          "lng": "9.1796141",
+          "task_id": 209250,
+          "structure_id": 35,
+          "address": "CORSO CRISTOFORO COLOMBO 1",
+          "lat": "45.4549824",
+          "lng": "9.1722022",
           "type": "Standard",
           "priority": 3,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
+          "checkin_time": "15:00",
+          "checkout_time": "10:00",
           "cleaning_time": null
         }
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 21,
+      "total_walk_time_min": 29,
       "priority_levels": [
         1,
         1,
-        1
+        2
       ]
     },
     {
@@ -555,7 +789,59 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209255,
+          "task_id": 209294,
+          "structure_id": 986,
+          "address": "VIA WASHINGTON, 54",
+          "lat": "45.4623642",
+          "lng": "9.1543891",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": "14:00",
+          "checkout_time": "11:00",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209396,
+          "structure_id": 1339,
+          "address": "PIAZZALE BRESCIA 1",
+          "lat": "45.4697344",
+          "lng": "9.1448534",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209402,
+          "structure_id": 1341,
+          "address": "VIA MONREALE 12",
+          "lat": "45.4760985",
+          "lng": "9.1400074",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 23,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 937,
+      "name": "LOVETH",
+      "lastname": "IGUDIA",
+      "role": "Premium",
+      "sequence_details": [
+        {
+          "task_id": 209384,
           "structure_id": 1630,
           "address": "Via dei Transiti 21",
           "lat": "45.490856",
@@ -567,26 +853,26 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209316,
-          "structure_id": 1371,
-          "address": "VIA VALTORTA 30",
-          "lat": "45.4995037",
-          "lng": "9.2245184",
+          "task_id": 209167,
+          "structure_id": 1382,
+          "address": "VIA PONTE SEVESO 40",
+          "lat": "45.4901211",
+          "lng": "9.2057682",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
+          "checkin_time": "17:00",
+          "checkout_time": null,
           "cleaning_time": null
         },
         {
-          "task_id": 209098,
-          "structure_id": 1564,
-          "address": "VIA DON LUIGI ORIONE, 14",
-          "lat": "45.5002419",
-          "lng": "9.2383984",
+          "task_id": 209425,
+          "structure_id": 754,
+          "address": "VIA STRADIVARI, 4",
+          "lat": "45.4842098",
+          "lng": "9.2155099",
           "type": "Standard",
           "priority": 3,
-          "checkin_time": "15:00",
+          "checkin_time": "20:00",
           "checkout_time": null,
           "cleaning_time": null
         }
@@ -596,86 +882,47 @@
       "total_walk_time_min": 25,
       "priority_levels": [
         1,
-        1,
-        2
-      ]
-    },
-    {
-      "cleaner_id": 937,
-      "name": "LOVETH",
-      "lastname": "IGUDIA",
-      "role": "Standard",
-      "sequence_details": [
-        {
-          "task_id": 209313,
-          "structure_id": 1332,
-          "address": "CORSO XXII MARZO 4",
-          "lat": "45.4620925",
-          "lng": "9.208244",
-          "type": "Standard",
-          "priority": 1,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209303,
-          "structure_id": 1494,
-          "address": "VIA ORTI 16D",
-          "lat": "45.454729",
-          "lng": "9.2015875",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": "15:00",
-          "checkout_time": null,
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209333,
-          "structure_id": 1353,
-          "address": "Via Crivelli, 15/1",
-          "lat": "45.4534737",
-          "lng": "9.1937547",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": "15:00",
-          "checkout_time": null,
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 19,
-      "priority_levels": [
-        1,
-        2,
-        2
+        3,
+        3
       ]
     },
     {
       "cleaner_id": 966,
       "name": "YENCI MARICELA",
       "lastname": "PILIA LINARES",
-      "role": "Standard",
+      "role": "Premium",
       "sequence_details": [
         {
-          "task_id": 209314,
-          "structure_id": 1345,
-          "address": "VIA ORNATO 10",
-          "lat": "45.5156349",
-          "lng": "9.1914387",
+          "task_id": 209385,
+          "structure_id": 1401,
+          "address": "VIALE ZARA, 118",
+          "lat": "45.4987885",
+          "lng": "9.1968263",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": "14:00",
-          "checkout_time": "10:15",
+          "checkin_time": "15:00",
+          "checkout_time": null,
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209158,
+          "structure_id": 1501,
+          "address": "VIA VALASSINA 45",
+          "lat": "45.5022144",
+          "lng": "9.1883947",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "20:30",
+          "checkout_time": null,
           "cleaning_time": null
         }
       ],
-      "total_apartments": 1,
-      "total_cleaning_time_min": 60,
-      "total_walk_time_min": 0,
+      "total_apartments": 2,
+      "total_cleaning_time_min": 120,
+      "total_walk_time_min": 9,
       "priority_levels": [
-        1
+        1,
+        3
       ]
     },
     {
@@ -685,11 +932,63 @@
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209315,
-          "structure_id": 1305,
-          "address": "VIA ARENA 1",
-          "lat": "45.4553283",
-          "lng": "9.178874",
+          "task_id": 209393,
+          "structure_id": 618,
+          "address": "VIA VOGHERA, 4",
+          "lat": "45.454632",
+          "lng": "9.168536",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": null,
+          "checkout_time": "09:30",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209397,
+          "structure_id": 1386,
+          "address": "VIA MEDICI 8",
+          "lat": "45.461148",
+          "lng": "9.180851",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209400,
+          "structure_id": 1315,
+          "address": "VIA GAUDENZIO FERRARI 16",
+          "lat": "45.4550128",
+          "lng": "9.1764066",
+          "type": "Standard",
+          "priority": 3,
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 3,
+      "total_cleaning_time_min": 180,
+      "total_walk_time_min": 24,
+      "priority_levels": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "cleaner_id": 985,
+      "name": "HODA MAHMOUD SALAMA",
+      "lastname": "HUSSEIN",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 209398,
+          "structure_id": 1336,
+          "address": "PIAZZA SAN CAMILLO DE LELLIS 1",
+          "lat": "45.4821797",
+          "lng": "9.2032178",
           "type": "Standard",
           "priority": 1,
           "checkin_time": "14:00",
@@ -697,11 +996,50 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209348,
-          "structure_id": 305,
-          "address": "RIPA TICINESE 43",
-          "lat": "45.4512117",
-          "lng": "9.1735639",
+          "task_id": 202153,
+          "structure_id": null,
+          "address": "VIA FELICE CASATI 18",
+          "lat": "45.4786808",
+          "lng": "9.2040633",
+          "type": "Standard",
+          "priority": 2,
+          "checkin_time": null,
+          "checkout_time": null,
+          "cleaning_time": null
+        }
+      ],
+      "total_apartments": 2,
+      "total_cleaning_time_min": 120,
+      "total_walk_time_min": 5,
+      "priority_levels": [
+        1,
+        3
+      ]
+    },
+    {
+      "cleaner_id": 987,
+      "name": "MARIE LAURE",
+      "lastname": "PENKA",
+      "role": "Standard",
+      "sequence_details": [
+        {
+          "task_id": 209399,
+          "structure_id": 1330,
+          "address": "VIA SALASCO 3",
+          "lat": "45.4500486",
+          "lng": "9.1915613",
+          "type": "Standard",
+          "priority": 1,
+          "checkin_time": "14:00",
+          "checkout_time": "10:15",
+          "cleaning_time": null
+        },
+        {
+          "task_id": 209416,
+          "structure_id": 128,
+          "address": "VIA VERONA 11",
+          "lat": "45.4497259",
+          "lng": "9.2043258",
           "type": "Standard",
           "priority": 2,
           "checkin_time": null,
@@ -709,15 +1047,15 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209028,
-          "structure_id": 1578,
-          "address": "VIA MOLINO DELLE ARMI, 13",
-          "lat": "45.456241",
-          "lng": "9.185713",
+          "task_id": 209160,
+          "structure_id": 1551,
+          "address": "VIA ADAMELLO, 8",
+          "lat": "45.4428459",
+          "lng": "9.2030197",
           "type": "Standard",
           "priority": 3,
           "checkin_time": "15:00",
-          "checkout_time": "11:00",
+          "checkout_time": null,
           "cleaning_time": null
         }
       ],
@@ -731,93 +1069,41 @@
       ]
     },
     {
-      "cleaner_id": 985,
-      "name": "HODA MAHMOUD SALAMA",
-      "lastname": "HUSSEIN",
+      "cleaner_id": 995,
+      "name": "BABY JANE",
+      "lastname": "MAGNAYE",
       "role": "Standard",
       "sequence_details": [
         {
-          "task_id": 209360,
-          "structure_id": 1329,
-          "address": "VIA SALASCO 3",
-          "lat": "45.450176",
-          "lng": "9.1940503",
+          "task_id": 209401,
+          "structure_id": 1319,
+          "address": "VIA GIANGIACOMO MORA 9",
+          "lat": "45.4586858",
+          "lng": "9.1797549",
           "type": "Standard",
           "priority": 1,
-          "checkin_time": "10:00",
+          "checkin_time": "14:00",
           "checkout_time": "10:15",
           "cleaning_time": null
         },
         {
-          "task_id": 209284,
-          "structure_id": 410,
-          "address": "VIA GIAN GALEAZZO 7",
-          "lat": "45.4529136",
-          "lng": "9.1823451",
+          "task_id": 205696,
+          "structure_id": 420,
+          "address": "VIA CESARE DA SESTO 20",
+          "lat": "45.458444",
+          "lng": "9.1718315",
           "type": "Standard",
           "priority": 2,
-          "checkin_time": "15:00",
+          "checkin_time": null,
           "checkout_time": "11:00",
           "cleaning_time": null
         },
         {
-          "task_id": 209334,
-          "structure_id": 1493,
-          "address": "Via Carlo Crivelli, 15/1",
-          "lat": "45.4534641",
-          "lng": "9.1937882",
-          "type": "Standard",
-          "priority": 3,
-          "checkin_time": "15:00",
-          "checkout_time": null,
-          "cleaning_time": null
-        }
-      ],
-      "total_apartments": 3,
-      "total_cleaning_time_min": 180,
-      "total_walk_time_min": 22,
-      "priority_levels": [
-        1,
-        2,
-        2
-      ]
-    },
-    {
-      "cleaner_id": 987,
-      "name": "MARIE LAURE",
-      "lastname": "PENKA",
-      "role": "Standard",
-      "sequence_details": [
-        {
-          "task_id": 209409,
-          "structure_id": 111,
-          "address": "VIA WHASHINGTON 102",
-          "lat": "45.4553247",
-          "lng": "9.1543019",
-          "type": "Standard",
-          "priority": 1,
-          "checkin_time": null,
-          "checkout_time": "12:00",
-          "cleaning_time": null
-        },
-        {
-          "task_id": 189544,
-          "structure_id": 432,
-          "address": "VIA VOGHERA 11",
-          "lat": "45.4538238",
-          "lng": "9.1662493",
-          "type": "Standard",
-          "priority": 2,
-          "checkin_time": null,
-          "checkout_time": null,
-          "cleaning_time": null
-        },
-        {
-          "task_id": 209117,
-          "structure_id": 1570,
-          "address": "RIPA DI PORTA TICINESE 43",
-          "lat": "45.4512117",
-          "lng": "9.1735639",
+          "task_id": 207830,
+          "structure_id": 1243,
+          "address": "Via Cesare da Sesto 20",
+          "lat": "45.458444",
+          "lng": "9.1718315",
           "type": "Standard",
           "priority": 3,
           "checkin_time": null,
@@ -827,7 +1113,7 @@
       ],
       "total_apartments": 3,
       "total_cleaning_time_min": 180,
-      "total_walk_time_min": 19,
+      "total_walk_time_min": 7,
       "priority_levels": [
         1,
         3,
@@ -835,6 +1121,6 @@
       ]
     }
   ],
-  "total_cleaners": 17,
-  "total_apartments": 47
+  "total_cleaners": 22,
+  "total_apartments": 64
 }
