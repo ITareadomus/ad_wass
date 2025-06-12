@@ -35,7 +35,7 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
             return 30
         elif contract_type == "C":
             return 40
-        elif contract_type == "Contratto a chiamata":
+        elif contract_type == "a chiamata":
             return 0  # I contratti a chiamata non hanno ore minime
         return 0
 

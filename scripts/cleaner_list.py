@@ -132,7 +132,7 @@ for cleaner in results:
     elif contract_type_db == 3:
         contract_type = "C"
     elif contract_type_db == 4:
-        contract_type = "Contratto a chiamata"
+        contract_type = "a chiamata"
     else:
         contract_type = contract_type_db  # mantiene None o altro valore se non 1/2/3/4
 
