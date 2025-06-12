@@ -20,6 +20,22 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking', departure_time=None
     Returns:
         dict: Dizionario con 'distanza_testo', 'distanza_metri', 'durata' (in secondi), 'durata_testo', oppure None in caso di errore.
     """
+    # Validazione input
+    try:
+        lat1, lng1, lat2, lng2 = float(lat1), float(lng1), float(lat2), float(lng2)
+    except (ValueError, TypeError):
+        print(f"Errore: coordinate non valide - lat1:{lat1}, lng1:{lng1}, lat2:{lat2}, lng2:{lng2}")
+        return None
+    
+    # Controllo coordinate valide
+    if not (-90 <= lat1 <= 90 and -90 <= lat2 <= 90):
+        print(f"Errore: latitudini fuori range - lat1:{lat1}, lat2:{lat2}")
+        return None
+    
+    if not (-180 <= lng1 <= 180 and -180 <= lng2 <= 180):
+        print(f"Errore: longitudini fuori range - lng1:{lng1}, lng2:{lng2}")
+        return None
+
     origine = f"{lat1},{lng1}"
     destinazione = f"{lat2},{lng2}"
 
@@ -35,15 +51,24 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking', departure_time=None
 
         result = gmaps.distance_matrix(**params)
 
+        # Verifica struttura risposta
+        if not result.get('rows') or not result['rows'][0].get('elements'):
+            print(f"Errore: risposta API malformata per {origine} -> {destinazione}")
+            return None
+
         elemento = result['rows'][0]['elements'][0]
 
         if elemento['status'] != 'OK':
-            raise ValueError(f"Errore nella risposta della Distance Matrix: {elemento['status']}")
+            print(f"Errore API Google Maps: {elemento['status']} per {origine} -> {destinazione}")
+            return None
 
         distanza_testo = elemento['distance']['text']
         distanza_valore = elemento['distance']['value']  # in metri
         durata_testo = elemento['duration']['text']
         durata_valore = elemento['duration']['value']    # in secondi
+
+        # Debug info
+        print(f"Distanza calcolata: {origine} -> {destinazione} = {durata_testo} ({durata_valore}s)")
 
         return {
             'distanza_testo': distanza_testo,
@@ -53,7 +78,7 @@ def calcola_distanza(lat1, lng1, lat2, lng2, mode='walking', departure_time=None
         }
 
     except Exception as e:
-        print("Errore nel calcolo della distanza:", e)
+        print(f"Errore nel calcolo della distanza da {origine} a {destinazione}: {e}")
         return None
 
 # ESEMPIO USO (decommentare per test)
