@@ -289,6 +289,16 @@
             await loadCleaners(true);
         }
 
+        // Converte il tipo di contratto da numero a testo
+        function getContractTypeDisplay(contractType) {
+            if (contractType === 1 || contractType === 'A') return 'A';
+            if (contractType === 2 || contractType === 'B') return 'B';
+            if (contractType === 3 || contractType === 'C') return 'C';
+            if (contractType === 4) return 'Contratto a chiamata';
+            if (contractType === 'Contratto a chiamata') return 'Contratto a chiamata';
+            return contractType || '';
+        }
+
         // Mostra cleaners nella lista
         function displayCleaners() {
             const cleanerList = document.getElementById('cleanerList');
@@ -300,6 +310,7 @@
 
                 const isSelected = selectedFromFile.some(sel => sel.id === cleaner.id);
                 const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
+                const contractDisplay = getContractTypeDisplay(cleaner.contract_type);
 
                 cleanerItem.innerHTML = `
                     <div class="cleaner-info">
@@ -310,7 +321,7 @@
                             <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
                             <div style="font-size: 12px; color: #6c757d; margin-top: 4px;">
                                 Ore questo mese: ${cleaner.counter_hours || 0}h
-                                ${cleaner.contract_type ? ` | Contratto: ${cleaner.contract_type}` : ''}
+                                ${contractDisplay ? ` | Contratto: ${contractDisplay}` : ''}
                             </div>
                         </div>
                     </div>
