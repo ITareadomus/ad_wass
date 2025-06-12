@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -119,9 +120,40 @@
             </div>
 
             <div id="assignmentResults" style="display: none;">
-                    <h3>📋 Tabella Assegnazioni Appartamenti</h3>
-                    <div id="assignmentList"></div>
-                </div>
+                <h3>📋 Tabella Assegnazioni Appartamenti</h3>
+                <div id="assignmentList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per modificare assegnazione -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 400px;">
+            <h3 style="margin-top: 0; color: #2c3e50;">Modifica Assegnazione</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <strong>Appartamento:</strong> <span id="editApartmentInfo"></span>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="editCleanerSelect" style="display: block; margin-bottom: 5px; font-weight: bold;">Cleaner Assegnato:</label>
+                <select id="editCleanerSelect" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+                    <!-- Opzioni dinamiche -->
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="editPriorityInput" style="display: block; margin-bottom: 5px; font-weight: bold;">Priorità nell'ordine del cleaner:</label>
+                <input type="number" id="editPriorityInput" min="1" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            
+            <div style="text-align: right;">
+                <button onclick="closeEditModal()" style="background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                    Annulla
+                </button>
+                <button onclick="saveEditChanges()" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                    Salva Modifiche
+                </button>
             </div>
         </div>
     </div>
@@ -137,6 +169,12 @@
     </div>
 
     <script>
+        // Variabili globali per l'editing
+        let currentEditingApartment = null;
+        let currentAssignments = [];
+        let modifiedAssignments = [];
+        let hasUnsavedChanges = false;
+
         // Mostra messaggio all'utente
         function showMessage(text, type = 'info') {
             const container = document.getElementById('messageContainer');
@@ -347,6 +385,11 @@
                 showMessage('Assegnazioni generate con successo!', 'success');
                 document.getElementById('viewReportBtn').style.display = 'inline-block';
 
+                // Salva le assegnazioni correnti per l'editing
+                currentAssignments = JSON.parse(JSON.stringify(assignments));
+                modifiedAssignments = JSON.parse(JSON.stringify(assignments));
+                hasUnsavedChanges = false;
+
                 // Mostra la tabella con tutti gli appartamenti e i cleaner assegnati
                 displayAssignmentsTable(assignments);
 
@@ -357,6 +400,180 @@
                 hideLoadingOverlay();
                 console.error('Errore durante la generazione delle assegnazioni:', error);
                 showMessage(`Errore: ${error.message}`, 'error');
+            }
+        }
+
+        // Apre il modal per modificare un appartamento
+        function editApartment(assignmentIndex, apartmentIndex) {
+            const assignment = modifiedAssignments[assignmentIndex];
+            const apartment = assignment.sequence_details[apartmentIndex];
+            
+            currentEditingApartment = {
+                assignmentIndex: assignmentIndex,
+                apartmentIndex: apartmentIndex,
+                originalAssignmentIndex: assignmentIndex
+            };
+
+            // Popola le informazioni dell'appartamento
+            document.getElementById('editApartmentInfo').textContent = 
+                `${apartment.task_id} - ${apartment.address}`;
+
+            // Popola la dropdown dei cleaner
+            const cleanerSelect = document.getElementById('editCleanerSelect');
+            cleanerSelect.innerHTML = '';
+            
+            modifiedAssignments.forEach((assign, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${assign.name} ${assign.lastname} (${assign.role})`;
+                if (index === assignmentIndex) {
+                    option.selected = true;
+                }
+                cleanerSelect.appendChild(option);
+            });
+
+            // Imposta la priorità corrente
+            document.getElementById('editPriorityInput').value = apartment.priority;
+
+            // Mostra il modal
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // Chiude il modal di editing
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            currentEditingApartment = null;
+        }
+
+        // Salva le modifiche dell'appartamento
+        function saveEditChanges() {
+            if (!currentEditingApartment) return;
+
+            const newCleanerIndex = parseInt(document.getElementById('editCleanerSelect').value);
+            const newPriority = parseInt(document.getElementById('editPriorityInput').value);
+            
+            const { assignmentIndex, apartmentIndex, originalAssignmentIndex } = currentEditingApartment;
+            
+            // Rimuovi l'appartamento dall'assegnazione corrente
+            const apartment = modifiedAssignments[originalAssignmentIndex].sequence_details.splice(apartmentIndex, 1)[0];
+            
+            // Aggiorna la priorità
+            apartment.priority = newPriority;
+            
+            // Aggiungi all'assegnazione del nuovo cleaner
+            if (!modifiedAssignments[newCleanerIndex].sequence_details) {
+                modifiedAssignments[newCleanerIndex].sequence_details = [];
+            }
+            
+            // Inserisci nella posizione corretta in base alla priorità
+            let insertIndex = modifiedAssignments[newCleanerIndex].sequence_details.length;
+            for (let i = 0; i < modifiedAssignments[newCleanerIndex].sequence_details.length; i++) {
+                if (modifiedAssignments[newCleanerIndex].sequence_details[i].priority > newPriority) {
+                    insertIndex = i;
+                    break;
+                }
+            }
+            
+            modifiedAssignments[newCleanerIndex].sequence_details.splice(insertIndex, 0, apartment);
+            
+            // Riordina le priorità per il cleaner destinatario
+            modifiedAssignments[newCleanerIndex].sequence_details.forEach((apt, index) => {
+                apt.priority = index + 1;
+            });
+            
+            // Riordina le priorità per il cleaner di origine se ha ancora appartamenti
+            if (modifiedAssignments[originalAssignmentIndex].sequence_details.length > 0) {
+                modifiedAssignments[originalAssignmentIndex].sequence_details.forEach((apt, index) => {
+                    apt.priority = index + 1;
+                });
+            }
+            
+            // Aggiorna i conteggi
+            modifiedAssignments[newCleanerIndex].total_apartments = modifiedAssignments[newCleanerIndex].sequence_details.length;
+            modifiedAssignments[originalAssignmentIndex].total_apartments = modifiedAssignments[originalAssignmentIndex].sequence_details.length;
+            
+            hasUnsavedChanges = true;
+            
+            // Aggiorna la visualizzazione
+            displayAssignmentsTable(modifiedAssignments);
+            updateMapWithAssignments(modifiedAssignments);
+            
+            // Mostra il pulsante di conferma se ci sono modifiche
+            updateConfirmButton();
+            
+            closeEditModal();
+            showMessage('Modifica salvata! Premi "Conferma Modifiche" per salvare definitivamente.', 'success');
+        }
+
+        // Aggiorna il pulsante di conferma
+        function updateConfirmButton() {
+            let confirmBtn = document.getElementById('confirmChangesBtn');
+            if (!confirmBtn && hasUnsavedChanges) {
+                // Crea il pulsante se non esiste
+                confirmBtn = document.createElement('button');
+                confirmBtn.id = 'confirmChangesBtn';
+                confirmBtn.className = 'btn btn-confirm';
+                confirmBtn.textContent = 'Conferma Modifiche';
+                confirmBtn.onclick = confirmChanges;
+                confirmBtn.style.marginLeft = '10px';
+                
+                const actionsDiv = document.querySelector('.assignment-actions');
+                actionsDiv.appendChild(confirmBtn);
+            } else if (confirmBtn && !hasUnsavedChanges) {
+                // Rimuovi il pulsante se non ci sono modifiche
+                confirmBtn.remove();
+            }
+        }
+
+        // Conferma e salva le modifiche nel JSON
+        async function confirmChanges() {
+            if (!hasUnsavedChanges) {
+                showMessage('Nessuna modifica da salvare', 'info');
+                return;
+            }
+
+            try {
+                showLoadingOverlay();
+                showMessage('Salvataggio modifiche...', 'info');
+
+                // Prepara i dati da salvare
+                const saveData = {
+                    timestamp: new Date().toISOString(),
+                    date: getSelectedAssignmentDate(),
+                    assignments: modifiedAssignments,
+                    total_cleaners: modifiedAssignments.length,
+                    total_apartments: modifiedAssignments.reduce((sum, assign) => sum + assign.total_apartments, 0)
+                };
+
+                // Salva nel file assignments.json
+                const response = await fetch('/save-assignments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(saveData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Errore nel salvataggio delle modifiche');
+                }
+
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.error || 'Errore nel salvataggio');
+                }
+
+                currentAssignments = JSON.parse(JSON.stringify(modifiedAssignments));
+                hasUnsavedChanges = false;
+                updateConfirmButton();
+
+                hideLoadingOverlay();
+                showMessage('Modifiche salvate con successo!', 'success');
+
+            } catch (error) {
+                hideLoadingOverlay();
+                console.error('Errore nel salvataggio:', error);
+                showMessage(`Errore nel salvataggio: ${error.message}`, 'error');
             }
         }
 
@@ -429,8 +646,8 @@
             `;
 
             let rowCount = 0;
-            assignments.forEach(assignment => {
-                assignment.sequence_details.forEach(apartment => {
+            assignments.forEach((assignment, assignmentIndex) => {
+                assignment.sequence_details.forEach((apartment, apartmentIndex) => {
                     const rowColor = rowCount % 2 === 0 ? '#f8f9fa' : 'white';
                     const premiumBadge = apartment.type === 'Premium' ? 
                         '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">PREMIUM</span>' : '';
@@ -443,7 +660,7 @@
                             <td style="padding: 12px; color: #6c757d; max-width: 250px;">
                                 ${apartment.address}
                                 <div style="font-size: 12px; color: #868e96; margin-top: 4px;">
-                                    Check-in: ${apartment.checkin_time} | Check-out: ${apartment.checkout_time}
+                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'}
                                 </div>
                             </td>
                             <td style="padding: 12px; text-align: center;">
@@ -465,8 +682,12 @@
                             </td>
                             <td style="padding: 12px; text-align: center;">
                                 <button onclick="showCleanerRoute(${assignment.cleaner_id}, '${assignment.name} ${assignment.lastname}')" 
-                                        style="background: ${cleanerColorMap[assignment.cleaner_id]}; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background-color 0.2s;">
-                                    Visualizza Percorso
+                                        style="background: ${cleanerColorMap[assignment.cleaner_id]}; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-right: 5px; transition: background-color 0.2s;">
+                                    Percorso
+                                </button>
+                                <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
+                                        style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; transition: background-color 0.2s;">
+                                    ✏️ Modifica
                                 </button>
                             </td>
                         </tr>
@@ -482,6 +703,7 @@
                 <div style="margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 8px; text-align: center;">
                     <strong>Totale appartamenti assegnati: ${rowCount}</strong>
                     <span style="margin-left: 20px;">Totale cleaner utilizzati: ${assignments.length}</span>
+                    ${hasUnsavedChanges ? '<span style="margin-left: 20px; color: #e74c3c; font-weight: bold;">⚠️ Modifiche non salvate</span>' : ''}
                 </div>
             `;
 
@@ -539,13 +761,18 @@
             showMessage(`Caricamento percorso per ${cleanerName}...`, 'info');
 
             try {
-                // Carica le assegnazioni dal file assignments.json con timestamp per evitare cache
-                const response = await fetch(`/data/assignments.json?t=${Date.now()}`);
-                if (!response.ok) {
-                    throw new Error('File assignments.json non trovato');
+                // Usa le assegnazioni modificate se disponibili, altrimenti carica dal file
+                let assignmentsData;
+                if (modifiedAssignments.length > 0) {
+                    assignmentsData = { assignments: modifiedAssignments };
+                } else {
+                    const response = await fetch(`/data/assignments.json?t=${Date.now()}`);
+                    if (!response.ok) {
+                        throw new Error('File assignments.json non trovato');
+                    }
+                    assignmentsData = await response.json();
                 }
 
-                const assignmentsData = await response.json();
                 console.log('Dati assegnazioni caricati:', assignmentsData);
 
                 const cleanerAssignment = assignmentsData.assignments.find(a => a.cleaner_id == cleanerId);
@@ -773,7 +1000,9 @@
                 apartments = [];
             }
 
-            countSpan.textContent = `${apartments.length} appartamenti`;            if (apartments.length === 0) {
+            countSpan.textContent = `${apartments.length} appartamenti`;
+            
+            if (apartments.length === 0) {
                 container.innerHTML = '<div class="no-data">Nessun appartamento trovato per la giornata</div>';
                 return;
             }
@@ -1126,6 +1355,13 @@
                 }
 
                 // Se ci sono assegnazioni già generate, mantieni i marker colorati
+                if (modifiedAssignments.length > 0) {
+                    updateMapWithAssignments(modifiedAssignments);
+                    showMessage('Percorso rimosso - assegnazioni mantenute', 'success');
+                    document.getElementById('resetMapButton').style.display = 'none';
+                    return;
+                }
+
                 try {
                     const assignmentsResponse = await fetch(`/data/assignments.json?t=${Date.now()}`);
                     if (assignmentsResponse.ok) {
@@ -1136,6 +1372,7 @@
                             // Mantieni i marker colorati delle assegnazioni
                             updateMapWithAssignments(assignments);
                             showMessage('Percorso rimosso - assegnazioni mantenute', 'success');
+                            document.getElementById('resetMapButton').style.display = 'none';
                             return;
                         }
                     }
@@ -1192,107 +1429,6 @@
             }
 
             showMessage(`Focalizzato su: ${apt.address}`, 'info');
-        }
-
-        // Carica le assegnazioni e verifica i cleaner selezionati
-        async function refreshAssignments() {
-            try {
-                const response = await fetch('/assignments.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    displayAssignmentResults(data.assignment || data.assignments || []);
-                } else {
-                    console.log('File assignments.json non trovato. Genera prima le assegnazioni.');
-                    // Rimuovo il messaggio di info per evitare confusione all'utente
-                }
-            } catch (error) {
-                console.log('File assignments.json non ancora disponibile');
-                // Rimuovo il messaggio di errore per evitare confusione all'utente
-            }
-        }
-
-        // Carica i cleaners selezionati
-        async function loadCleaners() {
-            try {
-                showLoadingOverlay();
-
-
-                const response = await fetch('/data/modello_cleaners.json');
-
-                if (!response.ok) {
-                    throw new Error('File sel_cleaners.json non trovato. Genera prima le convocazioni.');
-                }
-
-                const data = await response.json();
-                selectedCleaners = Array.isArray(data.cleaners) ? data.cleaners : [];
-
-                displayCleaners();
-                hideLoadingOverlay();
-                showMessage(`${selectedCleaners.length} cleaners caricati con successo`, 'success');
-
-            } catch (error) {
-                hideLoadingOverlay();
-                selectedCleaners = []; // Assicura che sia sempre un array
-                console.error('Errore nel caricamento dei cleaners:', error);
-                showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
-            }
-        }
-
-        // Carica le assegnazioni generate
-        async function loadAssignments() {
-            try {
-                showLoadingOverlay();
-
-                const timestamp = Date.now();
-                const response = await fetch(`/data/assignments.json?t=${timestamp}`);
-                if (!response.ok) {
-                    throw new Error('File assignments.json non trovato. Genera prima le assegnazioni.');
-                }
-
-                const data = await response.json();
-                assignments = Array.isArray(data.assignments) ? data.assignments : [];
-
-                displayAssignments();
-                hideLoadingOverlay();
-                showMessage(`${assignments.length} assegnazioni caricate con successo`, 'success');
-
-            } catch (error) {
-                hideLoadingOverlay();
-                assignments = []; // Assicura che sia sempre un array
-                console.error('Errore nel caricamento delle assegnazioni:', error);
-                showMessage(`Errore nel caricamento delle assegnazioni: ${error.message}`, 'error');
-            }
-        }
-
-        // Visualizza le assegnazioni nella lista
-        function displayAssignments() {
-            const container = document.getElementById('assignmentsList');
-            const countSpan = document.getElementById('assignmentCount');
-
-            // Verifica che assignments sia un array
-            if (!Array.isArray(assignments)) {
-                assignments = [];
-            }
-
-            countSpan.textContent = `${assignments.length} assegnazioni`;
-
-            if (assignments.length === 0) {
-                container.innerHTML = '<div class="no-data">Nessuna assegnazione disponibile.</div>';
-                return;
-            }
-
-            let html = '';
-            assignments.forEach((assignment, index) => {
-                html += `
-                    <div class="assignment-item" style="padding: 8px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 5px; background: white;">
-                        <div style="font-weight: bold; color: #2c3e50;">
-                            Assegnazione ${index + 1}
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
         }
 
         // Inizializza la data selezionata al caricamento della pagina
@@ -1361,18 +1497,6 @@
                 console.error('Errore nel caricamento dei cleaners per data:', error);
                 showMessage(`Errore nel caricamento dei cleaners: ${error.message}`, 'error');
             }
-        }
-
-        // Funzione per aggiornare le statistiche
-        function updateStatistics() {
-            const assignedCleanersCount = assignments.length;
-            const assignedApartmentsCount = assignments.reduce((total, assignment) => {
-                return total + (assignment.sequence_details ? assignment.sequence_details.length : 0);
-            }, 0);
-
-            document.getElementById('assigned-cleaners-count').textContent = assignedCleanersCount;
-            document.getElementById('assigned-apartments-count').textContent = assignedApartmentsCount;
-            document.getElementById('total-apartments-count').textContent = apartments.length;
         }
 
         // Carica i dati all'avvio

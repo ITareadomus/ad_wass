@@ -52,6 +52,8 @@ class CustomHandler(SimpleHTTPRequestHandler):
             self.handle_save_selection()
         elif self.path == '/get-assignments':
             self.handle_get_assignments()
+        elif self.path == '/save-assignments':
+            self.handle_save_assignments()
         else:
             self.send_response(404)
             self.end_headers()
@@ -266,6 +268,21 @@ class CustomHandler(SimpleHTTPRequestHandler):
                     'apartments': [],
                     'date_data': None
                 })
+
+        except Exception as e:
+            self.send_json_response({'success': False, 'error': str(e)})
+
+    def handle_save_assignments(self):
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+
+            # Salva i dati nel file assignments.json
+            with open('data/assignments.json', 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+
+            self.send_json_response({'success': True, 'message': 'Assegnazioni salvate con successo'})
 
         except Exception as e:
             self.send_json_response({'success': False, 'error': str(e)})
