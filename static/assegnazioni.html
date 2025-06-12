@@ -407,7 +407,7 @@
 
             // Crea la tabella HTML
             let tableHtml = `
-                <div style="margin-bottom: 15px; text-align: center;">
+                <div id="resetMapButton" style="margin-bottom: 15px; text-align: center; display: none;">
                     <button onclick="resetMapView()" 
                             style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;">
                         ✕ Rimuovi Filtro Percorso
@@ -669,11 +669,15 @@
                             });
                             directionsRenderer.setDirections(response);
                             showMessage(`Percorso di ${cleanerName} visualizzato sulla mappa (${apartments.length} appartamenti)`, 'success');
+                            // Mostra il pulsante per rimuovere il filtro percorso
+                            document.getElementById('resetMapButton').style.display = 'block';
                         } else {
                             console.error('Errore nel calcolo del percorso:', status);
                             // Anche se il percorso fallisce, mostra i marker
                             map.fitBounds(bounds);
                             showMessage(`Marker visualizzati per ${cleanerName} (${apartments.length} appartamenti)`, 'success');
+                            // Mostra il pulsante anche se il percorso fallisce ma ci sono marker
+                            document.getElementById('resetMapButton').style.display = 'block';
                         }
                     });
                 } else {
@@ -681,6 +685,8 @@
                     map.fitBounds(bounds);
                     map.setZoom(15);
                     showMessage(`Visualizzato appartamento per ${cleanerName}`, 'success');
+                    // Mostra il pulsante per rimuovere il filtro percorso
+                    document.getElementById('resetMapButton').style.display = 'block';
                 }
 
             } catch (error) {
@@ -1032,6 +1038,9 @@
                 }
 
                 showMessage('Vista generale ripristinata - marker grigi', 'success');
+                
+                // Nascondi il pulsante rimuovi filtro
+                document.getElementById('resetMapButton').style.display = 'none';
             } catch (error) {
                 console.error('Errore nel reset della mappa:', error);
                 showMessage(`Errore nel reset della mappa: ${error.message}`, 'error');
