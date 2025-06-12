@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-12T13:42:43.869257",
+  "timestamp": "2025-06-12T14:34:50.148074",
   "date": "2025-06-12",
   "assignments": [
     {
@@ -345,14 +345,14 @@
           "cleaning_time": null
         },
         {
-          "task_id": 209125,
-          "structure_id": 1618,
-          "address": "VIALE CERTOSA 92",
-          "lat": "45.4938429",
-          "lng": "9.1438164",
+          "task_id": 209449,
+          "structure_id": 1623,
+          "address": "via Principe Eugenio 15",
+          "lat": "45.48931",
+          "lng": "9.1635183",
           "type": "Standard",
           "priority": 3,
-          "checkin_time": "15:00",
+          "checkin_time": null,
           "checkout_time": null,
           "cleaning_time": null
         }
@@ -363,7 +363,7 @@
       "priority_levels": [
         1,
         1,
-        2
+        1
       ]
     },
     {
