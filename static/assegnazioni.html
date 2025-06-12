@@ -700,7 +700,8 @@
                             <td style="padding: 12px; color: #6c757d; max-width: 250px;">
                                 ${apartment.address}
                                 <div style="font-size: 12px; color: #868e96; margin-top: 4px;">
-                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'} | Durata: ${apartment.cleaning_time || 60} min
+                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'}
+                                    <br>Durata pulizia: <strong>${apartment.cleaning_time || 60} min</strong>
                                 </div>
                             </td>
                             <td style="padding: 12px; text-align: center;">
@@ -716,7 +717,10 @@
                                     <div style="width: 12px; height: 12px; border-radius: 50%; background: ${cleanerColorMap[assignment.cleaner_id]}; margin-right: 8px; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.3);"></div>
                                     <div>
                                         <div style="font-weight: 500; color: #495057;">${assignment.name} ${assignment.lastname}</div>
-                                        <div style="font-size: 12px; color: #868e96;">${assignment.role}</div>
+                                        <div style="font-size: 12px; color: #868e96;">
+                                            ${assignment.role}
+                                            ${assignment.counter_hours !== undefined ? ` | ${assignment.counter_hours}h mese` : ''}
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -1100,6 +1104,7 @@
                         </div>
                         <div style="font-size: 12px; color: #7f8c8d; margin-top: 4px;">
                             ID: ${cleaner.id} | Disponibile: ${cleaner.available ? 'Sì' : 'No'} | Ore mese: ${cleaner.counter_hours || 0}h
+                            ${cleaner.contract_type ? ` | Contratto: ${cleaner.contract_type}` : ''}
                         </div>
                     </div>
                 `;
