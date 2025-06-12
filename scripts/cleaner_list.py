@@ -131,8 +131,10 @@ for cleaner in results:
         contract_type = "B"
     elif contract_type_db == 3:
         contract_type = "C"
+    elif contract_type_db == 4:
+        contract_type = "Contratto a chiamata"
     else:
-        contract_type = contract_type_db  # mantiene None o altro valore se non 1/2/3
+        contract_type = contract_type_db  # mantiene None o altro valore se non 1/2/3/4
 
     counter_hours = get_monthly_hours(cursor, cleaner["id"])
     counter_days = get_consecutive_days(cursor, cleaner["id"])
