@@ -997,16 +997,36 @@
         // Resetta la vista della mappa per mostrare tutti gli appartamenti
         async function resetMapView() {
             try {
-                showMessage('Caricamento vista generale...', 'info');
+                showMessage('Rimozione percorso...', 'info');
 
-                // Pulisci la mappa
+                // Rimuovi solo il percorso ma mantieni i marker
+                if (directionsRenderer) {
+                    directionsRenderer.setDirections({routes: []});
+                }
+
+                // Se ci sono assegnazioni già generate, mantieni i marker colorati
+                try {
+                    const assignmentsResponse = await fetch(`/data/assignments.json?t=${Date.now()}`);
+                    if (assignmentsResponse.ok) {
+                        const assignmentsData = await assignmentsResponse.json();
+                        const assignments = assignmentsData.assignments || [];
+                        
+                        if (assignments.length > 0) {
+                            // Mantieni i marker colorati delle assegnazioni
+                            updateMapWithAssignments(assignments);
+                            showMessage('Percorso rimosso - assegnazioni mantenute', 'success');
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.log('Nessuna assegnazione trovata, mostro marker grigi');
+                }
+
+                // Se non ci sono assegnazioni, mostra marker grigi
                 clearMap();
-
-                // Carica tutti gli appartamenti e mostrali sulla mappa con marker grigi
                 if (apartments.length > 0) {
                     showApartmentsOnMap();
                 } else {
-                    // Ricarica gli appartamenti se non sono disponibili
                     await loadApartments();
                 }
 
