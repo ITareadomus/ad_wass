@@ -39,8 +39,10 @@ def time_between_apartments(apt1, apt2):
 
 def build_assignments(cleaners, apartments):
     """Costruisce le assegnazioni"""
-    # Filtra appartamenti con coordinate valide
+    # Separa appartamenti con e senza coordinate
     valid_apartments = []
+    invalid_apartments = []
+    
     for apt in apartments:
         if apt.get("lat") and apt.get("lng"):
             try:
@@ -48,13 +50,26 @@ def build_assignments(cleaners, apartments):
                 float(apt["lng"])
                 valid_apartments.append(apt)
             except (ValueError, TypeError):
-                continue
+                invalid_apartments.append(apt)
+        else:
+            invalid_apartments.append(apt)
+    
+    total_apartments = len(apartments)
+    print(f"Appartamenti totali: {total_apartments}")
+    print(f"Appartamenti con coordinate valide: {len(valid_apartments)}")
+    print(f"Appartamenti SENZA coordinate: {len(invalid_apartments)}")
+    
+    if invalid_apartments:
+        print("\n⚠️ APPARTAMENTI SENZA COORDINATE:")
+        for apt in invalid_apartments[:5]:  # Mostra solo i primi 5
+            print(f"  - Task ID: {apt.get('task_id', 'N/A')} | Address: {apt.get('address', 'N/A')}")
+        if len(invalid_apartments) > 5:
+            print(f"  ... e altri {len(invalid_apartments) - 5} appartamenti")
     
     apartments = valid_apartments
-    print(f"Appartamenti validi con coordinate: {len(apartments)}")
     
     if not apartments:
-        print("Nessun appartamento con coordinate valide trovato!")
+        print("❌ Nessun appartamento con coordinate valide trovato!")
         return []
     
     # Aggiungi priorità agli appartamenti
@@ -102,10 +117,15 @@ def build_assignments(cleaners, apartments):
         walk_total_sec = 0
         clean_total_min = current_apt.get("cleaning_time", 60) or 60
         
-        # Cerca appartamenti vicini
+        # Cerca appartamenti vicini con algoritmo più flessibile
+        max_attempts = len(unassigned_apts) * 2  # Più tentativi per trovare combinazioni
+        attempts = 0
+        
         for candidate in unassigned_apts[1:]:
-            if candidate.get("assigned", False):
+            if candidate.get("assigned", False) or attempts >= max_attempts:
                 continue
+            
+            attempts += 1
                 
             # Calcola tempo di percorrenza con Google Maps
             walk_time_sec = time_between_apartments(current_pack[-1], candidate)
@@ -113,14 +133,31 @@ def build_assignments(cleaners, apartments):
             
             potential_clean_time = candidate.get("cleaning_time", 60) or 60
             
-            # Verifica se può essere aggiunto (max 15 min di cammino, max 4h totali)
-            if (walk_time_min <= 15 and 
-                clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60 <= 240):
+            # Criteri più flessibili: 
+            # - Max 20 min di cammino (era 15)
+            # - Max 5h totali per cleaner premium, 4h per standard
+            max_work_hours = 300 if cleaner_role.lower() == "premium" else 240
+            max_walk_minutes = 20
+            
+            # Se è molto vicino (< 10 min), accetta anche se supera leggermente il tempo
+            if walk_time_min <= 10:
+                max_work_hours += 30  # 30 min extra per appartamenti molto vicini
+            
+            if (walk_time_min <= max_walk_minutes and 
+                clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60 <= max_work_hours):
                 
                 current_pack.append(candidate)
                 candidate["assigned"] = True
                 clean_total_min += potential_clean_time
                 walk_total_sec += walk_time_sec
+                print(f"    ✅ Aggiunto apt {candidate.get('task_id')} ({walk_time_min:.1f} min di cammino)")
+            else:
+                # Log del perché è stato rifiutato
+                total_time = clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60
+                if walk_time_min > max_walk_minutes:
+                    print(f"    ❌ Apt {candidate.get('task_id')} troppo lontano: {walk_time_min:.1f} min > {max_walk_minutes} min")
+                elif total_time > max_work_hours:
+                    print(f"    ❌ Apt {candidate.get('task_id')} supera tempo max: {total_time:.1f} min > {max_work_hours} min")
         
         # Crea i dettagli della sequenza nel formato atteso dalle maschere
         sequence_details = []
@@ -153,6 +190,81 @@ def build_assignments(cleaners, apartments):
         
         assignments.append(assignment)
         print(f"Assegnato a {cleaner_name} {cleaner_lastname}: {len(current_pack)} appartamenti (Google Maps)")
+    
+    # SECONDO PASSAGGIO: Assegna appartamenti rimasti con criteri più flessibili
+    unassigned_remaining = [apt for apt in apartments if not apt.get("assigned", False)]
+    if unassigned_remaining and assignments:
+        print(f"\n🔄 SECONDO PASSAGGIO: {len(unassigned_remaining)} appartamenti non assegnati")
+        
+        for apt in unassigned_remaining:
+            best_assignment = None
+            best_cleaner_idx = -1
+            min_total_time = float('inf')
+            
+            # Trova il cleaner con meno lavoro totale che può prendere questo appartamento
+            for idx, assignment in enumerate(assignments):
+                cleaner_role = assignment["role"]
+                
+                # Verifica compatibilità ruolo
+                apt_type = apt.get("type", "Standard").lower()
+                if cleaner_role.lower() == "standard" and apt_type == "premium":
+                    continue  # Cleaner standard non può fare apt premium
+                
+                # Verifica se può aggiungere questo appartamento
+                max_work_hours = 300 if cleaner_role.lower() == "premium" else 240
+                current_total = assignment["total_cleaning_time_min"] + assignment["total_walk_time_min"]
+                apt_cleaning_time = apt.get("cleaning_time", 60) or 60
+                
+                if current_total + apt_cleaning_time + 30 <= max_work_hours:  # +30 min buffer per cammino
+                    if current_total < min_total_time:
+                        min_total_time = current_total
+                        best_assignment = assignment
+                        best_cleaner_idx = idx
+            
+            # Assegna all'assignment migliore
+            if best_assignment:
+                apt["assigned"] = True
+                
+                # Aggiungi alla sequenza
+                new_priority = len(best_assignment["sequence_details"]) + 1
+                best_assignment["sequence_details"].append({
+                    "task_id": apt.get("task_id") or apt.get("structure_id", "N/A"),
+                    "structure_id": apt.get("structure_id"),
+                    "address": apt.get("address", "Indirizzo non disponibile"),
+                    "lat": str(apt.get("lat", "")),
+                    "lng": str(apt.get("lng", "")),
+                    "type": apt.get("type", "Standard"),
+                    "priority": new_priority,
+                    "checkin_time": apt.get("checkin_time"),
+                    "checkout_time": apt.get("checkout_time"),
+                    "cleaning_time": apt.get("cleaning_time", 60)
+                })
+                
+                # Aggiorna statistiche
+                best_assignment["total_apartments"] += 1
+                best_assignment["total_cleaning_time_min"] += apt.get("cleaning_time", 60) or 60
+                best_assignment["total_walk_time_min"] += 15  # Stima tempo cammino
+                
+                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']}")
+    
+    # Statistiche finali
+    total_assigned = sum(a["total_apartments"] for a in assignments)
+    total_original = len(apartments)
+    unassigned_final = [apt for apt in apartments if not apt.get("assigned", False)]
+    
+    print(f"\n📊 STATISTICHE FINALI:")
+    print(f"  🏠 Appartamenti con coordinate: {total_original}")
+    print(f"  ✅ Appartamenti assegnati: {total_assigned}")
+    print(f"  ❌ Appartamenti NON assegnati: {len(unassigned_final)}")
+    print(f"  📈 Percentuale assegnazione: {(total_assigned/total_original)*100:.1f}%")
+    
+    if unassigned_final:
+        print(f"\n⚠️ APPARTAMENTI NON ASSEGNATI:")
+        for apt in unassigned_final[:10]:  # Mostra primi 10
+            apt_type = apt.get("type", "Standard")
+            print(f"  - {apt.get('task_id')} ({apt_type}) - {apt.get('address', 'N/A')}")
+        if len(unassigned_final) > 10:
+            print(f"  ... e altri {len(unassigned_final) - 10}")
     
     return assignments
 
