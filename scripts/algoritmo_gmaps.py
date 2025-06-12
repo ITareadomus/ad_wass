@@ -90,15 +90,14 @@ def build_assignments(cleaners, apartments):
         walk_total_sec = 0
         clean_total_min = current_apt.get("cleaning_time", 60) or 60
         
-        # Cerca appartamenti vicini con algoritmo più flessibile
-        max_attempts = len(unassigned_apts) * 2  # Più tentativi per trovare combinazioni
-        attempts = 0
-        
+        # Cerca appartamenti vicini (PRIMO PASSAGGIO: max 3 appartamenti)        
         for candidate in unassigned_apts[1:]:
-            if candidate.get("assigned", False) or attempts >= max_attempts:
+            if candidate.get("assigned", False):
                 continue
             
-            attempts += 1
+            # Limita a 3 appartamenti nel primo passaggio
+            if len(current_pack) >= 3:
+                break
                 
             # Calcola tempo di percorrenza con Google Maps
             walk_time_sec = time_between_apartments(current_pack[-1], candidate)
@@ -120,11 +119,8 @@ def build_assignments(cleaners, apartments):
                 print(f"    ✅ Aggiunto apt {candidate.get('task_id')} ({walk_time_min:.1f} min di cammino)")
             else:
                 # Log del perché è stato rifiutato
-                total_time = clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60
                 if walk_time_min > max_walk_minutes:
                     print(f"    ❌ Apt {candidate.get('task_id')} troppo lontano: {walk_time_min:.1f} min > {max_walk_minutes} min")
-                elif total_time > max_work_hours:
-                    print(f"    ❌ Apt {candidate.get('task_id')} supera tempo max: {total_time:.1f} min > {max_work_hours} min")
         
         # Crea i dettagli della sequenza nel formato atteso dalle maschere
         sequence_details = []
@@ -168,7 +164,7 @@ def build_assignments(cleaners, apartments):
             best_cleaner_idx = -1
             min_total_time = float('inf')
             
-            # Trova il cleaner con meno lavoro totale che può prendere questo appartamento
+            # Trova il cleaner con l'appartamento più vicino a questo appartamento non assegnato
             for idx, assignment in enumerate(assignments):
                 cleaner_role = assignment["role"]
                 
@@ -177,12 +173,17 @@ def build_assignments(cleaners, apartments):
                 if cleaner_role.lower() == "standard" and apt_type == "premium":
                     continue  # Cleaner standard non può fare apt premium
                 
-                # Nessun limite di ore - assegna sempre se ruolo compatibile
-                if True:  # Sempre assegna se ruolo compatibile
-                    if current_total < min_total_time:
-                        min_total_time = current_total
-                        best_assignment = assignment
-                        best_cleaner_idx = idx
+                # Calcola la distanza minima da qualsiasi appartamento già assegnato a questo cleaner
+                for assigned_apt in assignment["sequence_details"]:
+                    if assigned_apt.get("lat") and assigned_apt.get("lng"):
+                        distance = time_between_apartments(apt, {
+                            "lat": assigned_apt["lat"], 
+                            "lng": assigned_apt["lng"]
+                        })
+                        if distance < min_total_time:
+                            min_total_time = distance
+                            best_assignment = assignment
+                            best_cleaner_idx = idx
             
             # Assegna all'assignment migliore
             if best_assignment:
@@ -206,9 +207,10 @@ def build_assignments(cleaners, apartments):
                 # Aggiorna statistiche
                 best_assignment["total_apartments"] += 1
                 best_assignment["total_cleaning_time_min"] += apt.get("cleaning_time", 60) or 60
-                best_assignment["total_walk_time_min"] += 15  # Stima tempo cammino
+                walk_time_min = min_total_time / 60 if min_total_time != float("inf") else 5
+                best_assignment["total_walk_time_min"] += int(walk_time_min)
                 
-                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']}")
+                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']} (distanza: {walk_time_min:.1f} min)")
     
     # Statistiche finali
     total_assigned = sum(a["total_apartments"] for a in assignments)

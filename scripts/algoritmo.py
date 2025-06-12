@@ -123,10 +123,14 @@ def build_assignments(cleaners, apartments):
         walk_total_sec = 0
         clean_total_min = current_apt.get("cleaning_time", 60) or 60
 
-        # Cerca appartamenti vicini
+        # Cerca appartamenti vicini (PRIMO PASSAGGIO: max 3 appartamenti)
         for candidate in unassigned_apts[1:]:
             if candidate.get("assigned", False):
                 continue
+
+            # Limita a 3 appartamenti nel primo passaggio
+            if len(current_pack) >= 3:
+                break
 
             # Calcola tempo di percorrenza
             walk_time_sec = time_between_apartments(current_pack[-1], candidate)
@@ -134,9 +138,8 @@ def build_assignments(cleaners, apartments):
 
             potential_clean_time = candidate.get("cleaning_time", 60) or 60
 
-            # Verifica se può essere aggiunto (max 20 min di cammino, senza limiti di ore)
+            # Verifica se può essere aggiunto (max 20 min di cammino)
             if walk_time_min <= 20:
-
                 current_pack.append(candidate)
                 candidate["assigned"] = True
                 clean_total_min += potential_clean_time
@@ -173,6 +176,85 @@ def build_assignments(cleaners, apartments):
 
         assignments.append(assignment)
         print(f"Assegnato a {cleaner_name} {cleaner_lastname}: {len(current_pack)} appartamenti")
+
+    # SECONDO PASSAGGIO: Assegna appartamenti rimanenti al cleaner più vicino
+    unassigned_remaining = [apt for apt in apartments if not apt.get("assigned", False)]
+    if unassigned_remaining and assignments:
+        print(f"\n🔄 SECONDO PASSAGGIO: {len(unassigned_remaining)} appartamenti non assegnati")
+        
+        for apt in unassigned_remaining:
+            best_assignment = None
+            best_cleaner_idx = -1
+            min_distance = float('inf')
+            
+            # Trova il cleaner con l'appartamento più vicino a questo appartamento non assegnato
+            for idx, assignment in enumerate(assignments):
+                cleaner_role = assignment["role"]
+                
+                # Verifica compatibilità ruolo
+                apt_type = apt.get("type", "Standard").lower()
+                if cleaner_role.lower() == "standard" and apt_type == "premium":
+                    continue  # Cleaner standard non può fare apt premium
+                
+                # Calcola la distanza minima da qualsiasi appartamento già assegnato a questo cleaner
+                for assigned_apt in assignment["sequence_details"]:
+                    if assigned_apt.get("lat") and assigned_apt.get("lng"):
+                        distance = time_between_apartments(apt, {
+                            "lat": assigned_apt["lat"], 
+                            "lng": assigned_apt["lng"]
+                        })
+                        if distance < min_distance:
+                            min_distance = distance
+                            best_assignment = assignment
+                            best_cleaner_idx = idx
+            
+            # Assegna all'assignment più vicino
+            if best_assignment and min_distance != float('inf'):
+                apt["assigned"] = True
+                
+                # Aggiungi alla sequenza
+                new_priority = len(best_assignment["sequence_details"]) + 1
+                best_assignment["sequence_details"].append({
+                    "task_id": apt.get("structure_id") or apt.get("task_id", "N/A"),
+                    "structure_id": apt.get("structure_id"),
+                    "address": apt.get("address", "Indirizzo non disponibile"),
+                    "lat": str(apt.get("lat", "")),
+                    "lng": str(apt.get("lng", "")),
+                    "type": apt.get("type", "Standard"),
+                    "priority": new_priority,
+                    "checkin_time": apt.get("checkin_time"),
+                    "checkout_time": apt.get("checkout_time"),
+                    "cleaning_time": apt.get("cleaning_time", 60)
+                })
+                
+                # Aggiorna statistiche
+                best_assignment["total_apartments"] += 1
+                best_assignment["total_cleaning_time_min"] += apt.get("cleaning_time", 60) or 60
+                walk_time_min = min_distance / 60 if min_distance != float("inf") else 5
+                best_assignment["total_walk_time_min"] += int(walk_time_min)
+                
+                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']} (distanza: {walk_time_min:.1f} min)")
+            else:
+                print(f"    ❌ Impossibile assegnare appartamento {apt.get('task_id')} - nessun cleaner compatibile trovato")
+
+    # Statistiche finali
+    total_assigned = sum(a["total_apartments"] for a in assignments)
+    total_original = len(apartments)
+    unassigned_final = [apt for apt in apartments if not apt.get("assigned", False)]
+    
+    print(f"\n📊 STATISTICHE FINALI:")
+    print(f"  🏠 Appartamenti con coordinate: {total_original}")
+    print(f"  ✅ Appartamenti assegnati: {total_assigned}")
+    print(f"  ❌ Appartamenti NON assegnati: {len(unassigned_final)}")
+    print(f"  📈 Percentuale assegnazione: {(total_assigned/total_original)*100:.1f}%")
+    
+    if unassigned_final:
+        print(f"\n⚠️ APPARTAMENTI NON ASSEGNATI:")
+        for apt in unassigned_final[:5]:  # Mostra primi 5
+            apt_type = apt.get("type", "Standard")
+            print(f"  - {apt.get('task_id')} ({apt_type}) - {apt.get('address', 'N/A')}")
+        if len(unassigned_final) > 5:
+            print(f"  ... e altri {len(unassigned_final) - 5}")
 
     return assignments
 

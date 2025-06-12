@@ -22,7 +22,7 @@ def refresh_cleaner_list():
 def calculate_cleaners_needed(apartments):
     num_apts = len(apartments)
     num_apts_extra = int(num_apts * (1 + EXTRA_APT_PERCENTAGE))
-    avg_apt_per_cleaner = 5  # Aumentato da 3 a 5
+    avg_apt_per_cleaner = 3  # Media standard di 3 appartamenti per cleaner
     return math.ceil(num_apts_extra / avg_apt_per_cleaner)
 
 # Seleziona i cleaner da utilizzare per la giornata
@@ -67,7 +67,7 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
     # Ma considera che i premium potrebbero avere cleaning_time più lunghi
     if premium_apts > 0:
         # Almeno 1 cleaner premium, ma calcola in base al carico di lavoro
-        min_premium_cleaners = max(1, math.ceil(premium_apts / 4))  # Aumentato da 2.5 a 4
+        min_premium_cleaners = max(1, math.ceil(premium_apts / 3))  # Media di 3 appartamenti per cleaner
         print(f"📋 Appartamenti Premium: {premium_apts} → Cleaner Premium necessari: {min_premium_cleaners}")
     else:
         min_premium_cleaners = 0
@@ -75,7 +75,7 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
     
     # Calcola cleaner standard necessari per gli appartamenti standard
     if standard_apts > 0:
-        standard_cleaners_for_standard_apts = max(1, math.ceil(standard_apts / 5))  # Aumentato da 3 a 5
+        standard_cleaners_for_standard_apts = max(1, math.ceil(standard_apts / 3))  # Media di 3 appartamenti per cleaner
         print(f"📋 Appartamenti Standard: {standard_apts} → Cleaner Standard necessari: {standard_cleaners_for_standard_apts}")
     else:
         standard_cleaners_for_standard_apts = 0
