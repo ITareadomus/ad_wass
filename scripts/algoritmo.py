@@ -134,9 +134,8 @@ def build_assignments(cleaners, apartments):
 
             potential_clean_time = candidate.get("cleaning_time", 60) or 60
 
-            # Verifica se può essere aggiunto (max 15 min di cammino, max 4h totali)
-            if (walk_time_min <= 15 and 
-                clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60 <= 240):
+            # Verifica se può essere aggiunto (max 20 min di cammino, senza limiti di ore)
+            if walk_time_min <= 20:
 
                 current_pack.append(candidate)
                 candidate["assigned"] = True

@@ -107,17 +107,11 @@ def build_assignments(cleaners, apartments):
             potential_clean_time = candidate.get("cleaning_time", 60) or 60
             
             # Criteri più flessibili: 
-            # - Max 20 min di cammino (era 15)
-            # - Max 5h totali per cleaner premium, 4h per standard
-            max_work_hours = 300 if cleaner_role.lower() == "premium" else 240
-            max_walk_minutes = 20
+            # - Max 25 min di cammino (aumentato)
+            # - NESSUN limite di ore di lavoro
+            max_walk_minutes = 25
             
-            # Se è molto vicino (< 10 min), accetta anche se supera leggermente il tempo
-            if walk_time_min <= 10:
-                max_work_hours += 30  # 30 min extra per appartamenti molto vicini
-            
-            if (walk_time_min <= max_walk_minutes and 
-                clean_total_min + potential_clean_time + (walk_total_sec + walk_time_sec)/60 <= max_work_hours):
+            if walk_time_min <= max_walk_minutes:
                 
                 current_pack.append(candidate)
                 candidate["assigned"] = True
@@ -183,12 +177,8 @@ def build_assignments(cleaners, apartments):
                 if cleaner_role.lower() == "standard" and apt_type == "premium":
                     continue  # Cleaner standard non può fare apt premium
                 
-                # Verifica se può aggiungere questo appartamento
-                max_work_hours = 300 if cleaner_role.lower() == "premium" else 240
-                current_total = assignment["total_cleaning_time_min"] + assignment["total_walk_time_min"]
-                apt_cleaning_time = apt.get("cleaning_time", 60) or 60
-                
-                if current_total + apt_cleaning_time + 30 <= max_work_hours:  # +30 min buffer per cammino
+                # Nessun limite di ore - assegna sempre se ruolo compatibile
+                if True:  # Sempre assegna se ruolo compatibile
                     if current_total < min_total_time:
                         min_total_time = current_total
                         best_assignment = assignment

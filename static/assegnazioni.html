@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -108,6 +107,13 @@
                 </div>
             </div>
 
+            <!-- Sezione per appartamenti senza coordinate GPS -->
+            <div id="gps-warnings" style="margin-top: 20px; display: none;">
+                <h3 style="color: #856404;">⚠️ Appartamenti senza coordinate GPS</h3>
+                <div id="apartments-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
+                </div>
+            </div>
+
             <div class="assignment-controls">
                 <div class="assignment-actions">
                     <button class="btn btn-generate" id="generateAssignmentsBtn" onclick="generateAssignments()">
@@ -130,23 +136,23 @@
     <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 400px;">
             <h3 style="margin-top: 0; color: #2c3e50;">Modifica Assegnazione</h3>
-            
+
             <div style="margin-bottom: 20px;">
                 <strong>Appartamento:</strong> <span id="editApartmentInfo"></span>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label for="editCleanerSelect" style="display: block; margin-bottom: 5px; font-weight: bold;">Cleaner Assegnato:</label>
                 <select id="editCleanerSelect" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
                     <!-- Opzioni dinamiche -->
                 </select>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label for="editPriorityInput" style="display: block; margin-bottom: 5px; font-weight: bold;">Priorità nell'ordine del cleaner:</label>
                 <input type="number" id="editPriorityInput" min="1" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
             </div>
-            
+
             <div style="text-align: right;">
                 <button onclick="closeEditModal()" style="background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
                     Annulla
@@ -417,7 +423,7 @@
         function editApartment(assignmentIndex, apartmentIndex) {
             const assignment = modifiedAssignments[assignmentIndex];
             const apartment = assignment.sequence_details[apartmentIndex];
-            
+
             currentEditingApartment = {
                 assignmentIndex: assignmentIndex,
                 apartmentIndex: apartmentIndex,
@@ -431,7 +437,7 @@
             // Popola la dropdown dei cleaner
             const cleanerSelect = document.getElementById('editCleanerSelect');
             cleanerSelect.innerHTML = '';
-            
+
             modifiedAssignments.forEach((assign, index) => {
                 const option = document.createElement('option');
                 option.value = index;
@@ -461,21 +467,21 @@
 
             const newCleanerIndex = parseInt(document.getElementById('editCleanerSelect').value);
             const newPriority = parseInt(document.getElementById('editPriorityInput').value);
-            
+
             const { assignmentIndex, apartmentIndex, originalAssignmentIndex } = currentEditingApartment;
-            
+
             // Rimuovi l'appartamento dall'assegnazione corrente
             const apartment = modifiedAssignments[originalAssignmentIndex].sequence_details.splice(apartmentIndex, 1)[0];
-            
+
             // Controlla se il cleaner è cambiato
             if (newCleanerIndex !== originalAssignmentIndex) {
                 // Cleaner cambiato: aggiorna priorità e sposta appartamento
                 apartment.priority = newPriority;
-                
+
                 if (!modifiedAssignments[newCleanerIndex].sequence_details) {
                     modifiedAssignments[newCleanerIndex].sequence_details = [];
                 }
-                
+
                 // Inserisci nella posizione corretta in base alla priorità
                 let insertIndex = modifiedAssignments[newCleanerIndex].sequence_details.length;
                 for (let i = 0; i < modifiedAssignments[newCleanerIndex].sequence_details.length; i++) {
@@ -484,14 +490,14 @@
                         break;
                     }
                 }
-                
+
                 modifiedAssignments[newCleanerIndex].sequence_details.splice(insertIndex, 0, apartment);
-                
+
                 // Riordina le priorità per il cleaner destinatario
                 modifiedAssignments[newCleanerIndex].sequence_details.forEach((apt, index) => {
                     apt.priority = index + 1;
                 });
-                
+
                 // Riordina le priorità per il cleaner di origine se ha ancora appartamenti
                 if (modifiedAssignments[originalAssignmentIndex].sequence_details.length > 0) {
                     modifiedAssignments[originalAssignmentIndex].sequence_details.forEach((apt, index) => {
@@ -501,47 +507,47 @@
             } else {
                 // Stesso cleaner: scambia priorità con l'appartamento esistente
                 const currentSequence = modifiedAssignments[newCleanerIndex].sequence_details;
-                
+
                 // Trova l'appartamento che ha già la priorità desiderata
                 const targetApartmentIndex = currentSequence.findIndex(apt => apt.priority === newPriority);
-                
+
                 if (targetApartmentIndex !== -1) {
                     // Scambia le priorità
                     const targetApartment = currentSequence[targetApartmentIndex];
                     const oldPriority = apartment.priority;
-                    
+
                     apartment.priority = newPriority;
                     targetApartment.priority = oldPriority;
-                    
+
                     console.log(`Scambiando priorità: ${apartment.task_id} (${oldPriority} -> ${newPriority}) con ${targetApartment.task_id} (${newPriority} -> ${oldPriority})`);
                 } else {
                     // Nessun appartamento con quella priorità, aggiorna solo questo
                     apartment.priority = newPriority;
                 }
-                
+
                 // Reinserisci l'appartamento nella sequenza
                 currentSequence.push(apartment);
-                
+
                 // Riordina la sequenza per priorità
                 currentSequence.sort((a, b) => a.priority - b.priority);
             }
-            
+
             // Aggiorna i conteggi
             modifiedAssignments[newCleanerIndex].total_apartments = modifiedAssignments[newCleanerIndex].sequence_details.length;
             modifiedAssignments[originalAssignmentIndex].total_apartments = modifiedAssignments[originalAssignmentIndex].sequence_details.length;
-            
+
             hasUnsavedChanges = true;
-            
+
             // Aggiorna la visualizzazione
             displayAssignmentsTable(modifiedAssignments);
             updateMapWithAssignments(modifiedAssignments);
-            
+
             // Aggiorna anche i colori dei cleaner se necessario
             updateCleanerColorMap();
-            
+
             // Mostra il pulsante di conferma se ci sono modifiche
             updateConfirmButton();
-            
+
             closeEditModal();
             showMessage('Modifica salvata! Premi "Conferma Modifiche" per salvare definitivamente.', 'success');
         }
@@ -566,7 +572,7 @@
                 confirmBtn.textContent = 'Conferma Modifiche';
                 confirmBtn.onclick = confirmChanges;
                 confirmBtn.style.marginLeft = '10px';
-                
+
                 const actionsDiv = document.querySelector('.assignment-actions');
                 actionsDiv.appendChild(confirmBtn);
             } else if (confirmBtn && !hasUnsavedChanges) {
@@ -809,6 +815,16 @@
             // Rimuovi tutti i marker
             markers.forEach(marker => marker.setMap(null));
             markers = [];
+
+            // Pulisci anche gli avvisi GPS
+            const apartmentsList = document.getElementById('apartments-list');
+            const gpsWarnings = document.getElementById('gps-warnings');
+            if (apartmentsList) {
+                apartmentsList.innerHTML = '';
+            }
+            if (gpsWarnings) {
+                gpsWarnings.style.display = 'none';
+            }
         }
 
         // Mostra il percorso del cleaner sulla mappa
@@ -1056,7 +1072,7 @@
             }
 
             countSpan.textContent = `${apartments.length} appartamenti`;
-            
+
             if (apartments.length === 0) {
                 container.innerHTML = '<div class="no-data">Nessun appartamento trovato per la giornata</div>';
                 return;
@@ -1141,10 +1157,37 @@
             let bounds = new google.maps.LatLngBounds();
             let validApartments = 0;
 
-            apartments.forEach((apt, index) => {
-                if (!apt.lat || !apt.lng) {
-                    console.warn('Appartamento senza coordinate:', apt);
-                    return;
+            // Crea marker per ogni appartamento
+            apartments.forEach(apt => {
+                // Se non ha coordinate valide, aggiungi flag di avviso
+                if (!apt.lat || !apt.lng || apt.lat === 'null' || apt.lng === 'null') {
+                    console.log("Appartamento senza coordinate:", apt);
+
+                    // Aggiungi alla lista degli appartamenti problematici per la visualizzazione
+                    const apartmentsList = document.getElementById('apartments-list');
+                    if (apartmentsList) {
+                        const warningDiv = document.createElement('div');
+                        warningDiv.className = 'apartment-warning';
+                        warningDiv.style.cssText = `
+                            background: #fff3cd; 
+                            border: 1px solid #ffeaa7; 
+                            border-radius: 4px; 
+                            padding: 10px; 
+                            margin: 5px 0; 
+                            display: flex; 
+                            align-items: center;
+                        `;
+                        warningDiv.innerHTML = `
+                            <span style="color: #856404; font-size: 16px; margin-right: 10px;">⚠️</span>
+                            <div>
+                                <strong>Task ID: ${apt.task_id || 'N/A'}</strong><br>
+                                <small>Appartamento senza coordinate GPS valide</small><br>
+                                <small>Address: ${apt.address || 'N/A'}</small>
+                            </div>
+                        `;
+                        apartmentsList.appendChild(warningDiv);
+                    }
+                    return; // Salta dalla mappa ma mostra nell'elenco
                 }
 
                 const position = { 
@@ -1157,7 +1200,7 @@
                     const pos = m.getPosition();
                     return pos ? {lat: pos.lat(), lng: pos.lng()} : null;
                 }).filter(p => p !== null);
-                
+
                 const offset = calculateMarkerOffset(existingPositions, position);
                 const finalPosition = {
                     lat: position.lat + offset.lat,
@@ -1219,6 +1262,14 @@
             }
 
             console.log(`Visualizzati ${validApartments} appartamenti sulla mappa`);
+
+            // Mostra la sezione degli avvisi GPS se ci sono appartamenti problematici
+            const apartmentsList = document.getElementById('apartments-list');
+            const gpsWarnings = document.getElementById('gps-warnings');
+            if (apartmentsList && apartmentsList.children.length > 0 && gpsWarnings) {
+                gpsWarnings.style.display = 'block';
+            }
+
             showMessage(`${validApartments} appartamenti visualizzati sulla mappa`, 'success');
         }
 
@@ -1227,28 +1278,28 @@
             let offset = { lat: 0, lng: 0 };
             let attempts = 0;
             const maxAttempts = 8;
-            
+
             // Controlla se la posizione è troppo vicina ad altre esistenti
             for (let existing of existingPositions) {
                 const distance = google.maps.geometry.spherical.computeDistanceBetween(
                     new google.maps.LatLng(newPosition.lat, newPosition.lng),
                     new google.maps.LatLng(existing.lat, existing.lng)
                 );
-                
+
                 // Se è molto vicino (meno di 50 metri), applica un offset
                 if (distance < 50 && attempts < maxAttempts) {
                     const angle = (attempts * 45) * (Math.PI / 180); // Distribuisci in cerchio
                     const offsetDistance = baseOffset * (1 + attempts * 0.5); // Aumenta distanza progressivamente
-                    
+
                     offset.lat = Math.cos(angle) * offsetDistance;
                     offset.lng = Math.sin(angle) * offsetDistance;
-                    
+
                     // Testa la nuova posizione
                     const testPosition = {
                         lat: newPosition.lat + offset.lat,
                         lng: newPosition.lng + offset.lng
                     };
-                    
+
                     // Controlla se la nuova posizione è ancora troppo vicina
                     let tooClose = false;
                     for (let existing of existingPositions) {
@@ -1261,15 +1312,15 @@
                             break;
                         }
                     }
-                    
+
                     if (!tooClose) {
                         break;
                     }
-                    
+
                     attempts++;
                 }
             }
-            
+
             return offset;
         }
 
@@ -1296,17 +1347,17 @@
                     }
 
                     const originalPosition = { lat: parseFloat(apartment.lat), lng: parseFloat(apartment.lng) };
-                    
+
                     // Calcola offset se necessario per evitare sovrapposizioni
                     const offset = calculateMarkerOffset(usedPositions, originalPosition);
                     const finalPosition = {
                         lat: originalPosition.lat + offset.lat,
                         lng: originalPosition.lng + offset.lng
                     };
-                    
+
                     // Aggiungi la posizione finale alla lista di quelle utilizzate
                     usedPositions.push(finalPosition);
-                    
+
                     const premiumText = apartment.type === 'Premium' ? " [PREMIUM]" : "";
 
                     const marker = new google.maps.Marker({
@@ -1357,7 +1408,7 @@
                             }
                         });
                         infoWindow.open(map, marker);
-                        
+
                         // Evidenzia temporaneamente il marker cliccato
                         const originalScale = marker.getIcon().scale;
                         marker.setIcon({
@@ -1365,7 +1416,7 @@
                             scale: originalScale * 1.3,
                             strokeWeight: 4
                         });
-                        
+
                         setTimeout(() => {
                             marker.setIcon({
                                 ...marker.getIcon(),
@@ -1446,7 +1497,7 @@
                 }
 
                 showMessage('Vista generale ripristinata - marker grigi', 'success');
-                
+
                 // Nascondi il pulsante rimuovi filtro
                 document.getElementById('resetMapButton').style.display = 'none';
             } catch (error) {
