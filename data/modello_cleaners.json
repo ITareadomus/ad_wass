@@ -16,7 +16,7 @@
             "counter_hours": 34.75,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 24,
@@ -52,7 +52,7 @@
             "counter_hours": 40.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 287,
@@ -109,7 +109,7 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 39.25,
+            "counter_hours": 40.75,
             "counter_days": 0,
             "available": true,
             "contract_type": "B"
@@ -184,7 +184,7 @@
             "counter_hours": 32.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 785,
@@ -232,7 +232,7 @@
             "counter_hours": 49.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 895,
@@ -244,7 +244,7 @@
             "counter_hours": 12.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 937,
@@ -256,7 +256,7 @@
             "counter_hours": 52.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 966,
@@ -268,7 +268,7 @@
             "counter_hours": 42.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 967,
@@ -280,7 +280,7 @@
             "counter_hours": 12.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 985,
@@ -292,7 +292,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 987,
@@ -304,7 +304,7 @@
             "counter_hours": 30.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 995,
@@ -316,7 +316,7 @@
             "counter_hours": 4.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1008,
@@ -328,7 +328,7 @@
             "counter_hours": 6.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1013,
@@ -340,7 +340,7 @@
             "counter_hours": 8.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1020,
@@ -349,10 +349,10 @@
             "role": "Standard",
             "active": true,
             "ranking": 0,
-            "counter_hours": 23.75,
+            "counter_hours": 25.75,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1023,
@@ -364,7 +364,7 @@
             "counter_hours": 0.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1024,
@@ -376,7 +376,7 @@
             "counter_hours": 36.75,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1025,
@@ -388,7 +388,7 @@
             "counter_hours": 24.0,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         },
         {
             "id": 1027,
@@ -400,7 +400,7 @@
             "counter_hours": 2.5,
             "counter_days": 0,
             "available": true,
-            "contract_type": 4
+            "contract_type": "a chiamata"
         }
     ]
 }
