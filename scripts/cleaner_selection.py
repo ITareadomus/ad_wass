@@ -225,6 +225,19 @@ def main():
         print("Esegui prima task_selection.py per caricare gli appartamenti.")
         return
 
+    # FILTRO APPARTAMENTI SENZA COORDINATE (come negli algoritmi di assegnazione)
+    apartments_before_filter = len(apartments)
+    apartments = [apt for apt in apartments if apt.get("lat") and apt.get("lng")]
+    apartments_filtered_out = apartments_before_filter - len(apartments)
+    
+    if apartments_filtered_out > 0:
+        print(f"⚠️ Filtrati {apartments_filtered_out} appartamenti senza coordinate")
+        print(f"📍 Appartamenti con coordinate valide: {len(apartments)}")
+
+    if not apartments:
+        print("❌ ERRORE: Nessun appartamento con coordinate valide trovato!")
+        return
+
     # Log del numero di appartamenti da pulire
     total_apartments = len(apartments)
     extra_apartments = int(total_apartments * EXTRA_APT_PERCENTAGE)
