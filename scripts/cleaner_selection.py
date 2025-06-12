@@ -60,21 +60,48 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
     if total_apts == 0:
         return []
 
-    premium_ratio = premium_apts / total_apts
-    num_premium_needed = round(num_needed * premium_ratio)
-    num_standard_needed = num_needed - num_premium_needed
-
-    # Seleziona cleaner premium
-    premium_cleaners = [
-        c for c in eligible_cleaners if c["role"].lower() == "premium"
-    ][:num_premium_needed]
-
+    # Gli appartamenti premium richiedono OBBLIGATORIAMENTE cleaner premium
+    # Calcola quanti cleaner premium servono (almeno 1 per ogni 3 apt premium)
+    min_premium_cleaners = max(1, math.ceil(premium_apts / 3)) if premium_apts > 0 else 0
+    
+    # Calcola cleaner standard necessari per gli appartamenti standard
+    standard_cleaners_for_standard_apts = max(1, math.ceil(standard_apts / 3)) if standard_apts > 0 else 0
+    
+    # Cleaner premium possono anche fare appartamenti standard se necessario
+    total_cleaners_needed = min_premium_cleaners + standard_cleaners_for_standard_apts
+    
+    # Se abbiamo più cleaner necessari del previsto, aggiustiamo
+    if total_cleaners_needed > num_needed:
+        # Priorità agli appartamenti premium - manteniamo i cleaner premium necessari
+        # Riduciamo quelli standard se necessario
+        standard_cleaners_for_standard_apts = max(0, num_needed - min_premium_cleaners)
+    
+    # Seleziona cleaner premium (almeno quelli necessari per apt premium)
+    available_premium = [c for c in eligible_cleaners if c["role"].lower() == "premium"]
+    premium_cleaners = available_premium[:min_premium_cleaners]
+    
+    # Se non ci sono abbastanza cleaner premium, avvisa
+    if len(premium_cleaners) < min_premium_cleaners:
+        print(f"⚠️ ATTENZIONE: Servono {min_premium_cleaners} cleaner Premium per {premium_apts} appartamenti Premium")
+        print(f"⚠️ Disponibili solo {len(premium_cleaners)} cleaner Premium!")
+    
     # Seleziona cleaner standard
-    standard_cleaners = [
-        c for c in eligible_cleaners if c["role"].lower() == "standard"
-    ][:num_standard_needed]
+    available_standard = [c for c in eligible_cleaners if c["role"].lower() == "standard"]
+    standard_cleaners = available_standard[:standard_cleaners_for_standard_apts]
+    
+    # Se abbiamo ancora bisogno di cleaner e ci sono premium extra, li usiamo
+    total_selected = len(premium_cleaners) + len(standard_cleaners)
+    if total_selected < num_needed and len(available_premium) > len(premium_cleaners):
+        extra_premium_needed = min(num_needed - total_selected, 
+                                 len(available_premium) - len(premium_cleaners))
+        extra_premium = available_premium[len(premium_cleaners):len(premium_cleaners) + extra_premium_needed]
+        premium_cleaners.extend(extra_premium)
 
     selected_cleaners = premium_cleaners + standard_cleaners
+    
+    print(f"🏆 Cleaner Premium selezionati: {len(premium_cleaners)} (per {premium_apts} apt premium)")
+    print(f"👥 Cleaner Standard selezionati: {len(standard_cleaners)} (per {standard_apts} apt standard)")
+    
     return selected_cleaners
 
 # Salva i cleaner selezionati in un file JSON nella cartella data

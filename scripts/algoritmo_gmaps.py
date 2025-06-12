@@ -76,11 +76,23 @@ def build_assignments(cleaners, apartments):
         cleaner_lastname = cleaner.get("lastname", "")
         cleaner_role = cleaner.get("role", "Standard")
         
-        # Trova appartamenti non assegnati
-        unassigned_apts = [apt for apt in apartments if not apt.get("assigned", False)]
+        # Trova appartamenti non assegnati compatibili con il ruolo del cleaner
+        if cleaner_role.lower() == "premium":
+            # I cleaner premium possono pulire sia premium che standard
+            unassigned_apts = [apt for apt in apartments if not apt.get("assigned", False)]
+            # Ma prioritizziamo quelli premium
+            premium_apts = [apt for apt in unassigned_apts if apt.get("type", "Standard").lower() == "premium"]
+            standard_apts = [apt for apt in unassigned_apts if apt.get("type", "Standard").lower() == "standard"]
+            unassigned_apts = premium_apts + standard_apts
+        else:
+            # I cleaner standard possono pulire SOLO appartamenti standard
+            unassigned_apts = [apt for apt in apartments 
+                             if not apt.get("assigned", False) 
+                             and apt.get("type", "Standard").lower() == "standard"]
         
         if not unassigned_apts:
-            break
+            print(f"⚠️ Nessun appartamento compatibile per {cleaner_name} {cleaner_lastname} ({cleaner_role})")
+            continue
         
         # Prendi il primo appartamento disponibile
         current_apt = unassigned_apts[0]
@@ -221,9 +233,32 @@ def main(selected_date=None):
         print(f"📊 Totale pacchetti: {len(assignments)}")
         print(f"🏠 Appartamenti assegnati: {sum(a['total_apartments'] for a in assignments)}")
         
+        # Validazione appartamenti premium
+        premium_apartments_assigned = 0
+        premium_apartments_to_premium_cleaners = 0
+        
+        for assignment in assignments:
+            for apt_detail in assignment["sequence_details"]:
+                if apt_detail.get("type", "Standard").lower() == "premium":
+                    premium_apartments_assigned += 1
+                    if assignment["role"].lower() == "premium":
+                        premium_apartments_to_premium_cleaners += 1
+        
+        total_premium_apts = len([apt for apt in apartments if apt.get("type", "Standard").lower() == "premium"])
+        
+        print(f"\n🏆 VALIDAZIONE APPARTAMENTI PREMIUM:")
+        print(f"  📋 Totale apt premium: {total_premium_apts}")
+        print(f"  ✅ Apt premium assegnati: {premium_apartments_assigned}")
+        print(f"  🏆 Apt premium a cleaner premium: {premium_apartments_to_premium_cleaners}")
+        
+        if premium_apartments_to_premium_cleaners != premium_apartments_assigned:
+            print(f"  ⚠️ ATTENZIONE: {premium_apartments_assigned - premium_apartments_to_premium_cleaners} apt premium assegnati a cleaner standard!")
+        else:
+            print(f"  ✅ Tutti gli appartamenti premium sono assegnati a cleaner premium!")
+        
         # Stampa riepilogo
         for i, assignment in enumerate(assignments, 1):
-            print(f"  {i}. {assignment['name']} {assignment['lastname']}: {assignment['total_apartments']} apt")
+            print(f"  {i}. {assignment['name']} {assignment['lastname']} ({assignment['role']}): {assignment['total_apartments']} apt")
 
     except Exception as e:
         print(f"❌ Errore durante l'esecuzione: {str(e)}")
