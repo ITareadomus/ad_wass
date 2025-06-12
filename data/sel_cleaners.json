@@ -213,7 +213,7 @@
             "date": "2025-06-12"
         },
         "2025-06-13": {
-            "timestamp": "2025-06-12T15:12:32.286Z",
+            "timestamp": "2025-06-12T15:21:59.469Z",
             "cleaners": [
                 {
                     "id": 18,
@@ -225,7 +225,7 @@
                     "counter_hours": 34.75,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 24,
@@ -261,7 +261,7 @@
                     "counter_hours": 40,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 287,
@@ -318,7 +318,7 @@
                     "role": "Standard",
                     "active": true,
                     "ranking": 0,
-                    "counter_hours": 39.25,
+                    "counter_hours": 40.75,
                     "counter_days": 0,
                     "available": true,
                     "contract_type": "B"
@@ -360,18 +360,6 @@
                     "contract_type": "B"
                 },
                 {
-                    "id": 644,
-                    "name": "HENRY",
-                    "lastname": "CHIDUBEM",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 44.5,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": "B"
-                },
-                {
                     "id": 771,
                     "name": "PRECIOUS",
                     "lastname": "GYABAAH",
@@ -381,7 +369,7 @@
                     "counter_hours": 32.5,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 895,
@@ -393,7 +381,7 @@
                     "counter_hours": 12,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 937,
@@ -405,7 +393,7 @@
                     "counter_hours": 52.5,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 966,
@@ -417,7 +405,7 @@
                     "counter_hours": 42,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 },
                 {
                     "id": 967,
@@ -429,46 +417,10 @@
                     "counter_hours": 12,
                     "counter_days": 0,
                     "available": true,
-                    "contract_type": 4
-                },
-                {
-                    "id": 985,
-                    "name": "HODA MAHMOUD SALAMA",
-                    "lastname": "HUSSEIN",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 0,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 4
-                },
-                {
-                    "id": 987,
-                    "name": "MARIE LAURE",
-                    "lastname": "PENKA",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 30.5,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 4
-                },
-                {
-                    "id": 995,
-                    "name": "BABY JANE",
-                    "lastname": "MAGNAYE",
-                    "role": "Standard",
-                    "active": true,
-                    "ranking": 0,
-                    "counter_hours": 4.5,
-                    "counter_days": 0,
-                    "available": true,
-                    "contract_type": 4
+                    "contract_type": "a chiamata"
                 }
             ],
-            "total_selected": 21,
+            "total_selected": 17,
             "total_available": 33,
             "date": "2025-06-13"
         },
