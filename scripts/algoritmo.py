@@ -160,7 +160,7 @@ def build_assignments(cleaners, apartments):
         sequence_details = []
         for i, apt in enumerate(current_pack):
             sequence_details.append({
-                "task_id": apt.get("task_id") or apt.get("structure_id", "N/A"),
+                "task_id": apt.get("structure_id") or apt.get("task_id", "N/A"),
                 "structure_id": apt.get("structure_id"),
                 "address": apt.get("address", "Indirizzo non disponibile"),
                 "lat": str(apt.get("lat", "")),
