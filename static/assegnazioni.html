@@ -583,24 +583,35 @@
 
                     console.log(`Creando marker per appartamento ${apt.task_id} con priorità ${apt.priority} e colore ${cleanerColor}`);
 
+                    // Calcola offset per evitare sovrapposizioni anche nel percorso singolo
+                    const offset = calculateMarkerOffset(
+                        markers.map(m => m.getPosition()).filter(p => p).map(p => ({lat: p.lat(), lng: p.lng()})), 
+                        position
+                    );
+                    const finalPosition = {
+                        lat: position.lat + offset.lat,
+                        lng: position.lng + offset.lng
+                    };
+
                     const marker = new google.maps.Marker({
-                        position: position,
+                        position: finalPosition,
                         map: map,
                         title: `Priorità ${apt.priority}. ${apt.task_id} - ${apt.address}${premiumText}`,
                         label: {
                             text: apt.priority ? apt.priority.toString() : (index + 1).toString(),
                             color: 'white',
                             fontWeight: 'bold',
-                            fontSize: '12px'
+                            fontSize: '13px'
                         },
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
-                            scale: 12,
+                            scale: 15, // Leggermente più grande per il percorso singolo
                             fillColor: cleanerColor,
                             fillOpacity: 1,
-                            strokeWeight: 2,
+                            strokeWeight: 3,
                             strokeColor: '#ffffff'
-                        }
+                        },
+                        zIndex: 2000 + (apt.priority || (index + 1)) // Z-index più alto per percorso singolo
                     });
 
                     // Info window con dettagli dell'appartamento
@@ -855,8 +866,20 @@
                     lng: parseFloat(apt.lng) 
                 };
 
+                // Calcola offset per marker grigi
+                const existingPositions = markers.map(m => {
+                    const pos = m.getPosition();
+                    return pos ? {lat: pos.lat(), lng: pos.lng()} : null;
+                }).filter(p => p !== null);
+                
+                const offset = calculateMarkerOffset(existingPositions, position);
+                const finalPosition = {
+                    lat: position.lat + offset.lat,
+                    lng: position.lng + offset.lng
+                };
+
                 const marker = new google.maps.Marker({
-                    position: position,
+                    position: finalPosition,
                     map: map,
                     title: `${apt.task_id || apt.structure_id} - ${apt.address}`,
                     icon: {
@@ -913,6 +936,57 @@
             showMessage(`${validApartments} appartamenti visualizzati sulla mappa`, 'success');
         }
 
+        // Calcola offset per marker vicini
+        function calculateMarkerOffset(existingPositions, newPosition, baseOffset = 0.0003) {
+            let offset = { lat: 0, lng: 0 };
+            let attempts = 0;
+            const maxAttempts = 8;
+            
+            // Controlla se la posizione è troppo vicina ad altre esistenti
+            for (let existing of existingPositions) {
+                const distance = google.maps.geometry.spherical.computeDistanceBetween(
+                    new google.maps.LatLng(newPosition.lat, newPosition.lng),
+                    new google.maps.LatLng(existing.lat, existing.lng)
+                );
+                
+                // Se è molto vicino (meno di 50 metri), applica un offset
+                if (distance < 50 && attempts < maxAttempts) {
+                    const angle = (attempts * 45) * (Math.PI / 180); // Distribuisci in cerchio
+                    const offsetDistance = baseOffset * (1 + attempts * 0.5); // Aumenta distanza progressivamente
+                    
+                    offset.lat = Math.cos(angle) * offsetDistance;
+                    offset.lng = Math.sin(angle) * offsetDistance;
+                    
+                    // Testa la nuova posizione
+                    const testPosition = {
+                        lat: newPosition.lat + offset.lat,
+                        lng: newPosition.lng + offset.lng
+                    };
+                    
+                    // Controlla se la nuova posizione è ancora troppo vicina
+                    let tooClose = false;
+                    for (let existing of existingPositions) {
+                        const testDistance = google.maps.geometry.spherical.computeDistanceBetween(
+                            new google.maps.LatLng(testPosition.lat, testPosition.lng),
+                            new google.maps.LatLng(existing.lat, existing.lng)
+                        );
+                        if (testDistance < 30) {
+                            tooClose = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!tooClose) {
+                        break;
+                    }
+                    
+                    attempts++;
+                }
+            }
+            
+            return offset;
+        }
+
         // Aggiorna la mappa con tutti i marker colorati delle assegnazioni
         function updateMapWithAssignments(assignments) {
             if (!map) {
@@ -924,6 +998,7 @@
 
             let bounds = new google.maps.LatLngBounds();
             let totalMarkers = 0;
+            let usedPositions = []; // Tiene traccia delle posizioni utilizzate
 
             assignments.forEach(assignment => {
                 const cleanerColor = cleanerColorMap[assignment.cleaner_id] || '#e74c3c';
@@ -934,11 +1009,22 @@
                         return;
                     }
 
-                    const position = { lat: parseFloat(apartment.lat), lng: parseFloat(apartment.lng) };
+                    const originalPosition = { lat: parseFloat(apartment.lat), lng: parseFloat(apartment.lng) };
+                    
+                    // Calcola offset se necessario per evitare sovrapposizioni
+                    const offset = calculateMarkerOffset(usedPositions, originalPosition);
+                    const finalPosition = {
+                        lat: originalPosition.lat + offset.lat,
+                        lng: originalPosition.lng + offset.lng
+                    };
+                    
+                    // Aggiungi la posizione finale alla lista di quelle utilizzate
+                    usedPositions.push(finalPosition);
+                    
                     const premiumText = apartment.type === 'Premium' ? " [PREMIUM]" : "";
 
                     const marker = new google.maps.Marker({
-                        position: position,
+                        position: finalPosition,
                         map: map,
                         title: `${assignment.name} ${assignment.lastname} - Priorità ${apartment.priority}. ${apartment.task_id} - ${apartment.address}${premiumText}`,
                         label: {
@@ -949,12 +1035,13 @@
                         },
                         icon: {
                             path: google.maps.SymbolPath.CIRCLE,
-                            scale: 12,
+                            scale: 14, // Leggermente più grande per migliore visibilità
                             fillColor: cleanerColor,
                             fillOpacity: 1,
-                            strokeWeight: 2,
+                            strokeWeight: 3, // Bordo più spesso per miglior contrasto
                             strokeColor: '#ffffff'
-                        }
+                        },
+                        zIndex: 1000 + apartment.priority // Priorità più alta = z-index più alto
                     });
 
                     // Info window con dettagli dell'appartamento
@@ -966,8 +1053,12 @@
                                 <strong>Priorità: ${apartment.priority}</strong><br>
                                 <strong>Check-in:</strong> ${apartment.checkin_time || 'N/A'}<br>
                                 <strong>Check-out:</strong> ${apartment.checkout_time || 'N/A'}<br>
-                                <strong>Cleaner:</strong> ${assignment.name} ${assignment.lastname}
+                                <strong>Cleaner:</strong> ${assignment.name} ${assignment.lastname}<br>
+                                <div style="background: ${cleanerColor}; color: white; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-top: 5px; font-size: 10px;">
+                                    ${assignment.role}
+                                </div>
                                 ${apartment.type === 'Premium' ? '<br><span style="color: green; font-weight: bold;">PREMIUM</span>' : ''}
+                                ${offset.lat !== 0 || offset.lng !== 0 ? '<br><small style="color: #888;">(Posizione leggermente spostata per visibilità)</small>' : ''}
                             </div>
                         `
                     });
@@ -980,11 +1071,27 @@
                             }
                         });
                         infoWindow.open(map, marker);
+                        
+                        // Evidenzia temporaneamente il marker cliccato
+                        const originalScale = marker.getIcon().scale;
+                        marker.setIcon({
+                            ...marker.getIcon(),
+                            scale: originalScale * 1.3,
+                            strokeWeight: 4
+                        });
+                        
+                        setTimeout(() => {
+                            marker.setIcon({
+                                ...marker.getIcon(),
+                                scale: originalScale,
+                                strokeWeight: 3
+                            });
+                        }, 1000);
                     });
 
                     marker.infoWindow = infoWindow;
                     markers.push(marker);
-                    bounds.extend(position);
+                    bounds.extend(finalPosition);
                     totalMarkers++;
                 });
             });
@@ -994,11 +1101,18 @@
                 map.fitBounds(bounds);
                 if (totalMarkers === 1) {
                     map.setZoom(15);
+                } else {
+                    // Assicurati che non sia troppo zoomato quando ci sono molti marker
+                    setTimeout(() => {
+                        if (map.getZoom() > 16) {
+                            map.setZoom(16);
+                        }
+                    }, 500);
                 }
             }
 
-            console.log(`Visualizzati ${totalMarkers} appartamenti colorati sulla mappa`);
-            showMessage(`Mappa aggiornata con ${totalMarkers} appartamenti assegnati`, 'success');
+            console.log(`Visualizzati ${totalMarkers} appartamenti colorati sulla mappa con gestione sovrapposizioni`);
+            showMessage(`Mappa aggiornata con ${totalMarkers} appartamenti assegnati (anti-sovrapposizione attivo)`, 'success');
         }
 
         // Resetta la vista della mappa per mostrare tutti gli appartamenti
