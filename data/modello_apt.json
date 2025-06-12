@@ -2589,7 +2589,7 @@
             "date": "2025-06-15"
         },
         "2025-06-12": {
-            "timestamp": "2025-06-12T13:21:52.281624",
+            "timestamp": "2025-06-12T13:34:03.591414",
             "apt": [
                 {
                     "task_id": 189544,
@@ -4616,7 +4616,7 @@
             "date": "2025-06-30"
         },
         "2025-06-13": {
-            "timestamp": "2025-06-12T11:49:56.865655",
+            "timestamp": "2025-06-12T13:34:44.141119",
             "apt": [
                 {
                     "task_id": 170560,
@@ -5054,7 +5054,7 @@
                     "cleaning_time": null,
                     "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
-                    "checkin_time": null,
+                    "checkin_time": "15:00",
                     "checkout_time": null,
                     "pax_in": 4,
                     "pax_out": 1,
@@ -6142,7 +6142,7 @@
                     "cleaning_time": null,
                     "checkin": "2025-06-14",
                     "checkout": "2025-06-13",
-                    "checkin_time": null,
+                    "checkin_time": "15:00",
                     "checkout_time": null,
                     "pax_in": 5,
                     "pax_out": 3,
@@ -6300,9 +6300,26 @@
                     "pax_in": 0,
                     "pax_out": 1,
                     "small_equipment": false
+                },
+                {
+                    "task_id": 209441,
+                    "structure_id": 223,
+                    "client_id": 3,
+                    "type": "Standard",
+                    "address": "VIA NEGROLI 10A",
+                    "lat": "45.4629317",
+                    "lng": "9.2326585",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-13",
+                    "checkin_time": null,
+                    "checkout_time": "11:00",
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
                 }
             ],
-            "total_apartments": 99,
+            "total_apartments": 100,
             "date": "2025-06-13"
         },
         "2025-06-21": {
