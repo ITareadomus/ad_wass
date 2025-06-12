@@ -1512,8 +1512,9 @@
 
                 showMessage(`Data aggiornata a: ${displayDate}`, 'info');
 
-                // Ricarica i cleaner per la nuova data
+                // Ricarica automaticamente sia i cleaner che gli appartamenti per la nuova data
                 loadSelectedCleanersForDate(selectedDateValue);
+                loadApartments();
             }
         }
 
