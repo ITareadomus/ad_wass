@@ -90,6 +90,18 @@ def get_apartments_for_date(selected_date):
     apt_data = []
 
     for apt in results:
+        # Salta appartamenti senza coordinate valide
+        lat = normalize_coord(apt.get("lat"))
+        lng = normalize_coord(apt.get("lng"))
+        
+        if not lat or not lng:
+            continue
+            
+        try:
+            float(lat)
+            float(lng)
+        except (ValueError, TypeError):
+            continue
         structure_type_id = apt.get("structure_type_id", None)
         small_equipment = True if structure_type_id == 1 else static_params[
             "small_equipment"]
@@ -105,9 +117,9 @@ def get_apartments_for_date(selected_date):
             "address":
             apt.get("address", static_params["address"]),
             "lat":
-            normalize_coord(apt.get("lat")),
+            lat,
             "lng":
-            normalize_coord(apt.get("lng")),
+            lng,
             "cleaning_time":
             static_params["cleaning_time"],
             "checkin":

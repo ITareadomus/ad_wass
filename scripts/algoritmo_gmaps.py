@@ -39,37 +39,10 @@ def time_between_apartments(apt1, apt2):
 
 def build_assignments(cleaners, apartments):
     """Costruisce le assegnazioni"""
-    # Separa appartamenti con e senza coordinate
-    valid_apartments = []
-    invalid_apartments = []
-    
-    for apt in apartments:
-        if apt.get("lat") and apt.get("lng"):
-            try:
-                float(apt["lat"])
-                float(apt["lng"])
-                valid_apartments.append(apt)
-            except (ValueError, TypeError):
-                invalid_apartments.append(apt)
-        else:
-            invalid_apartments.append(apt)
-    
-    total_apartments = len(apartments)
-    print(f"Appartamenti totali: {total_apartments}")
-    print(f"Appartamenti con coordinate valide: {len(valid_apartments)}")
-    print(f"Appartamenti SENZA coordinate: {len(invalid_apartments)}")
-    
-    if invalid_apartments:
-        print("\n⚠️ APPARTAMENTI SENZA COORDINATE:")
-        for apt in invalid_apartments[:5]:  # Mostra solo i primi 5
-            print(f"  - Task ID: {apt.get('task_id', 'N/A')} | Address: {apt.get('address', 'N/A')}")
-        if len(invalid_apartments) > 5:
-            print(f"  ... e altri {len(invalid_apartments) - 5} appartamenti")
-    
-    apartments = valid_apartments
+    print(f"Appartamenti da assegnare: {len(apartments)}")
     
     if not apartments:
-        print("❌ Nessun appartamento con coordinate valide trovato!")
+        print("❌ Nessun appartamento trovato!")
         return []
     
     # Aggiungi priorità agli appartamenti
