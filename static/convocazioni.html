@@ -356,7 +356,15 @@
                 const selResponse = await fetch('/data/sel_cleaners.json');
                 if (selResponse.ok) {
                     const selData = await selResponse.json();
-                    selectedFromFile = selData.cleaners || [];
+                    const selectedDate = getSelectedDate();
+                    
+                    // Estrai i cleaner dalla struttura corretta (dates[data].cleaners)
+                    let cleanersForDate = [];
+                    if (selData.dates && selData.dates[selectedDate]) {
+                        cleanersForDate = selData.dates[selectedDate].cleaners || [];
+                    }
+                    
+                    selectedFromFile = cleanersForDate;
 
                     // Aggiorna le checkbox in base al file generato
                     const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
@@ -369,8 +377,8 @@
                     updateStats();
 
                     // Mostra le statistiche degli appartamenti se disponibili
-                    if (selData.apartment_stats) {
-                        displayApartmentStats(selData.apartment_stats);
+                    if (selData.dates && selData.dates[selectedDate] && selData.dates[selectedDate].apartment_stats) {
+                        displayApartmentStats(selData.dates[selectedDate].apartment_stats);
                     }
 
                     hideLoadingOverlay();
