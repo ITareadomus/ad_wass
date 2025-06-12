@@ -457,35 +457,63 @@
             // Rimuovi l'appartamento dall'assegnazione corrente
             const apartment = modifiedAssignments[originalAssignmentIndex].sequence_details.splice(apartmentIndex, 1)[0];
             
-            // Aggiorna la priorità
-            apartment.priority = newPriority;
-            
-            // Aggiungi all'assegnazione del nuovo cleaner
-            if (!modifiedAssignments[newCleanerIndex].sequence_details) {
-                modifiedAssignments[newCleanerIndex].sequence_details = [];
-            }
-            
-            // Inserisci nella posizione corretta in base alla priorità
-            let insertIndex = modifiedAssignments[newCleanerIndex].sequence_details.length;
-            for (let i = 0; i < modifiedAssignments[newCleanerIndex].sequence_details.length; i++) {
-                if (modifiedAssignments[newCleanerIndex].sequence_details[i].priority > newPriority) {
-                    insertIndex = i;
-                    break;
+            // Controlla se il cleaner è cambiato
+            if (newCleanerIndex !== originalAssignmentIndex) {
+                // Cleaner cambiato: aggiorna priorità e sposta appartamento
+                apartment.priority = newPriority;
+                
+                if (!modifiedAssignments[newCleanerIndex].sequence_details) {
+                    modifiedAssignments[newCleanerIndex].sequence_details = [];
                 }
-            }
-            
-            modifiedAssignments[newCleanerIndex].sequence_details.splice(insertIndex, 0, apartment);
-            
-            // Riordina le priorità per il cleaner destinatario
-            modifiedAssignments[newCleanerIndex].sequence_details.forEach((apt, index) => {
-                apt.priority = index + 1;
-            });
-            
-            // Riordina le priorità per il cleaner di origine se ha ancora appartamenti
-            if (modifiedAssignments[originalAssignmentIndex].sequence_details.length > 0) {
-                modifiedAssignments[originalAssignmentIndex].sequence_details.forEach((apt, index) => {
+                
+                // Inserisci nella posizione corretta in base alla priorità
+                let insertIndex = modifiedAssignments[newCleanerIndex].sequence_details.length;
+                for (let i = 0; i < modifiedAssignments[newCleanerIndex].sequence_details.length; i++) {
+                    if (modifiedAssignments[newCleanerIndex].sequence_details[i].priority > newPriority) {
+                        insertIndex = i;
+                        break;
+                    }
+                }
+                
+                modifiedAssignments[newCleanerIndex].sequence_details.splice(insertIndex, 0, apartment);
+                
+                // Riordina le priorità per il cleaner destinatario
+                modifiedAssignments[newCleanerIndex].sequence_details.forEach((apt, index) => {
                     apt.priority = index + 1;
                 });
+                
+                // Riordina le priorità per il cleaner di origine se ha ancora appartamenti
+                if (modifiedAssignments[originalAssignmentIndex].sequence_details.length > 0) {
+                    modifiedAssignments[originalAssignmentIndex].sequence_details.forEach((apt, index) => {
+                        apt.priority = index + 1;
+                    });
+                }
+            } else {
+                // Stesso cleaner: scambia priorità con l'appartamento esistente
+                const currentSequence = modifiedAssignments[newCleanerIndex].sequence_details;
+                
+                // Trova l'appartamento che ha già la priorità desiderata
+                const targetApartmentIndex = currentSequence.findIndex(apt => apt.priority === newPriority);
+                
+                if (targetApartmentIndex !== -1) {
+                    // Scambia le priorità
+                    const targetApartment = currentSequence[targetApartmentIndex];
+                    const oldPriority = apartment.priority;
+                    
+                    apartment.priority = newPriority;
+                    targetApartment.priority = oldPriority;
+                    
+                    console.log(`Scambiando priorità: ${apartment.task_id} (${oldPriority} -> ${newPriority}) con ${targetApartment.task_id} (${newPriority} -> ${oldPriority})`);
+                } else {
+                    // Nessun appartamento con quella priorità, aggiorna solo questo
+                    apartment.priority = newPriority;
+                }
+                
+                // Reinserisci l'appartamento nella sequenza
+                currentSequence.push(apartment);
+                
+                // Riordina la sequenza per priorità
+                currentSequence.sort((a, b) => a.priority - b.priority);
             }
             
             // Aggiorna i conteggi
@@ -498,11 +526,23 @@
             displayAssignmentsTable(modifiedAssignments);
             updateMapWithAssignments(modifiedAssignments);
             
+            // Aggiorna anche i colori dei cleaner se necessario
+            updateCleanerColorMap();
+            
             // Mostra il pulsante di conferma se ci sono modifiche
             updateConfirmButton();
             
             closeEditModal();
             showMessage('Modifica salvata! Premi "Conferma Modifiche" per salvare definitivamente.', 'success');
+        }
+
+        // Aggiorna la mappa dei colori cleaner
+        function updateCleanerColorMap() {
+            cleanerColorMap = {};
+            modifiedAssignments.forEach((assignment, index) => {
+                const colorIndex = index % cleanerColors.length;
+                cleanerColorMap[assignment.cleaner_id] = cleanerColors[colorIndex];
+            });
         }
 
         // Aggiorna il pulsante di conferma
@@ -660,7 +700,7 @@
                             <td style="padding: 12px; color: #6c757d; max-width: 250px;">
                                 ${apartment.address}
                                 <div style="font-size: 12px; color: #868e96; margin-top: 4px;">
-                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'}
+                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'} | Durata: ${apartment.cleaning_time || 60} min
                                 </div>
                             </td>
                             <td style="padding: 12px; text-align: center;">
@@ -687,7 +727,7 @@
                                 </button>
                                 <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
                                         style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; transition: background-color 0.2s;">
-                                    ✏️ Modifica
+                                    Modifica
                                 </button>
                             </td>
                         </tr>
@@ -1024,6 +1064,7 @@
                             Check-in: ${apt.checkin_time || 'N/A'} | Check-out: ${apt.checkout_time || 'N/A'}
                             ${apt.pax_in ? ` | Pax in: ${apt.pax_in}` : ''}
                             ${apt.pax_out ? ` | Pax out: ${apt.pax_out}` : ''}
+                            | Durata: ${apt.cleaning_time || 60} min
                         </div>
                     </div>
                 `;
@@ -1058,7 +1099,7 @@
                             </span>
                         </div>
                         <div style="font-size: 12px; color: #7f8c8d; margin-top: 4px;">
-                            ID: ${cleaner.id} | Disponibile: ${cleaner.available ? 'Sì' : 'No'}
+                            ID: ${cleaner.id} | Disponibile: ${cleaner.available ? 'Sì' : 'No'} | Ore mese: ${cleaner.counter_hours || 0}h
                         </div>
                     </div>
                 `;

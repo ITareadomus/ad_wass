@@ -357,13 +357,13 @@
                 if (selResponse.ok) {
                     const selData = await selResponse.json();
                     const selectedDate = getSelectedDate();
-                    
+
                     // Estrai i cleaner dalla struttura corretta (dates[data].cleaners)
                     let cleanersForDate = [];
                     if (selData.dates && selData.dates[selectedDate]) {
                         cleanersForDate = selData.dates[selectedDate].cleaners || [];
                     }
-                    
+
                     selectedFromFile = cleanersForDate;
 
                     // Aggiorna le checkbox in base al file generato
