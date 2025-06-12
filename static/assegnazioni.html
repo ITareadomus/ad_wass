@@ -1089,11 +1089,11 @@
                     displayAssignmentResults(data.assignment || data.assignments || []);
                 } else {
                     console.log('File assignments.json non trovato. Genera prima le assegnazioni.');
-                    showMessage('File assignments.json non trovato. Genera prima le assegnazioni.', 'info');
+                    // Rimuovo il messaggio di info per evitare confusione all'utente
                 }
             } catch (error) {
-                hideLoadingOverlay();
-                showMessage('Errore nel caricamento delle assegnazioni esistenti', 'error');
+                console.log('File assignments.json non ancora disponibile');
+                // Rimuovo il messaggio di errore per evitare confusione all'utente
             }
         }
 
@@ -1278,8 +1278,6 @@
                 // loadApartments() ora userà automaticamente la data selezionata
                 loadApartments();
             }, 500);
-
-            refreshAssignments();
         });
     </script>
 </body>
