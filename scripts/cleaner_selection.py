@@ -61,20 +61,38 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
         return []
 
     # Gli appartamenti premium richiedono OBBLIGATORIAMENTE cleaner premium
-    # Calcola quanti cleaner premium servono (almeno 1 per ogni 3 apt premium)
-    min_premium_cleaners = max(1, math.ceil(premium_apts / 3)) if premium_apts > 0 else 0
+    # Calcola quanti cleaner premium servono basandosi su una media di 3 apt per cleaner
+    # Ma considera che i premium potrebbero avere cleaning_time più lunghi
+    if premium_apts > 0:
+        # Almeno 1 cleaner premium, ma calcola in base al carico di lavoro
+        min_premium_cleaners = max(1, math.ceil(premium_apts / 2.5))  # Più conservativo per premium
+        print(f"📋 Appartamenti Premium: {premium_apts} → Cleaner Premium necessari: {min_premium_cleaners}")
+    else:
+        min_premium_cleaners = 0
+        print(f"📋 Nessun appartamento Premium trovato")
     
     # Calcola cleaner standard necessari per gli appartamenti standard
-    standard_cleaners_for_standard_apts = max(1, math.ceil(standard_apts / 3)) if standard_apts > 0 else 0
+    if standard_apts > 0:
+        standard_cleaners_for_standard_apts = max(1, math.ceil(standard_apts / 3))
+        print(f"📋 Appartamenti Standard: {standard_apts} → Cleaner Standard necessari: {standard_cleaners_for_standard_apts}")
+    else:
+        standard_cleaners_for_standard_apts = 0
+        print(f"📋 Nessun appartamento Standard trovato")
     
     # Cleaner premium possono anche fare appartamenti standard se necessario
     total_cleaners_needed = min_premium_cleaners + standard_cleaners_for_standard_apts
     
-    # Se abbiamo più cleaner necessari del previsto, aggiustiamo
+    # Se abbiamo più cleaner necessari del previsto, aggiustiamo dando priorità ai premium
     if total_cleaners_needed > num_needed:
-        # Priorità agli appartamenti premium - manteniamo i cleaner premium necessari
-        # Riduciamo quelli standard se necessario
-        standard_cleaners_for_standard_apts = max(0, num_needed - min_premium_cleaners)
+        print(f"⚠️ Cleaners calcolati ({total_cleaners_needed}) > cleaners stimati ({num_needed})")
+        # Priorità assoluta agli appartamenti premium - manteniamo SEMPRE i cleaner premium necessari
+        if min_premium_cleaners <= num_needed:
+            standard_cleaners_for_standard_apts = max(0, num_needed - min_premium_cleaners)
+            print(f"🔄 Ridotto cleaner standard a: {standard_cleaners_for_standard_apts}")
+        else:
+            print(f"🚨 ATTENZIONE: Servono {min_premium_cleaners} cleaner Premium ma budget è solo {num_needed}")
+            # Comunque privilegiamo i premium anche se sforano il budget
+            standard_cleaners_for_standard_apts = 0
     
     # Seleziona cleaner premium (almeno quelli necessari per apt premium)
     available_premium = [c for c in eligible_cleaners if c["role"].lower() == "premium"]
@@ -99,8 +117,25 @@ def select_cleaners(cleaners, num_needed, premium_apts, standard_apts):
 
     selected_cleaners = premium_cleaners + standard_cleaners
     
+    print(f"\n📊 RIEPILOGO SELEZIONE CLEANER:")
     print(f"🏆 Cleaner Premium selezionati: {len(premium_cleaners)} (per {premium_apts} apt premium)")
     print(f"👥 Cleaner Standard selezionati: {len(standard_cleaners)} (per {standard_apts} apt standard)")
+    print(f"📈 Totale cleaner selezionati: {len(selected_cleaners)}")
+    print(f"🎯 Target stimato: {num_needed}")
+    
+    # Verifica coverage appartamenti premium
+    if premium_apts > 0:
+        premium_coverage = len(premium_cleaners) * 2.5  # Stima appartamenti gestibili
+        if premium_coverage >= premium_apts:
+            print(f"✅ Coverage appartamenti Premium: OK ({premium_coverage:.1f} >= {premium_apts})")
+        else:
+            print(f"⚠️ Coverage appartamenti Premium: INSUFFICIENTE ({premium_coverage:.1f} < {premium_apts})")
+    
+    # Verifica availability cleaner premium
+    total_premium_available = len([c for c in eligible_cleaners if c["role"].lower() == "premium"])
+    if premium_apts > 0 and len(premium_cleaners) < min_premium_cleaners:
+        print(f"🚨 ALERT: Mancano {min_premium_cleaners - len(premium_cleaners)} cleaner Premium!")
+        print(f"   Disponibili totali Premium: {total_premium_available}")
     
     return selected_cleaners
 
