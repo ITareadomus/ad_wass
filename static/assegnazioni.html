@@ -157,8 +157,34 @@
                 <button onclick="closeEditModal()" style="background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
                     Annulla
                 </button>
+                <button onclick="confirmDeleteTask()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                    🗑️ Elimina Task
+                </button>
                 <button onclick="saveEditChanges()" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
                     Salva Modifiche
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal di conferma cancellazione task -->
+    <div id="deleteConfirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 15000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 400px; text-align: center;">
+            <div style="color: #e74c3c; font-size: 48px; margin-bottom: 15px;">⚠️</div>
+            <h3 style="margin: 0 0 15px 0; color: #2c3e50;">Conferma Cancellazione</h3>
+            <p style="margin-bottom: 20px; color: #555; line-height: 1.4;">
+                Sei sicuro di voler <strong>eliminare definitivamente</strong> questo task?<br>
+                <span id="deleteTaskInfo" style="font-weight: bold; color: #e74c3c;"></span>
+            </p>
+            <p style="margin-bottom: 25px; color: #777; font-size: 14px; font-style: italic;">
+                Questa azione non può essere annullata. Il task verrà rimosso dalle assegnazioni e dalla mappa.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button onclick="closeDeleteConfirmModal()" style="background: #95a5a6; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                    Annulla
+                </button>
+                <button onclick="executeDeleteTask()" style="background: #e74c3c; color: white; border: none; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                    🗑️ Elimina Definitivamente
                 </button>
             </div>
         </div>
@@ -459,6 +485,76 @@
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
             currentEditingApartment = null;
+        }
+
+        // Mostra il modal di conferma cancellazione
+        function confirmDeleteTask() {
+            if (!currentEditingApartment) return;
+
+            const { assignmentIndex, apartmentIndex } = currentEditingApartment;
+            const assignment = modifiedAssignments[assignmentIndex];
+            const apartment = assignment.sequence_details[apartmentIndex];
+
+            // Popola le informazioni del task da cancellare
+            document.getElementById('deleteTaskInfo').textContent = 
+                `Task ${apartment.task_id} - ${apartment.address}`;
+
+            // Mostra il modal di conferma
+            document.getElementById('deleteConfirmModal').style.display = 'block';
+        }
+
+        // Chiude il modal di conferma cancellazione
+        function closeDeleteConfirmModal() {
+            document.getElementById('deleteConfirmModal').style.display = 'none';
+        }
+
+        // Esegue effettivamente la cancellazione del task
+        function executeDeleteTask() {
+            if (!currentEditingApartment) {
+                closeDeleteConfirmModal();
+                return;
+            }
+
+            const { assignmentIndex, apartmentIndex } = currentEditingApartment;
+            const assignment = modifiedAssignments[assignmentIndex];
+            const apartment = assignment.sequence_details[apartmentIndex];
+
+            console.log(`Cancellazione task ${apartment.task_id} dall'assegnazione di ${assignment.name} ${assignment.lastname}`);
+
+            // Rimuovi l'appartamento dall'assegnazione
+            assignment.sequence_details.splice(apartmentIndex, 1);
+
+            // Riordina le priorità degli appartamenti rimanenti
+            assignment.sequence_details.forEach((apt, index) => {
+                apt.priority = index + 1;
+            });
+
+            // Aggiorna il conteggio
+            assignment.total_apartments = assignment.sequence_details.length;
+
+            // Se l'assegnazione non ha più appartamenti, rimuovi l'intera assegnazione
+            if (assignment.sequence_details.length === 0) {
+                modifiedAssignments.splice(assignmentIndex, 1);
+                console.log(`Rimossa assegnazione vuota per ${assignment.name} ${assignment.lastname}`);
+            }
+
+            hasUnsavedChanges = true;
+
+            // Aggiorna la visualizzazione
+            displayAssignmentsTable(modifiedAssignments);
+            updateMapWithAssignments(modifiedAssignments);
+
+            // Aggiorna anche i colori dei cleaner se necessario
+            updateCleanerColorMap();
+
+            // Mostra il pulsante di conferma se ci sono modifiche
+            updateConfirmButton();
+
+            // Chiudi entrambi i modal
+            closeDeleteConfirmModal();
+            closeEditModal();
+
+            showMessage(`Task ${apartment.task_id} eliminato con successo! Premi "Conferma Modifiche" per salvare definitivamente.`, 'success');
         }
 
         // Salva le modifiche dell'appartamento
