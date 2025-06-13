@@ -2589,7 +2589,7 @@
             "date": "2025-06-15"
         },
         "2025-06-12": {
-            "timestamp": "2025-06-12T15:27:45.632917",
+            "timestamp": "2025-06-12T15:32:57.913589",
             "apt": [
                 {
                     "task_id": 189544,
@@ -4684,7 +4684,7 @@
             "date": "2025-06-30"
         },
         "2025-06-13": {
-            "timestamp": "2025-06-12T15:22:12.888709",
+            "timestamp": "2025-06-13T07:06:53.071952",
             "apt": [
                 {
                     "task_id": 170560,
@@ -4848,7 +4848,7 @@
                     "lat": "45.458444",
                     "lng": "9.1718315",
                     "cleaning_time": null,
-                    "checkin": "2025-06-25",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
                     "checkout_time": "11:00",
@@ -4899,11 +4899,11 @@
                     "lat": "45.458444",
                     "lng": "9.1718315",
                     "cleaning_time": null,
-                    "checkin": "2025-06-15",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
-                    "checkout_time": null,
-                    "pax_in": 1,
+                    "checkout_time": "08:00",
+                    "pax_in": 2,
                     "pax_out": 1,
                     "small_equipment": false
                 },
@@ -4950,11 +4950,11 @@
                     "lat": "45.4418695",
                     "lng": "9.1687704",
                     "cleaning_time": null,
-                    "checkin": "2025-07-01",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
-                    "checkout_time": null,
-                    "pax_in": 3,
+                    "checkout_time": "08:00",
+                    "pax_in": 2,
                     "pax_out": 1,
                     "small_equipment": false
                 },
@@ -5188,7 +5188,7 @@
                     "lat": "45.4524816",
                     "lng": "9.1603617",
                     "cleaning_time": null,
-                    "checkin": "2025-06-17",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
                     "checkout_time": null,
@@ -5273,11 +5273,11 @@
                     "lat": "45.4581403",
                     "lng": "9.1462786",
                     "cleaning_time": null,
-                    "checkin": "2025-06-27",
+                    "checkin": "2025-06-14",
                     "checkout": "2025-06-13",
-                    "checkin_time": "15:00",
+                    "checkin_time": null,
                     "checkout_time": null,
-                    "pax_in": 4,
+                    "pax_in": 1,
                     "pax_out": 1,
                     "small_equipment": false
                 },
@@ -5613,11 +5613,11 @@
                     "lat": "45.4495699",
                     "lng": "9.199613",
                     "cleaning_time": null,
-                    "checkin": "2025-07-12",
+                    "checkin": "2025-06-18",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
-                    "checkout_time": null,
-                    "pax_in": 2,
+                    "checkout_time": "08:30",
+                    "pax_in": 1,
                     "pax_out": 1,
                     "small_equipment": true
                 },
@@ -5732,12 +5732,12 @@
                     "lat": "45.4529136",
                     "lng": "9.1823451",
                     "cleaning_time": null,
-                    "checkin": "2025-06-26",
+                    "checkin": "2025-06-13",
                     "checkout": "2025-06-13",
                     "checkin_time": null,
                     "checkout_time": null,
                     "pax_in": 4,
-                    "pax_out": 1,
+                    "pax_out": 0,
                     "small_equipment": false
                 },
                 {
@@ -6351,9 +6351,60 @@
                     "pax_in": 0,
                     "pax_out": 0,
                     "small_equipment": false
+                },
+                {
+                    "task_id": 209492,
+                    "structure_id": 1566,
+                    "client_id": 119,
+                    "type": "Standard",
+                    "address": "VIA GAUDENZIO FERRARI 10",
+                    "lat": "45.4553562",
+                    "lng": "9.1758457",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-13",
+                    "checkin_time": "15:15",
+                    "checkout_time": "15:00",
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209493,
+                    "structure_id": 1567,
+                    "client_id": 119,
+                    "type": "Standard",
+                    "address": "PIAZZA ZAVATTARI 6",
+                    "lat": "45.476094",
+                    "lng": "9.1439747",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-13",
+                    "checkin_time": "15:30",
+                    "checkout_time": "09:45",
+                    "pax_in": 3,
+                    "pax_out": 0,
+                    "small_equipment": false
+                },
+                {
+                    "task_id": 209494,
+                    "structure_id": 1567,
+                    "client_id": 119,
+                    "type": "Standard",
+                    "address": "PIAZZA ZAVATTARI 6",
+                    "lat": "45.476094",
+                    "lng": "9.1439747",
+                    "cleaning_time": null,
+                    "checkin": "2025-06-13",
+                    "checkout": "2025-06-13",
+                    "checkin_time": "15:30",
+                    "checkout_time": "15:15",
+                    "pax_in": 0,
+                    "pax_out": 0,
+                    "small_equipment": false
                 }
             ],
-            "total_apartments": 102,
+            "total_apartments": 105,
             "date": "2025-06-13"
         },
         "2025-06-21": {
