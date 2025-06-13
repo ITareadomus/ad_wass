@@ -37,71 +37,10 @@
             <div class="content-section">
                 <div id="messageContainer"></div>
 
-                <!-- Dashboard con statistiche principali -->
-                <div class="dashboard-grid">
-                    <div class="dashboard-card selection-card">
-                        <div class="card-header">
-                            <h4>👥 Cleaner Selezionati</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="big-number" id="selectedCount">0</div>
-                            <div class="card-subtitle">di <span id="totalCount">0</span> disponibili</div>
-                            <div class="cleaner-breakdown" id="cleanerBreakdown">
-                                <span class="premium-count">Premium: <strong id="premiumCount">0</strong></span>
-                                <span class="standard-count">Standard: <strong id="standardCount">0</strong></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card apartments-card">
-                        <div class="card-header">
-                            <h4>🏠 Appartamenti</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="apartment-stats-grid" id="apartmentStatsGrid">
-                                <div class="stat-item">
-                                    <span class="stat-label">Da pulire:</span>
-                                    <span class="stat-value" id="totalApartments">-</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Extra stimati:</span>
-                                    <span class="stat-value" id="extraApartments">-</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Percentuale:</span>
-                                    <span class="stat-value" id="extraPercentage">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card summary-card">
-                        <div class="card-header">
-                            <h4>📊 Riepilogo</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="summary-stats" id="summaryStats">
-                                <div class="summary-item">
-                                    <span class="summary-label">Apt per cleaner:</span>
-                                    <span class="summary-value" id="aptPerCleaner">-</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span class="summary-label">Copertura:</span>
-                                    <span class="summary-value" id="coverage">-</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Lista cleaner selezionati visibili -->
-                <div class="selected-cleaners-preview" id="selectedCleanersPreview" style="display: none;">
-                    <div class="preview-header">
-                        <h4>✅ Cleaner Selezionati per <span id="previewDate"></span></h4>
-                        <button class="btn-collapse" onclick="toggleSelectedPreview()">▼</button>
-                    </div>
-                    <div class="preview-content" id="previewContent">
-                        <div class="selected-cleaners-list" id="selectedCleanersList"></div>
+                <div class="stats">
+                    <div class="stats-content">
+                        <span>👥 <span class="stats-number" id="selectedCount">0</span> cleaner selezionati</span>
+                        <span>di <span class="stats-number" id="totalCount">0</span> disponibili</span>
                     </div>
                 </div></div>
 
@@ -402,106 +341,11 @@
         // Aggiorna statistiche
         function updateStats() {
             const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
-            const selectedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
-            const selectedCount = selectedCheckboxes.length;
+            const selectedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
             const totalCount = checkboxes.length;
 
-            // Conta cleaner per ruolo
-            let premiumCount = 0;
-            let standardCount = 0;
-            
-            selectedCheckboxes.forEach(checkbox => {
-                const cleanerId = parseInt(checkbox.dataset.cleanerId);
-                const cleaner = cleaners.find(c => c.id === cleanerId);
-                if (cleaner) {
-                    if (cleaner.role.toLowerCase() === 'premium') {
-                        premiumCount++;
-                    } else {
-                        standardCount++;
-                    }
-                }
-            });
-
-            // Aggiorna contatori principali
             document.getElementById('selectedCount').textContent = selectedCount;
             document.getElementById('totalCount').textContent = totalCount;
-            document.getElementById('premiumCount').textContent = premiumCount;
-            document.getElementById('standardCount').textContent = standardCount;
-
-            // Aggiorna preview cleaner selezionati
-            updateSelectedCleanersPreview(selectedCheckboxes);
-            
-            // Aggiorna statistiche di riepilogo se ci sono dati appartamenti
-            updateSummaryStats(selectedCount);
-        }
-
-        // Aggiorna il preview dei cleaner selezionati
-        function updateSelectedCleanersPreview(selectedCheckboxes) {
-            const previewContainer = document.getElementById('selectedCleanersPreview');
-            const previewList = document.getElementById('selectedCleanersList');
-            const previewDate = document.getElementById('previewDate');
-            
-            if (selectedCheckboxes.length === 0) {
-                previewContainer.style.display = 'none';
-                return;
-            }
-
-            previewContainer.style.display = 'block';
-            previewDate.textContent = getSelectedDate().split('-').reverse().join('/');
-            
-            previewList.innerHTML = '';
-            selectedCheckboxes.forEach(checkbox => {
-                const cleanerId = parseInt(checkbox.dataset.cleanerId);
-                const cleaner = cleaners.find(c => c.id === cleanerId);
-                if (cleaner) {
-                    const cleanerItem = document.createElement('div');
-                    cleanerItem.className = 'preview-cleaner-item';
-                    const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
-                    
-                    cleanerItem.innerHTML = `
-                        <span class="preview-cleaner-name">${cleaner.name} ${cleaner.lastname}</span>
-                        <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
-                        <span class="preview-cleaner-hours">${cleaner.counter_hours || 0}h</span>
-                    `;
-                    previewList.appendChild(cleanerItem);
-                }
-            });
-        }
-
-        // Aggiorna statistiche di riepilogo
-        function updateSummaryStats(selectedCount) {
-            const totalApartmentsEl = document.getElementById('totalApartments');
-            const aptPerCleanerEl = document.getElementById('aptPerCleaner');
-            const coverageEl = document.getElementById('coverage');
-            
-            const totalApartments = totalApartmentsEl.textContent;
-            
-            if (totalApartments !== '-' && selectedCount > 0) {
-                const aptNumber = parseInt(totalApartments);
-                const avgPerCleaner = (aptNumber / selectedCount).toFixed(1);
-                aptPerCleanerEl.textContent = avgPerCleaner;
-                
-                const coverage = selectedCount * 3; // Assumiamo 3 apt per cleaner in media
-                const coveragePercentage = Math.min(100, (coverage / aptNumber * 100)).toFixed(0);
-                coverageEl.textContent = `${coveragePercentage}%`;
-            } else {
-                aptPerCleanerEl.textContent = '-';
-                coverageEl.textContent = '-';
-            }
-        }
-
-        // Toggle del preview cleaner selezionati
-        function toggleSelectedPreview() {
-            const content = document.getElementById('previewContent');
-            const button = document.querySelector('.btn-collapse');
-            
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                button.textContent = '▼';
-            } else {
-                content.style.display = 'none';
-                button.textContent = '▶';
-            }
         }
 
         // Genera selezione basata su percentuale
@@ -565,13 +409,16 @@
 
         // Mostra le statistiche degli appartamenti
         function displayApartmentStats(apartmentStats) {
-            document.getElementById('totalApartments').textContent = apartmentStats.total_apartments;
-            document.getElementById('extraApartments').textContent = apartmentStats.extra_apartments;
-            document.getElementById('extraPercentage').textContent = `${apartmentStats.percentage_used}%`;
-            
-            // Aggiorna anche le statistiche di riepilogo
-            const selectedCount = parseInt(document.getElementById('selectedCount').textContent);
-            updateSummaryStats(selectedCount);
+            const container = document.getElementById('apartmentStatsContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="apartment-stats">
+                        <p><strong>Appartamenti da pulire:</strong> ${apartmentStats.total_apartments}</p>
+                        <p><strong>Appartamenti aggiuntivi stimati (${apartmentStats.percentage_used}%):</strong> ${apartmentStats.extra_apartments}</p>
+                    </div>
+                `;
+                container.style.display = 'block';
+            }
         }
 
         // Conferma selezione e salva nel file
