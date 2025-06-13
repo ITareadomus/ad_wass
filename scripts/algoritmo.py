@@ -177,7 +177,7 @@ def build_assignments(cleaners, apartments):
         assignments.append(assignment)
         print(f"Assegnato a {cleaner_name} {cleaner_lastname}: {len(current_pack)} appartamenti")
 
-    # SECONDO PASSAGGIO: Assegna appartamenti rimanenti al cleaner più vicino
+    # SECONDO PASSAGGIO: Assegna appartamenti rimanenti al cleaner più vicino (MAX 4 appartamenti per cleaner)
     unassigned_remaining = [apt for apt in apartments if not apt.get("assigned", False)]
     if unassigned_remaining and assignments:
         print(f"\n🔄 SECONDO PASSAGGIO: {len(unassigned_remaining)} appartamenti non assegnati")
@@ -188,7 +188,12 @@ def build_assignments(cleaners, apartments):
             min_distance = float('inf')
             
             # Trova il cleaner con l'appartamento più vicino a questo appartamento non assegnato
+            # MA che non abbia già 4 appartamenti
             for idx, assignment in enumerate(assignments):
+                # LIMITE MASSIMO: 4 appartamenti per cleaner
+                if len(assignment["sequence_details"]) >= 4:
+                    continue
+                    
                 cleaner_role = assignment["role"]
                 
                 # Verifica compatibilità ruolo
@@ -208,7 +213,7 @@ def build_assignments(cleaners, apartments):
                             best_assignment = assignment
                             best_cleaner_idx = idx
             
-            # Assegna all'assignment più vicino
+            # Assegna all'assignment più vicino (se ha meno di 4 appartamenti)
             if best_assignment and min_distance != float('inf'):
                 apt["assigned"] = True
                 
@@ -233,9 +238,9 @@ def build_assignments(cleaners, apartments):
                 walk_time_min = min_distance / 60 if min_distance != float("inf") else 5
                 best_assignment["total_walk_time_min"] += int(walk_time_min)
                 
-                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']} (distanza: {walk_time_min:.1f} min)")
+                print(f"    ✅ Appartamento {apt.get('task_id')} assegnato a {best_assignment['name']} {best_assignment['lastname']} (distanza: {walk_time_min:.1f} min) - Tot: {len(best_assignment['sequence_details'])}")
             else:
-                print(f"    ❌ Impossibile assegnare appartamento {apt.get('task_id')} - nessun cleaner compatibile trovato")
+                print(f"    ❌ Appartamento {apt.get('task_id')} non assegnato - tutti i cleaner hanno già 4 appartamenti o non compatibili")
 
     # Statistiche finali
     total_assigned = sum(a["total_apartments"] for a in assignments)
