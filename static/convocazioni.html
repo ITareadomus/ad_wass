@@ -37,12 +37,58 @@
             <div class="content-section">
                 <div id="messageContainer"></div>
 
-                <div class="stats">
-                    <div class="stats-content">
-                        <span>👥 <span class="stats-number" id="selectedCount">0</span> cleaner selezionati</span>
-                        <span>di <span class="stats-number" id="totalCount">0</span> disponibili</span>
+                <!-- Dashboard Statistiche Principali -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card card-cleaners">
+                        <div class="card-icon">👥</div>
+                        <div class="card-content">
+                            <div class="card-number" id="selectedCount">0</div>
+                            <div class="card-label">Cleaner Selezionati</div>
+                            <div class="card-subtitle">di <span id="totalCount">0</span> disponibili</div>
+                        </div>
                     </div>
-                </div></div>
+
+                    <div class="dashboard-card card-apartments">
+                        <div class="card-icon">🏠</div>
+                        <div class="card-content">
+                            <div class="card-number" id="apartmentCount">-</div>
+                            <div class="card-label">Appartamenti da Pulire</div>
+                            <div class="card-subtitle" id="apartmentDate">Seleziona una data</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card card-extra">
+                        <div class="card-icon">📈</div>
+                        <div class="card-content">
+                            <div class="card-number" id="extraApartments">-</div>
+                            <div class="card-label">Appartamenti Extra</div>
+                            <div class="card-subtitle" id="extraPercentage">Stimati</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card card-status">
+                        <div class="card-icon" id="statusIcon">⏳</div>
+                        <div class="card-content">
+                            <div class="card-number" id="statusText">In Attesa</div>
+                            <div class="card-label">Stato Convocazioni</div>
+                            <div class="card-subtitle" id="statusSubtitle">Genera le convocazioni</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sezione Cleaner Selezionati (Vista Compatta) -->
+                <div id="selectedCleanersSection" class="selected-cleaners-preview" style="display: none;">
+                    <div class="section-header">
+                        <h3>👥 Cleaner Convocati</h3>
+                        <button class="btn-toggle" onclick="toggleSelectedCleaners()">
+                            <span id="toggleText">Mostra Dettagli</span>
+                        </button>
+                    </div>
+                    <div id="selectedCleanersGrid" class="cleaners-grid collapsed">
+                        <!-- I cleaner selezionati verranno inseriti qui -->
+                    </div>
+                </div>
+            </div>
 
             <div class="cleaner-list" id="cleanerList">
                 <div class="loading">Caricamento cleaner in corso...</div>
@@ -346,6 +392,86 @@
 
             document.getElementById('selectedCount').textContent = selectedCount;
             document.getElementById('totalCount').textContent = totalCount;
+
+            // Aggiorna lo stato
+            updateStatusCard(selectedCount);
+            
+            // Aggiorna la vista compatta dei cleaner selezionati
+            updateSelectedCleanersPreview();
+        }
+
+        // Aggiorna la card dello stato
+        function updateStatusCard(selectedCount) {
+            const statusIcon = document.getElementById('statusIcon');
+            const statusText = document.getElementById('statusText');
+            const statusSubtitle = document.getElementById('statusSubtitle');
+
+            if (selectedCount === 0) {
+                statusIcon.textContent = '⏳';
+                statusText.textContent = 'In Attesa';
+                statusSubtitle.textContent = 'Genera le convocazioni';
+            } else {
+                statusIcon.textContent = '✅';
+                statusText.textContent = 'Pronti';
+                statusSubtitle.textContent = `${selectedCount} cleaner selezionati`;
+            }
+        }
+
+        // Aggiorna la vista compatta dei cleaner selezionati
+        function updateSelectedCleanersPreview() {
+            const checkboxes = document.querySelectorAll('#cleanerList input[type="checkbox"]');
+            const selectedCleaners = [];
+
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    const cleanerId = parseInt(checkbox.dataset.cleanerId);
+                    const cleaner = cleaners.find(c => c.id === cleanerId);
+                    if (cleaner) {
+                        selectedCleaners.push(cleaner);
+                    }
+                }
+            });
+
+            const section = document.getElementById('selectedCleanersSection');
+            const grid = document.getElementById('selectedCleanersGrid');
+
+            if (selectedCleaners.length > 0) {
+                section.style.display = 'block';
+                
+                grid.innerHTML = selectedCleaners.map(cleaner => {
+                    const roleClass = cleaner.role.toLowerCase() === 'premium' ? 'role-premium' : 'role-standard';
+                    const contractDisplay = getContractTypeDisplay(cleaner.contract_type);
+                    
+                    return `
+                        <div class="selected-cleaner-item">
+                            <div class="cleaner-compact-info">
+                                <div class="cleaner-compact-name">${cleaner.name} ${cleaner.lastname}</div>
+                                <span class="cleaner-role ${roleClass}">${cleaner.role}</span>
+                            </div>
+                            <div class="cleaner-compact-stats">
+                                <span class="hours-badge">${cleaner.counter_hours || 0}h</span>
+                                ${contractDisplay ? `<span class="contract-badge">${contractDisplay}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                section.style.display = 'none';
+            }
+        }
+
+        // Toggle per mostrare/nascondere i dettagli dei cleaner selezionati
+        function toggleSelectedCleaners() {
+            const grid = document.getElementById('selectedCleanersGrid');
+            const toggleText = document.getElementById('toggleText');
+            
+            if (grid.classList.contains('collapsed')) {
+                grid.classList.remove('collapsed');
+                toggleText.textContent = 'Nascondi Dettagli';
+            } else {
+                grid.classList.add('collapsed');
+                toggleText.textContent = 'Mostra Dettagli';
+            }
         }
 
         // Genera selezione basata su percentuale
@@ -409,6 +535,18 @@
 
         // Mostra le statistiche degli appartamenti
         function displayApartmentStats(apartmentStats) {
+            // Aggiorna la dashboard
+            document.getElementById('apartmentCount').textContent = apartmentStats.total_apartments;
+            document.getElementById('extraApartments').textContent = apartmentStats.extra_apartments;
+            document.getElementById('extraPercentage').textContent = `${apartmentStats.percentage_used}% stimati`;
+
+            const selectedDate = getSelectedDate();
+            if (selectedDate) {
+                const [year, month, day] = selectedDate.split('-');
+                document.getElementById('apartmentDate').textContent = `${day}/${month}/${year}`;
+            }
+
+            // Mantieni anche il container originale per compatibilità
             const container = document.getElementById('apartmentStatsContainer');
             if (container) {
                 container.innerHTML = `
