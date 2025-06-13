@@ -808,7 +808,11 @@
                         '<span style="background: #28a745; color: white; padding: 1px 4px; border-radius: 2px; font-size: 9px; margin-left: 3px;">P</span>' : '';
                     
                     apartmentsList += `
-                        <div style="display: flex; align-items: center; margin-bottom: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid ${cleanerColor};">
+                        <div class="draggable-apartment" 
+                             draggable="true" 
+                             data-assignment-index="${assignmentIndex}" 
+                             data-apartment-index="${apartmentIndex}"
+                             style="display: flex; align-items: center; margin-bottom: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid ${cleanerColor}; cursor: move; transition: all 0.2s ease;">
                             <span style="background: ${cleanerColor}; color: white; padding: 2px 6px; border-radius: 50%; font-weight: bold; font-size: 11px; margin-right: 10px; min-width: 20px; text-align: center;">
                                 ${apartment.priority}
                             </span>
@@ -823,10 +827,13 @@
                                     Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'} | ${apartment.cleaning_time || 60} min
                                 </div>
                             </div>
-                            <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
-                                    style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 10px; margin-left: 10px;">
-                                Modifica
-                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <span style="background: #6c757d; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; opacity: 0.7;">⋮⋮</span>
+                                <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
+                                        style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 10px;">
+                                    Modifica
+                                </button>
+                            </div>
                         </div>
                     `;
                 });
@@ -851,8 +858,11 @@
                             </div>
                         </td>
                         <td style="padding: 15px; vertical-align: top;">
-                            <div style="max-height: 300px; overflow-y: auto;">
+                            <div class="cleaner-drop-zone" 
+                                 data-cleaner-index="${assignmentIndex}"
+                                 style="max-height: 300px; overflow-y: auto; min-height: 100px; border: 2px dashed transparent; border-radius: 4px; transition: all 0.3s ease;">
                                 ${apartmentsList}
+                                ${assignment.sequence_details.length === 0 ? `<div style="text-align: center; color: #6c757d; padding: 20px; font-style: italic;">Nessun appartamento assegnato<br><small>Trascina qui un appartamento</small></div>` : ''}
                             </div>
                         </td>
                         <td style="padding: 15px; text-align: center; vertical-align: top;">
@@ -912,6 +922,9 @@
 
             listDiv.innerHTML = tableHtml;
             resultDiv.style.display = 'block';
+            
+            // Riattiva il drag & drop dopo aver aggiornato il DOM
+            setTimeout(setupDragAndDrop, 100);
         }
 
         // Visualizza report assegnazioni
@@ -1750,6 +1763,152 @@
             }
         }
 
+        // Variabili globali per drag & drop
+        let draggedApartment = null;
+        let draggedFromCleanerIndex = null;
+        let draggedApartmentIndex = null;
+
+        // Gestione eventi drag & drop
+        function setupDragAndDrop() {
+            // Aggiungi event listeners per drag start
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.classList.contains('draggable-apartment')) {
+                    draggedApartment = e.target;
+                    draggedFromCleanerIndex = parseInt(e.target.dataset.assignmentIndex);
+                    draggedApartmentIndex = parseInt(e.target.dataset.apartmentIndex);
+                    
+                    e.target.style.opacity = '0.5';
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/html', e.target.outerHTML);
+                    
+                    console.log(`Drag started: apartment ${draggedApartmentIndex} from cleaner ${draggedFromCleanerIndex}`);
+                }
+            });
+
+            // Gestione drag end
+            document.addEventListener('dragend', function(e) {
+                if (e.target.classList.contains('draggable-apartment')) {
+                    e.target.style.opacity = '1';
+                    
+                    // Rimuovi evidenziazione dalle drop zone
+                    document.querySelectorAll('.cleaner-drop-zone').forEach(zone => {
+                        zone.style.borderColor = 'transparent';
+                        zone.style.backgroundColor = '';
+                    });
+                }
+            });
+
+            // Gestione drag over per le drop zone
+            document.addEventListener('dragover', function(e) {
+                if (e.target.closest('.cleaner-drop-zone')) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    
+                    const dropZone = e.target.closest('.cleaner-drop-zone');
+                    dropZone.style.borderColor = '#007bff';
+                    dropZone.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+                }
+            });
+
+            // Gestione drag leave
+            document.addEventListener('dragleave', function(e) {
+                if (e.target.classList.contains('cleaner-drop-zone')) {
+                    const rect = e.target.getBoundingClientRect();
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    
+                    // Controlla se il mouse è veramente uscito dalla drop zone
+                    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+                        e.target.style.borderColor = 'transparent';
+                        e.target.style.backgroundColor = '';
+                    }
+                }
+            });
+
+            // Gestione drop
+            document.addEventListener('drop', function(e) {
+                e.preventDefault();
+                
+                const dropZone = e.target.closest('.cleaner-drop-zone');
+                if (dropZone && draggedApartment) {
+                    const newCleanerIndex = parseInt(dropZone.dataset.cleanerIndex);
+                    
+                    // Rimuovi evidenziazione
+                    dropZone.style.borderColor = 'transparent';
+                    dropZone.style.backgroundColor = '';
+                    
+                    // Se è lo stesso cleaner, non fare nulla
+                    if (newCleanerIndex === draggedFromCleanerIndex) {
+                        console.log('Dropped on same cleaner, no action needed');
+                        return;
+                    }
+                    
+                    // Esegui il trasferimento
+                    transferApartmentBetweenCleaners(draggedFromCleanerIndex, draggedApartmentIndex, newCleanerIndex);
+                }
+                
+                // Reset variabili drag
+                draggedApartment = null;
+                draggedFromCleanerIndex = null;
+                draggedApartmentIndex = null;
+            });
+        }
+
+        // Trasferisce un appartamento tra cleaner
+        function transferApartmentBetweenCleaners(fromCleanerIndex, apartmentIndex, toCleanerIndex) {
+            console.log(`Transferring apartment ${apartmentIndex} from cleaner ${fromCleanerIndex} to cleaner ${toCleanerIndex}`);
+            
+            const fromAssignment = modifiedAssignments[fromCleanerIndex];
+            const toAssignment = modifiedAssignments[toCleanerIndex];
+            const apartment = fromAssignment.sequence_details[apartmentIndex];
+            
+            // Verifica compatibilità ruolo-appartamento
+            const apartmentType = apartment.type || 'Standard';
+            const toCleanerRole = toAssignment.role || 'Standard';
+            
+            if (apartmentType.toLowerCase() === 'premium' && toCleanerRole.toLowerCase() === 'standard') {
+                showMessage(`⚠️ ATTENZIONE: Non puoi assegnare un appartamento Premium a un cleaner Standard!`, 'error');
+                return;
+            }
+            
+            // Verifica limite di 4 appartamenti per cleaner
+            if (toAssignment.sequence_details.length >= 4) {
+                showMessage(`⚠️ ATTENZIONE: Il cleaner ${toAssignment.name} ${toAssignment.lastname} ha già raggiunto il limite massimo di 4 appartamenti!`, 'error');
+                return;
+            }
+            
+            // Rimuovi appartamento dal cleaner di origine
+            fromAssignment.sequence_details.splice(apartmentIndex, 1);
+            
+            // Riordina le priorità per il cleaner di origine
+            fromAssignment.sequence_details.forEach((apt, index) => {
+                apt.priority = index + 1;
+            });
+            
+            // Aggiungi appartamento al cleaner di destinazione
+            apartment.priority = toAssignment.sequence_details.length + 1;
+            toAssignment.sequence_details.push(apartment);
+            
+            // Aggiorna i conteggi
+            fromAssignment.total_apartments = fromAssignment.sequence_details.length;
+            toAssignment.total_apartments = toAssignment.sequence_details.length;
+            
+            // Aggiorna i tempi (approssimativo)
+            const apartmentCleaningTime = apartment.cleaning_time || 60;
+            fromAssignment.total_cleaning_time_min = (fromAssignment.total_cleaning_time_min || 0) - apartmentCleaningTime;
+            toAssignment.total_cleaning_time_min = (toAssignment.total_cleaning_time_min || 0) + apartmentCleaningTime;
+            
+            hasUnsavedChanges = true;
+            
+            // Aggiorna visualizzazione
+            displayAssignmentsTable(modifiedAssignments);
+            updateMapWithAssignments(modifiedAssignments);
+            updateCleanerColorMap();
+            updateConfirmButton();
+            
+            showMessage(`✅ Appartamento ${apartment.task_id} trasferito da ${fromAssignment.name} ${fromAssignment.lastname} a ${toAssignment.name} ${toAssignment.lastname}! Premi "Conferma Modifiche" per salvare.`, 'success');
+        }
+
         // Carica i dati all'avvio
         window.addEventListener('load', function() {
             // Inizializza la data
@@ -1767,6 +1926,9 @@
                 // loadApartments() ora userà automaticamente la data selezionata
                 loadApartments();
             }, 500);
+
+            // Inizializza drag & drop
+            setupDragAndDrop();
         });
     </script>
 </body>
