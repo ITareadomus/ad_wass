@@ -774,7 +774,7 @@
                 console.log(`Assegnato colore ${cleanerColors[colorIndex]} al cleaner ${assignment.cleaner_id} (${assignment.name} ${assignment.lastname})`);
             });
 
-            // Crea la tabella HTML
+            // Crea la tabella HTML raggruppata per cleaner
             let tableHtml = `
                 <div id="resetMapButton" style="margin-bottom: 15px; text-align: center; display: none;">
                     <button onclick="resetMapView()" 
@@ -786,81 +786,127 @@
                     <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <thead>
                             <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                <th style="padding: 15px; text-align: left; font-weight: 600;">Codice ADAM</th>
-                                <th style="padding: 15px; text-align: left; font-weight: 600;">Indirizzo</th>
-                                <th style="padding: 15px; text-align: center; font-weight: 600;">Priorità</th>
-                                <th style="padding: 15px; text-align: left; font-weight: 600;">Cliente</th>
-                                <th style="padding: 15px; text-align: left; font-weight: 600;">Cleaner Assegnato</th>
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Cleaner</th>
+                                <th style="padding: 15px; text-align: left; font-weight: 600;">Appartamenti Assegnati</th>
+                                <th style="padding: 15px; text-align: center; font-weight: 600;">Totale</th>
+                                <th style="padding: 15px; text-align: center; font-weight: 600;">Tempo Totale</th>
                                 <th style="padding: 15px; text-align: center; font-weight: 600;">Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
             `;
 
-            let rowCount = 0;
+            let totalApartments = 0;
             assignments.forEach((assignment, assignmentIndex) => {
-                assignment.sequence_details.forEach((apartment, apartmentIndex) => {
-                    const rowColor = rowCount % 2 === 0 ? '#f8f9fa' : 'white';
-                    const premiumBadge = apartment.type === 'Premium' ? 
-                        '<span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">PREMIUM</span>' : '';
+                const cleanerColor = cleanerColorMap[assignment.cleaner_id];
+                totalApartments += assignment.total_apartments;
 
-                    tableHtml += `
-                        <tr style="background: ${rowColor}; border-bottom: 1px solid #dee2e6; transition: background-color 0.2s;">
-                            <td style="padding: 12px; font-weight: 500; color: #495057;">
-                                ${apartment.task_id}${premiumBadge}
-                            </td>
-                            <td style="padding: 12px; color: #6c757d; max-width: 250px;">
-                                ${apartment.address}
-                                <div style="font-size: 12px; color: #868e96; margin-top: 4px;">
-                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'}
-                                    <br>Durata pulizia: <strong>${apartment.cleaning_time || 60} min</strong>
+                // Lista degli appartamenti per questo cleaner
+                let apartmentsList = '';
+                assignment.sequence_details.forEach((apartment, apartmentIndex) => {
+                    const premiumBadge = apartment.type === 'Premium' ? 
+                        '<span style="background: #28a745; color: white; padding: 1px 4px; border-radius: 2px; font-size: 9px; margin-left: 3px;">P</span>' : '';
+                    
+                    apartmentsList += `
+                        <div style="display: flex; align-items: center; margin-bottom: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid ${cleanerColor};">
+                            <span style="background: ${cleanerColor}; color: white; padding: 2px 6px; border-radius: 50%; font-weight: bold; font-size: 11px; margin-right: 10px; min-width: 20px; text-align: center;">
+                                ${apartment.priority}
+                            </span>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 500; color: #2c3e50; font-size: 13px;">
+                                    ${apartment.task_id}${premiumBadge}
                                 </div>
-                            </td>
-                            <td style="padding: 12px; text-align: center;">
-                                <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 50%; font-weight: bold; font-size: 12px;">
-                                    ${apartment.priority}
-                                </span>
-                            </td>
-                            <td style="padding: 12px; color: #6c757d;">
-                                N/A
-                            </td>
-                            <td style="padding: 12px;">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 12px; height: 12px; border-radius: 50%; background: ${cleanerColorMap[assignment.cleaner_id]}; margin-right: 8px; border: 2px solid white; box-shadow: 0 0 3px rgba(0,0,0,0.3);"></div>
-                                    <div>
-                                        <div style="font-weight: 500; color: #495057;">${assignment.name} ${assignment.lastname}</div>
-                                        <div style="font-size: 12px; color: #868e96;">
-                                            ${assignment.role}
-                                            ${assignment.counter_hours !== undefined ? ` | ${assignment.counter_hours}h mese` : ''}
-                                            ${assignment.contract_type ? ` | ${getContractTypeDisplay(assignment.contract_type)}` : ''}
-                                        </div>
+                                <div style="color: #6c757d; font-size: 11px; margin-top: 2px;">
+                                    ${apartment.address}
+                                </div>
+                                <div style="color: #868e96; font-size: 10px; margin-top: 2px;">
+                                    Check-in: ${apartment.checkin_time || 'N/A'} | Check-out: ${apartment.checkout_time || 'N/A'} | ${apartment.cleaning_time || 60} min
+                                </div>
+                            </div>
+                            <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
+                                    style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 10px; margin-left: 10px;">
+                                Modifica
+                            </button>
+                        </div>
+                    `;
+                });
+
+                const rowColor = assignmentIndex % 2 === 0 ? '#fdfdfd' : 'white';
+                
+                tableHtml += `
+                    <tr style="background: ${rowColor}; border-bottom: 2px solid #dee2e6;">
+                        <td style="padding: 15px; vertical-align: top;">
+                            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                <div style="width: 16px; height: 16px; border-radius: 50%; background: ${cleanerColor}; margin-right: 10px; border: 3px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.3);"></div>
+                                <div>
+                                    <div style="font-weight: 600; color: #2c3e50; font-size: 16px;">
+                                        ${assignment.name} ${assignment.lastname}
+                                    </div>
+                                    <div style="font-size: 12px; color: #868e96; margin-top: 2px;">
+                                        ${assignment.role}
+                                        ${assignment.counter_hours !== undefined ? ` | ${assignment.counter_hours}h mese` : ''}
+                                        ${assignment.contract_type ? ` | ${getContractTypeDisplay(assignment.contract_type)}` : ''}
                                     </div>
                                 </div>
-                            </td>
-                            <td style="padding: 12px; text-align: center;">
-                                <button onclick="showCleanerRoute(${assignment.cleaner_id}, '${assignment.name} ${assignment.lastname}')" 
-                                        style="background: ${cleanerColorMap[assignment.cleaner_id]}; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-right: 5px; transition: background-color 0.2s;">
-                                    Percorso
-                                </button>
-                                <button onclick="editApartment(${assignmentIndex}, ${apartmentIndex})" 
-                                        style="background: #f39c12; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; transition: background-color 0.2s;">
-                                    Modifica
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    rowCount++;
-                });
+                            </div>
+                        </td>
+                        <td style="padding: 15px; vertical-align: top;">
+                            <div style="max-height: 300px; overflow-y: auto;">
+                                ${apartmentsList}
+                            </div>
+                        </td>
+                        <td style="padding: 15px; text-align: center; vertical-align: top;">
+                            <div style="background: ${cleanerColor}; color: white; padding: 8px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; display: inline-block;">
+                                ${assignment.total_apartments}
+                            </div>
+                            <div style="font-size: 11px; color: #868e96; margin-top: 4px;">
+                                appartamenti
+                            </div>
+                        </td>
+                        <td style="padding: 15px; text-align: center; vertical-align: top;">
+                            <div style="font-weight: 500; color: #2c3e50; font-size: 13px;">
+                                Pulizia: ${assignment.total_cleaning_time_min || 0} min
+                            </div>
+                            <div style="font-weight: 500; color: #2c3e50; font-size: 13px; margin-top: 2px;">
+                                Viaggio: ${assignment.total_walk_time_min || 0} min
+                            </div>
+                            <div style="font-size: 11px; color: #868e96; margin-top: 4px; padding-top: 4px; border-top: 1px solid #eee;">
+                                Totale: ${(assignment.total_cleaning_time_min || 0) + (assignment.total_walk_time_min || 0)} min
+                            </div>
+                        </td>
+                        <td style="padding: 15px; text-align: center; vertical-align: top;">
+                            <button onclick="showCleanerRoute(${assignment.cleaner_id}, '${assignment.name} ${assignment.lastname}')" 
+                                    style="background: ${cleanerColor}; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500; margin-bottom: 5px; display: block; width: 100%; transition: all 0.2s;">
+                                🗺️ Visualizza Percorso
+                            </button>
+                            <div style="font-size: 10px; color: #868e96;">
+                                ${assignment.sequence_details.length} tappe
+                            </div>
+                        </td>
+                    </tr>
+                `;
             });
 
             tableHtml += `
                         </tbody>
                     </table>
                 </div>
-                <div style="margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 8px; text-align: center;">
-                    <strong>Totale appartamenti assegnati: ${rowCount}</strong>
-                    <span style="margin-left: 20px;">Totale cleaner utilizzati: ${assignments.length}</span>
-                    ${hasUnsavedChanges ? '<span style="margin-left: 20px; color: #e74c3c; font-weight: bold;">⚠️ Modifiche non salvate</span>' : ''}
+                <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; text-align: center; color: white;">
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                        <div style="margin: 5px;">
+                            <div style="font-size: 24px; font-weight: bold;">${totalApartments}</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Appartamenti Totali</div>
+                        </div>
+                        <div style="margin: 5px;">
+                            <div style="font-size: 24px; font-weight: bold;">${assignments.length}</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Cleaner Utilizzati</div>
+                        </div>
+                        <div style="margin: 5px;">
+                            <div style="font-size: 24px; font-weight: bold;">${Math.round(totalApartments / assignments.length * 10) / 10}</div>
+                            <div style="font-size: 12px; opacity: 0.9;">Media Apt/Cleaner</div>
+                        </div>
+                        ${hasUnsavedChanges ? '<div style="margin: 5px; color: #ffeb3b;"><div style="font-size: 16px; font-weight: bold;">⚠️</div><div style="font-size: 12px;">Modifiche non salvate</div></div>' : ''}
+                    </div>
                 </div>
             `;
 
