@@ -212,29 +212,210 @@ body {
     padding: 30px;
 }
 
-/* Statistics card */
-.stats {
-    background: linear-gradient(135deg, var(--secondary-color), #2980b9);
-    color: white;
-    padding: 20px;
-    border-radius: var(--border-radius);
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
     margin-bottom: 30px;
-    text-align: center;
-    box-shadow: var(--shadow);
 }
 
-.stats-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    font-size: 18px;
+.dashboard-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-color), #34495e);
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h4 {
+    margin: 0;
+    font-size: 16px;
     font-weight: 600;
 }
 
-.stats-number {
-    font-size: 24px;
+.card-content {
+    padding: 20px;
+}
+
+.selection-card .big-number {
+    font-size: 36px;
     font-weight: 700;
+    color: var(--secondary-color);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.cleaner-breakdown {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: var(--light-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.premium-count,
+.standard-count {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.apartment-stats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.summary-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--light-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.summary-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.summary-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+/* Selected Cleaners Preview */
+.selected-cleaners-preview {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.preview-header {
+    background: linear-gradient(135deg, var(--success-color), #229954);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-collapse {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+.btn-collapse:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.preview-content {
+    padding: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.selected-cleaners-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+}
+
+.preview-cleaner-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background: var(--light-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.preview-cleaner-item:hover {
+    background: rgba(52, 152, 219, 0.05);
+    border-color: var(--secondary-color);
+}
+
+.preview-cleaner-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.preview-cleaner-hours {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* Lista cleaners moderna */
